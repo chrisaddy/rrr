@@ -1,3 +1,3 @@
 center_data <- function(data){
-					        scale(data, scale = FALSE)
+	scale(data, scale = FALSE)
 }
