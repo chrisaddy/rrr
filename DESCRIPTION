@@ -4,6 +4,12 @@ Version: 0.0.0.9000
 Authors@R: person("Chris", "Addy", email = "chris.william.addy@gmail.com", role = c("aut", "cre"))
 Description: Reduced-rank regression techniques for PCA and CVA/CCA, as well as regularized regression techniques for multiple regression.
 Depends: R (>= 3.3.0)
+Imports:
+	dplyr,
+	ggplot2,
+	cvTools,
+	matrixcalc
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 5.0.1.9000
