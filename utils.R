@@ -6,13 +6,6 @@ require(ggplot2)
 require(cvTools)
 require(matrixcalc)
 
-sqrt_matrix <- function(matr){
-			e <- eigen(matr)
-			vecs <- e$vectors
-			vals <- e$values
-			vecs %*% diag(sqrt(vals), length(vals)) %*% t(vecs)
-}
-
 weighted_mat <- function(var_x, var_y, gamma_mat){ 
 			sig_XX <- cov_mat(var_x, var_x)
 			sig_XY <- cov_mat(var_x, var_y)
