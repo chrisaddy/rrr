@@ -8,10 +8,6 @@ require(matrixcalc)
 
 ### format data into x,y centered matrices
 
-center_data <- function(data){
-					scale(data, scale = FALSE)
-}
-
 organize <- function(vars){
 				vars %>%
 				center_data() %>%
