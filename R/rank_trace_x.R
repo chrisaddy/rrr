@@ -1,3 +1,5 @@
+#` @export
+
 rank_trace_x <- function(var_x, var_y, gamma_mat){
 			rt <- c()
 			fr <- min(dim(var_x)[1], dim(var_y)[1])

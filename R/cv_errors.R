@@ -1,3 +1,5 @@
+#` @export
+
 cv_errors <- function(x, y, gamma_mat, k = 5) {
 				folds <- cvFolds(dim(y)[2], k)
 				l <- c()

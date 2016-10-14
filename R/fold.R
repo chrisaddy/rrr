@@ -1,3 +1,5 @@
+#` @export
+
 fold <- function(data, k){
 		full_set <- data[sample(nrow(data)),]
 		folds <- cut(seq(1, nrow(full_set)),

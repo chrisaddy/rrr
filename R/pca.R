@@ -1,6 +1,7 @@
 #' Reduced-Rank PCA
 #'
 #' \code{pca} carries out reduced-rank principled component analysis on a matrix of input data.
+#` @export
 
 pca <- function(x, rank, ridge = 0){
 		x_ridge <- x

@@ -1,3 +1,5 @@
+#` @export
+
 rank_trace_plot <- function(var_x, var_y, gamma_mat){
 			rx <- rank_trace_x(var_x, var_y, gamma_mat)
 			ry <- rank_trace_y(var_x, var_y, gamma_mat)

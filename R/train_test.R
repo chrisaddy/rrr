@@ -1,3 +1,5 @@
+#` @export
+
 train_test <- function(x, y, gamma_mat, rank, folds, i){
 		train <- train_set(x, y, folds, i)
 		train_x <- train$x

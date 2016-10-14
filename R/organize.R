@@ -1,3 +1,5 @@
+#` @export
+
 organize <- function(vars){
 				vars %>%
 				center_data() %>%
