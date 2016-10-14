@@ -8,13 +8,6 @@ require(matrixcalc)
 
 ### format data into x,y centered matrices
 
-organize <- function(vars){
-				vars %>%
-				center_data() %>%
-				as.matrix() %>%	
-				t()
-}
-
 ## estimates for variables means
 
 mu_vars <- function(var_matrix){
