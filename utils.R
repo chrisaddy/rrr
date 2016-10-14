@@ -6,12 +6,6 @@ require(ggplot2)
 require(cvTools)
 require(matrixcalc)
 
-## estimates for the covariance matrices
-
-cov_mat <- function(var1, var2){
-		var1 %*% t(var2) / (dim(var1)[2] - 1)
-}
-
 sqrt_matrix <- function(matr){
 			e <- eigen(matr)
 			vecs <- e$vectors
