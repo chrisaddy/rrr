@@ -1,10 +1,10 @@
 #### load packages
 
-library(dplyr)
-library(MMST)
-library(ggplot2)
-library(cvTools)
-library(matrixcalc)
+require(plyr)
+require(MMST)
+require(ggplot2)
+require(cvTools)
+require(matrixcalc)
 
 ### format data into x,y centered matrices
 
