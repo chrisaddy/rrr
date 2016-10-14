@@ -6,16 +6,6 @@ require(ggplot2)
 require(cvTools)
 require(matrixcalc)
 
-### format data into x,y centered matrices
-
-## estimates for variables means
-
-mu_vars <- function(var_matrix){
-				replicate(dim(var_matrix)[2],
-				rowMeans(var_matrix))
-}
-
-
 ## estimates for the covariance matrices
 
 cov_mat <- function(var1, var2){
