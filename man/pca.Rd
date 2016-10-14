@@ -7,6 +7,7 @@
 pca(x, rank, ridge = 0)
 }
 \description{
-\code{pca} carries out reduced-rank principled component analysis on a matrix of input data.
+\code{pca} carries out reduced-rank principled component analysis on a
+matrix of input data.
 }
 
