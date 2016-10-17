@@ -7,9 +7,9 @@
 #` @return centered matrix whose rows are variables and columns observations
 #` @export organize
 
-organize <- function(vars){
+organize <- function(vars, scale = FALSE){
 				vars %>%
-				center_data() %>%
-				as.matrix() %>%	
+				as.matrix() %>%
+				scale(center = TRUE, scale) %>%
 				t()
 }
