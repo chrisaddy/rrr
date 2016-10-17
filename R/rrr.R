@@ -9,6 +9,11 @@ weighted_mat <- function(x, y, gamma_mat){
 }
 
 V_t <- function(x, y, gamma_mat, rank){
+				if(rank == "full"){
+					reduce_rank <- min(dim(x)[2], dim(y)[2])
+				} else {
+					reduce_rank <- rank
+				}
 				w <- weighted_mat(x, y, gamma_mat)
 				eigen(w)$vectors[,1:rank] %>%
 				as.matrix(ncol = rank)
@@ -19,16 +24,26 @@ A_t <- function(x, y, gamma_mat, rank){
 			V_t(x, y, gamma_mat, rank)
 }
 
-B_t <- function(x, y, gamma_mat, rank){
-		t(V_t(x, y, gamma_mat, rank)) %*%
+B_t <- function(x, y, gamma_mat, rank = "full"){
+		if(rank == "full"){
+			reduce_rank <- min(dim(x)[2], dim(y)[2])
+		} else {
+			reduce_rank <- rank
+		}
+		t(V_t(x, y, gamma_mat, reduce_rank)) %*%
 			sqrt_matrix(gamma_mat) %*%
 			cov_mat(organize(y), organize(x)) %*%
 			solve(cov_mat(organize(x), organize(x)))
 }
 
 C_t <- function(x, y, gamma_mat, rank) {
-		A_t(x, y, gamma_mat, rank) %*% 
-			B_t(x, y, gamma_mat, rank)
+		if(rank == "full"){
+			reduce_rank <- min(dim(x)[2], dim(y)[2])
+		} else {
+			reduce_rank <- rank
+		}
+		A_t(x, y, gamma_mat, reduc_rank) %*% 
+			B_t(x, y, gamma_mat, reduce_rank)
 }
 
 
@@ -43,8 +58,13 @@ C_t <- function(x, y, gamma_mat, rank) {
 #`
 #` @export rrr
 
-rrr <- function(x, y, gamma_mat, rank){
+rrr <- function(x, y, gamma_mat, rank = "full"){
+		if(rank == "full"){
+			reduce_rank <- min(dim(x)[2], dim(x)[2])
+		} else {
+			reduce_rank <- rank
+		}
 		x_c <- organize(x)
 		y_c <- organize(y)
-		C_t(x, y, gamma_mat, rank)
+		C_t(x, y, gamma_mat, reduce_rank)
 }

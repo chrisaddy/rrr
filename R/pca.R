@@ -16,10 +16,8 @@ pc <- function(x, rank){
 #' @export pca
 
 pca <- function(x, rank){
-		pc(x, rank) %>% as_data_frame()
-		for(i in 1:rank){
-			names(pc)[i] <- paste("PC", i, sep ="")
-		}
+		pc(x, rank) %>%
+			as_data_frame()
 		pc
 }
 
@@ -31,7 +29,7 @@ pca <- function(x, rank){
 
 pca_predict <- function(x, rank) {
 		gamma <- diag(1, dim(x)[2])
-		coefficients <- pca(x, rank) %>% as.matrix()
+		coefficients <- pc(x, rank) %>% as.matrix()
 		mean <- mu_t(x, x, gamma, rank)
 		mean + coefficients %*% B_t(x, x, gamma, rank) %*% organize(x)
 }
