@@ -15,10 +15,14 @@ pc <- function(x, rank){
 #' 
 #' @export pca
 
-pca <- function(x, rank){
-		pc(x, rank) %>%
+pca <- function(x, rank = "full"){
+		if(rank == "full"){
+			reduce_rank = dim(x)[2]
+		} else {
+			reduce_rank = rank
+		}
+		pc(x, reduce_rank) %>%
 			as_data_frame()
-		pc
 }
 
 #` Reduced Rank PCA Prediction
