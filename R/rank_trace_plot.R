@@ -1,4 +1,6 @@
-#` @export
+#' Rank Trace Plot
+#
+#' @export
 
 rank_trace_plot <- function(x, y, gamma_mat){
 			trace <- rank_trace(x, y, gamma_mat)

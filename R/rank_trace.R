@@ -29,14 +29,14 @@ rank_trace_x <- function(x, y, gamma_mat){
 			c(1,rt)
 }
 
-#` Rank Trace
-#`
-#` \code{rank trace}
-#`
-#` @param x data frame of input variables
-#` @param y data frame of response variables
-#` @param gamma_mat weight for \eqn{R} matrix
-#` @export rank_trace_x
+#' Rank Trace
+#'
+#' \code{rank trace}
+#'
+#' @param x data frame of input variables
+#' @param y data frame of response variables
+#' @param gamma_mat weight for \eqn{R} matrix
+#' @export rank_trace_x
 rank_trace <- function(x, y, gamma_mat) {
 				rank <- 0:min(dim(x)[1], dim(y)[1])
 				data_frame(rank = rank,

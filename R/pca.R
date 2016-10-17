@@ -25,11 +25,11 @@ pca <- function(x, rank = "full"){
 			as_data_frame()
 }
 
-#` Reduced Rank PCA Prediction
-#`
-#` \code{pca_predict} predicts 
-#`
-#` @export pca_predict
+#' Reduced Rank PCA Prediction
+#'
+#' \code{pca_predict} predicts 
+#'
+#' @export pca_predict
 
 pca_predict <- function(x, rank) {
 		gamma <- diag(1, dim(x)[2])

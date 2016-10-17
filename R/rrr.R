@@ -19,9 +19,14 @@ V_t <- function(x, y, gamma_mat, rank){
 				as.matrix(ncol = rank)
 }
 
-A_t <- function(x, y, gamma_mat, rank){
+A_t <- function(x, y, gamma_mat, rank = "full"){
+		if(rank == "full"){
+			reduce_rank <- min(dim(x)[2], dim(y)[2])
+		} else {
+			reduce_rank <- rank
+		}
 		solve(sqrt_matrix(gamma_mat)) %*% 
-			V_t(x, y, gamma_mat, rank)
+			V_t(x, y, gamma_mat, reduce_rank)
 }
 
 B_t <- function(x, y, gamma_mat, rank = "full"){
@@ -42,21 +47,21 @@ C_t <- function(x, y, gamma_mat, rank) {
 		} else {
 			reduce_rank <- rank
 		}
-		A_t(x, y, gamma_mat, reduc_rank) %*% 
+		A_t(x, y, gamma_mat, reduce_rank) %*% 
 			B_t(x, y, gamma_mat, reduce_rank)
 }
 
 
-#` Reduced-Rank Regression
-#`
-#` \code{rrr} fits a reduced-rank regression model.
-#`
-#` @param x 
-#` @param y
-#` @param gamma_mat
-#` @param rank
-#`
-#` @export rrr
+#' Reduced-Rank Regression
+#'
+#' \code{rrr} fits a reduced-rank regression model.
+#'
+#' @param x 
+#' @param y
+#' @param gamma_mat
+#' @param rank rank of the coefficient matrix to estimate. \code{rank = full} is standard multivariate regression.
+#'
+#' @export rrr
 
 rrr <- function(x, y, gamma_mat, rank = "full"){
 		if(rank == "full"){

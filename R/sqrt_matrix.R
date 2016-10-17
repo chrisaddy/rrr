@@ -1,4 +1,4 @@
-#` @export
+#' @export
 
 sqrt_matrix <- function(matr){
 			e <- eigen(matr)

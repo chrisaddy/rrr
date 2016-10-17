@@ -7,6 +7,6 @@
 #` @param tuner small constant to augment the diagonal of 
 #` @radius radius of 
 
-ridge <- function(x, y, tuner, radius = 1){
+ridge <- function(x, y, k = 0){
 			solve((t(x) %*% x + k * diag(1, dim(x)[2]))) %*% t(x) %*% y
 }
