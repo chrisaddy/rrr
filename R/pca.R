@@ -37,3 +37,18 @@ pca_predict <- function(x, rank) {
 		mean <- mu_t(x, x, gamma, rank)
 		mean + coefficients %*% B_t(x, x, gamma, rank) %*% organize(x)
 }
+
+#' PCA Goodness of Fit
+#'
+#' @export
+
+pca_gof <- function(x) {
+			x_organize <- organize(x)
+			eigens <- eigen(cov_mat(x_organize, x_organize))$values
+			total_var <- sum(eigens)
+			gof <- c()
+			for(i in 1:length(eigens)){
+				gof[i] <- sum(eigens[(i + 1):length(eigens)]) / total_var
+			}
+			gof
+}

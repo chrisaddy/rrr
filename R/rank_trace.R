@@ -1,17 +1,18 @@
-delta_C <- function(var_x, var_y, gamma_mat, rank){
-		theta <- theta_full(var_x, var_y, gamma_mat)
-		C <- C_t(var_x, var_y, gamma_mat, rank)
+delta_C <- function(x, y, gamma_mat, rank){
+		theta <- theta_full(x, y, gamma_mat)
+		C <- C_t(x, y, gamma_mat, rank)
 		norm(theta - C, type = "F") / norm(theta, type = "F")
 }	
 
-delta_EE <- function(var_x, var_y, gamma_mat, rank){
-		full <- sigma_ee_full(var_x, var_y, gamma_mat)	
-		t <- sigma_ee_t(var_x, var_y, gamma_mat, rank)
-		sig_YY <- cov_mat(var_y, var_y)
+delta_EE <- function(x, y, gamma_mat, rank){
+		full <- sigma_ee_full(x, y, gamma_mat)	
+		t <- sigma_ee_t(x, y, gamma_mat, rank)
+		sig_YY <- cov_mat(y, y)
 		norm(full - t, type = "F") / norm(full - sig_YY, type = "F")
 }
 
 rank_trace_y <- function(x, y, gamma_mat){
+			x_organize 
 			rt <- c()
 			fr <- min(dim(x)[1], dim(y)[1])
 			for(i in 1:fr){
