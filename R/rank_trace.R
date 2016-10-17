@@ -1,3 +1,8 @@
+sigma_ee_full <- function(var_x, var_y, gamma_mat){
+       			s <- dim(var_y)[1]
+			sigma_ee_t(var_x, var_y, gamma_mat, s)
+}
+
 delta_C <- function(x, y, gamma_mat, rank){
 		theta <- theta_full(x, y, gamma_mat)
 		C <- C_t(x, y, gamma_mat, rank)
