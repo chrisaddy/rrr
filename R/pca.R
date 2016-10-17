@@ -1,3 +1,12 @@
+pc_gamma <- function(x){
+		diag(1, dim(x)[2])
+}
+
+pc <- function(x, rank){
+		gamma <- pc_gamma(x)
+		A_t(x, x, gamma, rank)
+}
+
 #' Reduced-Rank PCA
 #' 
 #' \code{pca} carries out reduced-rank principled component analysis on a
@@ -5,12 +14,24 @@
 #' 
 #' 
 #' @export pca
-pca <- function(x, rank, ridge = 0){
-		x_ridge <- x
-		gamma <- diag(1, dim(x)[1])
-		mu <- mu_t(x_ridge, x_ridge, gamma, rank)
-		coefficients <- C_t(x_ridge, x_ridge, gamma, rank)
-		estimates <- mu + coefficients %*% x_ridge
-		residuals <- estimates - x_ridge
-		list(coefficients, estimates, residuals)
+
+pca <- function(x, rank){
+		pc(x, rank) %>% as_data_frame()
+		for(i in 1:rank){
+			names(pc)[i] <- paste("PC", i, sep ="")
+		}
+		pc
+}
+
+#` Reduced Rank PCA Prediction
+#`
+#` \code{pca_predict} predicts 
+#`
+#` @export pca_predict
+
+pca_predict <- function(x, rank) {
+		gamma <- diag(1, dim(x)[2])
+		coefficients <- pca(x, rank) %>% as.matrix()
+		mean <- mu_t(x, x, gamma, rank)
+		mean + coefficients %*% B_t(x, x, gamma, rank) %*% organize(x)
 }

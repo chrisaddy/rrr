@@ -4,9 +4,12 @@
 \alias{mu_vars}
 \title{Mean Matrix}
 \usage{
-mu_vars(var_matrix)
+mu_vars(var)
+}
+\arguments{
+\item{var}{a data frame of}
 }
 \description{
-Mean Matrix
+\code{mu_vars} produces a mean matrix.
 }
 

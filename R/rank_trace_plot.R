@@ -1,13 +1,15 @@
 #` @export
 
-rank_trace_plot <- function(var_x, var_y, gamma_mat){
-			rx <- rank_trace_x(var_x, var_y, gamma_mat)
-			ry <- rank_trace_y(var_x, var_y, gamma_mat)
+rank_trace_plot <- function(x, y, gamma_mat){
+			trace <- rank_trace(x, y, gamma_mat)
 			ggplot() +
-			aes(x = rx, y = ry) +
+			aes(x = trace$deltaC,
+				y = trace$deltaEE,
+				label = trace$rank) +
 			lims(x = c(0,1), y = c(0,1)) +
-			geom_point() +
 			geom_line(color = "red") +
+			geom_text(check_overlap = TRUE, size = 5) +
+			geom_label() + 
 			labs(x = "dC", y = "dE") +
 			ggtitle(expression(paste("Rank Trace Plot for ",
 						 Theta^(0),

@@ -4,7 +4,7 @@
 \alias{pca}
 \title{Reduced-Rank PCA}
 \usage{
-pca(x, rank, ridge = 0)
+pca(x, rank)
 }
 \description{
 \code{pca} carries out reduced-rank principled component analysis on a
