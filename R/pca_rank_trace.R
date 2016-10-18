@@ -7,5 +7,5 @@
 #' export pca_rank_trace
 
 pca_rank_trace <- function(x) {
-					rank_trace(x, x, diag(1, dim(x)[1]))
+					rank_trace(x, x, diag(1, dim(x)[2]))
 }

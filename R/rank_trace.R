@@ -22,7 +22,6 @@ delta_EE <- function(x, y, gamma_mat, rank){
 }
 
 rank_trace_y <- function(x, y, gamma_mat){
-			x_organize 
 			rt <- c()
 			fr <- min(dim(x)[1], dim(y)[1])
 			for(i in 1:fr){
@@ -49,12 +48,14 @@ rank_trace_x <- function(x, y, gamma_mat){
 #' @param gamma_mat weight for \eqn{R} matrix
 #' @export rank_trace_x
 rank_trace <- function(x, y, gamma_mat) {
-				rank <- 0:min(dim(x)[1], dim(y)[1])
+				x_organize <- organize(x)
+				y_organize <- organize(y)
+				rank <- 0:min(dim(x)[2], dim(y)[2])
 				data_frame(rank = rank,
-					       deltaC = rank_trace_x(x,
-												 y,
+					       deltaC = rank_trace_x(x_organize,
+												 y_organize,
 												 gamma_mat),
-						   deltaEE = rank_trace_y(x,
-							  					  y,
+						   deltaEE = rank_trace_y(x_organize,
+							  					  y_organize,
 							  					  gamma_mat))
 }

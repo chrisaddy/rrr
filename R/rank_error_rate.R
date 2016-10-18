@@ -1,5 +1,3 @@
-#` @export
-
 rank_error_rate <- function(x, y, gamma_mat, rank, folds){
 			k <- folds$K
 			errors <- c()

@@ -25,7 +25,7 @@ pca <- function(x, rank = "full"){
 			as_data_frame()
 }
 
-#' Reduced Rank PCA Prediction
+#' Reduced-Rank PCA Prediction
 #'
 #' \code{pca_predict} predicts 
 #'
