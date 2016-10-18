@@ -38,6 +38,9 @@ delta_EE <- function(x, y, gamma_mat, rank){
 
 rank_trace <- function(x, y, gamma_mat) {
 				full_rank <- min(dim(x)[2], dim(y)[2])
+				C <- rrr
+				theta <- 
+				delta_C <- 
 				rt_x <- c()
 				rt_y <- c()
 				for(i in 1:full_rank){
