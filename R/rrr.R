@@ -1,13 +1,3 @@
-weighted_mat <- function(x, y, gamma_mat){
-			x_organize <- organize(x)
-			y_organize <- organize(y)
-			sqrt_matrix(gamma_mat) %*%
-				cov_mat(y_organize, x_organize) %*%
-				solve(cov_mat(x_organize, x_organize)) %*%
-				cov_mat(x_organize, y_organize) %*%
-				sqrt_matrix(gamma_mat)
-}
-
 V_t <- function(x, y, gamma_mat, rank){
 				if(rank == "full"){
 					reduce_rank <- min(dim(x)[2], dim(y)[2])
@@ -35,10 +25,7 @@ B_t <- function(x, y, gamma_mat, rank = "full"){
 		} else {
 			reduce_rank <- rank
 		}
-		t(V_t(x, y, gamma_mat, reduce_rank)) %*%
-			sqrt_matrix(gamma_mat) %*%
-			cov_mat(organize(y), organize(x)) %*%
-			solve(cov_mat(organize(x), organize(x)))
+		t(V_t(organize(x), organize(y), gamma_mat, reduce_rank)) %*% sqrt_matrix(gamma_mat) %*% cov_mat(organize(y), organize(x)) %*% solve(cov_mat(organize(x), organize(x)))
 }
 
 C_t <- function(x, y, gamma_mat, rank) {
@@ -63,13 +50,24 @@ C_t <- function(x, y, gamma_mat, rank) {
 #'
 #' @export rrr
 
-rrr <- function(x, y, gamma_mat, rank = "full"){
+rrr <- function(x, y, gamma_matrix, rank = "full"){
 		if(rank == "full"){
 			reduce_rank <- min(dim(x)[2], dim(x)[2])
 		} else {
 			reduce_rank <- rank
 		}
-		x_c <- organize(x)
-		y_c <- organize(y)
-		C_t(x, y, gamma_mat, reduce_rank)
+		x_organize <- organize(x)
+		y_organize <- organize(y)
+		weighted_matrix <- sqrt_matrix(gamma_matrix)
+
+}
+
+weighted_mat <- function(x, y, gamma_mat){
+			x_organize <- organize(x)
+			y_organize <- organize(y)
+			sqrt_matrix(gamma_mat) %*%
+				cov_mat(y_organize, x_organize) %*%
+				solve(cov_mat(x_organize, x_organize)) %*%
+				cov_mat(x_organize, y_organize) %*%
+				sqrt_matrix(gamma_mat)
 }

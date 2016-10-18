@@ -1,11 +1,11 @@
-sigma_ee_t <- function(var_x, var_y, gamma_mat, rank){
-		e <- var_y - C_t(var_x, var_y, gamma_mat, rank) %*% var_x
-		e %*% t(e) / (dim(var_x)[2] - dim(var_x)[1])
+sigma_ee_t <- function(x, y, gamma_mat, rank){
+		e <- y - C_t(x_organize, y_organize, gamma_mat, rank) %*% x
+		e %*% t(e) / (dim(x)[2] - dim(x)[1])
 }
 
-sigma_ee_full <- function(var_x, var_y, gamma_mat){
-       			s <- dim(var_y)[1]
-				sigma_ee_t(var_x, var_y, gamma_mat, s)
+sigma_ee_full <- function(x, y, gamma_mat){
+       			s <- dim(y)[1]
+				sigma_ee_t(x, y, gamma_mat, s)
 }
 
 delta_C <- function(x, y, gamma_mat, rank){
@@ -58,4 +58,25 @@ rank_trace <- function(x, y, gamma_mat) {
 						   deltaEE = rank_trace_y(x_organize,
 							  					  y_organize,
 							  					  gamma_mat))
+}
+
+#' Rank Trace Plot
+#
+#' @export
+
+rank_trace_plot <- function(x, y, gamma_mat){
+			trace <- rank_trace(x, y, gamma_mat)
+			ggplot() +
+			aes(x = trace$deltaC,
+				y = trace$deltaEE,
+				label = trace$rank) +
+			lims(x = c(0,1), y = c(0,1)) +
+			geom_line(color = "red") +
+			geom_text(check_overlap = TRUE, size = 5) +
+			geom_label() + 
+			labs(x = "dC", y = "dE") +
+			ggtitle(expression(paste("Rank Trace Plot for ",
+						 Theta^(0),
+						 " to ",
+						 Theta^(s) )))
 }
