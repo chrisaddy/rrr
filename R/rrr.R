@@ -39,5 +39,7 @@ rrr_predict <- function(x, y, gamma_matrix, rank){
 }
 
 rrr_residuals <- function(x, y, gamma_matrix, rank){
-				rrr_predict(x, y, gamma_matrix, rank) - organize(y)
+				resid <- rrr_predict(x, y, gamma_matrix, rank) - organize(y)
+				mse <- sum(resid^2) / (dim(resid)[1] * dim(resid)[2])
+				list(MSE = mse, Residuals = resid)
 }

@@ -2,7 +2,7 @@ Package: rrr
 Title: Reduced-Rank and Regularized Regression
 Version: 0.0.0.9000
 Authors@R: person("Chris", "Addy", email = "chris.william.addy@gmail.com", role = c("aut", "cre"))
-Description: Reduced-rank regression techniques for PCA and CVA/CCA, as well as regularized regression techniques for multiple regression.
+Description: Reduced-rank regression, diagnostics and graphics.
 Depends: R (>= 3.3.0)
 Imports:
 	dplyr,
