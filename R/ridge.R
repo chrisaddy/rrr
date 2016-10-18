@@ -8,5 +8,7 @@
 #` @radius radius of 
 
 ridge <- function(x, y, k = 0){
-			solve((t(x) %*% x + k * diag(1, dim(x)[2]))) %*% t(x) %*% y
+			x_mat <- as.matrix(x)
+			y_mat <- as.matrix(y)
+			solve((t(x_mat) %*% x + k * diag(1, dim(x_mat)[2]))) %*% t(x_mat) %*% y_mat
 }
