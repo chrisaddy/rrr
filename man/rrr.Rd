@@ -4,7 +4,7 @@
 \alias{rrr}
 \title{Reduced-Rank Regression}
 \usage{
-rrr(x, y, gamma_matrix, rank = "full")
+rrr(x, y, gamma_matrix, rank)
 }
 \arguments{
 \item{x}{}

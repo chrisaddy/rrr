@@ -2,11 +2,18 @@
 % Please edit documentation in R/rank_trace.R
 \name{rank_trace_plot}
 \alias{rank_trace_plot}
-\title{Rank Trace Plot}
+\title{Rank Trace}
 \usage{
 rank_trace_plot(x, y, gamma_mat)
 }
+\arguments{
+\item{x}{data frame of input variables}
+
+\item{y}{data frame of response variables}
+
+\item{gamma_mat}{weight for \eqn{R} matrix}
+}
 \description{
-Rank Trace Plot
+\code{rank trace}
 }
 
