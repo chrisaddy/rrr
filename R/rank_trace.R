@@ -1,5 +1,10 @@
+theta_full <- function(var_x, var_y, gamma_mat){
+		s <- dim(var_y)[1]
+		C_t(var_x, var_y, gamma_mat, s)
+}
+
 sigma_ee_t <- function(x, y, gamma_mat, rank){
-		e <- y - C_t(x_organize, y_organize, gamma_mat, rank) %*% x
+		e <- y - rrr(x, y, gamma_mat, rank)$C %*% x
 		e %*% t(e) / (dim(x)[2] - dim(x)[1])
 }
 
@@ -17,27 +22,10 @@ delta_C <- function(x, y, gamma_mat, rank){
 delta_EE <- function(x, y, gamma_mat, rank){
 		full <- sigma_ee_full(x, y, gamma_mat)	
 		t <- sigma_ee_t(x, y, gamma_mat, rank)
-		sig_YY <- cov_mat(y, y)
+		sig_YY <- cov_matrix(y, y)
 		norm(full - t, type = "F") / norm(full - sig_YY, type = "F")
 }
 
-rank_trace_y <- function(x, y, gamma_mat){
-			rt <- c()
-			fr <- min(dim(x)[1], dim(y)[1])
-			for(i in 1:fr){
-				rt[i] <- delta_EE(x, y, gamma_mat, i)
-			}
-			c(1,rt)
-}
-
-rank_trace_x <- function(x, y, gamma_mat){
-			rt <- c()
-			fr <- min(dim(x)[1], dim(y)[1])
-			for(i in 1:fr){
-				rt[i] <- delta_C(x, y, gamma_mat, i)
-			}
-			c(1,rt)
-}
 
 #' Rank Trace
 #'
@@ -47,17 +35,21 @@ rank_trace_x <- function(x, y, gamma_mat){
 #' @param y data frame of response variables
 #' @param gamma_mat weight for \eqn{R} matrix
 #' @export rank_trace_x
+
 rank_trace <- function(x, y, gamma_mat) {
-				x_organize <- organize(x)
-				y_organize <- organize(y)
+				full_rank <- min(dim(x)[2], dim(y)[2])
+				rt_x <- c()
+				rt_y <- c()
+				for(i in 1:full_rank){
+					rt_x[i] <- delta_C(x, y, gamma_mat, i)
+					rt_y[i] <- delta_EE(x, y, gamma_mat, i)
+				}
+				rt_x <- c(1, rt_x)
+				rt_y <- c(1, rt_y)
 				rank <- 0:min(dim(x)[2], dim(y)[2])
 				data_frame(rank = rank,
-					       deltaC = rank_trace_x(x_organize,
-												 y_organize,
-												 gamma_mat),
-						   deltaEE = rank_trace_y(x_organize,
-							  					  y_organize,
-							  					  gamma_mat))
+					       deltaC = rt_y,
+						   deltaEE = rt_y
 }
 
 #' Rank Trace Plot

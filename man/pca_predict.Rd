@@ -2,7 +2,7 @@
 % Please edit documentation in R/pca.R
 \name{pca_predict}
 \alias{pca_predict}
-\title{Reduced Rank PCA Prediction}
+\title{Reduced-Rank PCA Prediction}
 \usage{
 pca_predict(x, rank)
 }
