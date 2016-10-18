@@ -26,5 +26,9 @@ rrr <- function(x, y, gamma_matrix, rank){
 					sqrtm %*% 
 					sig_yx %*% 
 					solve(sig_xx)
-		A_t
+		C_t <- A_t %*% B_t
+		mu_y <- mu_vars(y_organize)
+		mu_x <- mu_vars(x_organize)
+		mu_t <- mu_y - C_t %*% mu_x
+		list(A = A_t, B = B_t, C = C_t)
 }
