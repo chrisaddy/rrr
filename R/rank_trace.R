@@ -36,24 +36,24 @@ delta_EE <- function(x, y, gamma_mat, rank){
 #' @param gamma_mat weight for \eqn{R} matrix
 #' @export rank_trace_x
 
-rank_trace <- function(x, y, gamma_mat) {
-				full_rank <- min(dim(x)[2], dim(y)[2])
-				C <- rrr
-				theta <- 
-				delta_C <- 
-				rt_x <- c()
-				rt_y <- c()
-				for(i in 1:full_rank){
-					rt_x[i] <- delta_C(x, y, gamma_mat, i)
-					rt_y[i] <- delta_EE(x, y, gamma_mat, i)
-				}
-				rt_x <- c(1, rt_x)
-				rt_y <- c(1, rt_y)
-				rank <- 0:min(dim(x)[2], dim(y)[2])
-				data_frame(rank = rank,
-					       deltaC = rt_y,
-						   deltaEE = rt_y
-}
+#rank_trace <- function(x, y, gamma_mat) {
+#				full_rank <- min(dim(x)[2], dim(y)[2])
+#				C <- rrr
+#				theta <- 
+#				delta_C <- 
+#				rt_x <- c()
+#				rt_y <- c()
+#				for(i in 1:full_rank){
+#					rt_x[i] <- delta_C(x, y, gamma_mat, i)
+#					rt_y[i] <- delta_EE(x, y, gamma_mat, i)
+#				}
+#				rt_x <- c(1, rt_x)
+#				rt_y <- c(1, rt_y)
+#				rank <- 0:min(dim(x)[2], dim(y)[2])
+#				data_frame(rank = rank,
+#					       deltaC = rt_y,
+#						   deltaEE = rt_y
+#}
 
 #' Rank Trace Plot
 #
