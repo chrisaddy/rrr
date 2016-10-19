@@ -1,12 +1,3 @@
-pc_gamma <- function(x){
-		diag(1, dim(x)[2])
-}
-
-pc <- function(x, rank, type){
-		gamma <- pc_gamma(x)
-		rrr(x, x, gamma, rank, type)$A
-}
-
 #' Reduced-Rank PCA
 #' 
 #' \code{pca} carries out reduced-rank principled component analysis on a
@@ -18,8 +9,7 @@ pc <- function(x, rank, type){
 #' @export pca
 
 pca <- function(x, rank = "full", type = "cov"){
-	components <- pc(x,rank, type)
-	dplyr::as_data_frame(components)
+	rrr(x, x, diag(1, dim(x)[2]), rank, type)
 }
 
 #' Reduced-Rank PCA Prediction
@@ -28,11 +18,8 @@ pca <- function(x, rank = "full", type = "cov"){
 #'
 #' @export pca_predict
 
-pca_predict <- function(x, rank) {
-		gamma <- diag(1, dim(x)[2])
-		coefficients <- pc(x, rank) %>% as.matrix()
-		mean <- mu_t(x, x, gamma, rank)
-		mean + coefficients %*% B_t(x, x, gamma, rank) %*% organize(x)
+pca_predict <- function(x, rank = "full", type = "cov") {
+	rrr_predict(x, x, x, diag(1, dim(x)[2]), type = "cov")
 }
 
 #' PCA Goodness of Fit
