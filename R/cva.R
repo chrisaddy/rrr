@@ -1,0 +1,17 @@
+#' Reduced-Rank Canonical Variate Analysis
+#'
+#' \code{cva} fits a reduced-rank canonical variate/correlation model.
+#'
+#'
+
+cva <- function(x, y, gamma_mat, rank = "full", type = "cov") {
+	if(type == "cov"){
+		y_c <- scale(y, center = TRUE, scale = FALSE)
+	} else if(type == "cor"){
+		y_c <- scale(y, center = TRUE, scale = TRUE)
+	} else {
+		stop("argument type not recognized")
+	}
+	gamma <- cov_matrix(y_c, y_c)
+	rrr(x, y, gamma, rank, type)
+}	

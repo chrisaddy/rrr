@@ -17,6 +17,7 @@ Collate:
     rank_trace.R
     pca.R
     pca_rank_trace.R
+    cva.R
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
