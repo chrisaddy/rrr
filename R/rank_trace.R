@@ -50,8 +50,8 @@ rank_trace <- function(x, y, gamma_mat) {
 				rt_y <- c(1, rt_y)
 				rank <- 0:min(dim(x)[2], dim(y)[2])
 				data_frame(rank = rank,
-					       deltaC = rt_y,
-						   deltaEE = rt_y
+					       deltaC = rt_x,
+						   deltaEE = rt_y)
 }
 
 #' Rank Trace Plot
