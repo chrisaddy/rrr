@@ -65,3 +65,11 @@ train_test <- function(x, y, gamma_mat, rank, folds, i){
 		C <- C_t(train_x, train_y, gamma_mat, rank)
 		mu[,1:dim(test_x)[2]] + C %*% test_x
 } 
+
+#` Penalized Regression
+#`
+#` \code{penalized} is used to fit least-squares models subject to constraints on the parameters.
+#`
+#` @param 
+#`
+#`
