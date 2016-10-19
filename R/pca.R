@@ -4,7 +4,7 @@ pc_gamma <- function(x){
 
 pc <- function(x, rank){
 		gamma <- pc_gamma(x)
-		A_t(x, x, gamma, rank)
+		rrr(x, x, gamma, rank)$A
 }
 
 #' Reduced-Rank PCA
@@ -12,6 +12,8 @@ pc <- function(x, rank){
 #' \code{pca} carries out reduced-rank principled component analysis on a
 #' matrix of input data.
 #' 
+#' @param x data frame of input variables
+#' @param rank of coefficient matrix. Default \code{="full"}.
 #' 
 #' @export pca
 
@@ -21,8 +23,11 @@ pca <- function(x, rank = "full"){
 		} else {
 			reduce_rank = rank
 		}
-		pc(x, reduce_rank) %>%
-			as_data_frame()
+		components <- pc(x, reduce_rank)
+		for(i in 1:reduce_rank){
+			names(components)[i] <- paste("PC", i, sep = "")
+		}
+		dplyr::as_data_frame(components)
 }
 
 #' Reduced-Rank PCA Prediction

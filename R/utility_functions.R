@@ -18,10 +18,7 @@ sqrt_matrix <- function(matr){
 }
 
 organize <- function(vars, scale = FALSE){
-				vars %>%
-				as.matrix() %>%
-				scale(center = TRUE, scale) %>%
-				t()
+	t(scale(as.matrix(vars), center = TRUE, scale))
 }
 
 mu_vars <- function(var){

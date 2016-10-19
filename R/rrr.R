@@ -6,12 +6,20 @@
 #' @param y data frame of response variables
 #' @param gamma_mat weight matrix
 #' @param rank of the coefficient matrix to estimate. \code{rank = full} is standard multivariate regression.
+#' @param type the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.
 #'
 #' @export rrr
 
-rrr <- function(x, y, gamma_matrix, rank){
-	x_organize <- organize(x)
-	y_organize <- organize(y)
+rrr <- function(x, y, gamma_matrix, rank, type = "cov"){
+	if(type == "cov"){
+		x_organize <- organize(x)
+		y_organize <- organize(y)
+	} else if(type == "cor"){
+		x_organize <- organize(x, scale = TRUE)
+		y_organize <- organize(y, scale = TRUE)
+	} else {
+		stop("type input not recognized")
+	}
 	sig_xx <- cov_matrix(x_organize, x_organize)
 	sig_yx <- cov_matrix(y_organize, x_organize)
 	sqrtm <- sqrt_matrix(gamma_matrix)

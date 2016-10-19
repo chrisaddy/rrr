@@ -6,6 +6,11 @@
 \usage{
 pca(x, rank = "full")
 }
+\arguments{
+\item{x}{data frame of input variables}
+
+\item{rank}{of coefficient matrix. Default \code{="full"}.}
+}
 \description{
 \code{pca} carries out reduced-rank principled component analysis on a
 matrix of input data.
