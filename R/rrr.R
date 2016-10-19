@@ -47,8 +47,8 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov"){
 	list(mean = mu_t[,1], A = A_t, B = B_t, C = C_t)
 }
 
-rrr_predict <- function(x, y, x_new, gamma_matrix, rank){
-	regress <- rrr(x, y, gamma_matrix, rank)
+rrr_predict <- function(x, y, x_new, gamma_matrix, rank = "full", type = "cov"){
+	regress <- rrr(x, y, gamma_matrix, rank, type)
 	regress$mean + regress$C %*% organize(x_new)				
 }
 
