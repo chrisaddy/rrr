@@ -11,10 +11,7 @@ Imports:
 	ggplot2,
 	cvTools,
 Collate:
-	cov_matrix.R
-	mu_vars.R
-	organize.R
-	sqrt_matrix.R
+	utility_functions.R
 	rrr.R
 	rank_trace.R
 	pca.R
