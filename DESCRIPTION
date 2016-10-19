@@ -5,9 +5,19 @@ Authors@R: person("Chris", "Addy", email = "chris.william.addy@gmail.com", role 
 Description: Reduced-rank regression, diagnostics and graphics.
 Depends: R (>= 3.3.0)
 Imports:
+	Rcpp,
 	dplyr,
 	ggplot2,
 	cvTools,
+Collate:
+	cov_matrix.R
+	mu_vars.R
+	organize.R
+	sqrt_matrix.R
+	rrr.R
+	rank_trace.R
+	pca.R
+	pca_rank_trace.R
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
