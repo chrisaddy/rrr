@@ -18,16 +18,8 @@ pc <- function(x, rank, type){
 #' @export pca
 
 pca <- function(x, rank = "full", type = "cov"){
-		if(rank == "full"){
-			reduce_rank = dim(x)[2]
-		} else {
-			reduce_rank = rank
-		}
-		components <- pc(x, reduce_rank, type)
-		for(i in 1:reduce_rank){
-			names(components)[i] <- paste("PC", i, sep = "")
-		}
-		dplyr::as_data_frame(components)
+	components <- pc(x,rank, type)
+	dplyr::as_data_frame(components)
 }
 
 #' Reduced-Rank PCA Prediction
