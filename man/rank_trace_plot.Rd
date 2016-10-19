@@ -6,7 +6,14 @@
 \usage{
 rank_trace_plot(x, y, gamma_mat)
 }
+\arguments{
+\item{x}{data frame of input variables}
+
+\item{y}{data frame of response variables}
+
+\item{gamma_mat}{weight matrix}
+}
 \description{
-Rank Trace Plot
+Plot of rank trace to determine suitable rank of coefficient matrix.
 }
 

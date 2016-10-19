@@ -34,7 +34,7 @@ delta_EE <- function(x, y, gamma_mat, rank){
 #' @param x data frame of input variables
 #' @param y data frame of response variables
 #' @param gamma_mat weight for \eqn{R} matrix
-#' @export rank_trace_x
+#' @export rank_trace
 
 rank_trace <- function(x, y, gamma_mat) {
 				x_org <- organize(x)
@@ -55,7 +55,13 @@ rank_trace <- function(x, y, gamma_mat) {
 }
 
 #' Rank Trace Plot
-#
+#'
+#' Plot of rank trace to determine suitable rank of coefficient matrix.
+#'
+#' @param x data frame of input variables
+#' @param y data frame of response variables
+#' @param gamma_mat weight matrix
+#'
 #' @export
 
 rank_trace_plot <- function(x, y, gamma_mat){
