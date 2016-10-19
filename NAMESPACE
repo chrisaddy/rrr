@@ -3,6 +3,6 @@
 export(pca)
 export(pca_gof)
 export(pca_predict)
-export(rank_trace)
 export(rank_trace_plot)
 export(rrr)
+export(sqrt_matrix)

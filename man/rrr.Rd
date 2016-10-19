@@ -7,9 +7,13 @@
 rrr(x, y, gamma_matrix, rank)
 }
 \arguments{
-\item{x}{}
+\item{x}{data frame of input variables}
 
-\item{rank}{rank of the coefficient matrix to estimate. \code{rank = full} is standard multivariate regression.}
+\item{y}{data frame of response variables}
+
+\item{rank}{of the coefficient matrix to estimate. \code{rank = full} is standard multivariate regression.}
+
+\item{gamma_mat}{weight matrix}
 }
 \description{
 \code{rrr} fits a reduced-rank regression model.
