@@ -1,10 +1,12 @@
 Package: rrr
 Title: Reduced-Rank and Regularized Regression
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Authors@R: person("Chris", "Addy", email = "chris.william.addy@gmail.com", role = c("aut", "cre"))
+URL: http://github.com/chrisaddy/rrr
 Description: Reduced-rank regression, diagnostics and graphics.
 Depends: R (>= 3.3.0)
 Imports:
+	Rcpp,
 	dplyr,
 	ggplot2,
 	cvTools,
