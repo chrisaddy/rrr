@@ -2,9 +2,9 @@ pc_gamma <- function(x){
 		diag(1, dim(x)[2])
 }
 
-pc <- function(x, rank){
+pc <- function(x, rank, type){
 		gamma <- pc_gamma(x)
-		rrr(x, x, gamma, rank)$A
+		rrr(x, x, gamma, rank, type)$A
 }
 
 #' Reduced-Rank PCA
@@ -17,13 +17,13 @@ pc <- function(x, rank){
 #' 
 #' @export pca
 
-pca <- function(x, rank = "full"){
+pca <- function(x, rank = "full", type = "cov"){
 		if(rank == "full"){
 			reduce_rank = dim(x)[2]
 		} else {
 			reduce_rank = rank
 		}
-		components <- pc(x, reduce_rank)
+		components <- pc(x, reduce_rank, type)
 		for(i in 1:reduce_rank){
 			names(components)[i] <- paste("PC", i, sep = "")
 		}
