@@ -1,0 +1,12 @@
+#' Reduced-Rank Linear Discriminant Analysis
+#'
+#' \code{lda} produces a linear discriminant analysis as a reduced-rank regression.
+#'
+#'
+#'
+#' @export
+
+lda <- function(x, y, gamma, rank, classes) {
+    ### build Y matrix
+    ### centering matrix
+

@@ -4,7 +4,7 @@
 \alias{pca}
 \title{Reduced-Rank PCA}
 \usage{
-pca(x, rank = "full")
+pca(x, rank = "full", type = "cov")
 }
 \arguments{
 \item{x}{data frame of input variables}

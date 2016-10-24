@@ -4,7 +4,7 @@
 #'
 #'
 
-cva <- function(x, y, gamma_mat, rank = "full", type = "cov") {
+cva <- function(x, y, rank = "full", type = "cov") {
 	if(type == "cov"){
 		y_c <- scale(y, center = TRUE, scale = FALSE)
 	} else if(type == "cor"){
@@ -14,4 +14,4 @@ cva <- function(x, y, gamma_mat, rank = "full", type = "cov") {
 	}
 	gamma <- cov_matrix(y_c, y_c)
 	rrr(x, y, gamma, rank, type)
-}	
+}

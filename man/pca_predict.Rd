@@ -4,7 +4,7 @@
 \alias{pca_predict}
 \title{Reduced-Rank PCA Prediction}
 \usage{
-pca_predict(x, rank)
+pca_predict(x, rank = "full", type = "cov")
 }
 \description{
 \code{pca_predict} predicts

@@ -4,14 +4,16 @@
 \alias{rrr}
 \title{Reduced-Rank Regression}
 \usage{
-rrr(x, y, gamma_matrix, rank)
+rrr(x, y, gamma_matrix, rank = "full", type = "cov")
 }
 \arguments{
 \item{x}{data frame of input variables}
 
 \item{y}{data frame of response variables}
 
-\item{rank}{of the coefficient matrix to estimate. \code{rank = full} is standard multivariate regression.}
+\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.}
+
+\item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{gamma_mat}{weight matrix}
 }
