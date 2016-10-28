@@ -5,12 +5,10 @@ Authors@R: person("Chris", "Addy", email = "chris.william.addy@gmail.com", role 
 URL: http://github.com/chrisaddy/rrr
 Description: Reduced-rank regression, diagnostics and graphics.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.2.0)
 Imports:
     Rcpp,
-    dplyr,
-    ggplot2,
-    cvTools,
+    dplyr
 Collate:
     utility_functions.R
     rrr.R
@@ -18,6 +16,7 @@ Collate:
     pca.R
     pca_rank_trace.R
     cva.R
+    lda.R
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

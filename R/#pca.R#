@@ -46,3 +46,13 @@ pca_gof <- function(x) {
 			}
 			gof
 }
+
+pca_gof2 <- function(x) {
+			eigens <- eigen(cov(x, x))$values
+			total_var <- sum(eigens)
+			gof <- c()
+			for(i in 1:length(eigens)){
+				gof[i] <- sum(eigens[(i + 1):length(eigens)]) / total_var
+			}
+			gof
+}
