@@ -48,15 +48,14 @@ lda_plot <- function(rrlda_object){
     Xi <- rrlda_object$Xi
     Omega <- rrlda_object$Omega
     ggplot(Xi,
-           aes(V1, V2, color = "class")) +
-        geom_point() #+
-        #geom_point(aes(Omega$V1,
-        #               Omega$V2,
-        #               color = "black",
-         #              Shape = "M",
-         #              size = 4))
+           aes(V1, V2, color = class)) +
+        geom_point() +
+        geom_point(aes(Omega$V1,
+                       Omega$V2),
+                   color = "black",
+                   shape = "M",
+                   size = 4)
 }
-
 
 #' Reduced-Rank Quadratic Linear Discriminant Analysis
 #'
