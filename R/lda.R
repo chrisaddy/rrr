@@ -10,9 +10,10 @@ binary_matrix <- function(class) {
 #'
 #' \code{lda} produces a linear discriminant analysis as a reduced-rank regression.
 #'
-#' @param formula
-#' @param data
-#' @param rank
+#' @param x data frame of input variables
+#' @param y data frame of categorical response variables
+#' @param k parameter to ensure non-singular covariance matrices
+#' @param ld_num number of linear discriminants to split the data
 #'
 #' @export
 
@@ -44,18 +45,34 @@ rrlda <- function(x, y, k = 0, ld_num = 2) {
          Omega = Omega_df)
 }
 
-lda_plot <- function(rrlda_object){
+#' Plot of original classes along LD axes
+#'
+#'
+#' @export
+
+lda_original_plot <- function(rrlda_object){
     Xi <- rrlda_object$Xi
     Omega <- rrlda_object$Omega
     ggplot(Xi,
-           aes(V1, V2, color = "class")) +
+           aes(V1, V2, color = class)) +
         geom_point() +
         geom_point(aes(Omega$V1,
-                       Omega$V2,
-                       color = "black",
-                       Shape = "M",
-                       size = 4))
+                       Omega$V2),
+                   color = "black",
+                   shape = "M",
+                   size = 4)
 }
+
+#' Plot of LDA Classifications along LD Axes
+#'
+#' \code{lda_plot}
+#'
+#' 
+
+
+#lda_plot <- function(rrlda_object){
+#}
+
 
 
 #' Reduced-Rank Quadratic Linear Discriminant Analysis
@@ -64,6 +81,6 @@ lda_plot <- function(rrlda_object){
 #'
 #'
 
-qlda <- function(x, y){
-    x_expand <- 
-}
+#qlda <- function(x, y){
+  #  x_expand <- 
+#}
