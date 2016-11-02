@@ -75,11 +75,11 @@ lda_original_plot <- function(rrlda_object){
 
 
 
-#' Reduced-Rank Quadratic Linear Discriminant Analysis
-#'
-#' \code{qlda} produces a linear discriminant analysis with quadratic bounds by introducing squares and cross-products of all variables into the feature space.
-#'
-#'
+# Reduced-Rank Quadratic Linear Discriminant Analysis
+#
+# \code{qlda} produces a linear discriminant analysis with quadratic bounds by introducing squares and cross-products of all variables into the feature space.
+#
+#
 
 #qlda <- function(x, y){
   #  x_expand <- 
