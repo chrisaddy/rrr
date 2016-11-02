@@ -1,12 +1,38 @@
+binary_matrix <- function(class) {
+    class <- dplyr::mutate_if(class, is.factor, as.character) %>% as.matrix()
+    mat <- model.matrix(~ class -1)
+##    mat <- dplyr::select(mat, -dim(mat)[2])
+##    names(mat) <- substring(names(mat), 4, 100)
+    mat
+}
+
 #' Reduced-Rank Linear Discriminant Analysis
 #'
 #' \code{lda} produces a linear discriminant analysis as a reduced-rank regression.
 #'
-#'
+#' @param formula
+#' @param data
+#' @param rank
 #'
 #' @export
 
-lda <- function(x, y, gamma, rank, classes) {
-    ### build Y matrix
-    ### centering matrix
-
+rrlda <- function(x, y, k = 0, rank = "full") {
+### build Y matrix
+    y_binary <- binary_matrix(y)
+### centering matrix
+    n <- dim(y_binary)[1]
+    centering_matrix <- diag(1, n) - matrix(1, n, n) / n
+    y_center <- t(y_binary) %*% centering_matrix
+    x_center <- organize(x)
+    s_yy <- y_center %*% t(y_center) + k * diag(1, dim(y_center)[1])
+    s_xy <- x_center %*% t(y_center)
+    s_yx <- t(s_xy)
+    s_xx <- x_center %*% t(x_center) + k * diag(1, dim(x_center)[1])
+    R_star <- solve(sqrt_matrix(s_xx)) %*%
+        s_xy %*% solve(s_yy) %*%
+        s_yx %*%
+        solve(sqrt_matrix(s_xx))
+    R_star
+    V_star <- eigen(R_star)$vectors[,1:rank]
+    
+}

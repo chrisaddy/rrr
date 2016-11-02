@@ -49,12 +49,12 @@ lda_plot <- function(rrlda_object){
     Omega <- rrlda_object$Omega
     ggplot(Xi,
            aes(V1, V2, color = "class")) +
-        geom_point() +
-        geom_point(aes(Omega$V1,
-                       Omega$V2,
-                       color = "black",
-                       Shape = "M",
-                       size = 4))
+        geom_point() #+
+        #geom_point(aes(Omega$V1,
+        #               Omega$V2,
+        #               color = "black",
+         #              Shape = "M",
+         #              size = 4))
 }
 
 
