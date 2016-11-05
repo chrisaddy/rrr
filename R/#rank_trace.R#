@@ -135,7 +135,7 @@ pca_rank_trace <- function(x){
         pca_rank_trace_y[i] <- delta_residuals(i)
     }
     pca_rank_trace_y[length(pca_rank_trace_y)] <- 0
-    dplyr::data_frame(rank = 0:(length(pca_rank_trace_x) - 1),
+    dplyr::data_frame(rank = 0:length(pca_rank_trace_x),
                       delta_C = c(1, pca_rank_trace_x),
                       delta_residuals = c(1, pca_rank_trace_y))
 }
