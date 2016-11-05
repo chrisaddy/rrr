@@ -8,6 +8,7 @@
 #' @param rank of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.
 #' @param type the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.
 #'
+#' @references Izenman, A.J. (2008) Modern Multivariate Statistical Techniques. Springer.
 #' @export rrr
 
 rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){

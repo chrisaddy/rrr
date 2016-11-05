@@ -36,7 +36,6 @@ rrlda <- function(x, y, k = 0, ld_num = 2) {
         s_yx %*%
         s_xx_inv_sqrt
     R_star
-    list(xy = s_xy, yy_in = s_yy_inv, xx_inv = s_xx_inv_sqrt)
     V_star <- eigen(R_star)$vectors[,1:ld_num]
     gamma <- s_xx_inv_sqrt %*% Re(V_star)
     xi <- t(gamma) %*% x_center
@@ -47,6 +46,9 @@ rrlda <- function(x, y, k = 0, ld_num = 2) {
          xi = bind_cols(xi_df, y),
          class_means = bind_cols(omega_df, y))
 }
+
+predict_rrlda <- function(rrlda_object, new_x, new_y){
+    coefs <- rrlda(rrlda_object)$
 
 #' Plot of original classes along LD axes
 #'

@@ -86,8 +86,8 @@ rank_trace_y <- function(x, y, gamma_mat){
 #'
 #' Plot of rank trace to determine suitable rank of coefficient matrix.
 #'
-#' @param x data frame or matrix of input variables
-#' @param y data frame or matrix of response variables
+#' @param x data frame of input variables
+#' @param y data frame of response variables
 #' @param gamma_mat weight matrix
 #'
 #' @export
@@ -108,44 +108,3 @@ rank_trace_plot <- function(x, y, gamma_mat){
 				 " to ",
 				 Theta^(s) )))
 }
-
-
-#' PCA Rank Trace
-#'
-#' Rank trace coordinates to determine number of principle components to use in reduced-rank PCA.
-#'
-#' @param x data frame or matrix of input variables
-#'
-#' @export
-
-pca_rank_trace <- function(x){
-    eigenvecs <- pca(x)$A
-    eigens <- eigen(cov(x, x))
-    full_rank <- dim(eigens$vectors)[2]
-    delta_C <- function(t){
-        sqrt(1 - t / full_rank)
-    }
-    delta_residuals <- function(t){
-        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)
-    }
-    pca_rank_trace_x <- c()
-    pca_rank_trace_y <- c()
-    for(i in 1:full_rank){
-        pca_rank_trace_x[i] <- delta_C(i)
-        pca_rank_trace_y[i] <- delta_residuals(i)
-    }
-    pca_rank_trace_y[length(pca_rank_trace_y)] <- 0
-    dplyr::data_frame(delta_C = pca_rank_trace_x,
-                      delta_residuals = pca_rank_trace_y)
-}
-
-#' PCA Rank Trace Plot
-#'
-#' Plot of rank trace to determine number of principle components to use in reduced-rank PCA.
-#'
-#' @param x data frame or matrix of input variables
-#'
-#' @export
-
-pca_rank_trace_plot(x){
-    
