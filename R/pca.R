@@ -69,18 +69,25 @@ pca_gof <- function(x) {
 }
 
 pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
-    scores <- dplyr::as_data_frame(pca(x, rank, type)$A)
+    pc <- pca(x, rank, type)$B
+    scores <- as_data_frame(t(pc %*% organize(x)))
+    colnames(scores) <- paste("PC", 1:dim(scores)[2], sep = "")
     score_1 <- paste("PC", pc_1, sep = "")
     score_2 <- paste("PC", pc_2, sep = "")
     dplyr::select(scores, ends_with(score_1), ends_with(score_2))
 }
 
-pca_pairwise_plot <- function(x, pc_1, pc_2, class_labels = NULL, rank = "full", type = "cov"){
+#' PC Pairwise Plot
+#'
+#' \code{pc_pairwise_plot}
+
+pc_pairwise_plot <- function(x, pc_1, pc_2, class_labels = NULL, rank = "full", type = "cov"){
     pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
+    class <- as.factor(class_labels)
     ggplot2::ggplot(pairs,
                     aes_string(colnames(pairs)[1],
                                colnames(pairs)[2],
-                               label = class_labels)) +
+                               label = class)) +
         geom_point() +
         ggplot2::labs(x = paste("PC", pc_1, sep = ""),
                       y = paste("PC", pc_2, sep = ""))
