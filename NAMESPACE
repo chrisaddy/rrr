@@ -3,6 +3,7 @@
 export(cv_scores)
 export(cva)
 export(organize)
+export(pc_pairwise_plot)
 export(pc_scores)
 export(pca)
 export(pca_gof)

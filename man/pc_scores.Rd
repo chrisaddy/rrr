@@ -4,7 +4,7 @@
 \alias{pc_scores}
 \title{Reduced-rank Principal Component Scores}
 \usage{
-pc_scores(x, rank = "full")
+pc_scores(x, rank = "full", type = "cov")
 }
 \arguments{
 \item{x}{a data frame or matrix of predictor variables.}
