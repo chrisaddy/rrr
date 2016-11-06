@@ -66,3 +66,6 @@ pca_gof <- function(x) {
 			}
 			gof
 }
+
+pca_pairwise_plot <- function(){
+}
