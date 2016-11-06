@@ -17,11 +17,19 @@ sqrt_matrix <- function(matr){
 			vecs %*% diag(sqrt(vals), length(vals)) %*% t(vecs)
 }
 
+#' Organize Data for RRR
+#'
+#' \code{organize} mean-center and transpose a matrix
+#'
+#' @param vars data frame or matrix
+#' @param scale logical. If \code{TRUE}, matrix is scaled by standard deviations.
+#'
+#' @export
 organize <- function(vars, scale = FALSE){
 	t(scale(as.matrix(vars), center = TRUE, scale))
 }
 
-mu_vars <- function(var){
-				replicate(dim(var)[2],
-				rowMeans(var))
-}
+#mu_vars <- function(var){
+#				replicate(dim(var)[2],
+#				rowMeans(var))
+#}

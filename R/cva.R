@@ -2,7 +2,12 @@
 #'
 #' \code{cva} fits a reduced-rank canonical variate/correlation model.
 #'
+#' @param x data frame or matrix of predictor variables
+#' @param y data frame or matrix of response variables
+#' @param rank rank of matrix
+#' @param type structure of covariance matrix. \code{type = "cov"} (default) performs CVA using covariance matrix. \code{type = "cor"} performs CVA using covariance matrix.
 #'
+#' @export
 
 cva <- function(x, y, rank = "full", type = "cov") {
 	if(type == "cov"){
@@ -12,6 +17,23 @@ cva <- function(x, y, rank = "full", type = "cov") {
 	} else {
 		stop("argument type not recognized")
 	}
-	gamma <- cov_matrix(y_c, y_c)
-	rrr(x, y, gamma, rank, type)
+	gamma <- cov(y, y)
+	rrr_object <- rrr(x, y, gamma, rank, type)
+        rrr_object$H <- MASS::ginv(rrr_object$A)
+        rrr_object
 }
+#' Canonical Variate Scores
+#'
+#' \code{cv_scores} calculates the canonical variate scores for \eqn{\mathbf{X}} and \eqn{\mathbf{Y}}
+#'
+#' @param cva_object A reduced-rank CVA object obtained by \code{cva}
+#' @param x data frame or matrix of predictor variables
+#' @param y data frame or matrix of response variables
+#'
+#' @export
+
+cv_scores <- function(cva_object, x, y) {
+    xi <- cva_object$B %*% organize(x)
+    omega <- cva_object$H %*% organize(y)
+}
+
