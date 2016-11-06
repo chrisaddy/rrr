@@ -82,13 +82,16 @@ pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
 #' \code{pc_pairwise_plot}
 
 pc_pairwise_plot <- function(x, pc_1, pc_2, class_labels = NULL, rank = "full", type = "cov"){
+    class <- dplyr::as_data_frame(class_labels)
+    names(class) <- c("class")
     pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
-    class <- as.factor(class_labels)
-    ggplot2::ggplot(pairs,
-                    aes_string(colnames(pairs)[1],
-                               colnames(pairs)[2],
-                               label = class)) +
-        geom_point() +
+    pairs_tbl <- dplyr::bind_cols(pairs, class)
+    ggplot2::ggplot(pairs_tbl,
+                    aes_string(colnames(pairs_tbl)[1],
+                               colnames(pairs_tbl)[2])) +
+        geom_point(aes(color = factor(class))) +
         ggplot2::labs(x = paste("PC", pc_1, sep = ""),
-                      y = paste("PC", pc_2, sep = ""))
+                      y = paste("PC", pc_2, sep = "")) +
+        labs(title = "PC Pairwise") +
+        theme(legend.title = element_blank())
 }
