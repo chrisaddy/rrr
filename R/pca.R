@@ -142,7 +142,7 @@ pc_pairwise <- function(x, pc_1 = 1, pc_2, rank = "full", type = "cov"){
 #'
 #' @export
  
-pc_pairwise_plot <- function(x, pc_1, pc_2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
+pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
     class <- dplyr::as_data_frame(class_labels)
     names(class) <- c("class")
     pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
@@ -166,5 +166,14 @@ pc_pairwise_plot <- function(x, pc_1, pc_2, class_labels = NULL, rank = "full", 
 #'
 #' \code{pc_plot_matrix} creates a matrix of pairwise PC scatterplots
 #' 
-#pc_plot_matrix <- function(){
-    
+
+#pc_plot_matrix <- function(x, rank = "full", type = "cov"){
+#    pc <- pca(x, rank, type)$B
+#    scores <- as_data_frame(t(pc %*% organize(x)))
+#    colnames(scores) <- paste("PC", 1:dim(scores)[2], sep = "")
+#    score_1 <- paste("PC", pc_1, sep = "")
+#    score_2 <- paste("PC", pc_2, sep = "")
+#    dplyr::select(scores, ends_with(score_1), ends_with(score_2))
+#}
+#    pairs_permute <- 
+#}

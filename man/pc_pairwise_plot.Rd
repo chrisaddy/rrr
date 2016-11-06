@@ -4,8 +4,8 @@
 \alias{pc_pairwise_plot}
 \title{PC Pairwise Plot}
 \usage{
-pc_pairwise_plot(x, pc_1, pc_2, class_labels = NULL, rank = "full",
-  type = "cov", interactive = FALSE)
+pc_pairwise_plot(x, pc_1 = 1, pc_2 = 2, class_labels = NULL,
+  rank = "full", type = "cov", interactive = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of predictor variables}
