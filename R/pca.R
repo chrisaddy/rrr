@@ -18,6 +18,7 @@ pca <- function(x, rank = "full", type = "cov"){
     }
     means <- colMeans(x)
     A <- eigen(cov(x, x))$vectors[,1:reduce_rank]
+    colnames(A) <- paste("PC", 1:reduce_rank, sep = "")
     B <- t(A)
     list(means = means, A = A, B = B, C = A %*% B)
 }
@@ -67,5 +68,20 @@ pca_gof <- function(x) {
 			gof
 }
 
-pca_pairwise_plot <- function(){
+pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
+    scores <- dplyr::as_data_frame(pca(x, rank, type)$A)
+    score_1 <- paste("PC", pc_1, sep = "")
+    score_2 <- paste("PC", pc_2, sep = "")
+    dplyr::select(scores, ends_with(score_1), ends_with(score_2))
+}
+
+pca_pairwise_plot <- function(x, pc_1, pc_2, class_labels = NULL, rank = "full", type = "cov"){
+    pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
+    ggplot2::ggplot(pairs,
+                    aes_string(colnames(pairs)[1],
+                               colnames(pairs)[2],
+                               label = class_labels)) +
+        geom_point() +
+        ggplot2::labs(x = paste("PC", pc_1, sep = ""),
+                      y = paste("PC", pc_2, sep = ""))
 }
