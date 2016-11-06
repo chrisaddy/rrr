@@ -22,6 +22,20 @@ pca <- function(x, rank = "full", type = "cov"){
     list(means = means, A = A, B = B, C = A %*% B)
 }
 
+#' Reduced-rank Principal Component Scores
+#'
+#' \code{pc_scores} returns data frame of principle component scores from reduced-rank PCA
+#'
+#' @param x a data frame or matrix of predictor variables.
+#'
+#' @export
+
+pc_scores <- function(x, rank = "full"){
+    pca_object <- pca(x, rank)
+    pca_object$B %*% organize(x)
+}
+
+
 #' Reduced-Rank PCA Prediction
 #'
 #' \code{pca_predict} predicts
