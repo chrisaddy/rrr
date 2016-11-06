@@ -2,17 +2,22 @@
 % Please edit documentation in R/pca.R
 \name{pca}
 \alias{pca}
-\title{Reduced-Rank PCA}
+\title{Fit Reduced-Rank PCA}
 \usage{
 pca(x, rank = "full", type = "cov")
 }
 \arguments{
-\item{x}{data frame of input variables}
+\item{x}{data frame or matrix of input variables}
 
-\item{rank}{of coefficient matrix. Default \code{="full"}.}
+\item{rank}{rank of coefficient matrix. Default \code{="full"}.}
+
+\item{type}{}
 }
 \description{
 \code{pca} carries out reduced-rank principled component analysis on a
 matrix of input data.
+}
+\references{
+Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
 }
 

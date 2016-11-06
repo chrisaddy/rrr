@@ -20,4 +20,7 @@ rrr(x, y, gamma_matrix, rank = "full", type = "cov", k = 0)
 \description{
 \code{rrr} fits a reduced-rank regression model.
 }
+\references{
+Izenman, A.J. (2008) Modern Multivariate Statistical Techniques. Springer.
+}
 

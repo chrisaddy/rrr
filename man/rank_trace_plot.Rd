@@ -7,9 +7,9 @@
 rank_trace_plot(x, y, gamma_mat)
 }
 \arguments{
-\item{x}{data frame of input variables}
+\item{x}{data frame or matrix of input variables}
 
-\item{y}{data frame of response variables}
+\item{y}{data frame or matrix of response variables}
 
 \item{gamma_mat}{weight matrix}
 }

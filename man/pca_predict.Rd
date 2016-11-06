@@ -4,9 +4,17 @@
 \alias{pca_predict}
 \title{Reduced-Rank PCA Prediction}
 \usage{
-pca_predict(x, rank = "full", type = "cov")
+pca_predict(pca_object, new_x)
+}
+\arguments{
+\item{pca_object}{a reduced-rank PCA object from \code{pca()}.}
+
+\item{new_x}{a data frame or matrix inputs to be predicted.}
 }
 \description{
 \code{pca_predict} predicts
+}
+\references{
+Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
 }
 

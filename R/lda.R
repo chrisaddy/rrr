@@ -47,26 +47,26 @@ rrlda <- function(x, y, k = 0, ld_num = 2) {
          class_means = bind_cols(omega_df, y))
 }
 
-predict_rrlda <- function(rrlda_object, new_x, new_y){
-    coefs <- rrlda(rrlda_object)$
+##predict_rrlda <- function(rrlda_object, new_x, new_y){
+##    coefs <- rrlda(rrlda_object)$
+##}
+##' Plot of original classes along LD axes
+##'
+##'
+#' 
 
-#' Plot of original classes along LD axes
-#'
-#'
-#' @export
-
-lda_original_plot <- function(rrlda_object){
-    xi <- rrlda_object$xi
-    omega <- rrlda_object$class_means
-    ggplot(xi,
-           aes(V1, V2, color = class)) +
-        geom_point() #+
+#lda_original_plot <- function(rrlda_object){
+#    xi <- rrlda_object$xi
+#    omega <- rrlda_object$class_means
+#    ggplot(xi,
+#           aes(V1, V2, color = class)) +
+#        geom_point() #+
 #        geom_point(aes(omega$V1,
 #                       omega$V2),
 #                   color = "black",
 #                   shape = "M",
 #                   size = 4)
-}
+#}
 
 #' Plot of LDA Classifications along LD Axes
 #'

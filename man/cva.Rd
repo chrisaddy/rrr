@@ -6,6 +6,15 @@
 \usage{
 cva(x, y, rank = "full", type = "cov")
 }
+\arguments{
+\item{x}{data frame or matrix of predictor variables}
+
+\item{y}{data frame or matrix of response variables}
+
+\item{rank}{rank of matrix}
+
+\item{type}{structure of covariance matrix. \code{type = "cov"} (default) performs CVA using covariance matrix. \code{type = "cor"} performs CVA using covariance matrix.}
+}
 \description{
 \code{cva} fits a reduced-rank canonical variate/correlation model.
 }

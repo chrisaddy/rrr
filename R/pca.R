@@ -32,8 +32,8 @@ pca <- function(x, rank = "full", type = "cov"){
 #' @references Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
 #' @export pca_predict
 
-pca_predict <- function(pca_object, new_x) {
-    pca_object$C %*% 
+pca_predict <- function(pca_object, new_x){
+    pca_object$C %*% new_x
 }
 
 #' PCA Goodness of Fit

@@ -7,7 +7,7 @@
 pca_gof(x)
 }
 \arguments{
-\item{x}{data frame of observations used in a principal components analysis}
+\item{x}{data frame or matrix of observations used in a principal components analysis}
 }
 \description{
 PCA Goodness of Fit
