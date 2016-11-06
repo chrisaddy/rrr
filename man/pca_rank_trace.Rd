@@ -2,7 +2,7 @@
 % Please edit documentation in R/rank_trace.R, R/pca_rank_trace.R
 \name{pca_rank_trace}
 \alias{pca_rank_trace}
-\title{PCA Rank Trace}
+\title{Rank Trace Plot}
 \usage{
 pca_rank_trace(x)
 
@@ -11,10 +11,21 @@ pca_rank_trace(x)
 \arguments{
 \item{x}{data frame or matrix of input variables}
 
+\item{y}{data frame or matrix of response variables}
+
+\item{gamma_mat}{weight matrix
+
+
+PCA Rank Trace
+
+Rank trace coordinates to determine number of principle components to use in reduced-rank PCA.}
+
+\item{x}{data frame or matrix of input variables}
+
 \item{x}{export pca_rank_trace}
 }
 \description{
-Rank trace coordinates to determine number of principle components to use in reduced-rank PCA.
+Plot of rank trace to determine suitable rank of coefficient matrix.
 
 \code{pca_rank_trace} is a wrapper function for \code{rank_trace} for Principle Components Analysis
 }
