@@ -14,7 +14,6 @@ Collate:
     rrr.R
     rank_trace.R
     pca.R
-    pca_rank_trace.R
     cva.R
     lda.R
 License: GPL-3
