@@ -17,7 +17,7 @@ pca <- function(x, rank = "full", type = "cov"){
         reduce_rank <- rank
     }
     means <- colMeans(x)
-    A <- t(eigen(cov(x, x))$vectors[,1:reduce_rank])
+    A <- eigen(cov(x, x))$vectors[,1:reduce_rank]
     B <- t(A)
     list(means = means, A = A, B = B, C = A %*% B)
 }
@@ -30,9 +30,9 @@ pca <- function(x, rank = "full", type = "cov"){
 #'
 #' @export
 
-pc_scores <- function(x, rank = "full"){
-    pca_object <- pca(x, rank)
-    pca_object$B %*% organize(x)
+pc_scores <- function(x, rank = "full", type = "cov"){
+    pca_object <- pca(x, rank, type)
+    t(pca_object$B %*% organize(x))
 }
 
 
