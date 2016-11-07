@@ -174,7 +174,19 @@ pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = 
 }
 
 
-
+#' 3D Principal Component Plot
+#'
+#' \code{pc_plot_3D}
+#'
+#' @param x data frame or matrix of predictor variables
+#' @param pc_x integer number of the principal component used for the x-axis
+#' @param pc_y integer number of the principal component used for the y-axis
+#' @param pc_z integer number of the principal component used for the z-axis
+#' @param class_labels data frame or vector of class labels
+#' @param rank rank of coefficient matrix
+#' @param type type of covariance matrix
+#'
+#' @export
 pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, rank = "full", type = "cov"){
     class <- dplyr::as_data_frame(class_labels)
     threes <- pc_threewise(x, pc_x, pc_y, pc_z, rank, type)
