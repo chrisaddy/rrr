@@ -1,283 +1,1008 @@
-y
-yc
-diag(1, 3)
-Ic <- diag(1, 3)
-rank_error_rate(xc, yc, I, 1, fold5)
-rank_error_rate(xc, yc, I, fold5)
-rank_error_rate(xc, yc, I, 2, fold5)
-fold2 <- cvFolds(25, 5)
-rank_error_rate(xc, yc, I, 2, fold2)
-cov_mat(yc, xc)
-xc
-I
-rank_error_rate(xc, yc, Ic, 2, fold2)
-rank_error_rate(xc, yc, Ic, 1, fold2)
-rank_error_rate(xc, yc, Ic, 2, fold2)
-rank_error_rate(xc, yc, Ic, 3, fold2)
-rank_error_rate(xc, yc, Ic, 4, fold2)
-rank_error_rate(xc, yc, Ic, 5, fold2)
-eigen(weighted_mat(xc, yc, I))
-eigen(weighted_mat(xc, yc, Ic))
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-rank_error_rate(xc, yc, I, 1)
-rank_error_rate(xc, yc, I, 1, fold5)
-rank_error_rate(xc, yc, I, 1, fold2)
-rank_error_rate(xc, yc, Ic, 1, fold2)
-rank_error_rate(xc, yc, Ic, 1, fold2) / 5
-rank_error_rate(xc, yc, Ic, 2, fold2) / 5
-rank_error_rate(xc, yc, Ic, 3, fold2) / 5
-rank_error_rate(xc, yc, Ic, 4, fold2) / 5
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-rank_error_rate(xc, yc, Ic, 1)
-rank_error_rate(xc, yc, Ic, 1, fold2)
-rank_error_rate(xc, yc, Ic, 1, fold2) / 5
-rank_error_rate(xc, yc, Ic, 2, fold2) / 5
-rank_error_rate(xc, yc, Ic, 3, fold2) / 5
-uc
-yc
-rank_error_rate(xc, yc, Ic, 3, fold2) / 25
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-rank_error_rate(xc, yc, Ic, 1, fold2)
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-rank_error_rate(xc, yc, Ic, 1, fold2)
-rank_error_rate(xc, yc, Ic, 1, fold2) / 5
-rank_error_rate(xc, yc, Ic, 1, fold2) / 75
-rank_error_rate(xc, yc, Ic, 2, fold2) / 75
-rank_error_rate(xc, yc, Ic, 3, fold2) / 75
-rank_error_rate(xc, yc, Ic, 0, fold2) / 75
-rank_error_rate(xc, yc, Ic, -1, fold2) / 75
-data(PAH)
-data(MMST)
-data("MMST")
-data
-data()
-data(detergent)
-detergent
-pah <- read_delim("http://astro.ocis.temple.edu/~alan/PAH.txt", delim = " ")
-library(readr)
-pah <- read_delim("http://astro.ocis.temple.edu/~alan/PAH.txt", delim = " ")
-pah
-x1 <- pah %>% select(Py:Phen) %>% center_data() %>% as.matrix() %>% t()
-y1 <- pah %>% select(x220:x350) %>% center_data() %>% as.matrix() %>% t()
-dim(y1)
-I1 <- diag(1, 27)
-rank_trace_plot(x1, y1, I1)
+mean_male
+eigen(cov_male)
+eigen(cov_male)$vectors[,1]
+male_pc1 <- as.matrix(eigen(cov_male)$vectors[,1], 3, 1)
+male_pc1
+female_pc1 <- as.matrix(eigen(cov_female)$vectors[,1], 3, 1)
+cov_female
+mean_female
+cov_female <- cov(female_turtle, female_turtle)
+cov_female
+female_pc1 <- as.matrix(eigen(cov_female)$vectors[,1], 3, 1)
+female_pc1
+male_turtle
+male_pc1 %*% t(male_turtle)
+t(male_pc1) %*% t(male_turtle)
+male_volumes <- t(male_pc1) %*% t(male_turtle)
+female_volumes
+female_volumes <- t(female_pc1) %*% t(female_turtle)
+female_volumes
+boxplot(male_volumes, female_volumes)
+female_volumes <- t(female_pc1) %*% t(female_turtle) %>% as.matrix(ncol = 1)
+female_volumes
+female_volumes <- as.matrix(t(female_pc1) %*% t(female_turtle), 24, 1)
+female_volumes
+typeof(female_volumes)
+female_volumes <- as.matrix(t(female_pc1) %*% t(female_turtle), 1, 24)
+female_volumes
+as.matrix(female_volumes, 24, 1)
+as.dataframe(male_volumes, female_volumes)
+as.data.frame(male_volumes, female_volumes)
+male_volumes
+male_volumes <- t(male_pc1) %*% t(male_turtle)#
+female_volumes <- t(female_pc1) %*% t(female_turtle)
+data_frame(male_volumes, female_volumes)
+typeof(male_volumes)
+typeof(female_volumes)
+dim(male_volumes)
+dim(female_volumes)
+dim(as.vector(female_volues))
+dim(as.vector(female_volumes))
+as.vector(female_volumes)
+male_volumes <- t(male_pc1) %*% t(male_turtle) %>% as.vector()#
+female_volumes <- t(female_pc1) %*% t(female_turtle) %>% as.vector()
+data_frame(male_volumes, female_volumes)
+volume <- data_frame(male_volumes, female_volumes)#
+#
+ggplot(volume) + boxplot()
 library(ggplot2)
-rank_trace_plot(x1, y1, I1)
-rank_error_rate(x1, y1, I1, 1, fold5)
-foldpah5 <- cvFolds()
-y1
-foldpah5 <- cvFolds(25, 5)
-rank_error_rate(x1, y1, I1, 1, foldpah5)
-rank_error_rate(x1, y1, I1, 1, foldpah5) / 1
-rank_error_rate(x1, y1, I1, 1, foldpah5) / 5
-rank_error_rate(x1, y1, I1, 2, foldpah5) / 5
-rank_error_rate(x1, y1, I1, 3, foldpah5) / 5
-rank_error_rate(x1, y1, I1, 4, foldpah5) / 5
-rank_error_rate(x1, y1, I1, 20, foldpah5) / 5
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-rank_error_rate(x1,y1,I1,1,foldpah5)
-rank_error_rate(x1,y1,I1,2,foldpah5)
-rank_error_rate(x1,y1,I1,3,foldpah5)
-rank_error_rate(x1,y1,I1,4,foldpah5)
-rank_error_rate(x1,y1,I1,5,foldpah5)
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-rank_error_rate(x1,y1,I1,1,foldpah5)
-rank_error_rate(x1,y1,I1,2,foldpah5)
-rank_error_rate(x1,y1,I1,3,foldpah5)
-rank_error_rate(x1,y1,I1,4,foldpah5)
-rank_error_rate(x1,y1,I1,5,foldpah5)
-rank_error_rate(x1,y1,I1,6,foldpah5)
-rank_error_rate(x1,y1,I1,7, foldpah5)
-rank_error_rate(x1,y1,I1,8, foldpah5)
-rank_error_rate(x1,y1,I1,9, foldpah5)
-rank_error_rate(x1,y1,I1,20, foldpah5)
-I1
-I1 <- diag(1, 10)
-rank_error_rate(x1,y1,I1,20, foldpah5)
-rank_error_rate(x1,y1,I1,8, foldpah5)
-rank_error_rate(x1,y1,I1,7, foldpah5)
-dim(y1)
-dim(C_t(x1, y1, I1, 20))
-I1 <- diag(1, 27)
-dim(C_t(x1, y1, I1, 20))
-dim(C_t(x1, y1, I1, 2))
-for(i in 1:10){
-l <- c()
-l[i] <- rank_error_rate(x1, y1, gamma_mat, i, fold5)
-}
-for(i in 1:10){
-l <- c()
-l[i] <- rank_error_rate(x1, y1, I, i, fold5)
-l
-}
-for(i in 1:10){
-l[i] <- rank_error_rate(x1, y1, I1, i, fold5)
-l
-}
-rank_error_rate(x1,y1,I1,1,fold5)
-for(i in 1:10){
-l[i] <- rank_error_rate(x1, y1, I1, i, foldpah5)
-l
-}
-l
-fold10 <- cvFolds(25, 10)
-for(i in 1:10){
-l[i] <- rank_error_rate(x1, y1, I1, i, fold10)
-l
-}
-l
-x
-y
-for(i in 1:13){
-l[i] <- rank_error_rate(x, y, I, i, cvFolds(29,5))
-l
-}
-l
-l / 13
-l / (29)
-data(norwaypaper1)
+volume <- data_frame(male_volumes, female_volumes)#
+#
+ggplot(volume) + boxplot()
+boxplot(volume)
+qplot(volume, type = "boxplot")
+qplot(volume, geom = "boxplot")
+male_volumes <- t(male_pc1) %*% t(male_turtle) %>% as.vector()#
+female_volumes <- t(female_pc1) %*% t(female_turtle) %>% as.vector()#
+#
+volume <- data_frame(male_volumes, female_volumes)#
+#
+boxplot(volume)
+det(matrix(c(1, 2, 3, 4), 2, 2))
+?det
 library(MMST)
-library(ggplot)
-library(ggplot2)
+data(wine)
+wine <- as_data_frame(wine) %>% dplyr::select(-classdigit)
+wine
+manova(wine)
+library(MASS)
+manova(lda(class ~ ., wine))
+lda(class ~., wine)
+library(cart)
+library(CART)
+library(nnet)
+??nnet
+?nnet
+data(wine)
+library(MMST)
+data(wine)
+head(wine)
 library(dplyr)
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-data(norwaypaper1)
-norwaypaper1 %>% select("starts_with")
-norwaypaper1 %>% select(starts_with("X"))
-data(norwaypaper1)
-x <- norwaypaper1 %>% select(starts_with("X")) %>% organize()
-y <- norwaypaper1 %>% select(starts_with("Y")) %>% organize()
-gamma <- diag(1, dim(y)[1])
-### full rank agrees with book and previous problem
-theta_full(x, y, gamma)
-theta_full(x, y, gamma) %>% round()
-theta_full(x, y, gamma) %>% round(3)
-### plot the rank trace
-rank_trace_plot(x, y, gamma)
-data_frame(C = rank_trace_x(x, y, gamma), eps = rank_trace_y(x, y, gamma))
-data_frame(C = rank_trace_x(x, y, gamma), eps = rank_trace_y(x, y, gamma)) %>% round(4)
-data_frame(C = rank_trace_x(x, y, gamma),
-eps = rank_trace_y(x, y, gamma)) %>% round(4)
-## estimates for variables meansmu vars <− function(var matrix){ replicate (dim(var matrix)[2],rowMeans(var matrix))}
-mu vars <− function(var matrix){ replicate (dim(var matrix)[2],rowMeans(var matrix))}
-source("~/Downlaods/`Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-source("~/Downlaods/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-source("~Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-library(cvTools)
-dim(y)
-fold5 <- cvFolds(dim(y)[2], 5)
-fold10 <- cvFolds(dim(y)[2], 10)
-cvFolds(29, 28)
-cvFolds(29, 29)
-rank_error_rate(x, y, I, 1, foldn)
-foldn <- cvFolds(dim(y)[2], dim(y)[2])
-foldn$folds
-names(foldn)
-foldn$K
-for(i in 1:foldn$K){
-l <- c()
-l[i] <- rank_error_rate(x,y,I, i, foldn)
-l
-}
-rank_error_rate(x,y,I, 1, foldn)
-rank_error_rate(x,y,I, 1, fold5)
-rank_error_rate(x,y,I,3, fold5)
-x
-y
-I
-gamma
-rank_error_rate(x,y,gamma, 1, fold5)
-library(matrixcalc)
-rank_error_rate(x,y,gamma, 1, fold5)
-rank(y)
-matrix.rank(y)
-matrix.rank(y %*% y)
-matrix.rank(y %*% t())
-matrix.rank(y %*% t(y))
-cv_errors <- function(x, y, gamma_mat, rank, folds) {#
-				l <- c()#
-				for(j in 1:dim(y)[1]){#
-					rank_error_rate(x, y, gamma_mat, j, folds)#
-				}#
-				l#
-}
-cv_errors(x, y, gamma, )
-cv_errors <- function(x, y, gamma_mat, folds) {#
-				l <- c()#
-				for(j in 1:dim(y)[1]){#
-					rank_error_rate(x, y, gamma_mat, j, folds)#
-				}#
-				l#
-}
-cv_errors(x, y, gamma, fold5cv_errors <- function(x, y, gamma_mat, k = 5) {#
-				folds <- cvFolds(dim(y)[2], k)#
-				l <- c()#
-				for(j in 1:dim(y)[1]){#
-					rank_error_rate(x, y, gamma_mat, j, folds)#
-				}#
-				l#
-})
-cv_errors <- function(x, y, gamma_mat, k = 5) {#
-				folds <- cvFolds(dim(y)[2], k)#
-				l <- c()#
-				for(j in 1:dim(y)[1]){#
-					rank_error_rate(x, y, gamma_mat, j, folds)#
-				}#
-				l#
-}
-cv_errors(x, y, gamma, 5)
-cv_errors(x, y, gamma, 10)
-cv_errors <- function(x, y, gamma_mat, k = 5) {#
-				folds <- cvFolds(dim(y)[2], k)#
-				l <- c()#
-				for(j in 1:dim(y)[1]){#
-					l[j] <- rank_error_rate(x, y, gamma_mat, j, folds)#
-				}#
-				l#
-}
-cv_errors(x, y, gamma_mat, 5)
-cv_errors(x, y, gamma, 5)
-cv_errors(x, y, gamma, 10)
-cv_errors(x, y, gamma, dim(y)[2])
-cv_errors(x, y, gamma, 29)
-cv_errors(x, y, gamma, 28)
-cv_errors(x, y, gamma, 5)
-cv_errors(x, y, gamma, 10)
-cv_errors(x, y, gamma, 29)
-cv_errors(x, y, gamma, 20)
-cv_errors(x, y, gamma, 14)
-cv_errors(x, y, gamma, 15)
-cv_errors(x, y, gamma, 1)
-source("~Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-cv_errors(x, y, gamma, 1)
-cv_errors(x, y, gamma, 2)
-cv_errors(x, y, gamma, 3)
-cv_errors(x, y, gamma, 5)
-source("~/Box Sync/STAT 9103/Homework/Chapter6/6_15/6_15.R")
-cv_errors(x, y, gamma, 5)
-cv_errors(x, y, gamma, 2)
-cv_errors(x, y, gamma, 3)
-cv_errors(x, y, gamma, 5)
-cv_errors(x, y, gamma, 20)
-cv_errors(x, y, gamma, 10)
-cv_errors(x, y, gamma, 15)
-cv_errors(x, y, gamma)
-library(devtools)
-install_github("rrr", "chrisaddy")
-install(Rcpp)
-library(Rcpp)
-install_github("rrr", "chrisaddy")
-install_github("chrisaddy/rrr")
-install_github("chrisaddy/rrr", force = TRUE)
-?Rcpp
+wine <- wine %>% dplyr::select(-classdigit)
+wine_x <- dplyr::select(wine, -class)
+wine_y <- dplyr::select(wine, class)
+nnet(wine_x, wine_y)
+nnet(wine_x)
+?nnet
+nnet(wine_x, wine_y, size = 1)
+nnet(wine_x, wine_y, size = 3)
+nnet(wine_x, wine_y, size = length)
+?nnet
 library(rrr)
-devtools::install_github("rrr", "chrisaddy")
+pca(wine_x)
+data(turtle)
+data(turtles)
+turtles
+lda(sex ~ ., turtles)
+MASS::lda(sex ~ ., turtles)
+pca(turtles)
+turtles_x <- turtles %>% dplyr::select(-sex)
+pca(turtles)
+turtles
+pca(turtles_x)
+pca(turtles_x)$A
+eigens(turtles)
+eigens(turtles_x)
+eigen(turtles_x)
+eigen(cov(turtle_x, turtle_x))
+eigen(cov(turtles_x, turtles_x))
+eigen(cov(turtles_x, turtles_x))$values[1,2]
+eigen(cov(turtles_x, turtles_x))$values[1]
+eigen(cov(turtles_x, turtles_x))$values[1:2]
+eigen(cov(turtles_x, turtles_x))$values[1:3]
+eigen(cov(turtles_x, turtles_x))$values[1:4]
+eigen(cov(turtles_x, turtles_x))$values[1:3]
+eigen(cov(turtles_x, turtles_x))$values[1:]
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens)$vectors[2]#
+        delta_C <- function(t){#
+            sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(1 in i:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+        delta_C <- function(t){#
+            sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(1 in i:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigenvecs#
+#    eigens <- eigen(cov(x, x))#
+#    full_rank <- dim(eigens$vectors)[2]#
+#    delta_C <- function(t){#
+#        sqrt(1 - t / full_rank)#
+#    }#
+#    delta_residuals <- function(t){#
+#        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+#    }#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    eigens#
+#    full_rank <- dim(eigens$vectors)[2]#
+#    delta_C <- function(t){#
+#        sqrt(1 - t / full_rank)#
+#    }#
+#    delta_residuals <- function(t){#
+#        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+#    }#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    full_rank#
+#    delta_C <- function(t){#
+#        sqrt(1 - t / full_rank)#
+#    }#
+#    delta_residuals <- function(t){#
+#        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+#    }#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_C(2)#
+#    delta_residuals <- function(t){#
+#        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+#    }#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_C(1)#
+#    delta_residuals <- function(t){#
+#        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+#    }#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+    }#
+    list(delta_residuals(1), delta_C(1))#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+    }#
+    list(delta_residuals(1), delta_residuals(2), delta_residuals(3))#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((eigens$values[(t+1):full_rank])^2 / (eigens$values)^2)#
+    }#
+    eigens$values#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace(turtles_x)^2
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    list(delta_residuals(1), (delta_residuals(2), (delta_residuals(3))#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    list(delta_residuals(1), delta_residuals(2), delta_residuals(3))#
+#    pca_rank_trace_x <- c()#
+#    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+#                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+#    for(1 in i:full_rank){#
+#        pca_rank_trace_x[i] <- delta_C(i)#
+#        pca_rank_trace_y[i] <- delta_residuals(i)#
+#    }#
+#    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+                                        #                      delta_residuals = pca_rank_trace_y)#
+    list(pca_rank_trace_x, pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(1 in i:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+    delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(1 in i:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        #pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    dplyr::data_frame(delta_C = pca_rank_trace_x)#,#
+    #delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        #pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    dplyr::data_frame(delta_C = pca_rank_trace_x)#,#
+    #delta_residuals = pca_rank_trace_y)#
+}
+π
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        #pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    dplyr::data_frame(delta_C = pca_rank_trace_x),#
+    delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    dplyr::data_frame(delta_C = pca_rank_trace_x),#
+                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    pca_rank_trace_y[length(pca_rank_trace_y)] <- 0#
+    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+                      delta_residuals = pca_rank_trace_y)#
+}
+pca_rank_trace(turtles_x)
+plot(pca_rank_trace(turtles_x))
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    pca_rank_trace_y[length(pca_rank_trace_y)] <- 0#
+    pca_rank_trace_x[1] <- 1#
+    pca_rank_trace_y[1] <- 1#
+    dplyr::data_frame(delta_C = pca_rank_trace_x,#
+                      delta_residuals = pca_rank_trace_y)#
+}
+plot(pca_rank_trace(turtles_x))
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    pca_rank_trace_y[length(pca_rank_trace_y)] <- 0#
+    dplyr::data_frame(c(1, delta_C = pca_rank_trace_x),#
+                      c(1, delta_residuals = pca_rank_trace_y))#
+}
+plot(pca_rank_trace(turtles_x))
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    pca_rank_trace_y[length(pca_rank_trace_y)] <- 0#
+    dplyr::data_frame(delta_C = c(1, pca_rank_trace_x),#
+                      delta_residuals = c(1, pca_rank_trace_y))#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace(turtles_x) ->a
+1:dim(a)[1]
+0:dim(a)[1]
+0:dim(a)[3 - 1]
+pca_rank_trace_plot(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt, aes(x = delta_C,#
+                            y = delta_residuals,#
+                            label = 0:(dim(rt)[1] - 1))) +#
+        ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+            ggplot2::geom_line(color = "red") +#
+            ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+            ggplot2::labs(x = "dC", y = "dE") +#
+            ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+				 Theta^(0),#
+				 " to ",#
+				 Theta^(s) )))#
+}
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt, aes(x = delta_C,#
+                            y = delta_residuals,#
+                            label = 0:(dim(rt)[1] - 1))) +#
+        ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+            ggplot2::geom_line(color = "red") +#
+            ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+            ggplot2::labs(x = "dC", y = "dE") +#
+            ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+				 Theta^(0),#
+				 " to ",#
+				 Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    dplyr::aes(x = delta_C,#
+               y = delta_residuals,#
+               label = 0:(dim(rt)[1] - 1))) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") +#
+    ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    dplyr::aes(x = delta_C,#
+               y = delta_residuals,#
+               label = 0:(dim(rt)[1] - 1)) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") +#
+    ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt, aes(delta_C, delta_residuals)) +#
+    #dplyr::aes(x = delta_C,#
+     #          y = delta_residuals,#
+      #         label = 0:(dim(rt)[1] - 1)) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") +#
+    #ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    #ggplot2::labs(x = "dC", y = "dE") +#
+    #ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+    #                 Theta^(0),#
+#		     " to ",#
+#		     Theta^(s) )))#
+}
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt, aes(delta_C, delta_residuals)) +#
+    #dplyr::aes(x = delta_C,#
+     #          y = delta_residuals,#
+      #         label = 0:(dim(rt)[1] - 1)) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") #+#
+    #ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    #ggplot2::labs(x = "dC", y = "dE") +#
+    #ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+    #                 Theta^(0),#
+#		     " to ",#
+#		     Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+?ggplot
+?aes
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt, aes(delta_C, delta_residuals)) +#
+    ggplot2::aes(x = delta_C,#
+                 y = delta_residuals,#
+                 label = 0:(dim(rt)[1] - 1)) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") #+#
+    ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    ggplot2::aes(x = delta_C,#
+                 y = delta_residuals,#
+                 label = 0:(dim(rt)[1] - 1)) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") #+#
+    ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    ggplot2::aes(x = delta_C,#
+                 y = delta_residuals,#
+                 label = 0:(dim(rt)[1] - 1)) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") #+#
+    #ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    ggplot2::aes(x = delta_C,#
+                 y = delta_residuals,#
+                 label = 0:(dim(rt)[1] - 1)) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") #+#
+    #ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+   # ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    ggplot2::aes(x = delta_C,#
+                 y = delta_residuals,#
+                 label = 0:(dim(rt)[1] - 1)) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") +#
+    ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    pca_rank_trace_y[length(pca_rank_trace_y)] <- 0#
+    dplyr::data_frame(rank = 0:(length(pc_rank_trace_x) - 1),#
+                      delta_C = c(1, pca_rank_trace_x),#
+                      delta_residuals = c(1, pca_rank_trace_y))#
+}#
+#
+#' PCA Rank Trace Plot#
+#'#
+#' Plot of rank trace to determine number of principle components to use in reduced-rank PCA.#
+#'#
+#' @param x data frame or matrix of input variables#
+#'#
+#' @export#
+#
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    ggplot2::aes(x = delta_C,#
+                 y = delta_residuals,#
+                 label = rank) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") +#
+    ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    pca_rank_trace_y[length(pca_rank_trace_y)] <- 0#
+    dplyr::data_frame(rank = 0:(length(pca_rank_trace_x) - 1),#
+                      delta_C = c(1, pca_rank_trace_x),#
+                      delta_residuals = c(1, pca_rank_trace_y))#
+}#
+#
+#' PCA Rank Trace Plot#
+#'#
+#' Plot of rank trace to determine number of principle components to use in reduced-rank PCA.#
+#'#
+#' @param x data frame or matrix of input variables#
+#'#
+#' @export#
+#
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    ggplot2::aes(x = delta_C,#
+                 y = delta_residuals,#
+                 label = rank) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") +#
+    ggplot2::geom_text(check_overlap = TRUE, size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace_plot(turtles_x)
+pca_rank_trace(turtles_x)
+pca_rank_trace <- function(x){#
+    eigenvecs <- pca(x)$A#
+    eigens <- eigen(cov(x, x))#
+    full_rank <- dim(eigens$vectors)[2]#
+    delta_C <- function(t){#
+        sqrt(1 - t / full_rank)#
+    }#
+    delta_residuals <- function(t){#
+        sqrt((sum(eigens$values[(t+1):full_rank])^2) / sum((eigens$values))^2)#
+    }#
+    pca_rank_trace_x <- c()#
+    pca_rank_trace_y <- c()#
+    for(i in 1:full_rank){#
+        pca_rank_trace_x[i] <- delta_C(i)#
+        pca_rank_trace_y[i] <- delta_residuals(i)#
+    }#
+    pca_rank_trace_y[length(pca_rank_trace_y)] <- 0#
+    dplyr::data_frame(rank = 0:length(pca_rank_trace_x),#
+                      delta_C = c(1, pca_rank_trace_x),#
+                      delta_residuals = c(1, pca_rank_trace_y))#
+}#
+#
+#' PCA Rank Trace Plot#
+#'#
+#' Plot of rank trace to determine number of principle components to use in reduced-rank PCA.#
+#'#
+#' @param x data frame or matrix of input variables#
+#'#
+#' @export#
+#
+pca_rank_trace_plot <- function(x){#
+    rt <- pca_rank_trace(x)#
+    ggplot2::ggplot(rt) +#
+    ggplot2::aes(x = delta_C,#
+                 y = delta_residuals,#
+                 label = rank) +#
+    ggplot2::lims(x = c(0,1), y = c(0,1)) +#
+    ggplot2::geom_line(color = "red") +#
+    ggplot2::geom_text(size = 5) +#
+    ggplot2::labs(x = "dC", y = "dE") +#
+    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",#
+                     Theta^(0),#
+		     " to ",#
+		     Theta^(s) )))#
+}
+pca_rank_trace(turtles_x)
+pca_rank_trace_plot(turtles_x)
+data(wine)
+head(wine)
+wine_x <- as_data_frame(wine) %>% dplyr::select(-class, -classdigit)
+pca_rank_trace(wine_x)
+pca_rank_trace_plot(wine_x)
+rrr(turtles_x, turtles_x)
+rrr(turtles_x, turtles_x, )
+library(microbenchmark)
+cva <- function(x, y, rank = "full", type = "cov") {#
+	if(type == "cov"){#
+		y_c <- scale(y, center = TRUE, scale = FALSE)#
+	} else if(type == "cor"){#
+		y_c <- scale(y, center = TRUE, scale = TRUE)#
+	} else {#
+		stop("argument type not recognized")#
+	}#
+	gamma <- cov_matrix(y_c, y_c)#
+	rrr(x, y, gamma, rank, type)#
+}#
+#
+cva2 <- function(x, y, rank = "full", type = "cov") {#
+	if(type == "cov"){#
+		y_c <- scale(y, center = TRUE, scale = FALSE)#
+	} else if(type == "cor"){#
+		y_c <- scale(y, center = TRUE, scale = TRUE)#
+	} else {#
+		stop("argument type not recognized")#
+	}#
+	gamma <- cov_matrix(y_c, y_c)#
+	rrr(x, y, gamma, rank, type)#
+}
+cva2 <- function(x, y, rank = "full", type = "cov") {#
+	if(type == "cov"){#
+		y_c <- scale(y, center = TRUE, scale = FALSE)#
+	} else if(type == "cor"){#
+		y_c <- scale(y, center = TRUE, scale = TRUE)#
+	} else {#
+		stop("argument type not recognized")#
+	}#
+	gamma <- cov(y, y)#
+	rrr(x, y, gamma, rank, type)#
+}
+data(COMBO)
+data(combo17)
+data(COMBO17)
+galaxy <- as_data_frame(COMBO17)
+galaxy
+glimpse(galaxy)
+galaxies %>% select(-starts_with("e."))
+galaxies %>% select(starts_with("e."))
+galaxy %>% select(starts_with("e."))
+galaxy %>% select(-starts_with("e."))
+galaxy %>% select(-starts_with("e.")) %>% filter()
+?filter
+str(galaxy)
+galaxy %>% select(-starts_with("e.")) %>% na.omit()
+galaxy %>% select(-starts_with("e."))
+galaxy %>% select(-starts_with("e.")) %>% na.omit()
+galaxy %>% select(-starts_with("e."), Nr) %>% na.omit()
+galaxy %>% select(-starts_with("e."), -Nr) %>% na.omit()
+galaxy %>% select(-starts_with("e."), -Nr, -UFS:IFD) %>% na.omit()
+galaxy %>% select(-starts_with("e."), -Nr, -UFS:-IFD) %>% na.omit()
+galaxy <- as_data_frame(COMBO17) %>% select(-starts_with("e."), -Nr, -UFS:-IFD) %>% na.omit()
+galaxy
+galaxy <- as_data_frame(COMBO17) %>% select(-starts_with("e."), -Nr, -UFS:-IFD) %>% na.omit()
+galaxy_x <- galaxy %>% select(Rmag:chi2red)
+galaxy_y <- galaxy %>% select(Rmag:chi2red)
+galaxy_x <- galax
+?lm
 devtools::install_github("chrisaddy/rrr")
-devtools::install_github("chrisaddy/rrr")
+rrr::cva(galaxy_x, galaxy_y)
+rrr::cva(galaxy_x, galaxy_y, 2)
+galaxy_x <- galax
+data(pendigits)
+as_data_frame(pendigits)
 setwd("rrr")
-roxygen2::roxygenize
-roxygen2::roxygenize()
+pkgdown::build_site()
+traceback()
+?traceback
+pkgdown::build_site()
+install_github("xml2")
+install_github("hadley/xml2")
+devtools::install_github("hadley/xml2")
+devtools::install_github("hadley/xml2", force = TRUE)
+pkgdown::build_site()
+traceback()
+pkgdown::build_site()
+pkgdown::init_site()
+pkgdown::build_site()
+devtools::check("rrr")
+devtools::check()
+devtools::check()
 devtools::document()
+library(rrr)
+devtools::check()
+devtools::load_all()
+devtools::check()
+devtools::install()
+devtools::check()
+devtools::load_all()
+devtools::document()
+pkgdown::build_site()
+list.files()
