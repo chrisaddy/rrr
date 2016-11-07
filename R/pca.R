@@ -119,15 +119,26 @@ pca_rank_trace_plot <- function(x, interactive = FALSE){
     }
 }
 
+pc_scores <- function(x, rank = "full", type = "cov"){
+    dplyr::as_data_frame(t(pca(x, rank, type)$B %*% organize(x)))
+}
 
-pc_pairwise <- function(x, pc_1 = 1, pc_2, rank = "full", type = "cov"){
-    pc <- pca(x, rank, type)$B
-    scores <- as_data_frame(t(pc %*% organize(x)))
-    colnames(scores) <- paste("PC", 1:dim(scores)[2], sep = "")
+
+pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
+    scores <- pc_scores(x, rank, type)
     score_1 <- paste("PC", pc_1, sep = "")
     score_2 <- paste("PC", pc_2, sep = "")
     dplyr::select(scores, ends_with(score_1), ends_with(score_2))
 }
+
+pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
+    scores <- pc_scores(x, rank, type)
+    score_1 <- paste("PC", pc_x, sep = "")
+    score_2 <- paste("PC", pc_y, sep = "")
+    score_3 <- paste("PC", pc_z, sep = "")
+    dplyr::select(scores, ends_with(score_1), ends_with(score_2), ends_with(score_3))
+}
+
 
 #' PC Pairwise Plot
 #'
@@ -162,18 +173,17 @@ pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = 
     }   
 }
 
-#' PC Plot Matrix
-#'
-#' \code{pc_plot_matrix} creates a matrix of pairwise PC scatterplots
-#' 
 
-#pc_plot_matrix <- function(x, rank = "full", type = "cov"){
-#    pc <- pca(x, rank, type)$B
-#    scores <- as_data_frame(t(pc %*% organize(x)))
-#    colnames(scores) <- paste("PC", 1:dim(scores)[2], sep = "")
-#    score_1 <- paste("PC", pc_1, sep = "")
-#    score_2 <- paste("PC", pc_2, sep = "")
-#    dplyr::select(scores, ends_with(score_1), ends_with(score_2))
-#}
-#    pairs_permute <- 
-#}
+
+pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, rank = "full", type = "cov"){
+    class <- dplyr::as_data_frame(class_labels)
+    threes <- pc_threewise(x, pc_x, pc_y, pc_z, rank, type)
+    threes_tbl <- dplyr::bind_cols(threes, class)
+    names(threes_tbl) <- c("x_coord", "y_coord", "z_coord", "class")
+    plot_ly(threes_tbl, x = ~x_coord, y = ~y_coord, z = ~z_coord, color = ~factor(class)) %>%
+        layout(title = "PC Scatter 3D",
+         scene = list(
+           xaxis = list(title = names(threes)[1]), 
+           yaxis = list(title = names(threes)[2]), 
+           zaxis = list(title = names(threes)[3])))
+}
