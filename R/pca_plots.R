@@ -57,3 +57,82 @@ pca_rank_trace_plot <- function(x, interactive = FALSE){
         static_plot
     }
 }
+
+pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
+    scores <- pc_scores(x, rank, type)
+    score_1 <- paste("PC", pc_1, sep = "")
+    score_2 <- paste("PC", pc_2, sep = "")
+    select(scores, ends_with(score_1), ends_with(score_2))
+}
+
+#' PC Pairwise Plot
+#'
+#' \code{pc_pairwise_plot}
+#'
+#' @param x data frame or matrix of predictor variables
+#' @param pc_1 principal component for the x-axis
+#' @param pc_2 principal component for the y-axis
+#' @param class_labels data frame or vector of class labels
+#' @param rank rank of coefficient matrix
+#' @param type type of covariance matrix
+#' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
+#'
+#' @export
+ 
+pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
+    if(is.null(class_labels)){
+
+    }
+    class <- as_data_frame(class_labels)
+    names(class) <- c("class")
+    pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
+    pairs_tbl <- bind_cols(pairs, class)
+    static_plot <- ggplot(pairs_tbl,
+                    aes_q(colnames(pairs_tbl)[1],
+                               colnames(pairs_tbl)[2])) +
+        geom_point(aes(color = factor(class))) +
+        labs(x = paste("PC", pc_1, sep = ""),
+                      y = paste("PC", pc_2, sep = "")) +
+        labs(title = "PC Pairwise") +
+        theme(legend.title = element_blank())
+    if(interactive == TRUE){
+        ggplotly(static_plot)
+    } else {
+        static_plot
+    }   
+}
+
+pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
+    scores <- pc_scores(x, rank, type)
+    score_1 <- paste("PC", pc_x, sep = "")
+    score_2 <- paste("PC", pc_y, sep = "")
+    score_3 <- paste("PC", pc_z, sep = "")
+    select(scores, ends_with(score_1), ends_with(score_2), ends_with(score_3))
+}
+
+
+#' 3D Principal Component Plot
+#'
+#' \code{pc_plot_3D}
+#'
+#' @param x data frame or matrix of predictor variables
+#' @param pc_x integer number of the principal component used for the x-axis
+#' @param pc_y integer number of the principal component used for the y-axis
+#' @param pc_z integer number of the principal component used for the z-axis
+#' @param class_labels data frame or vector of class labels
+#' @param rank rank of coefficient matrix
+#' @param type type of covariance matrix
+#'
+#' @export
+pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, rank = "full", type = "cov"){
+    class <- as_data_frame(class_labels)
+    threes <- pc_threewise(x, pc_x, pc_y, pc_z, rank, type)
+    threes_tbl <- bind_cols(threes, class)
+    names(threes_tbl) <- c("x_coord", "y_coord", "z_coord", "class")
+    plot_ly(threes_tbl, x = ~x_coord, y = ~y_coord, z = ~z_coord, color = ~factor(class)) %>%
+        layout(title = "PC Scatter 3D",
+         scene = list(
+           xaxis = list(title = names(threes)[1]), 
+           yaxis = list(title = names(threes)[2]), 
+           zaxis = list(title = names(threes)[3])))
+}
