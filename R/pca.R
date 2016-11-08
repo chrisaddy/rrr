@@ -22,6 +22,15 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
     list(means = means, A = A, B = B, C = A %*% B)
 }
 
+#' Reduced-rank Principal Component Scores
+#'
+#' \code{pc_scores} returns data frame of principle component scores from reduced-rank PCA
+#'
+#' @param rrpca_object object returned by \code{rrpca} of type `list`.
+#' @inheritParams rrpca
+#'
+#' @export
+
 pc_scores <- function(rrpca_object, rank = "full", type = "cov", k = 0){
     pca <- rrpca(x, rank, type, k)
     pca$A %*% organize(x) %>%
