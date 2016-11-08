@@ -18,6 +18,7 @@ Collate:
     rrr.R
     pca.R
     pca_diagnostics.R
+    pca_plots.R
     cva.R
     lda.R
 License: GPL-3
