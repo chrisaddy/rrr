@@ -1,12 +1,15 @@
-#' Reduced-Rank Linear Discriminant Analysis
+#' Fit Reduced-Rank LDA Model
 #'
-#' \code{lda} produces a linear discriminant analysis as a reduced-rank regression.
+#' \code{lda} fits a reduced-rank linear discriminant analysis model.
 #' 
 #' @inheritParams rrr
 #'
+#' @references Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
+#'
 #' @export
 
-rrlda <- function(x, y, k = 0, ld_num = 2) {
+
+rrlda <- function(x, y, k = 0, rank = 2) {
 ### build Y matrix
     y_binary <- binary_matrix(y)
 ### centering matrix
@@ -24,7 +27,7 @@ rrlda <- function(x, y, k = 0, ld_num = 2) {
         s_yx %*%
         s_xx_inv_sqrt
     R_star
-    V_star <- eigen(R_star)$vectors[,1:ld_num]
+    V_star <- eigen(R_star)$vectors[,1:rank]
     gamma <- s_xx_inv_sqrt %*% Re(V_star)
     xi <- t(gamma) %*% x_center
     omega <- as_data_frame(t(gamma) %*% s_xy %*% s_yy_inv %*% y_center)

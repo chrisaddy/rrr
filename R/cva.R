@@ -1,12 +1,14 @@
-#' Reduced-Rank Canonical Variate Analysis
+#' Fit Reduced-Rank CVA Model
 #'
 #' \code{cva} fits a reduced-rank canonical variate/correlation model.
 #'
 #' @inheritParams rrr
 #'
+#' @references Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
+#'
 #' @export
 
-cva <- function(x, y, rank = "full", type = "cov", k = 0) {
+rrcva <- function(x, y, rank = "full", type = "cov", k = 0) {
 	if(type == "cov"){
 		y_c <- scale(y, center = TRUE, scale = FALSE)
 	} else if(type == "cor"){

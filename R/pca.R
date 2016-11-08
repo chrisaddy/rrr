@@ -1,16 +1,14 @@
-#' Fit Reduced-Rank PCA
+#' Fit Reduced-Rank PCA Model
 #' 
-#' \code{pca} carries out reduced-rank principled component analysis on a
-#' matrix of input data.
+#' \code{pca} fits reduced-rank principle component analysis model.
 #' 
-#' @param x data frame or matrix of input variables
-#' @param rank rank of coefficient matrix. Default \code{="full"}.
-#' @param type type of covariance matrix.
+#' @inheritParams rrr
 #'
 #' @references Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
-#' @export pca
+#'
+#' @export
 
-pca <- function(x, rank = "full", type = "cov"){
+rrpca <- function(x, rank = "full", type = "cov", k = 0){
     if(rank == "full"){
         reduce_rank <- dim(x)[2]
     } else {

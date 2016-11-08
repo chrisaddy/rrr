@@ -16,7 +16,6 @@ Imports:
 Collate:
     utility_functions.R
     rrr.R
-    rank_trace.R
     pca.R
     cva.R
     lda.R

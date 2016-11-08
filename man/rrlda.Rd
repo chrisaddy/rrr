@@ -2,20 +2,21 @@
 % Please edit documentation in R/lda.R
 \name{rrlda}
 \alias{rrlda}
-\title{Reduced-Rank Linear Discriminant Analysis}
+\title{Fit Reduced-Rank LDA Model}
 \usage{
 rrlda(x, y, k = 0, ld_num = 2)
 }
 \arguments{
 \item{x}{data frame of input variables}
 
-\item{y}{data frame of categorical response variables}
+\item{y}{data frame of response variables}
 
-\item{k}{parameter to ensure non-singular covariance matrices}
-
-\item{ld_num}{number of linear discriminants to split the data}
+\item{k}{small number to add to the ridge.}
 }
 \description{
-\code{lda} produces a linear discriminant analysis as a reduced-rank regression.
+\code{lda} fits a reduced-rank linear discriminant analysis model.
+}
+\references{
+Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
 }
 

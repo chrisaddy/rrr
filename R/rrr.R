@@ -1,4 +1,4 @@
-#' Fit Reduced-Rank Regression
+#' Fit Reduced-Rank Regression Model
 #'
 #' \code{rrr} fits a reduced-rank regression model.
 #'
