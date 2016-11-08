@@ -9,8 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 ```{r message = FALSE}
-#devtools::install_github("chrisaddy/rrr")
-#library(rrr)
+devtools::install_github("chrisaddy/rrr")
+library(rrr)
 ```
 
 ### Reduced-Rank Regression and Its Special Cases
@@ -105,12 +105,18 @@ The best reduced-rank approximation to the original $\mathbf{X}$ is
 \end{equation}
 
 ```{r}
-#library(dplyr)
-#data(pendigits)
+require(readr)
+digits <- read_delim("http://astro.ocis.temple.edu/~alan/pendigits.txt", delim = " ", col_names = FALSE)
 
-#digits <- as_data_frame(pendigits)
-#digits_class <- digits %>% select(V35)
-#digits_features <- digits %>% select(-V35, -V36)
+digits_class <- digits %>% dplyr::select(X35)
+digits_features <- digits %>% dplyr::select(-X35, -X36)
+
+digits_class
+digits_features
+
+digits_pca <- rrpca(digits_features)
+
+pca_gof(digits_features) %>% round(4)
 
 #pca_rank_trace(digits_features)
 

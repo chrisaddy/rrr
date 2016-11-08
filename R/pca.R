@@ -15,8 +15,15 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
         reduce_rank <- rank
     }
     means <- colMeans(x)
-    A <- eigen(cov(x))$vectors[,1:reduce_rank]
+    s_xx <- cov(x)
+    A <- eigen(s_xx$vectors[,1:reduce_rank]
     colnames(A) <- paste("PC", 1:reduce_rank, sep = "")
     B <- t(A)
     list(means = means, A = A, B = B, C = A %*% B)
+}
+
+pc_scores <- function(rrpca_object, rank = "full", type = "cov", k = 0){
+    pca <- rrpca(x, rank, type, k)
+    pca$A %*% organize(x) %>%
+        as_data_frame()
 }
