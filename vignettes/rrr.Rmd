@@ -63,8 +63,7 @@ The best reduced-rank approximation to the original $\mathbf{X}$ is
 \end{equation}
 
 ```{r}
-library(digits)
-
+#library(dplyr)
 #data(pendigits)
 
 #digits <- as_data_frame(pendigits)
