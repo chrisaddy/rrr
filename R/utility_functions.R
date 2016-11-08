@@ -1,3 +1,7 @@
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
 cov_matrix <- function(var1, var2){
 		var1 %*% t(var2) / (dim(var1)[2] - 1)
 }
@@ -11,9 +15,9 @@ cov_matrix <- function(var1, var2){
 #' @export
 
 sqrt_matrix <- function(matr){
-			e <- eigen(matr)
-			vecs <- e$vectors
-			vals <- e$values
+			eigens <- eigen(matr)
+			vecs <- eigens$vectors
+			vals <- eigens$values
 			vecs %*% diag(sqrt(vals), length(vals)) %*% t(vecs)
 }
 
@@ -26,10 +30,7 @@ sqrt_matrix <- function(matr){
 #'
 #' @export
 organize <- function(vars, scale = FALSE){
-	t(scale(as.matrix(vars), center = TRUE, scale))
+	as.matrix(vars) %>%
+		scale(center = TRUE, scale) %>%
+		t()
 }
-
-#mu_vars <- function(var){
-#				replicate(dim(var)[2],
-#				rowMeans(var))
-#}

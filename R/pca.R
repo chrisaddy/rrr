@@ -128,7 +128,7 @@ pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
     scores <- pc_scores(x, rank, type)
     score_1 <- paste("PC", pc_1, sep = "")
     score_2 <- paste("PC", pc_2, sep = "")
-    dplyr::select(scores, ends_with(score_1), ends_with(score_2))
+    dplyr::select(scores, dplyr::ends_with(score_1), dplyr::ends_with(score_2))
 }
 
 pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
@@ -136,7 +136,7 @@ pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
     score_1 <- paste("PC", pc_x, sep = "")
     score_2 <- paste("PC", pc_y, sep = "")
     score_3 <- paste("PC", pc_z, sep = "")
-    dplyr::select(scores, ends_with(score_1), ends_with(score_2), ends_with(score_3))
+    dplyr::select(scores, dplyr::ends_with(score_1), dplyr::ends_with(score_2), dplyr::ends_with(score_3))
 }
 
 

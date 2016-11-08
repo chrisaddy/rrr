@@ -26,8 +26,8 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	} else {
 		stop("type input not recognized")
 	}
-	sig_xx <- cov_matrix(x_organize, x_organize)# + k * diag(1, dim(x_organize)[1])
-	sig_yx <- cov_matrix(y_organize, x_organize)
+	sig_xx <- cov(x, x)# + k * diag(1, dim(x_organize)[1])
+	sig_yx <- cov(y_organize, x_organize)
         sig_yy <- cov_matrix(y_organize, y_organize)# + k * diag(1, dim(y_organize)[1])
         sig_xy <- t(sig_yx)
 	sqrtm <- sqrt_matrix(gamma_matrix)

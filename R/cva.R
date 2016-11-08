@@ -1,3 +1,5 @@
+
+
 #' Reduced-Rank Canonical Variate Analysis
 #'
 #' \code{cva} fits a reduced-rank canonical variate/correlation model.
@@ -22,6 +24,7 @@ cva <- function(x, y, rank = "full", type = "cov") {
         rrr_object$H <- MASS::ginv(rrr_object$A)
         rrr_object
 }
+
 #' Canonical Variate Scores
 #'
 #' \code{cv_scores} calculates the canonical variate scores for \eqn{\mathbf{X}} and \eqn{\mathbf{Y}}
