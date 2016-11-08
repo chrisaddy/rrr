@@ -7,7 +7,7 @@
 pca_rank_trace_plot(x, interactive = FALSE)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame of input variables}
 
 \item{interactive}{logical. If \code{TRUE} prints an interactive Plotly graphic.}
 }
