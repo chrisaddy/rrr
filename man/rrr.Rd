@@ -11,11 +11,13 @@ rrr(x, y, gamma_matrix, rank = "full", type = "cov", k = 0)
 
 \item{y}{data frame of response variables}
 
+\item{gamma_matrix}{weight matrix}
+
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.}
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
-\item{gamma_mat}{weight matrix}
+\item{k}{small number to add to the ridge.}
 }
 \description{
 \code{rrr} fits a reduced-rank regression model.

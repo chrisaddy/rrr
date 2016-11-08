@@ -89,12 +89,14 @@
       <dd>data frame of input variables</dd>
       <dt>y</dt>
       <dd>data frame of response variables</dd>
+      <dt>gamma_matrix</dt>
+      <dd>weight matrix</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> is standard multivariate regression.</dd>
       <dt>type</dt>
       <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
-      <dt>gamma_mat</dt>
-      <dd>weight matrix</dd>
+      <dt>k</dt>
+      <dd>small number to add to the ridge.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

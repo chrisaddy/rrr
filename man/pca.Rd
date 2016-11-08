@@ -11,7 +11,7 @@ pca(x, rank = "full", type = "cov")
 
 \item{rank}{rank of coefficient matrix. Default \code{="full"}.}
 
-\item{type}{}
+\item{type}{type of covariance matrix.}
 }
 \description{
 \code{pca} carries out reduced-rank principled component analysis on a
