@@ -1,5 +1,5 @@
 pca_rank_trace <- function(x){
-    eigenvecs <- pca(x)$A
+    eigenvecs <- rrpca(x)$A
     eigens <- eigen(cov(x, x))
     full_rank <- dim(eigens$vectors)[2]
     delta_C <- function(t){
@@ -15,7 +15,7 @@ pca_rank_trace <- function(x){
         pca_rank_trace_y[i] <- delta_residuals(i)
     }
     pca_rank_trace_y[length(pca_rank_trace_y)] <- 0
-    data_frame(rank = 0:length(pca_rank_trace_x),
+    dplyr::data_frame(rank = 0:length(pca_rank_trace_x),
                       delta_C = c(1, pca_rank_trace_x),
                       delta_residuals = c(1, pca_rank_trace_y))
 }
@@ -44,7 +44,7 @@ pca_rank_trace_plot <- function(x, interactive = FALSE){
                                           " to ",
                                           Theta^(s) )))
     if(interactive == TRUE){
-        ggplotly(static_plot)
+        plotly::ggplotly(static_plot)
     } else {
         static_plot
     }

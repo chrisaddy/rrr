@@ -2,10 +2,13 @@
 #' @export
 magrittr::'%>%'
 
-#' @importFrom dplyr as_data_frame bind_cols
+#' @import
 #' @export
 
 #' @importFrom stats cov
+#' @export
+
+#' @importFrom plotly ggplotly plot_ly
 #' @export
 
 #' @importFrom MASS ginv

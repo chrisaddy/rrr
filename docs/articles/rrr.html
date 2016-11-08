@@ -123,52 +123,31 @@ digits &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span cl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(X35)
 digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-X35, -X36)
 
-digits_class</code></pre></div>
-<pre><code>## # A tibble: 10,992 &times; 1
-##      X35
-##    &lt;int&gt;
-## 1      8
-## 2      2
-## 3      1
-## 4      4
-## 5      1
-## 6      6
-## 7      4
-## 8      0
-## 9      5
-## 10     0
-## # ... with 10,982 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">digits_features</code></pre></div>
-<pre><code>## # A tibble: 10,992 &times; 34
-##       X1    X2    X3    X4    X5    X6    X7    X8    X9   X10   X11   X12
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-## 1     47   100    27    81    57    37    26     0     0    23    56    53
-## 2      0    89    27   100    42    75    29    45    15    15    37     0
-## 3      0    57    31    68    72    90   100   100    76    75    50    51
-## 4      0   100     7    92     5    68    19    45    86    34   100    45
-## 5      0    67    49    83   100   100    81    80    60    60    40    40
-## 6    100   100    88    99    49    74    17    47     0    16    37     0
-## 7      0   100     3    72    26    35    85    35   100    71    73    97
-## 8      0    39     2    62    11     5    63     0   100    43    89    99
-## 9     13    89    12    50    72    38    56     0     4    17     0    61
-## 10    57   100    22    72     0    31    25     0    75    13   100    50
-## # ... with 10,982 more rows, and 22 more variables: X13 &lt;int&gt;, X14 &lt;int&gt;,
-## #   X15 &lt;int&gt;, X16 &lt;int&gt;, X17 &lt;int&gt;, X18 &lt;int&gt;, X19 &lt;int&gt;, X20 &lt;int&gt;,
-## #   X21 &lt;int&gt;, X22 &lt;int&gt;, X23 &lt;int&gt;, X24 &lt;int&gt;, X25 &lt;int&gt;, X26 &lt;int&gt;,
-## #   X27 &lt;int&gt;, X28 &lt;int&gt;, X29 &lt;int&gt;, X30 &lt;int&gt;, X31 &lt;int&gt;, X32 &lt;int&gt;,
-## #   X33 &lt;int&gt;, X34 &lt;int&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rrpca.html">rrpca</a></span>(digits_features)
+digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rrpca.html">rrpca</a></span>(digits_features)
 
 <span class="kw"><a href="../reference/pca_gof.html">pca_gof</a></span>(digits_features) %&gt;%<span class="st"> </span><span class="kw">round</span>(<span class="dv">4</span>)</code></pre></div>
 <pre><code>##  [1] 0.7169 0.4681 0.3145 0.2243 0.1664 0.1181 0.0874 0.0607 0.0414 0.0276
 ## [11] 0.0190 0.0122 0.0078 0.0038 0.0020 0.0003 0.0001 0.0000 0.0000 0.0000
 ## [21] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
 ## [31] 0.0000 0.0000 0.0000 0.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_rank_trace(digits_features)</span>
-
-<span class="co">#pca_rank_trace_plot(digits_features)</span>
-
-<span class="co">#pc_pairwise_plot(digits_features, class_labels = digits_class)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pca_rank_trace</span>(digits_features)</code></pre></div>
+<pre><code>## # A tibble: 35 &times; 3
+##     rank   delta_C delta_residuals
+##    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
+## 1      0 1.0000000      1.00000000
+## 2      1 0.9851844      0.71687775
+## 3      2 0.9701425      0.46805987
+## 4      3 0.9548637      0.31446713
+## 5      4 0.9393364      0.22432933
+## 6      5 0.9235481      0.16640087
+## 7      6 0.9074852      0.11813147
+## 8      7 0.8911328      0.08737814
+## 9      8 0.8744746      0.06065970
+## 10     9 0.8574929      0.04138801
+## # ... with 25 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
+<p><img src="rrr_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pc_pairwise_plot(digits_features, class_labels = digits_class)</span>
 
 <span class="co">#pc_plot_3D(digits_features, class_labels = digits_class)</span></code></pre></div>
 </div>

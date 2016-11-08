@@ -117,7 +117,7 @@ pca_gof(digits_features) %>% round(4)
 
 pca_rank_trace(digits_features)
 
-pca_rank_trace_plot(digits_features)
+pca_rank_trace_plot(digits_features, interactive = TRUE)
 
 #pc_pairwise_plot(digits_features, class_labels = digits_class)
 
