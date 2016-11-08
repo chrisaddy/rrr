@@ -3,6 +3,7 @@
 export("%>%")
 export(ginv)
 export(pca_gof)
+export(pca_rank_trace_plot)
 export(rrcva)
 export(rrlda)
 export(rrpca)
