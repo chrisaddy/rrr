@@ -94,16 +94,16 @@
 
 #rank_trace_plot <- function(x, y, gamma_mat){
 #	trace <- rank_trace(x, y, gamma_mat)
-#	ggplot2::ggplot() +
-#	ggplot2::aes(x = rank_trace_x(x, y, gamma_mat), #trace$deltaC,
+#	ggplot() +
+#	aes(x = rank_trace_x(x, y, gamma_mat), #trace$deltaC,
 #		y = rank_trace_y(x, y, gamma_mat), #trace$deltaEE,
 #		label = 0:3) +
-#	ggplot2::lims(x = c(0,1), y = c(0,1)) +
-#	ggplot2::geom_line(color = "red") +
-#	ggplot2::geom_text(check_overlap = TRUE, size = 5) +
-#	ggplot2::geom_label() + 
-#	ggplot2::labs(x = "dC", y = "dE") +
-#	ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",
+#	lims(x = c(0,1), y = c(0,1)) +
+#	geom_line(color = "red") +
+#	geom_text(check_overlap = TRUE, size = 5) +
+#	geom_label() + 
+#	labs(x = "dC", y = "dE") +
+#	ggtitle(expression(paste("Rank Trace Plot for ",
 #				 Theta^(0),
 #				 " to ",
 #				 Theta^(s) )))
@@ -135,7 +135,7 @@ pca_rank_trace <- function(x){
         pca_rank_trace_y[i] <- delta_residuals(i)
     }
     pca_rank_trace_y[length(pca_rank_trace_y)] <- 0
-    dplyr::data_frame(rank = 0:length(pca_rank_trace_x),
+    data_frame(rank = 0:length(pca_rank_trace_x),
                       delta_C = c(1, pca_rank_trace_x),
                       delta_residuals = c(1, pca_rank_trace_y))
 }
@@ -150,15 +150,15 @@ pca_rank_trace <- function(x){
 
 pca_rank_trace_plot <- function(x){
     rt <- pca_rank_trace(x)
-    ggplot2::ggplot(rt) +
-    ggplot2::aes(x = delta_C,
+    ggplot(rt) +
+    aes(x = delta_C,
                  y = delta_residuals,
                  label = rank) +
-    ggplot2::lims(x = c(0,1), y = c(0,1)) +
-    ggplot2::geom_line(color = "red") +
-    ggplot2::geom_text(check_overlap = TRUE, size = 5) +
-    ggplot2::labs(x = "dC", y = "dE") +
-    ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",
+    lims(x = c(0,1), y = c(0,1)) +
+    geom_line(color = "red") +
+    geom_text(check_overlap = TRUE, size = 5) +
+    labs(x = "dC", y = "dE") +
+    ggtitle(expression(paste("Rank Trace Plot for ",
                      Theta^(0),
 		     " to ",
 		     Theta^(s) )))

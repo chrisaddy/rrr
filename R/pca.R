@@ -5,7 +5,7 @@
 #' 
 #' @param x data frame or matrix of input variables
 #' @param rank rank of coefficient matrix. Default \code{="full"}.
-#' @param type 
+#' @param type type of covariance matrix.
 #'
 #' @references Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
 #' @export pca
@@ -17,7 +17,7 @@ pca <- function(x, rank = "full", type = "cov"){
         reduce_rank <- rank
     }
     means <- colMeans(x)
-    A <- eigen(cov(x, x))$vectors[,1:reduce_rank]
+    A <- eigen(cov(x))$vectors[,1:reduce_rank]
     colnames(A) <- paste("PC", 1:reduce_rank, sep = "")
     B <- t(A)
     list(means = means, A = A, B = B, C = A %*% B)
@@ -85,7 +85,7 @@ pca_rank_trace <- function(x){
         pca_rank_trace_y[i] <- delta_residuals(i)
     }
     pca_rank_trace_y[length(pca_rank_trace_y)] <- 0
-    dplyr::data_frame(rank = 0:length(pca_rank_trace_x),
+    data_frame(rank = 0:length(pca_rank_trace_x),
                       delta_C = c(1, pca_rank_trace_x),
                       delta_residuals = c(1, pca_rank_trace_y))
 }
@@ -100,15 +100,15 @@ pca_rank_trace <- function(x){
 
 pca_rank_trace_plot <- function(x, interactive = FALSE){
     rt <- pca_rank_trace(x)
-    static_plot <- ggplot2::ggplot(rt) +
-        ggplot2::aes(x = delta_C,
+    static_plot <- ggplot(rt) +
+        aes(x = delta_C,
                      y = delta_residuals,
                      label = rank) +
-        ggplot2::lims(x = c(0,1), y = c(0,1)) +
-        ggplot2::geom_line(color = "red") +
-        ggplot2::geom_text(check_overlap = TRUE, size = 5) +
-        ggplot2::labs(x = "dC", y = "dE") +
-        ggplot2::ggtitle(expression(paste("Rank Trace Plot for ",
+        lims(x = c(0,1), y = c(0,1)) +
+        geom_line(color = "red") +
+        geom_text(check_overlap = TRUE, size = 5) +
+        labs(x = "dC", y = "dE") +
+        ggtitle(expression(paste("Rank Trace Plot for ",
                                           Theta^(0),
                                           " to ",
                                           Theta^(s) )))
@@ -120,7 +120,7 @@ pca_rank_trace_plot <- function(x, interactive = FALSE){
 }
 
 pc_scores <- function(x, rank = "full", type = "cov"){
-    dplyr::as_data_frame(t(pca(x, rank, type)$B %*% organize(x)))
+    as_data_frame(t(pca(x, rank, type)$B %*% organize(x)))
 }
 
 
@@ -128,7 +128,7 @@ pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
     scores <- pc_scores(x, rank, type)
     score_1 <- paste("PC", pc_1, sep = "")
     score_2 <- paste("PC", pc_2, sep = "")
-    dplyr::select(scores, dplyr::ends_with(score_1), dplyr::ends_with(score_2))
+    select(scores, ends_with(score_1), ends_with(score_2))
 }
 
 pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
@@ -136,7 +136,7 @@ pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
     score_1 <- paste("PC", pc_x, sep = "")
     score_2 <- paste("PC", pc_y, sep = "")
     score_3 <- paste("PC", pc_z, sep = "")
-    dplyr::select(scores, dplyr::ends_with(score_1), dplyr::ends_with(score_2), dplyr::ends_with(score_3))
+    select(scores, ends_with(score_1), ends_with(score_2), ends_with(score_3))
 }
 
 
@@ -154,15 +154,18 @@ pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
 #' @export
  
 pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
-    class <- dplyr::as_data_frame(class_labels)
+    if(is.null(class_labels)){
+
+    }
+    class <- as_data_frame(class_labels)
     names(class) <- c("class")
     pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
-    pairs_tbl <- dplyr::bind_cols(pairs, class)
-    static_plot <- ggplot2::ggplot(pairs_tbl,
-                    aes_string(colnames(pairs_tbl)[1],
+    pairs_tbl <- bind_cols(pairs, class)
+    static_plot <- ggplot(pairs_tbl,
+                    aes_q(colnames(pairs_tbl)[1],
                                colnames(pairs_tbl)[2])) +
         geom_point(aes(color = factor(class))) +
-        ggplot2::labs(x = paste("PC", pc_1, sep = ""),
+        labs(x = paste("PC", pc_1, sep = ""),
                       y = paste("PC", pc_2, sep = "")) +
         labs(title = "PC Pairwise") +
         theme(legend.title = element_blank())
@@ -188,9 +191,9 @@ pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = 
 #'
 #' @export
 pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, rank = "full", type = "cov"){
-    class <- dplyr::as_data_frame(class_labels)
+    class <- as_data_frame(class_labels)
     threes <- pc_threewise(x, pc_x, pc_y, pc_z, rank, type)
-    threes_tbl <- dplyr::bind_cols(threes, class)
+    threes_tbl <- bind_cols(threes, class)
     names(threes_tbl) <- c("x_coord", "y_coord", "z_coord", "class")
     plot_ly(threes_tbl, x = ~x_coord, y = ~y_coord, z = ~z_coord, color = ~factor(class)) %>%
         layout(title = "PC Scatter 3D",

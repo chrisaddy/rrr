@@ -37,7 +37,7 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 		sig_xy %*%
 		sqrtm
 	V_t <- eigen(weighted_matrix)$vectors[,1:reduce_rank] %>%
-		as.matrix(ncol = reduc_rank)
+		as.matrix(ncol = reduce_rank)
 	A_t <- solve(sqrtm) %*% V_t
 	B_t <- t(V_t) %*%
 		sqrtm %*%

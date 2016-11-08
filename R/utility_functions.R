@@ -1,6 +1,12 @@
-#' @importFrom magrittr %>%
+#' @importFrom  magrittr %>%
 #' @export
 magrittr::`%>%`
+
+#' @import ggplot2
+#' @export
+
+#' @importFrom plotly plot_ly ggplotly
+#' @export
 
 cov_matrix <- function(var1, var2){
 		var1 %*% t(var2) / (dim(var1)[2] - 1)
