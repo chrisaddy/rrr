@@ -2,6 +2,7 @@
 
 export("%>%")
 export(ginv)
+export(pca_gof)
 export(rrcva)
 export(rrlda)
 export(rrpca)
