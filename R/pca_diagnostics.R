@@ -1,5 +1,7 @@
 #' PCA Goodness of Fit
 #'
+#' \code{pca_gof} is a measure of the goodness of fit of the \eqn{i}th principle component.
+#'
 #' @inheritParams rrpca
 #' 
 #' @export
@@ -12,5 +14,6 @@ pca_gof <- function(x) {
 			for(i in 1:length(eigens)){
 				gof[i] <- sum(eigens[(i + 1):length(eigens)]) / total_var
 			}
+			gof[length(gof)] <- 0
 			gof
 }
