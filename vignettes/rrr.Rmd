@@ -60,7 +60,7 @@ $$
 where $\mathbf{V}_t = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right)$ is an $\left(s \times t\right)$-matrix, with $\mathbf{v}_j$ the eigenvector associated with the $j$th largest eigenvalue of
 
 $$
-\mathbf{\Gamma}^{1/2} \mathbf{\Sigma}_{YX} \mathbf_{XX}^{-1} \mathbf_{XY} \mathbf{\Gamma}^{1/2}
+\mathbf{\Gamma}^{1/2} \mathbf{\Sigma}_{YX} \mathbf_{XX}^{-1} \mathbf{\Sigma}_{XY} \mathbf{\Gamma}^{1/2}
 $$
 
 Using different values of $\mathbf{\Gamma}$ we can use the reduced-rank regression model carry out classical multivariate procedures.
