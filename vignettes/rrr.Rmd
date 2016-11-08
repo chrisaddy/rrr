@@ -13,19 +13,9 @@ devtools::install_github("chrisaddy/rrr")
 library(rrr)
 ```
 
-```{r}
-library(dplyr)
-```
-
-$$ X_1 + Y = 2 $$
-
 ### Reduced-Rank Regression and Its Special Cases
 
 The multivariate linear regression model
-```{r}
-library(MMST)
-library(gridExtra)
-```
 
 $$
 \overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
@@ -73,11 +63,13 @@ The best reduced-rank approximation to the original $\mathbf{X}$ is
 \end{equation}
 
 ```{r}
-data(pendigits)
+library(digits)
 
-digits <- as_data_frame(pendigits)
-digits_class <- digits %>% select(V35)
-digits_features <- digits %>% select(-V35, -V36)
+#data(pendigits)
+
+#digits <- as_data_frame(pendigits)
+#digits_class <- digits %>% select(V35)
+#digits_features <- digits %>% select(-V35, -V36)
 
 #pca_rank_trace(digits_features)
 
@@ -172,13 +164,13 @@ where $\mathbf{v}_j$ is the eigenvector associated with the $j$th largest eigenv
 
 ```{r}
 ### COMBO-17 galaxy data
-data(COMBO17)
-galaxy <- as_data_frame(COMBO17) %>%
-       select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
-       na.omit()
+#data(COMBO17)
+#galaxy <- as_data_frame(COMBO17) %>%
+#       select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
+#       na.omit()
 
-galaxy_x <- galaxy %>% select(-Rmag:-chi2red)
-galaxy_y <- galaxy %>% select(Rmag:chi2red)
+#galaxy_x <- galaxy %>% select(-Rmag:-chi2red)
+#galaxy_y <- galaxy %>% select(Rmag:chi2red)
 
 #galaxy_x
 #galaxy_y
