@@ -46,13 +46,9 @@
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"chrisaddy/rrr"</span>)
 <span class="kw">library</span>(rrr)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
-<p><span class="math display">\[ X_1 + Y = 2 \]</span></p>
 <div id="reduced-rank-regression-and-its-special-cases" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#reduced-rank-regression-and-its-special-cases" class="anchor"> </a></body></html>Reduced-Rank Regression and Its Special Cases</h3>
 <p>The multivariate linear regression model</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MMST)
-<span class="kw">library</span>(gridExtra)</code></pre></div>
 <p><span class="math display">\[
 \overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
 \]</span></p>
@@ -89,11 +85,12 @@
         \boldsymbol{\mu}^{\left(t\right)} + \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)} \mathbf{X}
     \end{aligned}
 \end{equation}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(pendigits)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#library(dplyr)</span>
+<span class="co">#data(pendigits)</span>
 
-digits &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(pendigits)
-digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span><span class="kw">select</span>(V35)
-digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span><span class="kw">select</span>(-V35, -V36)
+<span class="co">#digits &lt;- as_data_frame(pendigits)</span>
+<span class="co">#digits_class &lt;- digits %&gt;% select(V35)</span>
+<span class="co">#digits_features &lt;- digits %&gt;% select(-V35, -V36)</span>
 
 <span class="co">#pca_rank_trace(digits_features)</span>
 
@@ -176,13 +173,13 @@ where we assume $\mathrm{cov}\left(\boldsymbol{\omega}\right) = \mathbf{I}_t$.
     \end{aligned}
 \end{equation}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### COMBO-17 galaxy data
-<span class="kw">data</span>(COMBO17)
-galaxy &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(COMBO17) %&gt;%
-<span class="st">       </span><span class="kw">select</span>(-<span class="kw">starts_with</span>(<span class="st">"e."</span>), -Nr, -UFS:-IFD) %&gt;%
-<span class="st">       </span><span class="kw">na.omit</span>()
+<span class="co">#data(COMBO17)</span>
+<span class="co">#galaxy &lt;- as_data_frame(COMBO17) %&gt;%</span>
+<span class="co">#       select(-starts_with("e."), -Nr, -UFS:-IFD) %&gt;%</span>
+<span class="co">#       na.omit()</span>
 
-galaxy_x &lt;-<span class="st"> </span>galaxy %&gt;%<span class="st"> </span><span class="kw">select</span>(-Rmag:-chi2red)
-galaxy_y &lt;-<span class="st"> </span>galaxy %&gt;%<span class="st"> </span><span class="kw">select</span>(Rmag:chi2red)
+<span class="co">#galaxy_x &lt;- galaxy %&gt;% select(-Rmag:-chi2red)</span>
+<span class="co">#galaxy_y &lt;- galaxy %&gt;% select(Rmag:chi2red)</span>
 
 <span class="co">#galaxy_x</span>
 <span class="co">#galaxy_y</span></code></pre></div>
@@ -210,7 +207,7 @@ galaxy_y &lt;-<span class="st"> </span>galaxy %&gt;%<span class="st"> </span><sp
 <p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span>:<span class="dv">10</span>)
 <span class="kw">plot</span>(<span class="dv">10</span>:<span class="dv">1</span>)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-6-1.png" width="672"><img src="rrr_files/figure-html/unnamed-chunk-6-2.png" width="672"></p>
+<p><img src="rrr_files/figure-html/unnamed-chunk-4-1.png" width="672"><img src="rrr_files/figure-html/unnamed-chunk-4-2.png" width="672"></p>
 <p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
 <pre><code>output:
   rmarkdown::html_vignette:
