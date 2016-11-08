@@ -48,27 +48,55 @@
 <span class="kw">library</span>(rrr)</code></pre></div>
 <div id="reduced-rank-regression-and-its-special-cases" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#reduced-rank-regression-and-its-special-cases" class="anchor"> </a></body></html>Reduced-Rank Regression and Its Special Cases</h3>
-<p>The multivariate linear regression model</p>
+<p>The multivariate linear regression model is given by</p>
 <p><span class="math display">\[
-\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
+\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
 \]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+\mathrm{E}\left(\varepsilon\right) = \mathbf{0}, \quad \mathrm{cov}\left(\varepsilon\right) = \mathbf{\Sigma}_{\varepsilon \varepsilon}
+\]</span></p>
+<p>and <span class="math inline">\(\varepsilon\)</span> is distributed independently of <span class="math inline">\(\mathbf{X}.\)</span></p>
+<p>We introduce the possibility that <span class="math inline">\(\mathbf{C}\)</span> is rank-deficient, i.e.,</p>
+<p><span class="math display">\[
+\mathrm{rank}\left(\mathbf{C}\right) = t \quad \mathrm{min}\left(r, s \right)
+\]</span></p>
+<p>When <span class="math inline">\(t = s\)</span>, the regression model is <em>full-rank</em>, and can be fit using multiple regression on each <span class="math inline">\(Y_i \in \mathbf{Y}.\)</span> When <span class="math inline">\(t &lt; s\)</span>, <span class="math inline">\(\mathbf{C}\)</span> can be decomposed into non-unique matrices <span class="math inline">\(\mathbf{A}_{s \times t}\)</span> and <span class="math inline">\(\mathbf{B}_{t \times r}\)</span>, such that <span class="math inline">\(\mathbf{C} = \mathbf{AB},\)</span> and the multivariate regression model is given by</p>
+<p><span class="math display">\[
+\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times t}{\mathbf{A}} \; \overset{t \times r}{\mathbf{B}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
+\]</span></p>
+<p>Finding <span class="math inline">\(\mathbf{A}, \mathbf{B}\)</span>, and ultimately the <em>reduced-rank regression coefficient</em> <span class="math inline">\(\mathbf{C}^{\left(t\right)}\)</span>, is done by minimizing the weighted sum-of-squares criterion</p>
+<p><span class="math display">\[
+\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)^\tau \mathbf{\Gamma}\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)\right]
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{\Gamma}\)</span> is a positive-definite symmetric <span class="math inline">\(\left(s \times s\right)\)</span>-matrix of weights, the expectation of which is taken over the joint distribution <span class="math inline">\(\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)^\tau\)</span>. This weighted sum-of-squares criterion is minimized when</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \boldsymbol{\mu}^\left(t\right) &amp; = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
+    \mathbf{A}^{\left(t\right)} &amp; = \mathbf{\Gamma}^{-1/2}\mathbf{V}_t \\
+    \mathbf{B}^{\left(t\right)} &amp; = \mathbf{V}_t^\tau \boldsymbol{\Gamma}^{-1/2}\mathbf{\Sigma}_{YX}\mathbf{XX}^{-1} \\
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{V}_t = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right)\)</span> is an <span class="math inline">\(\left(s \times t\right)\)</span>-matrix, with <span class="math inline">\(\mathbf{v}_j\)</span> the eigenvector associated with the <span class="math inline">\(j\)</span>th largest eigenvalue of</p>
+<p><span class="math display">\[
+\mathbf{\Gamma}^{1/2} \mathbf{\Sigma}_{YX} \mathbf_{XX}^{-1} \mathbf_{XY} \mathbf{\Gamma}^{1/2}
+\]</span></p>
+<p>Using different values of <span class="math inline">\(\mathbf{\Gamma}\)</span> we can use the reduced-rank regression model carry out classical multivariate procedures.</p>
 </div>
 <div id="principal-components-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#principal-components-analysis" class="anchor"> </a></body></html>Principal Components Analysis</h2>
 <p>Set</p>
-<p><span class="math display">\[latex
-\begin{aligned*}
+<p><span class="math display">\[
+\begin{aligned}
     \mathbf{Y} &amp; \equiv \mathbf{X} \\
     s &amp; = r \\
     \mathbf{\Gamma} &amp; = \mathbf{I}_r \\
-\end{aligned*}
+\end{aligned}
 \]</span></p>
 <p>Then, the least-squares error criterion</p>
-<span class="math display">\[\begin{equation}
-    \begin{aligned}
+<p><span class="math display">\[
     \mathrm{E}\left[\left(\mathbf{X} - \boldsymbol{\mu} - \mathbf{A}\mathbf{B}\mathbf{X}\right)^\tau\left(\mathbf{X} - \boldsymbol{\mu} - \mathbf{A}\mathbf{B}\mathbf{X}\right)\right]
-    \end{aligned}
-\end{equation}\]</span>
+\]</span></p>
 <p>is minimized by the reduced-rank regression solution,</p>
 <span class="math display">\[\begin{equation}
     \begin{aligned}
@@ -186,177 +214,7 @@ where we assume $\mathrm{cov}\left(\boldsymbol{\omega}\right) = \mathbf{I}_t$.
 </div>
 <div id="linear-discriminant-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#linear-discriminant-analysis" class="anchor"> </a></body></html>Linear Discriminant Analysis</h2>
-<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
-<ul><li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
-</ul></div>
-<div id="vignette-info" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#vignette-info" class="anchor"> </a></body></html>Vignette Info</h2>
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
 </div>
-<div id="styles" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#styles" class="anchor"> </a></body></html>Styles</h2>
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css</code></pre>
-</div>
-<div id="figures" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#figures" class="anchor"> </a></body></html>Figures</h2>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span>:<span class="dv">10</span>)
-<span class="kw">plot</span>(<span class="dv">10</span>:<span class="dv">1</span>)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-4-1.png" width="672"><img src="rrr_files/figure-html/unnamed-chunk-4-2.png" width="672"></p>
-<p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
-<pre><code>output:
-  rmarkdown::html_vignette:
-    fig_caption: yes</code></pre>
-<p>Then you can use the chunk option <code>fig.cap = "Your figure caption."</code> in <strong>knitr</strong>.</p>
-</div>
-<div id="more-examples" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#more-examples" class="anchor"> </a></body></html>More Examples</h2>
-<p>You can write math expressions, e.g. <span class="math inline">\(Y = X\beta + \epsilon\)</span>, footnotes<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, and tables, e.g.&nbsp;using <code>knitr::kable()</code>.</p>
-<table class="table"><thead><tr class="header"><th></th>
-<th align="right">mpg</th>
-<th align="right">cyl</th>
-<th align="right">disp</th>
-<th align="right">hp</th>
-<th align="right">drat</th>
-<th align="right">wt</th>
-<th align="right">qsec</th>
-<th align="right">vs</th>
-<th align="right">am</th>
-<th align="right">gear</th>
-<th align="right">carb</th>
-</tr></thead><tbody><tr class="odd"><td>Mazda RX4</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.620</td>
-<td align="right">16.46</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr><tr class="even"><td>Mazda RX4 Wag</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.875</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr><tr class="odd"><td>Datsun 710</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">108.0</td>
-<td align="right">93</td>
-<td align="right">3.85</td>
-<td align="right">2.320</td>
-<td align="right">18.61</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">1</td>
-</tr><tr class="even"><td>Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258.0</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr><tr class="odd"><td>Hornet Sportabout</td>
-<td align="right">18.7</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
-</tr><tr class="even"><td>Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225.0</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr><tr class="odd"><td>Duster 360</td>
-<td align="right">14.3</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">245</td>
-<td align="right">3.21</td>
-<td align="right">3.570</td>
-<td align="right">15.84</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-</tr><tr class="even"><td>Merc 240D</td>
-<td align="right">24.4</td>
-<td align="right">4</td>
-<td align="right">146.7</td>
-<td align="right">62</td>
-<td align="right">3.69</td>
-<td align="right">3.190</td>
-<td align="right">20.00</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr><tr class="odd"><td>Merc 230</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">140.8</td>
-<td align="right">95</td>
-<td align="right">3.92</td>
-<td align="right">3.150</td>
-<td align="right">22.90</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr><tr class="even"><td>Merc 280</td>
-<td align="right">19.2</td>
-<td align="right">6</td>
-<td align="right">167.6</td>
-<td align="right">123</td>
-<td align="right">3.92</td>
-<td align="right">3.440</td>
-<td align="right">18.30</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr></tbody></table><p>Also a quote using <code>&gt;</code>:</p>
-<blockquote>
-<p>&ldquo;He who gives up [code] safety for [code] speed deserves neither.&rdquo; (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
-</blockquote>
-</div>
-<div class="footnotes">
-<hr><ol><li id="fn1"><p>A footnote here.<a href="#fnref1">&#8617;</a></p></li>
-</ol></div>
 </div>
   </div>
 
@@ -366,10 +224,6 @@ where we assume $\mathrm{cov}\left(\boldsymbol{\omega}\right) = \mathbf{I}_t$.
       <ul class="nav nav-pills nav-stacked"><li><a href="#principal-components-analysis">Principal Components Analysis</a></li>
       <li><a href="#canonical-variate-analysis">Canonical Variate Analysis</a></li>
       <li><a href="#linear-discriminant-analysis">Linear Discriminant Analysis</a></li>
-      <li><a href="#vignette-info">Vignette Info</a></li>
-      <li><a href="#styles">Styles</a></li>
-      <li><a href="#figures">Figures</a></li>
-      <li><a href="#more-examples">More Examples</a></li>
       </ul></div>
       </div>
 

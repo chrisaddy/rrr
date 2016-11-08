@@ -9,37 +9,79 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 ```{r message = FALSE}
-devtools::install_github("chrisaddy/rrr")
-library(rrr)
+#devtools::install_github("chrisaddy/rrr")
+#library(rrr)
 ```
 
 ### Reduced-Rank Regression and Its Special Cases
 
-The multivariate linear regression model
+The multivariate linear regression model is given by
 
 $$
-\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
+\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
 $$
+
+with
+
+$$
+\mathrm{E}\left(\varepsilon\right) = \mathbf{0}, \quad \mathrm{cov}\left(\varepsilon\right) = \mathbf{\Sigma}_{\varepsilon \varepsilon}
+$$
+
+and $\varepsilon$ is distributed independently of $\mathbf{X}.$
+
+We introduce the possibility that $\mathbf{C}$ is rank-deficient, i.e.,
+
+$$
+\mathrm{rank}\left(\mathbf{C}\right) = t \quad \mathrm{min}\left(r, s \right)
+$$
+
+When $t = s$, the regression model is *full-rank*, and can be fit using multiple regression on each $Y_i \in \mathbf{Y}.$ When $t < s$, $\mathbf{C}$ can be decomposed into non-unique matrices $\mathbf{A}_{s \times t}$ and $\mathbf{B}_{t \times r}$, such that $\mathbf{C} = \mathbf{AB},$ and the multivariate regression model is given by
+
+$$
+\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times t}{\mathbf{A}} \; \overset{t \times r}{\mathbf{B}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
+$$
+
+Finding $\mathbf{A}, \mathbf{B}$, and ultimately the *reduced-rank regression coefficient* $\mathbf{C}^{\left(t\right)}$, is done by minimizing the weighted sum-of-squares criterion
+
+$$
+\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)^\tau \mathbf{\Gamma}\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)\right]
+$$
+
+where $\boldsymbol{\Gamma}$ is a positive-definite symmetric $\left(s \times s\right)$-matrix of weights, the expectation of which is taken over the joint distribution $\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)^\tau$. This weighted sum-of-squares criterion is minimized when
+
+$$
+\begin{aligned}
+	\boldsymbol{\mu}^\left(t\right) & = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
+	\mathbf{A}^{\left(t\right)} & = \mathbf{\Gamma}^{-1/2}\mathbf{V}_t \\
+	\mathbf{B}^{\left(t\right)} & = \mathbf{V}_t^\tau \boldsymbol{\Gamma}^{-1/2}\mathbf{\Sigma}_{YX}\mathbf{XX}^{-1} \\
+\end{aligned}
+$$
+
+where $\mathbf{V}_t = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right)$ is an $\left(s \times t\right)$-matrix, with $\mathbf{v}_j$ the eigenvector associated with the $j$th largest eigenvalue of
+
+$$
+\mathbf{\Gamma}^{1/2} \mathbf{\Sigma}_{YX} \mathbf_{XX}^{-1} \mathbf_{XY} \mathbf{\Gamma}^{1/2}
+$$
+
+Using different values of $\mathbf{\Gamma}$ we can use the reduced-rank regression model carry out classical multivariate procedures.
 
 ## Principal Components Analysis
 
 Set
 
-$$latex
-\begin{aligned*}
+$$
+\begin{aligned}
 	\mathbf{Y} & \equiv \mathbf{X} \\
 	s & = r \\
 	\mathbf{\Gamma} & = \mathbf{I}_r \\
-\end{aligned*}
+\end{aligned}
 $$
 	
 Then, the least-squares error criterion
 
-\begin{equation}
-	\begin{aligned}
+$$
 	\mathrm{E}\left[\left(\mathbf{X} - \boldsymbol{\mu} - \mathbf{A}\mathbf{B}\mathbf{X}\right)^\tau\left(\mathbf{X} - \boldsymbol{\mu} - \mathbf{A}\mathbf{B}\mathbf{X}\right)\right]
-	\end{aligned}
-\end{equation}
+$$
 
 is minimized by the reduced-rank regression solution,
 
@@ -177,51 +219,3 @@ where $\mathbf{v}_j$ is the eigenvector associated with the $j$th largest eigenv
 
 ## Linear Discriminant Analysis
 
-
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
-```
-
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))

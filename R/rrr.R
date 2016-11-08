@@ -10,7 +10,7 @@
 #' @param k small number to add to the ridge.
 #'
 #' @references Izenman, A.J. (2008) Modern Multivariate Statistical Techniques. Springer.
-#' @export rrr
+#' @export
 
 rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	if(rank == "full"){
@@ -18,17 +18,10 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	} else {
 		reduce_rank <- rank
 	}
-	if(type == "cov"){
-		x_organize <- organize(x)
-		y_organize <- organize(y)
-	} else if(type == "cor"){
-		x_organize <- organize(x, scale = TRUE)
-		y_organize <- organize(y, scale = TRUE)
-	} else {
-		stop("type input not recognized")
-	}
-	sig_xx <- cov(x, x)# + k * diag(1, dim(x_organize)[1])
-	sig_yx <- cov(y_organize, x_organize)
+	x_organize <- organize(x, type)
+	y_organize <- organize(y, type)
+	sig_xx <- cov_matrix(x_organize, x_organize)# + k * diag(1, dim(x_organize)[1])
+	sig_yx <- cov_matrix(y_organize, x_organize)
         sig_yy <- cov_matrix(y_organize, y_organize)# + k * diag(1, dim(y_organize)[1])
         sig_xy <- t(sig_yx)
 	sqrtm <- sqrt_matrix(gamma_matrix)

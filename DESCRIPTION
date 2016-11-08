@@ -1,6 +1,6 @@
 Package: rrr
 Title: Reduced-Rank Regression
-Version: 0.0.6.9000
+Version: 0.0.8.9000
 Authors@R: person("Chris", "Addy", email = "chris.william.addy@gmail.com", role = c("aut", "cre"))
 URL: http://github.com/chrisaddy/rrr
 Description: Reduced-rank regression, diagnostics and graphics.

@@ -4,7 +4,7 @@
 \alias{rrlda}
 \title{Fit Reduced-Rank LDA Model}
 \usage{
-rrlda(x, y, k = 0, ld_num = 2)
+rrlda(x, y, k = 0, rank = 2)
 }
 \arguments{
 \item{x}{data frame of input variables}
@@ -12,6 +12,8 @@ rrlda(x, y, k = 0, ld_num = 2)
 \item{y}{data frame of response variables}
 
 \item{k}{small number to add to the ridge.}
+
+\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.}
 }
 \description{
 \code{lda} fits a reduced-rank linear discriminant analysis model.
