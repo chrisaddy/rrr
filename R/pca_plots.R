@@ -1,3 +1,11 @@
+#' PCA Rank Trace
+#'
+#' Rank trace to determine number of principle components to use in reduced-rank PCA.
+#'
+#' @inheritParams rrpca
+#'
+#' @export
+
 pca_rank_trace <- function(x){
     eigenvecs <- rrpca(x)$A
     eigens <- eigen(cov(x, x))
@@ -24,7 +32,7 @@ pca_rank_trace <- function(x){
 #'
 #' Plot of rank trace to determine number of principle components to use in reduced-rank PCA.
 #'
-#' @param x data frame or matrix of input variables
+#' @inheritParams rrpca
 #' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
 #'
 #' @export
