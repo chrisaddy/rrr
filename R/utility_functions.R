@@ -2,6 +2,9 @@
 #' @export
 magrittr::'%>%'
 
+#' @import dplyr
+#' @export
+
 #' @import ggplot
 #' @export
 
