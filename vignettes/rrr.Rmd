@@ -12,6 +12,8 @@ vignette: >
 ```{r message = FALSE, out.width = .8}
 devtools::install_github("chrisaddy/rrr")
 library(rrr)
+library(ggplot)
+library(dplyr)
 ```
 
 ### Reduced-Rank Regression and Its Special Cases
