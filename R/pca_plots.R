@@ -8,7 +8,7 @@
 
 pca_rank_trace <- function(x){
     eigenvecs <- rrpca(x)$A
-    eigens <- eigen(cov(x, x))
+    eigens <- eigen(cov(x))
     full_rank <- dim(eigens$vectors)[2]
     delta_C <- function(t){
         sqrt(1 - t / full_rank)
@@ -80,9 +80,6 @@ pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
 #' @export
  
 pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
-    if(is.null(class_labels)){
-
-    }
     class <- as_data_frame(class_labels)
     names(class) <- c("class")
     pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)

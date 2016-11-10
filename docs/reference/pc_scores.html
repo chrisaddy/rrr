@@ -81,12 +81,18 @@
     <p><code>pc_scores</code> returns data frame of principle component scores from reduced-rank PCA</p>
     
 
-    <pre><span class='fu'>pc_scores</span>(<span class='no'>x</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>)</pre>
+    <pre><span class='fu'>pc_scores</span>(<span class='no'>rrpca_object</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>a data frame or matrix of predictor variables.</dd>
+      <dt>rrpca_object</dt>
+      <dd>object returned by <code>rrpca</code> of type `list`.</dd>
+      <dt>rank</dt>
+      <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> is standard multivariate regression.</dd>
+      <dt>type</dt>
+      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
+      <dt>k</dt>
+      <dd>small number to add to the ridge.</dd>
     </dl>
     
 

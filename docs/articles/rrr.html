@@ -79,7 +79,7 @@
 \]</span></p>
 <p>where <span class="math inline">\(\mathbf{V}_t = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right)\)</span> is an <span class="math inline">\(\left(s \times t\right)\)</span>-matrix, with <span class="math inline">\(\mathbf{v}_j\)</span> the eigenvector associated with the <span class="math inline">\(j\)</span>th largest eigenvalue of</p>
 <p><span class="math display">\[
-\mathbf{\Gamma}^{1/2} \mathbf{\Sigma}_{YX} \mathbf_{XX}^{-1} \mathbf_{XY} \mathbf{\Gamma}^{1/2}
+\mathbf{\Gamma}^{1/2}\mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1} \mathbf{\Sigma}_{XY} \mathbf{\Gamma}^{1/2}
 \]</span></p>
 <p>Using different values of <span class="math inline">\(\mathbf{\Gamma}\)</span> we can use the reduced-rank regression model carry out classical multivariate procedures.</p>
 </div>
@@ -114,13 +114,9 @@
     \end{aligned}
 \end{equation}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(readr)
-digits &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"http://astro.ocis.temple.edu/~alan/pendigits.txt"</span>, <span class="dt">delim =</span> <span class="st">" "</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_integer()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(X35)
+digits &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"http://astro.ocis.temple.edu/~alan/pendigits.txt"</span>, <span class="dt">delim =</span> <span class="st">" "</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)
+
+digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(X35)
 digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-X35, -X36)
 
 digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rrpca.html">rrpca</a></span>(digits_features)
@@ -130,7 +126,7 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 ## [11] 0.0190 0.0122 0.0078 0.0038 0.0020 0.0003 0.0001 0.0000 0.0000 0.0000
 ## [21] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
 ## [31] 0.0000 0.0000 0.0000 0.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pca_rank_trace</span>(digits_features)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace.html">pca_rank_trace</a></span>(digits_features)</code></pre></div>
 <pre><code>## # A tibble: 35 &times; 3
 ##     rank   delta_C delta_residuals
 ##    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
@@ -190,14 +186,12 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
     \end{aligned}
 \end{equation}\]</span>
 <p>requires minimizing the least-squares criterion</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[
     \begin{aligned}
         \mathrm{E}\left[\left(\mathbf{H}\mathbf{Y} - \boldsymbol{\nu} - \mathbf{G}\mathbf{X}\right)\left(\mathbf{H}\mathbf{Y} - \boldsymbol{\nu} - \mathbf{G}\mathbf{X}\right)^\tau\right]
     \end{aligned},
-
-where we assume $\mathrm{cov}\left(\boldsymbol{\omega}\right) = \mathbf{I}_t$.
-\end{equation}\]</span>
-<p>. This least-squares criterion is minimized when</p>
+\]</span></p>
+<p>where we assume <span class="math inline">\(\mathrm{cov}\left(\boldsymbol{\omega}\right) = \mathbf{I}_t\)</span>. This least-squares criterion is minimized when</p>
 <span class="math display">\[\begin{equation}
     \begin{aligned}
         \boldsymbol{\nu}^{\left(t\right)} &amp; = \mathbf{H}^{\left(t\right)} \boldsymbol{\mu}_Y - \mathbf{G}^{\left(t\right)}\boldsymbol{\mu}_Y \\
