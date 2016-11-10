@@ -25,6 +25,8 @@ sqrt_matrix <- function(matr){
 			vecs %*% diag(sqrt(vals), length(vals)) %*% t(vecs)
 }
 
+#' @export
+
 organize <- function(vars, type = "cov"){
 	matr <- as.matrix(vars)
 	if(type == "cov"){
