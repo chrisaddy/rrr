@@ -20,6 +20,7 @@ Collate:
     pca_diagnostics.R
     pca_plots.R
     cva.R
+    cva_diagnostics.R
     lda.R
 License: GPL-3
 Encoding: UTF-8
