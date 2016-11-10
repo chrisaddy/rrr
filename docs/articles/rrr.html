@@ -38,14 +38,16 @@
       <h1><code>rrr</code> for Multivariate Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-08</h4>
+            <h4 class="date">2016-11-10</h4>
           </div>
 
     
     
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"chrisaddy/rrr"</span>)
-<span class="kw">library</span>(rrr)</code></pre></div>
+<span class="kw">library</span>(rrr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr)</code></pre></div>
 <div id="reduced-rank-regression-and-its-special-cases" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#reduced-rank-regression-and-its-special-cases" class="anchor"> </a></body></html>Reduced-Rank Regression and Its Special Cases</h3>
 <p>The multivariate linear regression model is given by</p>
@@ -113,37 +115,21 @@
         \boldsymbol{\mu}^{\left(t\right)} + \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)} \mathbf{X}
     \end{aligned}
 \end{equation}\]</span>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(readr)
-digits &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"http://astro.ocis.temple.edu/~alan/pendigits.txt"</span>, <span class="dt">delim =</span> <span class="st">" "</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#require(readr)</span>
+<span class="co">#digits &lt;- read_delim("http://astro.ocis.temple.edu/~alan/pendigits.txt", delim = " ", col_names = FALSE)</span>
 
-digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(X35)
-digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-X35, -X36)
+<span class="co">#digits_class &lt;- digits %&gt;% dplyr::select(X35)</span>
+<span class="co">#digits_features &lt;- digits %&gt;% dplyr::select(-X35, -X36)</span>
 
-digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rrpca.html">rrpca</a></span>(digits_features)
+<span class="co">#digits_pca &lt;- rrpca(digits_features)</span>
 
-<span class="kw"><a href="../reference/pca_gof.html">pca_gof</a></span>(digits_features) %&gt;%<span class="st"> </span><span class="kw">round</span>(<span class="dv">4</span>)</code></pre></div>
-<pre><code>##  [1] 0.7169 0.4681 0.3145 0.2243 0.1664 0.1181 0.0874 0.0607 0.0414 0.0276
-## [11] 0.0190 0.0122 0.0078 0.0038 0.0020 0.0003 0.0001 0.0000 0.0000 0.0000
-## [21] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
-## [31] 0.0000 0.0000 0.0000 0.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace.html">pca_rank_trace</a></span>(digits_features)</code></pre></div>
-<pre><code>## # A tibble: 35 &times; 3
-##     rank   delta_C delta_residuals
-##    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
-## 1      0 1.0000000      1.00000000
-## 2      1 0.9851844      0.71687775
-## 3      2 0.9701425      0.46805987
-## 4      3 0.9548637      0.31446713
-## 5      4 0.9393364      0.22432933
-## 6      5 0.9235481      0.16640087
-## 7      6 0.9074852      0.11813147
-## 8      7 0.8911328      0.08737814
-## 9      8 0.8744746      0.06065970
-## 10     9 0.8574929      0.04138801
-## # ... with 25 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pc_pairwise_plot(digits_features, class_labels = digits_class)</span>
+<span class="co">#pca_gof(digits_features) %&gt;% round(4)</span>
+
+<span class="co">#pca_rank_trace(digits_features)</span>
+
+<span class="co">#pca_rank_trace_plot(digits_features)</span>
+
+<span class="co">#pc_pairwise_plot(digits_features, class_labels = digits_class)</span>
 
 <span class="co">#pc_plot_3D(digits_features, class_labels = digits_class)</span></code></pre></div>
 </div>
@@ -227,7 +213,9 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 <span class="co">#galaxy_y &lt;- galaxy %&gt;% select(Rmag:chi2red)</span>
 
 <span class="co">#galaxy_x</span>
-<span class="co">#galaxy_y</span></code></pre></div>
+<span class="co">#galaxy_y</span>
+
+<span class="co">#rrcva(galaxy_x, galaxy_y, rank = 2)</span></code></pre></div>
 </div>
 <div id="linear-discriminant-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#linear-discriminant-analysis" class="anchor"> </a></body></html>Linear Discriminant Analysis</h2>

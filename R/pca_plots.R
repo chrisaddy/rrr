@@ -39,7 +39,7 @@ pca_rank_trace <- function(x){
 
 pca_rank_trace_plot <- function(x, interactive = FALSE){
     rt <- pca_rank_trace(x)
-    static_plot <- ggplot(rt) +
+    static_plot <- ggplot2::ggplot(rt) +
         aes(x = delta_C,
                      y = delta_residuals,
                      label = rank) +
@@ -84,7 +84,7 @@ pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = 
     names(class) <- c("class")
     pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
     pairs_tbl <- bind_cols(pairs, class)
-    static_plot <- ggplot(pairs_tbl,
+    static_plot <- ggplot2::ggplot(pairs_tbl,
                     aes_q(colnames(pairs_tbl)[1],
                                colnames(pairs_tbl)[2])) +
         geom_point(aes(color = factor(class))) +

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Organize Matrix for Reduced-Rank Regression — organize • rrr</title>
+<title>Linear Discriminant Scores — ld_scores • rrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,21 +74,27 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Organize Matrix for Reduced-Rank Regression</h1>
+    <h1>Linear Discriminant Scores</h1>
     </div>
 
     
-    <p><code>organize</code> transposes and mean-centers a data frame or matrix of input or output variables.</p>
+    <p><code>ld_scores</code></p>
     
 
-    <pre><span class='fu'>organize</span>(<span class='no'>vars</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>)</pre>
+    <pre><span class='fu'>ld_scores</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>rank</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>vars</dt>
-      <dd>data frame or matrix of variables to be organized.</dd>
+      <dt>x</dt>
+      <dd>data frame of input variables</dd>
+      <dt>y</dt>
+      <dd>data frame of response variables</dd>
+      <dt>rank</dt>
+      <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> is standard multivariate regression.</dd>
       <dt>type</dt>
       <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
+      <dt>k</dt>
+      <dd>small number to add to the ridge.</dd>
     </dl>
     
 

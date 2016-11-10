@@ -9,16 +9,9 @@
 #' @export
 
 rrcva <- function(x, y, rank = "full", type = "cov", k = 0) {
-	if(type == "cov"){
-		y_c <- scale(y, center = TRUE, scale = FALSE)
-	} else if(type == "cor"){
-		y_c <- scale(y, center = TRUE, scale = TRUE)
-	} else {
-		stop("argument type not recognized")
-	}
-	gamma <- cov(y, y)
+	y_c <- organize(y, type)
+	gamma <- cov(y)
 	rrr_object <- rrr(x, y, gamma, rank, type)
         rrr_object$H <- ginv(rrr_object$A)
-        rrr_object
+    list(mean = rrr_object$mean, C = rrr_object$C, G = rrr_object$B, H = ginv(rrr_object$A))
 }
-

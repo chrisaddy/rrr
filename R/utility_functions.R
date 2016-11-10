@@ -5,6 +5,9 @@ magrittr::'%>%'
 #' @import dplyr
 #' @export
 
+#' @import ggplot2
+#' @export
+
 #' @importFrom stats cov
 #' @export
 
@@ -21,6 +24,15 @@ sqrt_matrix <- function(matr){
 			vals <- eigens$values
 			vecs %*% diag(sqrt(vals), length(vals)) %*% t(vecs)
 }
+
+#' Organize Matrix for Reduced-Rank Regression
+#' 
+#' \code{organize} transposes and mean-centers a data frame or matrix of input or output variables.
+#' 
+#' @inheritParams rrr
+#' @param vars data frame or matrix of variables to be organized.
+#'
+#' @export
 
 organize <- function(vars, type = "cov"){
 	matr <- as.matrix(vars)
