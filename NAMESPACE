@@ -3,6 +3,7 @@
 export("%>%")
 export(cva_residuals)
 export(ginv)
+export(ld_scores)
 export(organize)
 export(pc_pairwise_plot)
 export(pc_plot_3D)

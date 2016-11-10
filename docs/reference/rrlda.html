@@ -81,7 +81,7 @@
     <p><code>lda</code> fits a reduced-rank linear discriminant analysis model.</p>
     
 
-    <pre><span class='fu'>rrlda</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre><span class='fu'>rrlda</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>rank</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -89,10 +89,12 @@
       <dd>data frame of input variables</dd>
       <dt>y</dt>
       <dd>data frame of response variables</dd>
-      <dt>k</dt>
-      <dd>small number to add to the ridge.</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> is standard multivariate regression.</dd>
+      <dt>type</dt>
+      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
+      <dt>k</dt>
+      <dd>small number to add to the ridge.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
