@@ -2,7 +2,7 @@
 #' @export
 magrittr::'%>%'
 
-#' @import
+#' @import ggplot
 #' @export
 
 #' @importFrom stats cov
