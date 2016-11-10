@@ -4,10 +4,10 @@
 \alias{pc_scores}
 \title{Reduced-rank Principal Component Scores}
 \usage{
-pc_scores(rrpca_object, rank = "full", type = "cov", k = 0)
+pc_scores(x, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{rrpca_object}{object returned by \code{rrpca} of type `list`.}
+\item{x}{data frame of input variables}
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.}
 
