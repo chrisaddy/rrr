@@ -20,23 +20,23 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	}
 	x_organize <- organize(x, type)
 	y_organize <- organize(y, type)
-	sig_xx <- cov_matrix(x_organize, x_organize)# + k * diag(1, dim(x_organize)[1])
-	sig_yx <- cov_matrix(y_organize, x_organize)
-        sig_yy <- cov_matrix(y_organize, y_organize)# + k * diag(1, dim(y_organize)[1])
-        sig_xy <- t(sig_yx)
+	cov_x <- cov(x) #+ k * diag(1, dim(x_organize)[1])
+	cov_yx <- cov(y, x)
+    cov_y <- cov(y) #+ k * diag(1, dim(y_organize)[1])
+    cov_xy <- t(cov_yx)
 	sqrtm <- sqrt_matrix(gamma_matrix)
 	weighted_matrix <- sqrtm %*%
-		sig_yx %*%
-		solve(sig_xx) %*%
-		sig_xy %*%
+		cov_yx %*%
+		solve(cov_x) %*%
+		cov_xy %*%
 		sqrtm
 	V_t <- eigen(weighted_matrix)$vectors[,1:reduce_rank] %>%
 		as.matrix(ncol = reduce_rank)
 	A_t <- solve(sqrtm) %*% V_t
 	B_t <- t(V_t) %*%
 		sqrtm %*%
-		sig_yx %*%
-		solve(sig_xx)
+		cov_yx %*%
+		solve(cov_x)
 	C_t <- A_t %*% B_t
 	mu_y <- colMeans(y)
 	mu_x <- colMeans(x)
