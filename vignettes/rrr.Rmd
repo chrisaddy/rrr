@@ -115,7 +115,7 @@ digits_pca <- rrpca(digits_features)
 
 pca_gof(digits_features) %>% round(4)
 
-pca_rank_trace(digits_features)
+#pca_rank_trace(digits_features)
 
 pca_rank_trace_plot(digits_features)
 
