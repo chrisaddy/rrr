@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Multivariate Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-08</h4>
+            <h4 class="date">2016-11-10</h4>
           </div>
 
     
@@ -126,22 +126,9 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 ## [11] 0.0190 0.0122 0.0078 0.0038 0.0020 0.0003 0.0001 0.0000 0.0000 0.0000
 ## [21] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
 ## [31] 0.0000 0.0000 0.0000 0.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace.html">pca_rank_trace</a></span>(digits_features)</code></pre></div>
-<pre><code>## # A tibble: 35 &times; 3
-##     rank   delta_C delta_residuals
-##    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
-## 1      0 1.0000000      1.00000000
-## 2      1 0.9851844      0.71687775
-## 3      2 0.9701425      0.46805987
-## 4      3 0.9548637      0.31446713
-## 5      4 0.9393364      0.22432933
-## 6      5 0.9235481      0.16640087
-## 7      6 0.9074852      0.11813147
-## 8      7 0.8911328      0.08737814
-## 9      8 0.8744746      0.06065970
-## 10     9 0.8574929      0.04138801
-## # ... with 25 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_rank_trace(digits_features)</span>
+
+<span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
 <p><img src="rrr_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pc_pairwise_plot(digits_features, class_labels = digits_class)</span>
 
@@ -218,16 +205,84 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
     \end{aligned}
 \end{equation}\]</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### COMBO-17 galaxy data
-<span class="co">#data(COMBO17)</span>
-<span class="co">#galaxy &lt;- as_data_frame(COMBO17) %&gt;%</span>
-<span class="co">#       select(-starts_with("e."), -Nr, -UFS:-IFD) %&gt;%</span>
-<span class="co">#       na.omit()</span>
+<span class="kw">data</span>(COMBO17)
+galaxy &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(COMBO17) %&gt;%
+<span class="st">       </span><span class="kw">select</span>(-<span class="kw">starts_with</span>(<span class="st">"e."</span>), -Nr, -UFS:-IFD) %&gt;%
+<span class="st">       </span><span class="kw">na.omit</span>()
 
-<span class="co">#galaxy_x &lt;- galaxy %&gt;% select(-Rmag:-chi2red)</span>
-<span class="co">#galaxy_y &lt;- galaxy %&gt;% select(Rmag:chi2red)</span>
+galaxy_x &lt;-<span class="st"> </span>galaxy %&gt;%<span class="st"> </span><span class="kw">select</span>(-Rmag:-chi2red)
+galaxy_y &lt;-<span class="st"> </span>galaxy %&gt;%<span class="st"> </span><span class="kw">select</span>(Rmag:chi2red)
 
 <span class="co">#galaxy_x</span>
-<span class="co">#galaxy_y</span></code></pre></div>
+<span class="co">#galaxy_y</span>
+
+<span class="kw"><a href="../reference/rrcva.html">rrcva</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## $mean
+##            [,1]
+## [1,] 26.9647035
+## [2,]  0.7778445
+## [3,] 25.8103529
+## [4,] -0.7838949
+## [5,] -0.7059124
+## [6,]  2.1087757
+## 
+## $A
+##             [,1]       [,2]
+## [1,] 0.450509577 -0.3121809
+## [2,] 0.071013907 -0.4289359
+## [3,] 0.335325320  0.2488848
+## [4,] 0.020673543  1.2603829
+## [5,] 0.025943827  1.2558874
+## [6,] 0.003141958 -0.7126123
+## 
+## $B
+##          UjMAG       BjMAG       VjMAG      usMAG     gsMAG     rsMAG
+## [1,] 12.801398 0.030027684 -10.0136034  7.3781810 3.6563154 7.4920875
+## [2,] -3.526777 0.007037918  -0.6006888 -0.1396253 0.1362222 0.4440037
+##           UbMAG       BbMAG       VnMAG     S280MAG     W420FE     W462FE
+## [1,] -20.863684 -0.09214493 -0.28762197 0.114366840 -80.577920 -45.925360
+## [2,]   3.573287 -0.01097271  0.01701159 0.004312253  -3.552204  -2.571896
+##         W485FD    W518FE   W571FS   W604FE    W646FD      W696FE
+## [1,] 12.502665 53.802839 36.09168 3.096505 -8.390231 -42.9136538
+## [2,]  4.118007  1.729646  1.42660 2.451877 -3.999906  -0.8652682
+##          W753FE    W815FS      W856FD    W914FD    W914FE
+## [1,] 34.1142186 -36.60718 -13.4812757 19.003834 2.4553493
+## [2,]  0.8532394  -3.14504  -0.2666507  1.330534 0.7642494
+## 
+## $C
+##          UjMAG         BjMAG      VjMAG       usMAG       gsMAG      rsMAG
+## [1,]  6.868145  0.0113306551 -4.3237007  3.36752953  1.60467915  3.2366477
+## [2,]  2.421839 -0.0008864329 -0.4534481  0.58384375  0.20121867  0.3415933
+## [3,]  3.414872  0.0118206732 -3.5073170  2.43934030  1.25995876  2.6227924
+## [4,] -4.180439  0.0094912505 -0.9641145 -0.02344814  0.24728106  0.7145027
+## [5,] -4.097117  0.0096178660 -1.0141886  0.01606466  0.26593850  0.7519921
+## [6,]  2.553446 -0.0049209614  0.3965959  0.12268060 -0.08558559 -0.2928627
+##           UbMAG        BbMAG       VnMAG      S280MAG     W420FE
+## [1,] -10.514802 -0.038086701 -0.13488715  0.050177153 -35.192194
+## [2,]  -3.014323 -0.001836983 -0.02772204  0.006271956  -4.198485
+## [3,]  -6.106785 -0.033629466 -0.09221300  0.039423351 -27.903906
+## [4,]   4.072383 -0.015734776  0.01549496  0.007799458  -6.142968
+## [5,]   3.946362 -0.016171078  0.01390263  0.008382818  -6.551668
+## [6,]  -2.611921  0.007529771 -0.01302637 -0.002713629   2.278172
+##          W462FE    W485FD    W518FE     W571FS     W604FE    W646FD
+## [1,] -19.886918  4.347007 23.698732 15.8142894  0.6295759 -2.531185
+## [2,]  -2.158161 -0.878498  3.078842  1.9510913 -0.8318030  1.119880
+## [3,] -16.040042  5.217369 18.471937 12.4575124  1.6485712 -3.808972
+## [4,]  -4.191013  5.448740  3.292312  2.5442046  3.1543190 -5.214869
+## [5,]  -4.421491  5.496120  3.568092  2.7280047  3.1596161 -5.241106
+## [6,]   1.688469 -2.895259 -1.063521 -0.9032139 -1.7375083  2.824020
+##           W696FE     W753FE     W815FS     W856FD     W914FD     W914FE
+## [1,] -19.0628918 15.1024171 -15.510064 -5.9902006  8.1460418  0.8675743
+## [2,]  -2.6763216  2.0565989  -1.250598 -0.8429820  0.7788227 -0.1534501
+## [3,] -14.6053868 11.6517195 -13.058067 -4.5869784  6.7036162  1.0135508
+## [4,]  -1.9777464  1.7806701  -4.720755 -0.6147877  2.0698587  1.0140077
+## [5,]  -2.2000238  1.9566260  -4.899547 -0.6846392  2.1640329  1.0235124
+## [6,]   0.4817678 -0.5008435   2.126176  0.1476610 -0.8884456 -0.5368989
+## 
+## $H
+##             [,1]       [,2]       [,3]       [,4]      [,5]         [,6]
+## [1,]  1.39453594  0.2106292 1.04963650 0.09485012 0.1111437 -0.007471155
+## [2,] -0.06686816 -0.1051414 0.07012137 0.31449831 0.3135059 -0.177456306</code></pre>
 </div>
 <div id="linear-discriminant-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#linear-discriminant-analysis" class="anchor"> </a></body></html>Linear Discriminant Analysis</h2>

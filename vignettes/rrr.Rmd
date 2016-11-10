@@ -120,7 +120,7 @@ pca_gof(digits_features) %>% round(4)
 
 pca_rank_trace_plot(digits_features)
 
-pc_pairwise_plot(digits_features, class_labels = digits_class)
+#pc_pairwise_plot(digits_features, class_labels = digits_class)
 
 #pc_plot_3D(digits_features, class_labels = digits_class)
 ```
@@ -209,16 +209,18 @@ where $\mathbf{v}_j$ is the eigenvector associated with the $j$th largest eigenv
 
 ```{r}
 ### COMBO-17 galaxy data
-#data(COMBO17)
-#galaxy <- as_data_frame(COMBO17) %>%
-#       select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
-#       na.omit()
+data(COMBO17)
+galaxy <- as_data_frame(COMBO17) %>%
+       select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
+       na.omit()
 
-#galaxy_x <- galaxy %>% select(-Rmag:-chi2red)
-#galaxy_y <- galaxy %>% select(Rmag:chi2red)
+galaxy_x <- galaxy %>% select(-Rmag:-chi2red)
+galaxy_y <- galaxy %>% select(Rmag:chi2red)
 
 #galaxy_x
 #galaxy_y
+
+rrcva(galaxy_x, galaxy_y, rank = 2)
 ```
 
 ## Linear Discriminant Analysis

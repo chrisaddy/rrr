@@ -5,6 +5,9 @@ magrittr::'%>%'
 #' @import dplyr
 #' @export
 
+#' @import ggplot
+#' @export
+
 #' @importFrom stats cov
 #' @export
 
