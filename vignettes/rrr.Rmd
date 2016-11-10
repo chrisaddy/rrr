@@ -112,13 +112,13 @@ digits <- read_delim("http://astro.ocis.temple.edu/~alan/pendigits.txt", delim =
 digits_class <- digits %>% dplyr::select(X35)
 digits_features <- digits %>% dplyr::select(-X35, -X36)
 
-digits_pca <- rrpca(digits_features)
+#digits_pca <- rrpca(digits_features)
 
-pca_gof(digits_features) %>% round(4)
+#pca_gof(digits_features) %>% round(4)
 
 #pca_rank_trace(digits_features)
 
-pca_rank_trace_plot(digits_features)
+#pca_rank_trace_plot(digits_features)
 
 #pc_pairwise_plot(digits_features, class_labels = digits_class)
 

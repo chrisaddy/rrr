@@ -119,18 +119,15 @@ digits &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span cl
 digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(X35)
 digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-X35, -X36)
 
-digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rrpca.html">rrpca</a></span>(digits_features)
+<span class="co">#digits_pca &lt;- rrpca(digits_features)</span>
 
-<span class="kw"><a href="../reference/pca_gof.html">pca_gof</a></span>(digits_features) %&gt;%<span class="st"> </span><span class="kw">round</span>(<span class="dv">4</span>)</code></pre></div>
-<pre><code>##  [1] 0.7169 0.4681 0.3145 0.2243 0.1664 0.1181 0.0874 0.0607 0.0414 0.0276
-## [11] 0.0190 0.0122 0.0078 0.0038 0.0020 0.0003 0.0001 0.0000 0.0000 0.0000
-## [21] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
-## [31] 0.0000 0.0000 0.0000 0.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_rank_trace(digits_features)</span>
+<span class="co">#pca_gof(digits_features) %&gt;% round(4)</span>
 
-<span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pc_pairwise_plot(digits_features, class_labels = digits_class)</span>
+<span class="co">#pca_rank_trace(digits_features)</span>
+
+<span class="co">#pca_rank_trace_plot(digits_features)</span>
+
+<span class="co">#pc_pairwise_plot(digits_features, class_labels = digits_class)</span>
 
 <span class="co">#pc_plot_3D(digits_features, class_labels = digits_class)</span></code></pre></div>
 </div>
