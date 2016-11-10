@@ -41,5 +41,5 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	mu_y <- colMeans(y)
 	mu_x <- colMeans(x)
 	mu_t <- mu_y - C_t %*% mu_x
-	list(mean = mu_t[,1], A = A_t, B = B_t, C = C_t)
+	list(mean = mu_t, A = A_t, B = B_t, C = C_t)
 }
