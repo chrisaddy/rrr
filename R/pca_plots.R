@@ -58,6 +58,7 @@ pca_rank_trace_plot <- function(x, interactive = FALSE){
     }
 }
 
+#' @export
 pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
     scores <- pc_scores(x, rank, type)
     score_1 <- paste("PC", pc_1, sep = "")
@@ -81,12 +82,12 @@ pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
  
 pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
     class <- as_data_frame(class_labels)
-    names(class) <- c("class")
     pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
     pairs_tbl <- bind_cols(pairs, class)
+    names(pairs_tbl) <- c("pc_x", "pc_y", "class")
     static_plot <- ggplot2::ggplot(pairs_tbl,
-                    aes_q(colnames(pairs_tbl)[1],
-                               colnames(pairs_tbl)[2])) +
+                    aes(pc_x,
+                        pc_y)) +
         geom_point(aes(color = factor(class))) +
         labs(x = paste("PC", pc_1, sep = ""),
                       y = paste("PC", pc_2, sep = "")) +
@@ -96,7 +97,7 @@ pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = 
         ggplotly(static_plot)
     } else {
         static_plot
-    }   
+    }
 }
 
 pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
@@ -126,10 +127,10 @@ pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, ran
     threes <- pc_threewise(x, pc_x, pc_y, pc_z, rank, type)
     threes_tbl <- bind_cols(threes, class)
     names(threes_tbl) <- c("x_coord", "y_coord", "z_coord", "class")
-    plot_ly(threes_tbl, x = ~x_coord, y = ~y_coord, z = ~z_coord, color = ~factor(class)) %>%
-        layout(title = "PC Scatter 3D",
-         scene = list(
-           xaxis = list(title = names(threes)[1]), 
-           yaxis = list(title = names(threes)[2]), 
-           zaxis = list(title = names(threes)[3])))
+    plot_ly(threes_tbl, x = ~x_coord, y = ~y_coord, z = ~z_coord, color = ~factor(class)) #%>%
+        #layout(title = "PC Scatter 3D",
+         #scene = list(
+         #  xaxis = list(title = names(threes)[1]), 
+         #  yaxis = list(title = names(threes)[2]), 
+         #  zaxis = list(title = names(threes)[3])))
 }

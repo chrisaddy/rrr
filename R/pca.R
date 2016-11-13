@@ -32,6 +32,8 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
 
 pc_scores <- function(x, rank = "full", type = "cov", k = 0){
     pca <- rrpca(x, rank, type, k)
-    pca$A %*% organize(x) %>%
+    scores <- t(pca$A %*% organize(x)) %>%
         as_data_frame()
+    names(scores) <- paste("PC", 1:dim(scores)[2], sep = "")
+    scores
 }
