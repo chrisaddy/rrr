@@ -81,18 +81,31 @@ pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
 #' @export
  
 pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
-    class <- as_data_frame(class_labels)
     pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
-    pairs_tbl <- bind_cols(pairs, class)
-    names(pairs_tbl) <- c("pc_x", "pc_y", "class")
-    static_plot <- ggplot2::ggplot(pairs_tbl,
+    if(is.null(class_labels)){
+        pairs_tbl <- pairs
+        names(pairs_tbl) <- c("pc_x", "pc_y")
+        static_plot <- ggplot2::ggplot(pairs_tbl,
                     aes(pc_x,
-                        pc_y)) +
-        geom_point(aes(color = factor(class))) +
-        labs(x = paste("PC", pc_1, sep = ""),
-                      y = paste("PC", pc_2, sep = "")) +
-        labs(title = "PC Pairwise") +
-        theme(legend.title = element_blank())
+                            pc_y)) +
+            geom_point() +
+            labs(x = paste("PC", pc_1, sep = ""),
+                          y = paste("PC", pc_2, sep = "")) +
+            labs(title = "PC Pairwise") +
+            theme(legend.title = element_blank())
+    } else {
+        class <- as_data_frame(class_labels)
+        pairs_tbl <- bind_cols(pairs, class)
+        names(pairs_tbl) <- c("pc_x", "pc_y", "class")
+        static_plot <- ggplot2::ggplot(pairs_tbl,
+                                       aes(pc_x,
+                                        pc_y)) +
+            geom_point(aes(color = factor(class))) +
+            labs(x = paste("PC", pc_1, sep = ""),
+                          y = paste("PC", pc_2, sep = "")) +
+            labs(title = "PC Pairwise") +
+            theme(legend.title = element_blank())
+    }
     if(interactive == TRUE){
         ggplotly(static_plot)
     } else {
