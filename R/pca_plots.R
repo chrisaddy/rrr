@@ -87,7 +87,7 @@ pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = 
         names(pairs_tbl) <- c("pc_x", "pc_y")
         static_plot <- ggplot2::ggplot(pairs_tbl,
                     aes(pc_x,
-                            pc_y)) +
+                        pc_y)) +
             geom_point() +
             labs(x = paste("PC", pc_1, sep = ""),
                           y = paste("PC", pc_2, sep = "")) +
