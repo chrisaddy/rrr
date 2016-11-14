@@ -58,11 +58,10 @@ pca_rank_trace_plot <- function(x, interactive = FALSE){
     }
 }
 
-#' @export
-pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
+pc_pairwise <- function(x, pc_x, pc_y, rank = "full", type = "cov"){
     scores <- pc_scores(x, rank, type)
-    score_1 <- paste("PC", pc_1, sep = "")
-    score_2 <- paste("PC", pc_2, sep = "")
+    score_1 <- paste("PC", pc_x, sep = "")
+    score_2 <- paste("PC", pc_y, sep = "")
     select(scores, ends_with(score_1), ends_with(score_2))
 }
 
@@ -71,8 +70,8 @@ pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
 #' \code{pc_pairwise_plot}
 #'
 #' @param x data frame or matrix of predictor variables
-#' @param pc_1 principal component for the x-axis
-#' @param pc_2 principal component for the y-axis
+#' @param pc_x principal component for the x-axis
+#' @param pc_y principal component for the y-axis
 #' @param class_labels data frame or vector of class labels
 #' @param rank rank of coefficient matrix
 #' @param type type of covariance matrix
@@ -80,8 +79,8 @@ pc_pairwise <- function(x, pc_1, pc_2, rank = "full", type = "cov"){
 #'
 #' @export
  
-pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
-    pairs <- pc_pairwise(x, pc_1, pc_2, rank, type)
+pc_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
+    pairs <- pc_pairwise(x, pc_x, pc_y, rank, type)
     if(is.null(class_labels)){
         pairs_tbl <- pairs
         names(pairs_tbl) <- c("pc_x", "pc_y")
@@ -89,8 +88,8 @@ pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = 
                     aes(pc_x,
                         pc_y)) +
             geom_point() +
-            labs(x = paste("PC", pc_1, sep = ""),
-                          y = paste("PC", pc_2, sep = "")) +
+            labs(x = paste("PC", pc_x, sep = ""),
+                          y = paste("PC", pc_y, sep = "")) +
             labs(title = "PC Pairwise") +
             theme(legend.title = element_blank())
     } else {
@@ -101,8 +100,8 @@ pc_pairwise_plot <- function(x, pc_1 = 1, pc_2 = 2, class_labels = NULL, rank = 
                                        aes(pc_x,
                                         pc_y)) +
             geom_point(aes(color = factor(class))) +
-            labs(x = paste("PC", pc_1, sep = ""),
-                          y = paste("PC", pc_2, sep = "")) +
+            labs(x = paste("PC", pc_x, sep = ""),
+                          y = paste("PC", pc_y, sep = "")) +
             labs(title = "PC Pairwise") +
             theme(legend.title = element_blank())
     }
@@ -145,5 +144,5 @@ pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, ran
          #scene = list(
          #  xaxis = list(title = names(threes)[1]), 
          #  yaxis = list(title = names(threes)[2]), 
-         #  zaxis = list(title = names(threes)[3])))
+        #   zaxis = list(title = names(threes)[3])))
 }

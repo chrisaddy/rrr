@@ -12,7 +12,7 @@ vignette: >
 ```{r message = FALSE, out.width = .8}
 devtools::install_github("chrisaddy/rrr")
 library(rrr)
-library(ggplot2)
+#library(ggplot2)
 library(dplyr)
 ```
 
