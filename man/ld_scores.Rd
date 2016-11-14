@@ -7,9 +7,9 @@
 ld_scores(x, y, rank, type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame of input variables}
+\item{x}{data frame or matrix of input variables}
 
-\item{y}{data frame of response variables}
+\item{y}{data frame or matrix of response variables}
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.}
 

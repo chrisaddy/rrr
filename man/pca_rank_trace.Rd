@@ -4,10 +4,14 @@
 \alias{pca_rank_trace}
 \title{PCA Rank Trace}
 \usage{
-pca_rank_trace(x)
+pca_rank_trace(x, type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame of input variables}
+\item{x}{data frame or matrix of input variables}
+
+\item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
+
+\item{k}{small number to add to the ridge.}
 }
 \description{
 Rank trace to determine number of principle components to use in reduced-rank PCA.

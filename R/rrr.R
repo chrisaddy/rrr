@@ -2,8 +2,8 @@
 #'
 #' \code{rrr} fits a reduced-rank regression model.
 #'
-#' @param x data frame of input variables
-#' @param y data frame of response variables
+#' @param x data frame or matrix of input variables
+#' @param y data frame or matrix of response variables
 #' @param gamma_matrix weight matrix
 #' @param rank of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.
 #' @param type the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.
@@ -18,11 +18,9 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	} else {
 		reduce_rank <- rank
 	}
-	x_organize <- organize(x, type)
-	y_organize <- organize(y, type)
-	cov_x <- cov(x) #+ k * diag(1, dim(x_organize)[1])
+	cov_x <- cov(x) + k * diag(1, dim(x)[2])
 	cov_yx <- cov(y, x)
-    cov_y <- cov(y) #+ k * diag(1, dim(y_organize)[1])
+    cov_y <- cov(y) + k * diag(1, dim(y)[2])
     cov_xy <- t(cov_yx)
 	sqrtm <- sqrt_matrix(gamma_matrix)
 	weighted_matrix <- sqrtm %*%
@@ -43,3 +41,36 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	mu_t <- mu_y - C_t %*% mu_x
 	list(mean = mu_t, A = A_t, B = B_t, C = C_t)
 }
+
+#' Predict  RRR 
+#'
+#' \code{predict_rrr} predicts a matrix of responses from the coefficients of a \code{rrr} object.
+#'
+#' @inheritParams rrr
+#' @param rrr_object an object of type `list` that contains the means and coefficients of the reduced-rank regression.
+#' @param x_new data frame or matrix of input variables used to predict the response matrix.
+#'
+#' @export
+
+rrr_predict <- function(rrr_object, x_new){
+	num_obs <- dim(x_new)[1]
+	coeffs <- rrr_object$C
+	means <- matrix(rep(rrr_object$mean, num_obs), ncol = num_obs)
+	t(means + coeffs %*% organize(x_new)) %>% as_data_frame
+}
+
+#' RRR Error 
+#'
+#' \code{predict_rrr} predicts a matrix of responses from the coefficients of a \code{rrr} object.
+#'
+#' @inheritParams rrr_predict
+#'
+#' @export
+
+rrr_error <- function(rrr_object, x_new, y_new){
+	y_new - rrr_predict(rrr_object, x_new)
+}
+
+#rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
+#
+#}

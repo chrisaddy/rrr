@@ -7,9 +7,9 @@
 rrr(x, y, gamma_matrix, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame of input variables}
+\item{x}{data frame or matrix of input variables}
 
-\item{y}{data frame of response variables}
+\item{y}{data frame or matrix of response variables}
 
 \item{gamma_matrix}{weight matrix}
 

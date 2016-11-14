@@ -111,20 +111,23 @@ The best reduced-rank approximation to the original $\mathbf{X}$ is
 #require(readr)
 #digits <- read_delim("http://astro.ocis.temple.edu/~alan/pendigits.txt", delim = " ", col_names = FALSE)
 
-#digits_class <- digits %>% dplyr::select(X35)
-#digits_features <- digits %>% dplyr::select(-X35, -X36)
+data(pendigits)
+digits <- as_data_frame(pendigits)
 
-#digits_pca <- rrpca(digits_features)
+digits_class <- digits %>% dplyr::select(X35)
+digits_features <- digits %>% dplyr::select(-X35, -X36)
 
-#pca_gof(digits_features) %>% round(4)
+digits_pca <- rrpca(digits_features)
 
-#pca_rank_trace(digits_features)
+pca_gof(digits_features) %>% round(4)
 
-#pca_rank_trace_plot(digits_features)
+pca_rank_trace(digits_features)
 
-#pc_pairwise_plot(digits_features, class_labels = digits_class)
+pca_rank_trace_plot(digits_features)
 
-#pc_plot_3D(digits_features, class_labels = digits_class)
+pc_pairwise_plot(digits_features, class_labels = digits_class)
+
+pc_plot_3D(digits_features, class_labels = digits_class)
 ```
 
 ## Canonical Variate Analysis

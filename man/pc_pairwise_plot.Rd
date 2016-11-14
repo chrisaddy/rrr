@@ -4,15 +4,15 @@
 \alias{pc_pairwise_plot}
 \title{PC Pairwise Plot}
 \usage{
-pc_pairwise_plot(x, pc_1 = 1, pc_2 = 2, class_labels = NULL,
+pc_pairwise_plot(x, pc_x = 1, pc_y = 2, class_labels = NULL,
   rank = "full", type = "cov", interactive = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of predictor variables}
 
-\item{pc_1}{principal component for the x-axis}
+\item{pc_x}{principal component for the x-axis}
 
-\item{pc_2}{principal component for the y-axis}
+\item{pc_y}{principal component for the y-axis}
 
 \item{class_labels}{data frame or vector of class labels}
 

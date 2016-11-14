@@ -6,8 +6,8 @@
 #'
 #' @export
 
-pca_rank_trace <- function(x){
-    eigenvecs <- rrpca(x)$A
+pca_rank_trace <- function(x, type = "cov", k = 0){
+    eigenvecs <- rrpca(x, rank = "full", type, k)$A
     eigens <- eigen(cov(x))
     full_rank <- dim(eigens$vectors)[2]
     delta_C <- function(t){

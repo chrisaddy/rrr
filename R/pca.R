@@ -15,7 +15,7 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
         reduce_rank <- rank
     }
     means <- colMeans(x)
-    s_xx <- cov(x)
+    s_xx <- cov(x) + k * diag(1, dim(x)[2])
     A <- eigen(s_xx)$vectors[,1:reduce_rank]
     colnames(A) <- paste("PC", 1:reduce_rank, sep = "")
     B <- t(A)

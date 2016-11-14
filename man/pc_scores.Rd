@@ -7,7 +7,7 @@
 pc_scores(x, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame of input variables}
+\item{x}{data frame or matrix of input variables}
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.}
 
