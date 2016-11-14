@@ -4,7 +4,7 @@
 #' 
 #' @inheritParams rrr
 #'
-#' @references Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
+#' @references Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #'
 #' @export
 
@@ -27,6 +27,11 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
 #' \code{pc_scores} returns data frame of principle component scores from reduced-rank PCA
 #'
 #' @inheritParams rrpca
+#'
+#' @return data frame with \code{rank} number of columns, each of which represent the principal component scores of the observations.
+#'
+#' @examples
+#' pc_scores()  
 #'
 #' @export
 

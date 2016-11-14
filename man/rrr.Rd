@@ -13,7 +13,7 @@ rrr(x, y, gamma_matrix, rank = "full", type = "cov", k = 0)
 
 \item{gamma_matrix}{weight matrix}
 
-\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.}
+\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
@@ -23,6 +23,6 @@ rrr(x, y, gamma_matrix, rank = "full", type = "cov", k = 0)
 \code{rrr} fits a reduced-rank regression model.
 }
 \references{
-Izenman, A.J. (2008) Modern Multivariate Statistical Techniques. Springer.
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }
 

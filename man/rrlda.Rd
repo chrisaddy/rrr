@@ -4,14 +4,14 @@
 \alias{rrlda}
 \title{Fit Reduced-Rank LDA Model}
 \usage{
-rrlda(x, y, rank, type = "cov", k = 0)
+rrlda(x, y, rank = "full", type = "cov", k = 0)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
 
 \item{y}{data frame or matrix of response variables}
 
-\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.}
+\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
@@ -21,6 +21,6 @@ rrlda(x, y, rank, type = "cov", k = 0)
 \code{lda} fits a reduced-rank linear discriminant analysis model.
 }
 \references{
-Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
+Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }
 

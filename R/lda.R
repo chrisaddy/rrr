@@ -1,17 +1,33 @@
+lda_organize <- function(features, classes){
+    names(classes) <- "class"
+    combine_df <- dplyr::bind_cols(features, classes)
+    arrange_df <- dplyr::arrange(combine_df, class)
+    features_ordered <- dplyr::select(arrange_df, -class)
+    classes_ordered <- dplyr::select(arrange_df, class)
+    list(features_ordered = features_ordered, classes_ordered = classes_ordered)
+}
+
 #' Fit Reduced-Rank LDA Model
 #'
 #' \code{lda} fits a reduced-rank linear discriminant analysis model.
 #' 
 #' @inheritParams rrr
+#' 
+#' @return `list` containing: a data frame of class
 #'
-#' @references Izenman, A. J. (2008) Modern Multivariate Statistical Techniques. Springer.
+#' @examples
+#' rrlda()
+#'
+#' @references Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #'
 #' @export
 
 rrlda <- function(x, y, rank = "full", type = "cov", k = 0){
-    class <- y
-    y_binary <- binary_matrix(y)
-    cva_object <- rrcva(x, y_binary, rank, type, k)
+    ordered <- lda_organize(x, y)
+    x_ordered <- ordered$features_ordered
+    y_ordered <- ordered$classes_ordered
+    y_binary <- binary_matrix(y_ordered)
+    cva_object <- rrcva(x_ordered, y_binary, rank, type, k)
     list(class = class, mean = cva_object$mean, G = cva_object$G, H = cva_object$H)
 }
 
@@ -24,8 +40,6 @@ rrlda <- function(x, y, rank = "full", type = "cov", k = 0){
 #' @export
 
 ld_scores <- function(x, y, rank = "full", type = "cov", k = 0){
-    class <- y
-    y_binary <- binary_matrix(y)
     lda_object <- rrlda(x, y, rank, type, k)
     xi <- as_data_frame(t(lda_object$G %*% organize(x)))
     omega <- as_data_frame(t(lda_object$H %*% organize(y_binary)))

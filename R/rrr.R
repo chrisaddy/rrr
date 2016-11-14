@@ -5,11 +5,11 @@
 #' @param x data frame or matrix of input variables
 #' @param y data frame or matrix of response variables
 #' @param gamma_matrix weight matrix
-#' @param rank of the coefficient matrix to estimate. Default \code{rank = full} is standard multivariate regression.
+#' @param rank of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.
 #' @param type the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.
 #' @param k small number to add to the ridge.
 #'
-#' @references Izenman, A.J. (2008) Modern Multivariate Statistical Techniques. Springer.
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
