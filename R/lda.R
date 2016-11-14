@@ -8,7 +8,7 @@
 #'
 #' @export
 
-rrlda <- function(x, y, rank, type = "cov", k = 0){
+rrlda <- function(x, y, rank = "full", type = "cov", k = 0){
     class <- y
     y_binary <- binary_matrix(y)
     cva_object <- rrcva(x, y_binary, rank, type, k)
@@ -23,7 +23,7 @@ rrlda <- function(x, y, rank, type = "cov", k = 0){
 #'
 #' @export
 
-ld_scores <- function(x, y, rank, type = "cov", k = 0){
+ld_scores <- function(x, y, rank = "full", type = "cov", k = 0){
     class <- y
     y_binary <- binary_matrix(y)
     lda_object <- rrlda(x, y, rank, type, k)

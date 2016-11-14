@@ -61,8 +61,6 @@ binary_matrix <- function(class) {
 	num_class <- dim(unique(class))[1]
     class <- as.matrix(dplyr::mutate_if(class, is.factor, as.character))
     mat <- stats::model.matrix(~ class -1)[,-num_class]
-    #mat <- dplyr::select(mat, -dim(mat)[2])
-    names(mat) <- substring(names(mat), 4, 100)
-    #mat[,dim(mat)[2]] <- 0
+    colnames(mat) <- gsub("class", "", colnames(mat))
     mat
 }
