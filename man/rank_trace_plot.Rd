@@ -10,8 +10,6 @@ rank_trace_plot(x, y, gamma_mat)
 \item{x}{data frame or matrix of input variables}
 
 \item{y}{data frame or matrix of response variables}
-
-\item{gamma_mat}{weight matrix}
 }
 \description{
 Plot of rank trace to determine suitable rank of coefficient matrix.

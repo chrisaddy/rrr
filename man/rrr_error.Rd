@@ -10,6 +10,8 @@ rrr_error(rrr_object, x_new, y_new)
 \item{rrr_object}{an object of type `list` that contains the means and coefficients of the reduced-rank regression.}
 
 \item{x_new}{data frame or matrix of input variables used to predict the response matrix.}
+
+\item{y_new}{data frame or matrix of observed response variables.}
 }
 \description{
 \code{predict_rrr} predicts a matrix of responses from the coefficients of a \code{rrr} object.
