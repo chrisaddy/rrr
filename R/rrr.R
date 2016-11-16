@@ -67,6 +67,7 @@ rrr_predict <- function(rrr_object, x_new){
 #' \code{predict_rrr} predicts a matrix of responses from the coefficients of a \code{rrr} object.
 #'
 #' @inheritParams rrr_predict
+#' @param y_new data frame or matrix of observed response variables.
 #'
 #' @export
 

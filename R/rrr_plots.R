@@ -1,20 +1,3 @@
-delta_EE <- function(x, y, gamma_mat, rank){
-	full_rank <- min(dim(x)[2], dim(y)[2])
-	y_organize <- organize(y)
-	x_organize <- organize(x)
-	sig_YX <- cov_matrix(y_organize, x_organize)
-	sig_XX <- cov_matrix(x_organize, x_organize)
-	sig_YY <- cov_matrix(y_organize, y_organize)
-	sigma_ee_t <- y_organize - rrr(x, y, gamma_mat, rank)$C %*% x_organize
-	e_full <- rrr_residuals(x, y, gamma_mat, full_rank)
-	sigma_ee_full <- e_full %*% t(e_full)
-	e_t <- rrr_residuals(x, y, gamma_mat, rank)
-	sigma_ee_t <- e_t %*% t(e_t)
-	sum((sigma_ee - sigma_ee_t)^2) / sum((sigma_ee - sig_YY)^2)
-}
-
-#' @export
-
 delta_C <- function(x, y, gamma_mat, type = "cov", k = 0){
 	theta_full <- rrr(x, y, gamma_mat, rank = "full", type, k)$C
 	reduced_rank <- min(dim(x)[2], dim(y)[2])
@@ -24,8 +7,6 @@ delta_C <- function(x, y, gamma_mat, type = "cov", k = 0){
 	}
 	c(1, delta)
 }
-
-#' @export
 
 delta_EE <- function(x, y, gamma_mat, type = "cov", k = 0){
 	cov_y <- cov(y) + k * diag(1, dim(y_organize)[1])
@@ -65,7 +46,6 @@ rank_trace <- function(x, y, gamma_mat) {
 #' Plot of rank trace to determine suitable rank of coefficient matrix.
 #'
 #' @inheritParams rrr
-#' @param gamma_mat weight matrix
 #'
 #' @export
 

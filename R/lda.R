@@ -1,4 +1,3 @@
-#' @export
 lda_organize <- function(features, classes){
     names(classes) <- "class"
     combine_df <- dplyr::bind_cols(features, classes)
