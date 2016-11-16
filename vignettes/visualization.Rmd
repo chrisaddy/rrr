@@ -13,49 +13,31 @@ vignette: >
 
 The graphical display of data should be intuitive enough that any viewer of the display unfamiliar with the data, even unfamiliar with statistical analysis generally, should be able to see clear patterns, if in fact clear patterns exist in the data. This, the author believes, is especially true for multivariate data, where due to the higher dimensionality of the data, the potential for visualization to overwhelm is high.
 
-Because of this, graphical displays in the `rrr` package follow three main rules.
+#data(pendigits)
+#digits <- pendigits
 
-* Plots are easy
-* Plots are interactive
-* Plots are three-dimensional (when appropriate)
+#digits_class <- digits %>% dplyr::select(V35)
+#digits_features <- digits %>% dplyr::select(-V35, -V36)
 
-```{r}
-library(rrr)
-library(dplyr)
-library(readr)
-library(MMST)
-```
+#digits_pca <- rrpca(digits_features)
 
-## Plots are Easy
+#pca_rank_trace(digits_features)
 
-```{r}
-#digits <- read_delim("http://astro.ocis.temple.edu/~alan/pendigits.txt", delim = " ", col_names = FALSE)
+#pca_rank_trace_plot(digits_features)
 
-data(pendigits)
-digits <- pendigits
+#pc_pairwise_plot(digits_features)
 
-digits_class <- digits %>% dplyr::select(V35)
-digits_features <- digits %>% dplyr::select(-V35, -V36)
-
-digits_pca <- rrpca(digits_features)
-
-pca_rank_trace(digits_features)
-
-pca_rank_trace_plot(digits_features)
-
-pc_pairwise_plot(digits_features)
-
-pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
+#pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
 ```
 
 ## Plots are Interactive
 
 ```{r}
-pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)
+#pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)
 ```
 
 ## Plots are 3D
 
 ```{r}
-pc_plot_3D(digits_features, class_labels = digits_class)
+#pc_plot_3D(digits_features, class_labels = digits_class)
 ```
