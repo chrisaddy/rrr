@@ -4,9 +4,6 @@
 #'
 #' @inheritParams rrcva
 #'
-#' @examples
-#' cva_residuals()
-#'
 #' @export
 
 cva_residuals <- function(x, y, rank = "full", type = "cov"){

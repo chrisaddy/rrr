@@ -6,7 +6,6 @@
 #'
 #' @references Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #'
-#'
 #' @export
 
 rrcva <- function(x, y, rank = "full", type = "cov", k = 0) {

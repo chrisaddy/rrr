@@ -20,10 +20,6 @@ rrcva(x, y, rank = "full", type = "cov", k = 0)
 \description{
 \code{cva} fits a reduced-rank canonical variate/correlation model.
 }
-\examples{
-rrcva()
-
-}
 \references{
 Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }

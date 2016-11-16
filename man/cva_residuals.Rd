@@ -18,8 +18,4 @@ cva_residuals(x, y, rank = "full", type = "cov")
 \description{
 \code{cva_residuals} returns the multivariate residuals of the reduced-rank CVA regression
 }
-\examples{
-cva_residuals()
-
-}
 
