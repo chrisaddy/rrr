@@ -4,12 +4,14 @@
 \alias{rank_trace_plot}
 \title{Rank Trace Plot}
 \usage{
-rank_trace_plot(x, y, gamma_mat)
+rank_trace_plot(x, y, gamma_matrix)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
 
 \item{y}{data frame or matrix of response variables}
+
+\item{gamma_matrix}{weight matrix}
 }
 \description{
 Plot of rank trace to determine suitable rank of coefficient matrix.

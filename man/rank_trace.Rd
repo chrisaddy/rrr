@@ -4,12 +4,14 @@
 \alias{rank_trace}
 \title{Rank Trace}
 \usage{
-rank_trace(x, y, gamma_mat)
+rank_trace(x, y, gamma_matrix)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
 
 \item{y}{data frame or matrix of response variables}
+
+\item{gamma_matrix}{weight matrix}
 }
 \description{
 Rank trace to determine number of principle components to use in reduced-rank PCA.
