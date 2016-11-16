@@ -6,8 +6,6 @@
 #'
 #' @references Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #'
-#' @examples
-#' rrcva()
 #'
 #' @export
 
