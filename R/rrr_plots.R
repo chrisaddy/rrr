@@ -25,7 +25,7 @@ delta_EE <- function(x, y, gamma_mat, type = "cov", k = 0){
 #'
 #' @export
 
-rank_trace <- function(x, y, gamma_mat) {
+rank_trace <- function(x, y, gamma_matrix) {
 	s <- min(dim(x)[2], dim(y)[2])
 	rt_x <- c()
 	rt_y <- c()
@@ -45,12 +45,12 @@ rank_trace <- function(x, y, gamma_mat) {
 #'
 #' Plot of rank trace to determine suitable rank of coefficient matrix.
 #'
-#' @inheritParams rrr
+#' @inheritParams rank_trace
 #'
 #' @export
 
-rank_trace_plot <- function(x, y, gamma_mat){
-	trace <- rank_trace(x, y, gamma_mat)
+rank_trace_plot <- function(x, y, gamma_matrix){
+	trace <- rank_trace(x, y, gamma_matrix)
 	ggplot() +
 	aes(x = rank_trace_x(x, y, gamma_mat), #trace$deltaC,
 		y = rank_trace_y(x, y, gamma_mat), #trace$deltaEE,
