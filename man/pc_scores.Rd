@@ -21,8 +21,4 @@ data frame with \code{rank} number of columns, each of which represent the princ
 \description{
 \code{pc_scores} returns data frame of principle component scores from reduced-rank PCA
 }
-\examples{
-pc_scores()  
-
-}
 
