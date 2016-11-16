@@ -29,9 +29,6 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
 #'
 #' @return data frame with \code{rank} number of columns, each of which represent the principal component scores of the observations.
 #'
-#' @examples
-#' pc_scores()  
-#'
 #' @export
 
 pc_scores <- function(x, rank = "full", type = "cov", k = 0){
