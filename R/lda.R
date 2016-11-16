@@ -15,9 +15,6 @@ lda_organize <- function(features, classes){
 #' 
 #' @return `list` containing: a data frame of class
 #'
-#' @examples
-#' rrlda()
-#'
 #' @references Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #'
 #' @export
