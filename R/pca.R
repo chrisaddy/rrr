@@ -18,8 +18,7 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
     s_xx <- cov(x) + k * diag(1, dim(x)[2])
     A <- eigen(s_xx)$vectors[,1:reduce_rank]
     colnames(A) <- paste("PC", 1:reduce_rank, sep = "")
-    B <- t(A)
-    list(means = means, A = A, B = B, C = A %*% B)
+    list(means = as_data_frame(means), PC = as_data_frame(A))
 }
 
 #' Reduced-rank Principal Component Scores
@@ -37,7 +36,7 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
 
 pc_scores <- function(x, rank = "full", type = "cov", k = 0){
     pca <- rrpca(x, rank, type, k)
-    scores <- t(pca$A %*% organize(x)) %>%
+    scores <- t(t(as.matrix(pca$PC)) %*% organize(x)) %>%
         as_data_frame()
     names(scores) <- paste("PC", 1:dim(scores)[2], sep = "")
     scores

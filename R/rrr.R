@@ -13,10 +13,13 @@
 #' @export
 
 rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
+	full_rank <- min(dim(x)[2], dim(y)[2])
 	if(rank == "full"){
-		reduce_rank <- min(dim(x)[2], dim(y)[2])
-	} else {
+		reduce_rank <- full_rank
+	} else if(rank <= full_rank){
 		reduce_rank <- rank
+	} else {
+		stop("rank out of bounds")
 	}
 	cov_x <- cov(x) + k * diag(1, dim(x)[2])
 	cov_yx <- cov(y, x)

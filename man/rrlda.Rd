@@ -17,8 +17,15 @@ rrlda(x, y, rank = "full", type = "cov", k = 0)
 
 \item{k}{small number to add to the ridge.}
 }
+\value{
+`list` containing: a data frame of class
+}
 \description{
 \code{lda} fits a reduced-rank linear discriminant analysis model.
+}
+\examples{
+rrlda()
+
 }
 \references{
 Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
