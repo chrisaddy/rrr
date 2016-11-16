@@ -23,10 +23,6 @@ rrlda(x, y, rank = "full", type = "cov", k = 0)
 \description{
 \code{lda} fits a reduced-rank linear discriminant analysis model.
 }
-\examples{
-rrlda()
-
-}
 \references{
 Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }
