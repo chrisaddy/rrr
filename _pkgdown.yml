@@ -33,5 +33,6 @@ reference:
   desc: Multivariate data sets
   contents:
   - pendigits
+  - COMBO17
 
 
