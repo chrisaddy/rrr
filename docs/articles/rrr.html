@@ -38,16 +38,17 @@
       <h1><code>rrr</code> for Multivariate Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-13</h4>
+            <h4 class="date">2016-11-16</h4>
           </div>
 
     
     
 <div class="contents">
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"chrisaddy/rrr"</span>)
-<span class="kw">library</span>(rrr)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#devtools::install_github("chrisaddy/rrr")</span>
+<span class="co">#library(rrr)</span>
 <span class="co">#library(ggplot2)</span>
-<span class="kw">library</span>(dplyr)</code></pre></div>
+<span class="co">#library(dplyr)</span>
+<span class="co">#library(MMST)</span></code></pre></div>
 <div id="reduced-rank-regression-and-its-special-cases" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#reduced-rank-regression-and-its-special-cases" class="anchor"> </a></body></html>Reduced-Rank Regression and Its Special Cases</h3>
 <p>The multivariate linear regression model is given by</p>
@@ -100,23 +101,26 @@
     \mathrm{E}\left[\left(\mathbf{X} - \boldsymbol{\mu} - \mathbf{A}\mathbf{B}\mathbf{X}\right)^\tau\left(\mathbf{X} - \boldsymbol{\mu} - \mathbf{A}\mathbf{B}\mathbf{X}\right)\right]
 \]</span></p>
 <p>is minimized by the reduced-rank regression solution,</p>
-<span class="math display">\[\begin{equation}
+\begin{equation}
     \begin{aligned}
         \mathbf{A}^{\left(t\right)} &amp; = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right) \\
         \mathbf{B}^{\left(t\right)} &amp; = \mathbf{A}^{\left(t\right) \tau} \\
         \boldsymbol{\mu}^{\left(t\right)} &amp; = \left(\mathbf{I}_r - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\right)\boldsymbol{\mu}_X \\
     \end{aligned}
-\end{equation}\]</span>
+\end{equation}
 <p>where <span class="math inline">\(\mathbf{v}_j = \mathbf{v}_j \left(\mathbf{\Sigma}_{XX}\right)\)</span> is eigenvector associated with the <span class="math inline">\(j\)</span>th largest eigenvalue of <span class="math inline">\(\mathbf{\Sigma}_{XX}.\)</span></p>
 <p>The best reduced-rank approximation to the original <span class="math inline">\(\mathbf{X}\)</span> is</p>
-<span class="math display">\[\begin{equation}
+\begin{equation}
     \begin{aligned}
         \hat{\mathbf{X}}^{\left(t\right)} &amp; =
         \boldsymbol{\mu}^{\left(t\right)} + \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)} \mathbf{X}
     \end{aligned}
-\end{equation}\]</span>
+\end{equation}
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#require(readr)</span>
 <span class="co">#digits &lt;- read_delim("http://astro.ocis.temple.edu/~alan/pendigits.txt", delim = " ", col_names = FALSE)</span>
+
+<span class="co">#data(pendigits)</span>
+<span class="co">#digits &lt;- as_data_frame(pendigits)</span>
 
 <span class="co">#digits_class &lt;- digits %&gt;% dplyr::select(X35)</span>
 <span class="co">#digits_features &lt;- digits %&gt;% dplyr::select(-X35, -X36)</span>
@@ -136,7 +140,7 @@
 <div id="canonical-variate-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#canonical-variate-analysis" class="anchor"> </a></body></html>Canonical Variate Analysis</h2>
 <p><span class="math inline">\(\mathbf{X}, \mathbf{Y}\)</span> are jointly distributed, with</p>
-<span class="math display">\[\begin{equation}
+\begin{equation}
     \begin{aligned}
         \mathrm{E}\left\{
         \begin{pmatrix}
@@ -158,19 +162,19 @@
             \mathbf{\Sigma}_{YX} &amp; \mathbf{\Sigma}_{YY} \\
         \end{pmatrix}
     \end{aligned}
-\end{equation}\]</span>
+\end{equation}
 <p>Let <span class="math inline">\(1 \leq t \leq \mathrm{min}\left(r, s\right)\)</span>. <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are linearly projected into new vector variates,</p>
-<span class="math display">\[\begin{equation}
+\begin{equation}
     \begin{aligned}
         \boldsymbol{\xi}_{t \times 1} = \mathbf{G}_{t \times r} \mathbf{X}_{r \times 1}, \quad \boldsymbol{\omega}_{t \times 1} = \mathbf{H}_{t \times s} \mathbf{X}_{s \times 1}
         \end{aligned}
-        \end{equation}\]</span>
+        \end{equation}
 <p>Finding a solution to the problem</p>
-<span class="math display">\[\begin{equation}
+\begin{equation}
     \begin{aligned}
         \boldsymbol{\xi} \approx \boldsymbol{\nu} + \boldsymbol{\omega}
     \end{aligned}
-\end{equation}\]</span>
+\end{equation}
 <p>requires minimizing the least-squares criterion</p>
 <p><span class="math display">\[
     \begin{aligned}
@@ -178,7 +182,7 @@
     \end{aligned},
 \]</span></p>
 <p>where we assume <span class="math inline">\(\mathrm{cov}\left(\boldsymbol{\omega}\right) = \mathbf{I}_t\)</span>. This least-squares criterion is minimized when</p>
-<span class="math display">\[\begin{equation}
+\begin{equation}
     \begin{aligned}
         \boldsymbol{\nu}^{\left(t\right)} &amp; = \mathbf{H}^{\left(t\right)} \boldsymbol{\mu}_Y - \mathbf{G}^{\left(t\right)}\boldsymbol{\mu}_Y \\
         \mathbf{G}^{\left(t\right)} &amp; =
@@ -196,13 +200,13 @@
         \end{pmatrix}
         \mathbf{\Sigma}_{YY}^{-1/2} \\
     \end{aligned}
-\end{equation}\]</span>
+\end{equation}
 <p>where <span class="math inline">\(\mathbf{v}_j\)</span> is the eigenvector associated with the <span class="math inline">\(j\)</span>th largest eigenvalue of</p>
-<span class="math display">\[\begin{equation}
+\begin{equation}
     \begin{aligned}
         \mathbf{R} &amp; = \mathbf{\Sigma}_{YY}^{-1/2}\mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1} \mathbf{\Sigma}_{XY} \mathbf{\Sigma}_{YY}^{-1/2}
     \end{aligned}
-\end{equation}\]</span>
+\end{equation}
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### COMBO-17 galaxy data
 <span class="co">#data(COMBO17)</span>
 <span class="co">#galaxy &lt;- as_data_frame(COMBO17) %&gt;%</span>
