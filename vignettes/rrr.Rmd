@@ -10,11 +10,11 @@ vignette: >
 ---
 
 ```{r message = FALSE, out.width = .8}
-#devtools::install_github("chrisaddy/rrr")
-#library(rrr)
-#library(ggplot2)
-#library(dplyr)
-#library(MMST)
+install.packages("https://cran.r-project.org/src/contrib/Archive/MMST/")
+library(MMST)
+devtools::install_github("chrisaddy/rrr")
+library(rrr)
+library(dplyr)
 ```
 
 ### Reduced-Rank Regression and Its Special Cases
@@ -109,14 +109,11 @@ The best reduced-rank approximation to the original $\mathbf{X}$ is
 \end{equation}
 
 ```{r message = FALSE}
-#require(readr)
-#digits <- read_delim("http://astro.ocis.temple.edu/~alan/pendigits.txt", delim = " ", col_names = FALSE)
+data(pendigits)
+digits <- as_data_frame(pendigits)
 
-#data(pendigits)
-#digits <- as_data_frame(pendigits)
-
-#digits_class <- digits %>% dplyr::select(X35)
-#digits_features <- digits %>% dplyr::select(-X35, -X36)
+digits_class <- digits %>% dplyr::select(X35)
+digits_features <- digits %>% dplyr::select(-X35, -X36)
 
 #digits_pca <- rrpca(digits_features)
 
