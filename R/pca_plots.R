@@ -3,6 +3,10 @@
 #' Rank trace to determine number of principle components to use in reduced-rank PCA.
 #'
 #' @inheritParams rrpca
+#' 
+#' @examples
+#' x <- data.frame(x1 = runif(100, 0, 20), x2 = rnorm(100, 30, 4), x3 = rnorm(100, 10, 5), x4 = rnorm(100, 50, 15), runif(100, 0, 40))
+#' pca_rank_trace(x, k = 0.001)
 #'
 #' @export
 
@@ -35,6 +39,13 @@ pca_rank_trace <- function(x, type = "cov", k = 0){
 #' @inheritParams rrpca
 #' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
 #'
+#' @examples
+#' data(pendigits)
+#' digits_features <- pendigits[,1:34]
+#' pca_rank_trace_plot(digits_features)
+#'
+#' @seealso \code{pca_rank_trace} \code{rank_trace_plot}
+#' 
 #' @export
 
 pca_rank_trace_plot <- function(x, interactive = FALSE){

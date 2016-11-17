@@ -14,4 +14,13 @@ pca_rank_trace_plot(x, interactive = FALSE)
 \description{
 Plot of rank trace to determine number of principle components to use in reduced-rank PCA.
 }
+\examples{
+data(pendigits)
+digits_features <- pendigits[,1:34]
+pca_rank_trace_plot(digits_features)
+
+}
+\seealso{
+\code{pca_rank_trace} \code{rank_trace_plot}
+}
 

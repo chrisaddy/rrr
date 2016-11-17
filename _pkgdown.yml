@@ -1,5 +1,6 @@
 reference:
-- title: Fit reduced-rank regression models
+- title: Fit 
+  desc: Functions to fit reduced-rank regression models
   contents:
   - rrr
   - rrpca
@@ -7,23 +8,27 @@ reference:
   - rrlda
   - pc_scores
   - ld_scores
-- title: Prediction via reduced-rank regression
+- title: Prediction
+  desc: Functions for prediction via reduced-rank regression
   contents:
   - rrr_predict
-- title: Plots for reduced-rank regression
+- title: Plots
+  desc: Reduced-rank regression plots
   contents:
   - rank_trace_plot
   - pca_rank_trace_plot
   - pc_pairwise_plot
   - pc_plot_3D
-- title: Diagnostics for reduced-rank regression 
+- title: Diagnostics
+  desc: Diagnostic functions to test reduced-rank regression models
   contents:
   - cva_residuals
   - rrr_error
   - rank_trace
   - pca_rank_trace
   - pc_gof
-- title: data sets
+- title: Data
+  desc: Multivariate data sets
   contents:
   - pendigits
 

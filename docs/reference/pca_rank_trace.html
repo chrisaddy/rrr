@@ -94,12 +94,26 @@
     </dl>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>x1</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>100</span>, <span class='fl'>0</span>, <span class='fl'>20</span>), <span class='kw'>x2</span> <span class='kw'>=</span> <span class='fu'>rnorm</span>(<span class='fl'>100</span>, <span class='fl'>30</span>, <span class='fl'>4</span>), <span class='kw'>x3</span> <span class='kw'>=</span> <span class='fu'>rnorm</span>(<span class='fl'>100</span>, <span class='fl'>10</span>, <span class='fl'>5</span>), <span class='kw'>x4</span> <span class='kw'>=</span> <span class='fu'>rnorm</span>(<span class='fl'>100</span>, <span class='fl'>50</span>, <span class='fl'>15</span>), <span class='fu'>runif</span>(<span class='fl'>100</span>, <span class='fl'>0</span>, <span class='fl'>40</span>))
+<span class='fu'>pca_rank_trace</span>(<span class='no'>x</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.001</span>)</div><div class='output co'>#&gt; # A tibble: 6 × 3
+#&gt;    rank   delta_C delta_residuals
+#&gt;   &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
+#&gt; 1     0 1.0000000      1.00000000
+#&gt; 2     1 0.8944272      0.44834055
+#&gt; 3     2 0.7745967      0.15469322
+#&gt; 4     3 0.6324555      0.08572655
+#&gt; 5     4 0.4472136      0.03174218
+#&gt; 6     5 0.0000000      0.00000000</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -16,4 +16,9 @@ pca_rank_trace(x, type = "cov", k = 0)
 \description{
 Rank trace to determine number of principle components to use in reduced-rank PCA.
 }
+\examples{
+x <- data.frame(x1 = runif(100, 0, 20), x2 = rnorm(100, 30, 4), x3 = rnorm(100, 10, 5), x4 = rnorm(100, 50, 15), runif(100, 0, 40))
+pca_rank_trace(x, k = 0.001)
+
+}
 
