@@ -18,7 +18,7 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
     s_xx <- cov(x) + k * diag(1, dim(x)[2])
     A <- eigen(s_xx)$vectors[,1:reduce_rank]
     colnames(A) <- paste("PC", 1:reduce_rank, sep = "")
-    list(means = as_data_frame(means), PC = as_data_frame(A))
+    list(means = as_data_frame(means), C = as_data_frame(A %*% t(A)), PC = as_data_frame(A))
 }
 
 #' Reduced-rank Principal Component Scores
@@ -37,4 +37,41 @@ pc_scores <- function(x, rank = "full", type = "cov", k = 0){
         as_data_frame()
     names(scores) <- paste("PC", 1:dim(scores)[2], sep = "")
     scores
+}
+
+#' Predict via Reduced-Rank Principle Components Analysis
+#' 
+#' \code{rrpca_predict} 
+#' 
+#' inheritParams rrpca
+#'
+#' @export 
+
+rrpca_predict <- function(rrpca_object, x_new){
+	rrpca_object$C %*% organize(x_new)
+}
+
+#' Reduced-Rank PCA Error
+#'
+#' \code{rrpca_error}
+#'
+#' @inheritParams rrpca_predict
+#'
+#' @export
+
+rrpca_error <- function(rrpca_object, x_new){
+	x_new - rrpca_predict(rrpca_object, x_new)
+}	
+
+#' Reduced-Rank PCA Residuals
+#'
+#' \code{rrpca_residuals}
+#'
+#' @inheritParams rrpca
+#'
+#' @export
+
+rrpca_residuals <- function(x, rank = "full", type = "cov", k = 0){
+	object <- rrpca(x, rank, type, k)
+	rrpca_error(object, x)
 }

@@ -75,6 +75,17 @@ rrr_error <- function(rrr_object, x_new, y_new){
 	y_new - rrr_predict(rrr_object, x_new)
 }
 
-#rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
-#
-#}
+#' RRR Residuals
+#' 
+#' \code{rrr_residuals}
+#'
+#' @inheritParams rrr
+#'
+#' @export
+
+rrr_residuals <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
+	object <- rrr(x, y, gamma_matrix, rank, type, k)
+	rrr_error(object, x, y)
+}	
+
+

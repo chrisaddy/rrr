@@ -14,6 +14,7 @@ reference:
   desc: Functions for prediction via reduced-rank regression
   contents:
   - rrr_predict
+  - rrpca_predict
 - title: Plots
   desc: Reduced-rank regression plots
   contents:
@@ -28,11 +29,14 @@ reference:
   - rrr_error
   - rank_trace
   - pca_rank_trace
+  - rrpca_residuals
+  - rrpca_error
   - pc_gof
 - title: Data
   desc: Multivariate data sets
   contents:
   - pendigits
   - COMBO17
+  - tobacco
 
 

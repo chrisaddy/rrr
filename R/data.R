@@ -17,3 +17,24 @@
 #' @references A. Izenman (2008). \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @references Wolf, C. Meisenheimer, M., Kleinheinrich, M., Borch, A., Dye, S., Gray, M., Wisotski, L., Bell, E.F., Rix, H., W. Cimatti, A., Hasinger, G., and Szokoly, G. (2004). \emph{A catalogue of the Chandra Deep Field South with multi-colour classification and photometric redshifts from COMBO-17, Astronomy & Astrophysics}. \ur{arXiv:astro-ph/0403666v1}
 "COMBO17"
+
+#' MMST TOBACCO DATA
+#' 
+#' chemical composition of tobacco, 183, 187
+#'
+#' @format a data frame with 25 observations on the following 9 variables.
+#' \itemize{
+#'   \item{‘Y1.BurnRate’ a numeric vector}
+#'   \item{‘Y2.PercentSugar’ a numeric vector}
+#'   \item{‘Y3.PercentNicotine’ a numeric vector}
+#'   \item{‘X1.PercentNitrogen’ a numeric vector}
+#'   \item{‘X2.PercentChlorine’ a numeric vector}
+#'   \item{‘X3.PercentPotassium’ a numeric vector}
+#'   \item{‘X4.PercentPhosphorus’ a numeric vector}
+#'   \item{‘X5.PercentCalcium’ a numeric vector}
+#'   \item{‘X6.PercentMagnesium’ a numeric vector}
+#'   }
+#' 
+#' @references A. Izenman (2008). \emph{Modern Multivariate Statistical Techniques}. Springer.
+#' @references Anderson, R.L. and Bancroft, T.A. (1952). \emph{Statistical Theory in Research}. New York: Mcgraw-Hill.
+"tobacco"
