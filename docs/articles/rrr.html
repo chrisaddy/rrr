@@ -44,11 +44,13 @@
     
     
 <div class="contents">
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#devtools::install_github("chrisaddy/rrr")</span>
-<span class="co">#library(rrr)</span>
-<span class="co">#library(ggplot2)</span>
-<span class="co">#library(dplyr)</span>
-<span class="co">#library(MMST)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"https://cran.r-project.org/src/contrib/Archive/MMST/"</span>)</code></pre></div>
+<pre><code>## Warning: package 'https://cran.r-project.org/src/contrib/Archive/MMST/' is
+## not available (for R version 3.3.2)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MMST)
+devtools::<span class="kw">install_github</span>(<span class="st">"chrisaddy/rrr"</span>)
+<span class="kw">library</span>(rrr)
+<span class="kw">library</span>(dplyr)</code></pre></div>
 <div id="reduced-rank-regression-and-its-special-cases" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#reduced-rank-regression-and-its-special-cases" class="anchor"> </a></body></html>Reduced-Rank Regression and Its Special Cases</h3>
 <p>The multivariate linear regression model is given by</p>
@@ -116,14 +118,11 @@
         \boldsymbol{\mu}^{\left(t\right)} + \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)} \mathbf{X}
     \end{aligned}
 \end{equation}
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#require(readr)</span>
-<span class="co">#digits &lt;- read_delim("http://astro.ocis.temple.edu/~alan/pendigits.txt", delim = " ", col_names = FALSE)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(pendigits)
+digits &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(pendigits)
 
-<span class="co">#data(pendigits)</span>
-<span class="co">#digits &lt;- as_data_frame(pendigits)</span>
-
-<span class="co">#digits_class &lt;- digits %&gt;% dplyr::select(X35)</span>
-<span class="co">#digits_features &lt;- digits %&gt;% dplyr::select(-X35, -X36)</span>
+digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(V35)
+digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-V5, -V6)
 
 <span class="co">#digits_pca &lt;- rrpca(digits_features)</span>
 

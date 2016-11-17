@@ -112,8 +112,8 @@ The best reduced-rank approximation to the original $\mathbf{X}$ is
 data(pendigits)
 digits <- as_data_frame(pendigits)
 
-digits_class <- digits %>% dplyr::select(X35)
-digits_features <- digits %>% dplyr::select(-X35, -X36)
+digits_class <- digits %>% dplyr::select(V35)
+digits_features <- digits %>% dplyr::select(-V5, -V6)
 
 #digits_pca <- rrpca(digits_features)
 
