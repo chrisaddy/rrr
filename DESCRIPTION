@@ -23,6 +23,7 @@ Collate:
     cva.R
     cva_diagnostics.R
     lda.R
+    data.R
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

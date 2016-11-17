@@ -9,12 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r message = FALSE, out.width = .8}
-install.packages("https://cran.r-project.org/src/contrib/Archive/MMST/")
-library(MMST)
-devtools::install_github("chrisaddy/rrr")
+```{r}
 library(rrr)
-library(dplyr)
 ```
 
 ### Reduced-Rank Regression and Its Special Cases
@@ -54,11 +50,9 @@ $$
 where $\boldsymbol{\Gamma}$ is a positive-definite symmetric $\left(s \times s\right)$-matrix of weights, the expectation of which is taken over the joint distribution $\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)^\tau$. This weighted sum-of-squares criterion is minimized when
 
 $$
-\begin{aligned}
-	\boldsymbol{\mu}^\left(t\right) & = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
+\boldsymbol{\mu}^\left(t\right) & = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
 	\mathbf{A}^{\left(t\right)} & = \mathbf{\Gamma}^{-1/2}\mathbf{V}_t \\
 	\mathbf{B}^{\left(t\right)} & = \mathbf{V}_t^\tau \boldsymbol{\Gamma}^{-1/2}\mathbf{\Sigma}_{YX}\mathbf{XX}^{-1} \\
-\end{aligned}
 $$
 
 where $\mathbf{V}_t = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right)$ is an $\left(s \times t\right)$-matrix, with $\mathbf{v}_j$ the eigenvector associated with the $j$th largest eigenvalue of
@@ -89,41 +83,39 @@ $$
 
 is minimized by the reduced-rank regression solution,
 
-\begin{equation}
-	\begin{aligned}
+$$
 		\mathbf{A}^{\left(t\right)} & = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right) \\
 		\mathbf{B}^{\left(t\right)} & = \mathbf{A}^{\left(t\right) \tau} \\
 		\boldsymbol{\mu}^{\left(t\right)} & = \left(\mathbf{I}_r - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\right)\boldsymbol{\mu}_X \\
-	\end{aligned}
-\end{equation}
+$$
 
 where $\mathbf{v}_j = \mathbf{v}_j \left(\mathbf{\Sigma}_{XX}\right)$ is eigenvector associated with the $j$th largest eigenvalue of  $\mathbf{\Sigma}_{XX}.$
 
 The best reduced-rank approximation to the original $\mathbf{X}$ is
 
-\begin{equation}
-	\begin{aligned}
-		\hat{\mathbf{X}}^{\left(t\right)} & =
+$$
+\hat{\mathbf{X}}^{\left(t\right)} & =
 		\boldsymbol{\mu}^{\left(t\right)} + \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)} \mathbf{X}
-	\end{aligned}
-\end{equation}
+$$
 
 ```{r message = FALSE}
+library(dplyr)
+
 data(pendigits)
 digits <- as_data_frame(pendigits)
 
 digits_class <- digits %>% dplyr::select(V35)
 digits_features <- digits %>% dplyr::select(-V5, -V6)
 
-#digits_pca <- rrpca(digits_features)
+digits_pca <- rrpca(digits_features)
 
-#pca_gof(digits_features) %>% round(4)
+pca_gof(digits_features) %>% round(4)
 
-#pca_rank_trace(digits_features)
+pca_rank_trace(digits_features)
 
-#pca_rank_trace_plot(digits_features)
+pca_rank_trace_plot(digits_features)
 
-#pc_pairwise_plot(digits_features, class_labels = digits_class)
+pc_pairwise_plot(digits_features, class_labels = digits_class)
 
 #pc_plot_3D(digits_features, class_labels = digits_class)
 ```
@@ -132,8 +124,7 @@ digits_features <- digits %>% dplyr::select(-V5, -V6)
 
 $\mathbf{X}, \mathbf{Y}$ are jointly distributed, with
 
-\begin{equation}
-	\begin{aligned}
+$$
 		\mathrm{E}\left\{
 		\begin{pmatrix}
 			\mathbf{X} \\
@@ -153,24 +144,20 @@ $\mathbf{X}, \mathbf{Y}$ are jointly distributed, with
 			\mathbf{\Sigma}_{XX} & \mathbf{\Sigma}_{XY} \\
 			\mathbf{\Sigma}_{YX} & \mathbf{\Sigma}_{YY} \\
 		\end{pmatrix}
-	\end{aligned}
-\end{equation}
+$$
 
 Let $1 \leq t \leq \mathrm{min}\left(r, s\right)$. $\mathbf{X}$ and $\mathbf{Y}$ are linearly projected into new vector variates,
 
-\begin{equation}
-	\begin{aligned}
+$$
 		\boldsymbol{\xi}_{t \times 1} = \mathbf{G}_{t \times r} \mathbf{X}_{r \times 1}, \quad \boldsymbol{\omega}_{t \times 1} = \mathbf{H}_{t \times s} \mathbf{X}_{s \times 1}
-		\end{aligned}
-		\end{equation}
+$$
 
 Finding a solution to the problem
 
-\begin{equation}
-	\begin{aligned}
+$$
 		\boldsymbol{\xi} \approx \boldsymbol{\nu} + \boldsymbol{\omega}
-	\end{aligned}
-\end{equation}
+$$
+
 
 requires minimizing the least-squares criterion
 
@@ -182,8 +169,7 @@ $$
 
 where we assume $\mathrm{cov}\left(\boldsymbol{\omega}\right) = \mathbf{I}_t$. This least-squares criterion is minimized when
 
-\begin{equation}
-	\begin{aligned}
+$$
 		\boldsymbol{\nu}^{\left(t\right)} & = \mathbf{H}^{\left(t\right)} \boldsymbol{\mu}_Y - \mathbf{G}^{\left(t\right)}\boldsymbol{\mu}_Y \\
 		\mathbf{G}^{\left(t\right)} & =
 		\begin{pmatrix}
@@ -199,16 +185,14 @@ where we assume $\mathrm{cov}\left(\boldsymbol{\omega}\right) = \mathbf{I}_t$. T
 			\mathbf{v}_t^\tau \\
 		\end{pmatrix}
 		\mathbf{\Sigma}_{YY}^{-1/2} \\
-	\end{aligned}
-\end{equation}
+$$
 
 where $\mathbf{v}_j$ is the eigenvector associated with the $j$th largest eigenvalue of
 
-\begin{equation}
-	\begin{aligned}
+$$
 		\mathbf{R} & = \mathbf{\Sigma}_{YY}^{-1/2}\mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1} \mathbf{\Sigma}_{XY} \mathbf{\Sigma}_{YY}^{-1/2}
-	\end{aligned}
-\end{equation}
+$$
+
 
 ```{r}
 ### COMBO-17 galaxy data
