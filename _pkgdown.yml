@@ -6,8 +6,10 @@ reference:
   - rrpca
   - rrcva
   - rrlda
+  - rrqlda
   - pc_scores
   - ld_scores
+  - qld_scores
 - title: Prediction
   desc: Functions for prediction via reduced-rank regression
   contents:

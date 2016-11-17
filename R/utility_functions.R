@@ -25,15 +25,6 @@ sqrt_matrix <- function(matr){
 			vecs %*% diag(sqrt(vals), length(vals)) %*% t(vecs)
 }
 
-#' Organize Matrix for Reduced-Rank Regression
-#' 
-#' \code{organize} transposes and mean-centers a data frame or matrix of input or output variables.
-#' 
-#' @inheritParams rrr
-#' @param vars data frame or matrix of variables to be organized.
-#'
-#' @export
-
 organize <- function(vars, type = "cov"){
 	matr <- as.matrix(vars)
 	if(type == "cov"){
@@ -64,3 +55,16 @@ binary_matrix <- function(class) {
     colnames(mat) <- gsub("class", "", colnames(mat))
     mat
 }
+
+square <- function(x){
+	x^2
+}
+
+
+expand_feature_space <- function(feature_space){
+	feature_space <- dplyr::as_data_frame(feature_space)
+	feature_squares <- feature_space %>%
+		mutate_each(funs(square))
+	names(feature_squares) <- paste(names(feature_space), "_squared", sep = "")
+	dplyr::bind_cols(feature_space, feature_squares)
+}	
