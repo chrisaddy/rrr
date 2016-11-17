@@ -6,10 +6,12 @@
 \usage{
 rrpca_predict(rrpca_object, x_new)
 }
+\arguments{
+\item{rrpca_object}{`list` object obtained from `rrpca()`}
+
+\item{x_new}{data frame or matrix of new observations to predict.}
+}
 \description{
 \code{rrpca_predict}
-}
-\details{
-inheritParams rrpca
 }
 

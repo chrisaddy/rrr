@@ -43,7 +43,8 @@ pc_scores <- function(x, rank = "full", type = "cov", k = 0){
 #' 
 #' \code{rrpca_predict} 
 #' 
-#' inheritParams rrpca
+#' @param rrpca_object `list` object obtained from `rrpca()`
+#' @param x_new data frame or matrix of new observations to predict. 
 #'
 #' @export 
 
