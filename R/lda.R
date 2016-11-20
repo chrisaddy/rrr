@@ -60,8 +60,6 @@ rrlda <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
     list(G = G, H = H, eigen_portion = eigen_portion) 
 }
 
-ld_scores <- 
-
 #' @export
 
 rrlda2 <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
@@ -89,8 +87,6 @@ ld_scores <- function(x, y, rank = "full", type = "cov", k = 0){
     omega <- as_data_frame(t(t(lda_object$H) %*% y_organize))
     #list(ldf = dplyr::bind_cols(xi, class), 
 #	 class_mean = unique(dplyr::bind_cols(omega, class)))
-    list(dplyr::bind_cols(xi, class), unique(dplyr::bind_cols(omega, class))) 
+    list(scores = dplyr::bind_cols(xi, class), class_means = unique(dplyr::bind_cols(omega, class))) 
 }
-
-
 
