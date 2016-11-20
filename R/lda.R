@@ -60,8 +60,6 @@ rrlda <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
     list(G = G, H = H, eigen_portion = eigen_portion) 
 }
 
-#' @export
-
 rrlda2 <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
 	ordered <- lda_organize(x, y)
 	x_ordered <- ordered$features_ordered
