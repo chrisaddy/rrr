@@ -38,67 +38,12 @@
       <h1>Mathematical Background of Reduced-Rank Regression and its Special Cases</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-17</h4>
+            <h4 class="date">2016-11-20</h4>
           </div>
 
     
     
 <div class="contents">
-<div id="classical-multivariate-regression" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#classical-multivariate-regression" class="anchor"> </a></body></html>Classical Multivariate Regression</h2>
-<p>The multivariate regression model is given by</p>
-<p><span class="math display">\[
-\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
-\]</span></p>
-<p>with</p>
-<p><span class="math display">\[
-\mathrm{E}\left(\varepsilon\right) = \mathbf{0}, \quad \mathrm{cov}\left(\varepsilon\right) = \mathbf{\Sigma}_{\varepsilon \varepsilon}
-\]</span></p>
-<p>and <span class="math inline">\(\varepsilon\)</span> is distributed independently of <span class="math inline">\(\mathbf{X}.\)</span></p>
-</div>
-<div id="reduced-rank-regression" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#reduced-rank-regression" class="anchor"> </a></body></html>Reduced-Rank Regression</h2>
-<p>We introduce the possibility that <span class="math inline">\(\mathbf{C}\)</span> is rank-deficient, i.e.,</p>
-<p><span class="math display">\[
-\mathrm{rank}\left(\mathbf{C}\right) = t \quad \mathrm{min}\left(r, s \right)
-\]</span></p>
-<p>When <span class="math inline">\(t = s\)</span>, the regression model is <em>full-rank</em>, and can be fit using multiple regression on each <span class="math inline">\(Y_i \in \mathbf{Y}.\)</span> When <span class="math inline">\(t &lt; s\)</span>, <span class="math inline">\(\mathbf{C}\)</span> can be decomposed into non-unique matrices <span class="math inline">\(\mathbf{A}_{s \times t}\)</span> and <span class="math inline">\(\mathbf{B}_{t \times r}\)</span>, such that <span class="math inline">\(\mathbf{C} = \mathbf{AB},\)</span> and the multivariate regression model is given by</p>
-<p><span class="math display">\[
-\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times t}{\mathbf{A}} \; \overset{t \times r}{\mathbf{B}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
-\]</span></p>
-<p>Finding <span class="math inline">\(\mathbf{A}, \mathbf{B}\)</span>, and ultimately the <em>reduced-rank regression coefficient</em> <span class="math inline">\(\mathbf{C}^{\left(t\right)}\)</span>, is done by minimizing the weighted sum-of-squares criterion</p>
-<p><span class="math display">\[
-\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)^\tau \mathbf{\Gamma}\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)\right]
-\]</span></p>
-<p>where <span class="math inline">\(\boldsymbol{\Gamma}\)</span> is a positive-definite symmetric <span class="math inline">\(\left(s \times s\right)\)</span>-matrix of weights, the expectation of which is taken over the joint distribution <span class="math inline">\(\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)^\tau\)</span>. This weighted sum-of-squares criterion is minimized when</p>
-<p><span class="math display">\[
-\begin{aligned}
-\boldsymbol{\mu}^\left(t\right) &amp; = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
-        \mathbf{A}^{\left(t\right)} &amp; = \mathbf{\Gamma}^{-1/2}\mathbf{V}_t \\
-        \mathbf{B}^{\left(t\right)} &amp; = \mathbf{V}_t^\tau \boldsymbol{\Gamma}^{-1/2}\mathbf{\Sigma}_{YX}\mathbf{XX}^{-1} \\
-\end{aligned}
-\]</span></p>
-<p>where <span class="math inline">\(\mathbf{V}_t = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right)\)</span> is an <span class="math inline">\(\left(s \times t\right)\)</span>-matrix, with <span class="math inline">\(\mathbf{v}_j\)</span> the eigenvector associated with the <span class="math inline">\(j\)</span>th largest eigenvalue of</p>
-<p><span class="math display">\[
-\mathbf{\Gamma}^{1/2}\mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1} \mathbf{\Sigma}_{XY} \mathbf{\Gamma}^{1/2}
-\]</span></p>
-<p>Using different values of <span class="math inline">\(\mathbf{\Gamma}\)</span> we can use the reduced-rank regression model carry out classical multivariate procedures.</p>
-</div>
-<div id="principal-components-analysis" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#principal-components-analysis" class="anchor"> </a></body></html>Principal Components Analysis</h2>
-<p>Set</p>
-<p><span class="math display">\[
-\begin{aligned}
-        \mathbf{Y} &amp; \equiv \mathbf{X} \\
-        s &amp; = r \\
-        \mathbf{\Gamma} &amp; = \mathbf{I}_r \\
-\end{aligned}
-\]</span></p>
-<p>Then, the least-squares error criterion</p>
-<p><span class="math display">\[
-        \mathrm{E}\left[\left(\mathbf{X} - \boldsymbol{\mu} - \mathbf{A}\mathbf{B}\mathbf{X}\right)^\tau\left(\mathbf{X} - \boldsymbol{\mu} - \mathbf{A}\mathbf{B}\mathbf{X}\right)\right]
-\]</span></p>
-<p>is minimized by the reduced-rank regression solution,</p>
 <p><span class="math display">\[
                 \mathbf{A}^{\left(t\right)} &amp; = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right) \\
                 \mathbf{B}^{\left(t\right)} &amp; = \mathbf{A}^{\left(t\right) \tau} \\
@@ -153,16 +98,9 @@
 <p>$$  &amp; = <em>{YY}<sup>{-1/2}<em>{YX} </em>{XX}</sup>{-1} </em>{XY} _{YY}^{-1/2}</p>
 <p>B B B B B B B B B B B B B B B B B B B B B B B B A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A $$</p>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked"><li><a href="#classical-multivariate-regression">Classical Multivariate Regression</a></li>
-      <li><a href="#reduced-rank-regression">Reduced-Rank Regression</a></li>
-      <li><a href="#principal-components-analysis">Principal Components Analysis</a></li>
-      </ul></div>
       </div>
 
 </div>

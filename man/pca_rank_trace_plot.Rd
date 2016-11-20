@@ -4,10 +4,14 @@
 \alias{pca_rank_trace_plot}
 \title{PCA Rank Trace Plot}
 \usage{
-pca_rank_trace_plot(x, interactive = FALSE)
+pca_rank_trace_plot(x, type = "cov", k = 0, interactive = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
+
+\item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
+
+\item{k}{small number to add to the ridge.}
 
 \item{interactive}{logical. If \code{TRUE} prints an interactive Plotly graphic.}
 }

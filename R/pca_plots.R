@@ -5,14 +5,15 @@
 #' @inheritParams rrpca
 #' 
 #' @examples
-#' x <- data.frame(x1 = runif(100, 0, 20), x2 = rnorm(100, 30, 4), x3 = rnorm(100, 10, 5), x4 = rnorm(100, 50, 15), runif(100, 0, 40))
-#' pca_rank_trace(x, k = 0.001)
+#' data(pendigits)
+#' digits_features <- pendigits[,1:34]
+#' pca_rank_trace(digits_features, k = 0.001)
 #'
 #' @export
 
 pca_rank_trace <- function(x, type = "cov", k = 0){
     eigenvecs <- rrpca(x, rank = "full", type, k)$A
-    eigens <- eigen(cov(x))
+    eigens <- eigen(cov(x) + k * diag(1, dim(x)[2]))
     full_rank <- dim(eigens$vectors)[2]
     delta_C <- function(t){
         sqrt(1 - t / full_rank)
@@ -48,7 +49,8 @@ pca_rank_trace <- function(x, type = "cov", k = 0){
 #' 
 #' @export
 
-pca_rank_trace_plot <- function(x, interactive = FALSE){
+pca_rank_trace_plot <- function(x, type = "cov", k = 0, interactive = FALSE){
+    tuner <- k
     rt <- pca_rank_trace(x)
     static_plot <- ggplot2::ggplot(rt) +
         aes(x = delta_C,
@@ -58,15 +60,12 @@ pca_rank_trace_plot <- function(x, interactive = FALSE){
         geom_line(color = "red") +
         geom_text(check_overlap = TRUE, size = 5) +
         labs(x = "dC", y = "dE") +
-        ggtitle(expression(paste("Rank Trace Plot for ",
-                                          Theta^(0),
-                                          " to ",
-                                          Theta^(s) )))
-    if(interactive == TRUE){
-        plotly::ggplotly(static_plot)
-    } else {
-        static_plot
-    }
+        ggtitle(paste("PCA Rank Trace Plot, k = ", tuner, sep = ""))
+	if(interactive == TRUE){
+        	plotly::ggplotly(static_plot)
+    	} else {
+        	static_plot
+    	}
 }
 
 pc_pairwise <- function(x, pc_x, pc_y, rank = "full", type = "cov"){
@@ -80,12 +79,10 @@ pc_pairwise <- function(x, pc_x, pc_y, rank = "full", type = "cov"){
 #'
 #' \code{pc_pairwise_plot}
 #'
-#' @param x data frame or matrix of predictor variables
+#' @inheritParams rrpca
 #' @param pc_x principal component for the x-axis
 #' @param pc_y principal component for the y-axis
 #' @param class_labels data frame or vector of class labels
-#' @param rank rank of coefficient matrix
-#' @param type type of covariance matrix
 #' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
 #'
 #' @export
@@ -157,3 +154,20 @@ pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, ran
          #  yaxis = list(title = names(threes)[2]), 
         #   zaxis = list(title = names(threes)[3])))
 }
+
+
+#' Scatterplot Matrix of Principle Components
+#'
+#' @inheritParams pc_scores
+#' @inheritParams pc_pairwise_plot
+#'
+#' @export
+
+pc_allpairs_plot <- function(x, rank, type = "cov", k = 0, class_labels = NULL){
+	class <- as.factor(class_labels[[1]])
+	pc <- pc_scores(x, rank, type, k)
+	df <- dplyr::bind_cols(pc, as_data_frame(class))
+	names(df)[dim(df)[2]] <- "class"
+	GGally::ggpairs(df, aes(color = class))
+}
+	 

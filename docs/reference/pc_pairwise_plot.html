@@ -87,7 +87,7 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>data frame or matrix of predictor variables</dd>
+      <dd>data frame or matrix of input variables</dd>
       <dt>pc_x</dt>
       <dd>principal component for the x-axis</dd>
       <dt>pc_y</dt>
@@ -95,9 +95,9 @@
       <dt>class_labels</dt>
       <dd>data frame or vector of class labels</dd>
       <dt>rank</dt>
-      <dd>rank of coefficient matrix</dd>
+      <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
       <dt>type</dt>
-      <dd>type of covariance matrix</dd>
+      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>interactive</dt>
       <dd>logical. If <code>TRUE</code> prints an interactive Plotly graphic.</dd>
     </dl>

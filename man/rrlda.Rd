@@ -4,7 +4,7 @@
 \alias{rrlda}
 \title{Fit Reduced-Rank LDA Model}
 \usage{
-rrlda(x, y, rank = "full", type = "cov", k = 0)
+rrlda(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -16,6 +16,8 @@ rrlda(x, y, rank = "full", type = "cov", k = 0)
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{k}{small number to add to the ridge.}
+
+\item{quadratic}{`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
 }
 \value{
 `list` containing: a data frame of class

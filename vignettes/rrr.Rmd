@@ -13,12 +13,155 @@ vignette: >
 library(rrr)
 ```
 
+## Reduced-Rank Regression
+
+### Classical Multivariate Regression 
+
+Let $\mathbf{X} = \left(X_1, X_2, \dots, X_r\right)^\tau$ and $\mathbf{Y} = \left(Y_1, Y_2, \dots, Y_s\right)^\tau$, i.e., $\mathbf{X}$ is a random vector. The classical multivariate regression model is given by
+
+$$
+\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
+$$
+
+with
+
+$$
+\mathrm{E}\left(\varepsilon\right) = \mathbf{0}, \quad \mathrm{cov}\left(\varepsilon\right) = \mathbf{\Sigma}_{\varepsilon \varepsilon}
+$$
+
+and $\varepsilon$ is distributed independently of $\mathbf{X}.$
+
+The least-squares estimator is given by
+
+$$
+\hat{\mathbf{C}} = \mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1}
+$$
+
+Note that $\hat{\mathbf{C}}$ contains no term that takes into the account the correlation of the $Y_i$s. This is a surprising result, since we would expect correlation, perhaps very heavy correlation, among the responses.
+
+In other words, to find the least-squares estimate $\hat{\mathbf{C}}$ of $\mathbf{C}$, one need only regress $\mathbf{X}$ separately on each $Y_i$ and concatenate those multiple-regression coefficient vectors into a matrix to construct the estimated coefficient matrix $\hat{\mathbf{C}}$.
+
+The classical multivariate regression model is not *truly* multivariate. 
+
+### Multivariate Regression: The Tobacco Data Set
+
+```{r}
+library(dplyr)
+data(tobacco)
+
+tobacco <- as_data_frame(tobacco)
+
+tobacco_x <- tobacco %>% 
+	select(starts_with("X"))
+	
+tobacco_y <- tobacco %>% 
+	select(starts_with("Y"))
+	
+## multivariate regression
+
+x <- as.matrix(tobacco_x)
+y <- as.matrix(tobacco_y)
+
+multivar_reg <- t(cov(y, x) %*% solve(cov(x)))
+
+## separate multiple regression
+
+lm1 <- lm(y[,1] ~ x)$coeff
+lm2 <- lm(y[,2] ~ x)$coeff
+lm3 <- lm(y[,3] ~ x)$coeff
+
+### compare multivariate regression and separate multiple regresions
+
+multivar_reg
+
+cbind(lm1, lm2, lm3)
+```
+
+### The Reduced-Rank Regression Approach
+
+One way to introduce a multivariate component into the model is to allow for the possibility that $\mathbf{C}$ is deficient, or of *reduced-rank* $t$.
+
+$$
+\mathrm{rank}\left(\mathbf{C}\right) = t \leq \mathrm{min}\left(r, s\right)
+$$
+
+In other words, we allow for the possibility that there are unknown linear constraints on $\mathbf{C}$.
+
+Without loss of generality, we consider the case when there are more $ r > s$, i.e., $t < s$. 
+
+When $t = s$, the regression model is *full-rank*, and can be fit using multiple regression on each $Y_i \in \mathbf{Y}.$ When $t < s$, $\mathbf{C}$ can be decomposed into non-unique matrices $\mathbf{A}_{s \times t}$ and $\mathbf{B}_{t \times r}$, such that $\mathbf{C} = \mathbf{AB},$ and the multivariate regression model is given by
+
+$$
+\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times t}{\mathbf{A}} \; \overset{t \times r}{\mathbf{B}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
+$$}, \mathbf{B}$, and ultimately the *reduced-rank regression coefficient* $\mathbf{C}^{\left(t\right)}$, is done by minimizing the weighted sum-of-squares criterion
+
+$$
+\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)^\tau \mathbf{\Gamma}\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)\right]
+$$
+
+where $\boldsymbol{\Gamma}$ is a positive-definite symmetric $\left(s \times s\right)$-matrix of weights, the expectation of which is taken over the joint distribution $\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)^\tau$. This weighted sum-of-squares criterion is minimized when
+
+$$
+\begin{aligned}
+\boldsymbol{\mu}^\left(t\right) & = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
+        \mathbf{A}^{\left(t\right)} & = \mathbf{\Gamma}^{-1/2}\mathbf{V}_t \\
+        \mathbf{B}^{\left(t\right)} & = \mathbf{V}_t^\tau \boldsymbol{\Gamma}^{-1/2}\mathbf{\Sigma}_{YX}\mathbf{\Sigma}_{XX}^{-1} \\
+\end{aligned}
+$$
+
+where $\mathbf{V}_t = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right)$ is an $\left(s \times t\right)$-matrix, with $\mathbf{v}_j$ the eigenvector associated with the $j$th largest eigenvalue of
+
+$$
+\mathbf{\Gamma}^{1/2}\mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1} \mathbf{\Sigma}_{XY} \mathbf{\Gamma}^{1/2}
+$$
+
+In practice, we try out different values of $\mathbf{\Gamma}$. Two popular choices -- and ones that lead to interesting results as we will see -- are $\mathbf{\Gamma} = \mathbf{I}_r$ and $\mathbf{\Gamma} = \boldsymbol{\Sigma}_{YY}^{-1}$.
+
+Since the reduced-rank regression coefficient relies on inverting $\boldsymbol{\Sigma}_{XX}$ and, possibly, $\boldsymbol{\Sigma}_{YY}$, we want to take into consideration the cases when $\boldsymbol{\Sigma}_{XX}, \boldsymbol{\Sigma}_{YY}$ are singular or difficult to invert.
+
+Borrowing from ridge regression, we perturb the diagonal of the covariance matrices by some small constant, $k$. Thus, we carry out the reduced-rank regression procedure using
+
+$$
+\begin{aligned}
+\hat{\boldsymbol{\Sigma}}_{XX}^{\left(k\right)} & = \hat{\boldsymbol{\Sigma}}_{XX} + k \mathbf{I}_r \\
+\hat{\boldsymbol{\Sigma}}_{YY}^{\left(k\right)} & = \hat{\boldsymbol{\Sigma}}_{YY} + k \mathbf{I}_r
+\end{aligned}
+$$
+
+### Fit Reduced-Rank Regression with `rrr()`
+
+The main function in the `rrr` package is -- unsurprisingly -- `rrr()` 
+
+`rrr()` takes as inputs the data frames, or matrices,  of input and response variables, the weight matrix $\mathbf{\Gamma}$, the rank (defaulted to full rank), the type of covariance matrix to be used (either covariance or correlation), and the ridge constant $k$.
+
+```{r}
+args(rrr)
+```
+
+`rrr()` returns a `list` containing the means $\hat{boldsymbol{\mu}}$, the matrices $\hat{\mathbf{A}}$, $\hat{mathbf{B}}$, and the coefficient matrix $\hat{\mathbf{C}}$
+
+
+```{r}
+### use the identity matrix for gamma
+ident <- diag(1, dim(tobacco_y)[2])
+
+rrr(tobacco_x, tobacco_y, ident, rank = "full") 
+```
+
+We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical multivariate regression coefficients as before. They differ only by a transpose, and is presented this way in `rrr` as a matter of convention. It is this form that is presented in the literature (Izenman, 2008).
+
+### Assess Effective Dimensionality and Ridge Constant with `rank_trace`
+
+Since $\hat{\mathbf{C}}$ is calculated using sample observations, its *mathematical* rank will always be full, but it will have a *statistical* rank $t$ that is an unknown hyperparameter that 
+```{r}
+rank_trace(tobacco_x, tobacco_y, ident) 
+
+rank_trace_plot(tobacco_x, tobacco_y, ident)
+```
+
 ## Principle Components Analysis 
 
 ```{r message = FALSE, warning = FALSE}
-
-library(dplyr)
-
 data(pendigits)
 digits <- as_data_frame(pendigits)
 
@@ -39,22 +182,51 @@ pc_pairwise_plot(digits_features, class_labels = digits_class)
 #pc_plot_3D(digits_features, class_labels = digits_class)
 ```
 
+```{r}
+pc_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)
+```
+
 ## Canonical Variate Analysis
 
 ```{r}
 ### COMBO-17 galaxy data
-#data(COMBO17)
-#galaxy <- as_data_frame(COMBO17) %>%
-#       select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
-#       na.omit()
+data(COMBO17)
+galaxy <- as_data_frame(COMBO17) %>%
+       select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
+       na.omit()
 
-#galaxy_x <- galaxy %>% select(-Rmag:-chi2red)
-#galaxy_y <- galaxy %>% select(Rmag:chi2red)
+galaxy_x <- galaxy %>% select(-Rmag:-chi2red)
+galaxy_y <- galaxy %>% select(Rmag:chi2red)
 
-#galaxy_x
-#galaxy_y
+galaxy_x
+galaxy_y
 
-#rrcva(galaxy_x, galaxy_y, rank = 2)
+rrcva(galaxy_x, galaxy_y, rank = 2, k = 0.0001)
+
+canonical_cov(galaxy_x, galaxy_y, rank = 3, k = 0.0001)
+canonical_corr(galaxy_x, galaxy_y, rank = 3, k = 0.0001)
+
+cva_rank_trace(galaxy_x, galaxy_y)
+
+cva_rank_trace_plot(galaxy_x, galaxy_y)
+
+cva_rank_trace_plot(galaxy_x, galaxy_y, k = 0.0001)
 ```
 
 ## Linear Discriminant Analysis
+
+```{r}
+### create training and test sets
+set.seed(12345)
+num_obs <- dim(digits)[1]
+train_number <- floor(.75 * num_obs)
+train_index <- sample(num_obs, train_number)
+
+### training set
+train_digits_features <- digits_features[train_index, ]
+train_digits_class <- digits_class[train_index, ]
+
+### test set
+test_digits_features <- digits_features[-train_index, ]
+test_digits_class <- digits_class[-train_index, ]
+``` 

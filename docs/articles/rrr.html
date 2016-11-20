@@ -38,18 +38,183 @@
       <h1><code>rrr</code> for Multivariate Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-17</h4>
+            <h4 class="date">2016-11-20</h4>
           </div>
 
     
     
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rrr)</code></pre></div>
+<div id="reduced-rank-regression" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#reduced-rank-regression" class="anchor"> </a></body></html>Reduced-Rank Regression</h2>
+<div id="classical-multivariate-regression" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#classical-multivariate-regression" class="anchor"> </a></body></html>Classical Multivariate Regression</h3>
+<p>Let <span class="math inline">\(\mathbf{X} = \left(X_1, X_2, \dots, X_r\right)^\tau\)</span> and <span class="math inline">\(\mathbf{Y} = \left(Y_1, Y_2, \dots, Y_s\right)^\tau\)</span>, i.e., <span class="math inline">\(\mathbf{X}\)</span> is a random vector. The classical multivariate regression model is given by</p>
+<p><span class="math display">\[
+\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+\mathrm{E}\left(\varepsilon\right) = \mathbf{0}, \quad \mathrm{cov}\left(\varepsilon\right) = \mathbf{\Sigma}_{\varepsilon \varepsilon}
+\]</span></p>
+<p>and <span class="math inline">\(\varepsilon\)</span> is distributed independently of <span class="math inline">\(\mathbf{X}.\)</span></p>
+<p>The least-squares estimator is given by</p>
+<p><span class="math display">\[
+\hat{\mathbf{C}} = \mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1}
+\]</span></p>
+<p>Note that <span class="math inline">\(\hat{\mathbf{C}}\)</span> contains no term that takes into the account the correlation of the <span class="math inline">\(Y_i\)</span>s. This is a surprising result, since we would expect correlation, perhaps very heavy correlation, among the responses.</p>
+<p>In other words, to find the least-squares estimate <span class="math inline">\(\hat{\mathbf{C}}\)</span> of <span class="math inline">\(\mathbf{C}\)</span>, one need only regress <span class="math inline">\(\mathbf{X}\)</span> separately on each <span class="math inline">\(Y_i\)</span> and concatenate those multiple-regression coefficient vectors into a matrix to construct the estimated coefficient matrix <span class="math inline">\(\hat{\mathbf{C}}\)</span>.</p>
+<p>The classical multivariate regression model is not <em>truly</em> multivariate.</p>
+</div>
+<div id="multivariate-regression-the-tobacco-data-set" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#multivariate-regression-the-tobacco-data-set" class="anchor"> </a></body></html>Multivariate Regression: The Tobacco Data Set</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">data</span>(tobacco)
+
+tobacco &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(tobacco)
+
+tobacco_x &lt;-<span class="st"> </span>tobacco %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">"X"</span>))
+    
+tobacco_y &lt;-<span class="st"> </span>tobacco %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">"Y"</span>))
+    
+## multivariate regression
+
+x &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tobacco_x)
+y &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tobacco_y)
+
+multivar_reg &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">cov</span>(y, x) %*%<span class="st"> </span><span class="kw">solve</span>(<span class="kw">cov</span>(x)))
+
+## separate multiple regression
+
+lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(y[,<span class="dv">1</span>] ~<span class="st"> </span>x)$coeff
+lm2 &lt;-<span class="st"> </span><span class="kw">lm</span>(y[,<span class="dv">2</span>] ~<span class="st"> </span>x)$coeff
+lm3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y[,<span class="dv">3</span>] ~<span class="st"> </span>x)$coeff
+
+### compare multivariate regression and separate multiple regresions
+
+multivar_reg</code></pre></div>
+<pre><code>##                      Y1.BurnRate Y2.PercentSugar Y3.PercentNicotine
+## X1.PercentNitrogen    0.06197282      -4.3186662          0.5521620
+## X2.PercentChlorine   -0.16012848       1.3262863         -0.2785609
+## X3.PercentPotassium   0.29211810       1.5899470          0.2175877
+## X4.PercentPhosphorus -0.65798016      13.9526510         -0.7231067
+## X5.PercentCalcium     0.17302593       0.5525913          0.3230914
+## X6.PercentMagnesium  -0.42834825      -3.5021083          2.0048603</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cbind</span>(lm1, lm2, lm3)</code></pre></div>
+<pre><code>##                               lm1        lm2        lm3
+## (Intercept)            1.41113730 13.6329133 -1.5648236
+## xX1.PercentNitrogen    0.06197282 -4.3186662  0.5521620
+## xX2.PercentChlorine   -0.16012848  1.3262863 -0.2785609
+## xX3.PercentPotassium   0.29211810  1.5899470  0.2175877
+## xX4.PercentPhosphorus -0.65798016 13.9526510 -0.7231067
+## xX5.PercentCalcium     0.17302593  0.5525913  0.3230914
+## xX6.PercentMagnesium  -0.42834825 -3.5021083  2.0048603</code></pre>
+</div>
+<div id="the-reduced-rank-regression-approach" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#the-reduced-rank-regression-approach" class="anchor"> </a></body></html>The Reduced-Rank Regression Approach</h3>
+<p>One way to introduce a multivariate component into the model is to allow for the possibility that <span class="math inline">\(\mathbf{C}\)</span> is deficient, or of <em>reduced-rank</em> <span class="math inline">\(t\)</span>.</p>
+<p><span class="math display">\[
+\mathrm{rank}\left(\mathbf{C}\right) = t \leq \mathrm{min}\left(r, s\right)
+\]</span></p>
+<p>In other words, we allow for the possibility that there are unknown linear constraints on <span class="math inline">\(\mathbf{C}\)</span>.</p>
+<p>Without loss of generality, we consider the case when there are more $ r &gt; s$, i.e., <span class="math inline">\(t &lt; s\)</span>.</p>
+<p>When <span class="math inline">\(t = s\)</span>, the regression model is <em>full-rank</em>, and can be fit using multiple regression on each <span class="math inline">\(Y_i \in \mathbf{Y}.\)</span> When <span class="math inline">\(t &lt; s\)</span>, <span class="math inline">\(\mathbf{C}\)</span> can be decomposed into non-unique matrices <span class="math inline">\(\mathbf{A}_{s \times t}\)</span> and <span class="math inline">\(\mathbf{B}_{t \times r}\)</span>, such that <span class="math inline">\(\mathbf{C} = \mathbf{AB},\)</span> and the multivariate regression model is given by</p>
+<p><span class="math display">\[
+\overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times t}{\mathbf{A}} \; \overset{t \times r}{\mathbf{B}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
+\]</span>}, $, and ultimately the <em>reduced-rank regression coefficient</em> <span class="math inline">\(\mathbf{C}^{\left(t\right)}\)</span>, is done by minimizing the weighted sum-of-squares criterion</p>
+<p><span class="math display">\[
+\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)^\tau \mathbf{\Gamma}\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)\right]
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{\Gamma}\)</span> is a positive-definite symmetric <span class="math inline">\(\left(s \times s\right)\)</span>-matrix of weights, the expectation of which is taken over the joint distribution <span class="math inline">\(\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)^\tau\)</span>. This weighted sum-of-squares criterion is minimized when</p>
+<p><span class="math display">\[
+\begin{aligned}
+\boldsymbol{\mu}^\left(t\right) &amp; = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
+        \mathbf{A}^{\left(t\right)} &amp; = \mathbf{\Gamma}^{-1/2}\mathbf{V}_t \\
+        \mathbf{B}^{\left(t\right)} &amp; = \mathbf{V}_t^\tau \boldsymbol{\Gamma}^{-1/2}\mathbf{\Sigma}_{YX}\mathbf{\Sigma}_{XX}^{-1} \\
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{V}_t = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right)\)</span> is an <span class="math inline">\(\left(s \times t\right)\)</span>-matrix, with <span class="math inline">\(\mathbf{v}_j\)</span> the eigenvector associated with the <span class="math inline">\(j\)</span>th largest eigenvalue of</p>
+<p><span class="math display">\[
+\mathbf{\Gamma}^{1/2}\mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1} \mathbf{\Sigma}_{XY} \mathbf{\Gamma}^{1/2}
+\]</span></p>
+<p>In practice, we try out different values of <span class="math inline">\(\mathbf{\Gamma}\)</span>. Two popular choices &ndash; and ones that lead to interesting results as we will see &ndash; are <span class="math inline">\(\mathbf{\Gamma} = \mathbf{I}_r\)</span> and <span class="math inline">\(\mathbf{\Gamma} = \boldsymbol{\Sigma}_{YY}^{-1}\)</span>.</p>
+<p>Since the reduced-rank regression coefficient relies on inverting <span class="math inline">\(\boldsymbol{\Sigma}_{XX}\)</span> and, possibly, <span class="math inline">\(\boldsymbol{\Sigma}_{YY}\)</span>, we want to take into consideration the cases when <span class="math inline">\(\boldsymbol{\Sigma}_{XX}, \boldsymbol{\Sigma}_{YY}\)</span> are singular or difficult to invert.</p>
+<p>Borrowing from ridge regression, we perturb the diagonal of the covariance matrices by some small constant, <span class="math inline">\(k\)</span>. Thus, we carry out the reduced-rank regression procedure using</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\boldsymbol{\Sigma}}_{XX}^{\left(k\right)} &amp; = \hat{\boldsymbol{\Sigma}}_{XX} + k \mathbf{I}_r \\
+\hat{\boldsymbol{\Sigma}}_{YY}^{\left(k\right)} &amp; = \hat{\boldsymbol{\Sigma}}_{YY} + k \mathbf{I}_r
+\end{aligned}
+\]</span></p>
+</div>
+<div id="fit-reduced-rank-regression-with-rrr" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#fit-reduced-rank-regression-with-rrr" class="anchor"> </a></body></html>Fit Reduced-Rank Regression with <code><a href="../reference/rrr.html">rrr()</a></code></h3>
+<p>The main function in the <code>rrr</code> package is &ndash; unsurprisingly &ndash; <code><a href="../reference/rrr.html">rrr()</a></code></p>
+<p><code><a href="../reference/rrr.html">rrr()</a></code> takes as inputs the data frames, or matrices, of input and response variables, the weight matrix <span class="math inline">\(\mathbf{\Gamma}\)</span>, the rank (defaulted to full rank), the type of covariance matrix to be used (either covariance or correlation), and the ridge constant <span class="math inline">\(k\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(rrr)</code></pre></div>
+<pre><code>## function (x, y, gamma_matrix, rank = "full", type = "cov", k = 0) 
+## NULL</code></pre>
+<p><code><a href="../reference/rrr.html">rrr()</a></code> returns a <code>list</code> containing the means <span class="math inline">\(\hat{boldsymbol{\mu}}\)</span>, the matrices <span class="math inline">\(\hat{\mathbf{A}}\)</span>, <span class="math inline">\(\hat{mathbf{B}}\)</span>, and the coefficient matrix <span class="math inline">\(\hat{\mathbf{C}}\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### use the identity matrix for gamma
+ident &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span>, <span class="kw">dim</span>(tobacco_y)[<span class="dv">2</span>])
+
+<span class="kw"><a href="../reference/rrr.html">rrr</a></span>(tobacco_x, tobacco_y, ident, <span class="dt">rank =</span> <span class="st">"full"</span>) </code></pre></div>
+<pre><code>## $mean
+##           [,1]
+## [1,]  1.411137
+## [2,] 13.632913
+## [3,] -1.564824
+## 
+## $A
+##             [,1]       [,2]      [,3]
+## [1,]  0.03107787 -0.4704307 0.8818895
+## [2,] -0.97005030  0.1984637 0.1400521
+## [3,]  0.24090782  0.8598297 0.4501736
+## 
+## $B
+##      X1.PercentNitrogen X2.PercentChlorine X3.PercentPotassium
+## [1,]          4.3242696        -1.35864835          -1.4808316
+## [2,]         -0.4114869         0.09903401           0.3652138
+## [3,]         -0.3016163        -0.08086722           0.5782436
+##      X4.PercentPhosphorus X5.PercentCalcium X6.PercentMagnesium
+## [1,]           -13.729424        -0.4528289          3.86689562
+## [2,]             2.456879         0.3060762          1.23030547
+## [3,]             1.048309         0.3754285          0.03430168
+## 
+## $C
+##      X1.PercentNitrogen X2.PercentChlorine X3.PercentPotassium
+## [1,]         0.06197282         -0.1601285           0.2921181
+## [2,]        -4.31866620          1.3262863           1.5899470
+## [3,]         0.55216201         -0.2785609           0.2175877
+##      X4.PercentPhosphorus X5.PercentCalcium X6.PercentMagnesium
+## [1,]           -0.6579802         0.1730259          -0.4283482
+## [2,]           13.9526510         0.5525913          -3.5021083
+## [3,]           -0.7231067         0.3230914           2.0048603
+## 
+## $eigen_values
+## [1] 3.28209974 0.03782978 0.01015996</code></pre>
+<p>We can see that <code><a href="../reference/rrr.html">rrr()</a></code> with <code>rank = "full"</code> and <code>k = 0</code> returns the classical multivariate regression coefficients as before. They differ only by a transpose, and is presented this way in <code>rrr</code> as a matter of convention. It is this form that is presented in the literature (Izenman, 2008).</p>
+</div>
+<div id="assess-effective-dimensionality-and-ridge-constant-with-rank_trace" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#assess-effective-dimensionality-and-ridge-constant-with-rank_trace" class="anchor"> </a></body></html>Assess Effective Dimensionality and Ridge Constant with <code>rank_trace</code></h3>
+<p>Since <span class="math inline">\(\hat{\mathbf{C}}\)</span> is calculated using sample observations, its <em>mathematical</em> rank will always be full, but it will have a <em>statistical</em> rank <span class="math inline">\(t\)</span> that is an unknown hyperparameter that</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y, ident) </code></pre></div>
+<pre><code>## # A tibble: 4 &times; 3
+##   ranks         dC         dEE
+##   &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;
+## 1     0 1.00000000 1.000000000
+## 2     1 0.20198327 0.011933691
+## 3     2 0.08419093 0.003095346
+## 4     3 0.00000000 0.000000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace_plot.html">rank_trace_plot</a></span>(tobacco_x, tobacco_y, ident)</code></pre></div>
+<p><img src="rrr_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+</div>
+</div>
 <div id="principle-components-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#principle-components-analysis" class="anchor"> </a></body></html>Principle Components Analysis</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-
-<span class="kw">data</span>(pendigits)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(pendigits)
 digits &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(pendigits)
 
 digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(V35)
@@ -78,29 +243,139 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 ## 10     9 0.8574929      0.04079132
 ## # ... with 25 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<p><img src="rrr_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_pairwise_plot.html">pc_pairwise_plot</a></span>(digits_features, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-2-2.png" width="672"></p>
+<p><img src="rrr_files/figure-html/unnamed-chunk-6-2.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pc_plot_3D(digits_features, class_labels = digits_class)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_allpairs_plot.html">pc_allpairs_plot</a></span>(digits_features, <span class="dt">rank =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="rrr_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </div>
 <div id="canonical-variate-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#canonical-variate-analysis" class="anchor"> </a></body></html>Canonical Variate Analysis</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### COMBO-17 galaxy data
-<span class="co">#data(COMBO17)</span>
-<span class="co">#galaxy &lt;- as_data_frame(COMBO17) %&gt;%</span>
-<span class="co">#       select(-starts_with("e."), -Nr, -UFS:-IFD) %&gt;%</span>
-<span class="co">#       na.omit()</span>
+<span class="kw">data</span>(COMBO17)
+galaxy &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(COMBO17) %&gt;%
+<span class="st">       </span><span class="kw">select</span>(-<span class="kw">starts_with</span>(<span class="st">"e."</span>), -Nr, -UFS:-IFD) %&gt;%
+<span class="st">       </span><span class="kw">na.omit</span>()
 
-<span class="co">#galaxy_x &lt;- galaxy %&gt;% select(-Rmag:-chi2red)</span>
-<span class="co">#galaxy_y &lt;- galaxy %&gt;% select(Rmag:chi2red)</span>
+galaxy_x &lt;-<span class="st"> </span>galaxy %&gt;%<span class="st"> </span><span class="kw">select</span>(-Rmag:-chi2red)
+galaxy_y &lt;-<span class="st"> </span>galaxy %&gt;%<span class="st"> </span><span class="kw">select</span>(Rmag:chi2red)
 
-<span class="co">#galaxy_x</span>
-<span class="co">#galaxy_y</span>
-
-<span class="co">#rrcva(galaxy_x, galaxy_y, rank = 2)</span></code></pre></div>
+galaxy_x</code></pre></div>
+<pre><code>## # A tibble: 3,462 &times; 23
+##     UjMAG  BjMAG  VjMAG  usMAG  gsMAG  rsMAG  UbMAG  BbMAG  VnMAG S280MAG
+##     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1  -17.67 -17.54 -17.76 -17.83 -17.60 -17.97 -17.76 -17.53 -17.76  -18.22
+## 2  -18.28  17.86 -18.20 -18.42 -17.96 -18.43 -18.36 -17.85 -18.19  -17.97
+## 3  -19.75 -19.91 -20.41 -19.87 -20.05 -20.71 -19.82 -19.89 -20.40  -19.77
+## 4  -17.83 -17.39 -17.67 -17.98 -17.47 -17.89 -17.92 -17.38 -17.67  -18.12
+## 5  -17.69 -18.40 -19.37 -17.81 -18.69 -19.88 -17.76 -18.35 -19.37  -13.93
+## 6  -19.22 -18.11 -18.70 -19.34 -18.27 -19.05 -19.30 -18.08 -18.69  -19.18
+## 7  -17.09 -16.06 -16.23 -17.26 -16.11 -16.39 -17.19 -16.05 -16.22  -17.81
+## 8  -16.87 -16.49 -17.01 -17.01 -16.64 -17.32 -16.95 -16.46 -17.01  -14.37
+## 9  -17.67 -17.68 -17.87 -17.81 -17.63 -18.10 -17.76 -17.66 -17.86  -17.86
+## 10 -11.63 -11.15 -11.32 -11.82 -11.16 -11.60 -11.73 -11.13 -11.31  -12.22
+## # ... with 3,452 more rows, and 13 more variables: W420FE &lt;dbl&gt;,
+## #   W462FE &lt;dbl&gt;, W485FD &lt;dbl&gt;, W518FE &lt;dbl&gt;, W571FS &lt;dbl&gt;, W604FE &lt;dbl&gt;,
+## #   W646FD &lt;dbl&gt;, W696FE &lt;dbl&gt;, W753FE &lt;dbl&gt;, W815FS &lt;dbl&gt;, W856FD &lt;dbl&gt;,
+## #   W914FD &lt;dbl&gt;, W914FE &lt;dbl&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">galaxy_y</code></pre></div>
+<pre><code>## # A tibble: 3,462 &times; 6
+##      Rmag ApDRmag  mumax   Mcz MCzml chi2red
+##     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1  24.995   0.935 24.214 0.832 1.400    0.64
+## 2  25.013  -0.135 25.303 0.927 0.864    0.41
+## 3  24.246   0.821 23.511 1.202 1.217    0.92
+## 4  25.203   0.639 24.948 0.912 0.776    0.39
+## 5  25.504  -1.588 24.934 0.848 1.330    1.45
+## 6  23.740  -1.636 24.609 0.882 0.877    0.52
+## 7  25.706   0.199 25.271 0.896 0.870    1.31
+## 8  25.139  -0.310 25.376 0.930 0.877    1.84
+## 9  24.699   0.268 24.611 0.774 0.821    1.03
+## 10 24.849   0.399 24.264 0.062 0.055    0.55
+## # ... with 3,452 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rrcva.html">rrcva</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">2</span>, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<pre><code>## $mean
+##            [,1]
+## [1,] 26.9647035
+## [2,]  0.7778445
+## [3,] 25.8103529
+## [4,] -0.7838949
+## [5,] -0.7059124
+## [6,]  2.1087757
+## 
+## $G
+##          UjMAG       BjMAG       VjMAG      usMAG     gsMAG     rsMAG
+## [1,] 12.801398 0.030027684 -10.0136034  7.3781810 3.6563154 7.4920875
+## [2,] -3.526777 0.007037918  -0.6006888 -0.1396253 0.1362222 0.4440037
+##           UbMAG       BbMAG       VnMAG     S280MAG     W420FE     W462FE
+## [1,] -20.863684 -0.09214493 -0.28762197 0.114366840 -80.577920 -45.925360
+## [2,]   3.573287 -0.01097271  0.01701159 0.004312253  -3.552204  -2.571896
+##         W485FD    W518FE   W571FS   W604FE    W646FD      W696FE
+## [1,] 12.502665 53.802839 36.09168 3.096505 -8.390231 -42.9136538
+## [2,]  4.118007  1.729646  1.42660 2.451877 -3.999906  -0.8652682
+##          W753FE    W815FS      W856FD    W914FD    W914FE
+## [1,] 34.1142186 -36.60718 -13.4812757 19.003834 2.4553493
+## [2,]  0.8532394  -3.14504  -0.2666507  1.330534 0.7642494
+## 
+## $H
+##             [,1]       [,2]       [,3]       [,4]      [,5]         [,6]
+## [1,]  1.39453594  0.2106292 1.04963650 0.09485012 0.1111437 -0.007471155
+## [2,] -0.06686816 -0.1051414 0.07012137 0.31449831 0.3135059 -0.177456306
+## 
+## $eigen_values
+## [1] 5.418825e+00 3.944920e-02 5.038764e-03 8.993002e-04 3.712448e-05
+## [6] 1.101363e-05</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/canonical_cov.html">canonical_cov</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">3</span>, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<pre><code>##             xi1       xi2        xi3   omega1    omega2     omega3
+## xi1    0.938634 0.0000000 0.00000000 0.938634 0.0000000 0.00000000
+## xi2    0.000000 0.4695783 0.00000000 0.000000 0.4695783 0.00000000
+## xi3    0.000000 0.0000000 0.07553122 0.000000 0.0000000 0.07553122
+## omega1 0.938634 0.0000000 0.00000000 1.000000 0.0000000 0.00000000
+## omega2 0.000000 0.4695783 0.00000000 0.000000 1.0000000 0.00000000
+## omega3 0.000000 0.0000000 0.07553122 0.000000 0.0000000 1.00000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/canonical_corr.html">canonical_corr</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">3</span>, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<pre><code>##              xi1       xi2       xi3    omega1    omega2    omega3
+## xi1    1.0000000 0.0000000 0.0000000 0.9688312 0.0000000 0.0000000
+## xi2    0.0000000 1.0000000 0.0000000 0.0000000 0.6852579 0.0000000
+## xi3    0.0000000 0.0000000 1.0000000 0.0000000 0.0000000 0.2748294
+## omega1 0.9688312 0.0000000 0.0000000 1.0000000 0.0000000 0.0000000
+## omega2 0.0000000 0.6852579 0.0000000 0.0000000 1.0000000 0.0000000
+## omega3 0.0000000 0.0000000 0.2748294 0.0000000 0.0000000 1.0000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cva_rank_trace.html">cva_rank_trace</a></span>(galaxy_x, galaxy_y)</code></pre></div>
+<pre><code>## # A tibble: 7 &times; 3
+##   ranks         dC          dEE
+##   &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+## 1     0 1.00000000 1.0000000000
+## 2     1 0.31997913 0.0929573793
+## 3     2 0.28812548 0.0106490385
+## 4     3 0.12985784 0.0031004613
+## 5     4 0.04836781 0.0010833504
+## 6     5 0.04004294 0.0004057821
+## 7     6 0.00000000 0.0000000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cva_rank_trace_plot.html">cva_rank_trace_plot</a></span>(galaxy_x, galaxy_y)</code></pre></div>
+<p><img src="rrr_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cva_rank_trace_plot.html">cva_rank_trace_plot</a></span>(galaxy_x, galaxy_y, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<p><img src="rrr_files/figure-html/unnamed-chunk-8-2.png" width="672"></p>
 </div>
 <div id="linear-discriminant-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#linear-discriminant-analysis" class="anchor"> </a></body></html>Linear Discriminant Analysis</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### create training and test sets
+<span class="kw">set.seed</span>(<span class="dv">12345</span>)
+num_obs &lt;-<span class="st"> </span><span class="kw">dim</span>(digits)[<span class="dv">1</span>]
+train_number &lt;-<span class="st"> </span><span class="kw">floor</span>(.<span class="dv">75</span> *<span class="st"> </span>num_obs)
+train_index &lt;-<span class="st"> </span><span class="kw">sample</span>(num_obs, train_number)
+
+### training set
+train_digits_features &lt;-<span class="st"> </span>digits_features[train_index, ]
+train_digits_class &lt;-<span class="st"> </span>digits_class[train_index, ]
+
+### test set
+test_digits_features &lt;-<span class="st"> </span>digits_features[-train_index, ]
+test_digits_class &lt;-<span class="st"> </span>digits_class[-train_index, ]</code></pre></div>
 </div>
 </div>
   </div>
@@ -108,7 +383,8 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
       <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked"><li><a href="#principle-components-analysis">Principle Components Analysis</a></li>
+      <ul class="nav nav-pills nav-stacked"><li><a href="#reduced-rank-regression">Reduced-Rank Regression</a></li>
+      <li><a href="#principle-components-analysis">Principle Components Analysis</a></li>
       <li><a href="#canonical-variate-analysis">Canonical Variate Analysis</a></li>
       <li><a href="#linear-discriminant-analysis">Linear Discriminant Analysis</a></li>
       </ul></div>

@@ -8,7 +8,7 @@ pc_pairwise_plot(x, pc_x = 1, pc_y = 2, class_labels = NULL,
   rank = "full", type = "cov", interactive = FALSE)
 }
 \arguments{
-\item{x}{data frame or matrix of predictor variables}
+\item{x}{data frame or matrix of input variables}
 
 \item{pc_x}{principal component for the x-axis}
 
@@ -16,9 +16,9 @@ pc_pairwise_plot(x, pc_x = 1, pc_y = 2, class_labels = NULL,
 
 \item{class_labels}{data frame or vector of class labels}
 
-\item{rank}{rank of coefficient matrix}
+\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
-\item{type}{type of covariance matrix}
+\item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{interactive}{logical. If \code{TRUE} prints an interactive Plotly graphic.}
 }

@@ -6,14 +6,12 @@ reference:
   - rrpca
   - rrcva
   - rrlda
-  - rrqlda
-  - pc_scores
-  - ld_scores
-  - qld_scores
 - title: Prediction
   desc: Functions for prediction via reduced-rank regression
   contents:
+  - pc_scores
   - rrr_predict
+  - ld_scores
   - rrpca_predict
 - title: Plots
   desc: Reduced-rank regression plots
@@ -25,13 +23,22 @@ reference:
 - title: Diagnostics
   desc: Diagnostic functions to test reduced-rank regression models
   contents:
+  - canonical_cov
+  - canonical_corr
   - cva_residuals
   - rrr_error
+  - rrr_residuals
   - rank_trace
+  - pca_gof
   - pca_rank_trace
   - rrpca_residuals
   - rrpca_error
   - pc_gof
+- title: Utility Functions
+  desc: Functions useful for rrr 
+  contents:
+  - binary_matrix
+  - expand_feature_space
 - title: Data
   desc: Multivariate data sets
   contents:

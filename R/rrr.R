@@ -23,15 +23,17 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	}
 	cov_x <- cov(x) + k * diag(1, dim(x)[2])
 	cov_yx <- cov(y, x)
-    cov_y <- cov(y) + k * diag(1, dim(y)[2])
-    cov_xy <- t(cov_yx)
+	cov_y <- cov(y) + k * diag(1, dim(y)[2])
+    	cov_xy <- t(cov_yx)
 	sqrtm <- sqrt_matrix(gamma_matrix)
 	weighted_matrix <- sqrtm %*%
 		cov_yx %*%
 		solve(cov_x) %*%
 		cov_xy %*%
 		sqrtm
-	V_t <- eigen(weighted_matrix)$vectors[,1:reduce_rank] %>%
+	eigens <- eigen(weighted_matrix)
+	eigen_values <- eigens$values
+	V_t <- eigens$vectors[,1:reduce_rank] %>%
 		as.matrix(ncol = reduce_rank)
 	A_t <- solve(sqrtm) %*% V_t
 	B_t <- t(V_t) %*%
@@ -42,7 +44,7 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	mu_y <- colMeans(y)
 	mu_x <- colMeans(x)
 	mu_t <- mu_y - C_t %*% mu_x
-	list(mean = mu_t, A = A_t, B = B_t, C = C_t)
+	list(mean = mu_t, A = A_t, B = B_t, C = C_t, eigen_values = eigen_values)
 }
 
 #' Predict  RRR 

@@ -22,7 +22,7 @@ sqrt_matrix <- function(matr){
 			eigens <- eigen(matr)
 			vecs <- eigens$vectors
 			vals <- eigens$values
-			vecs %*% diag(sqrt(vals), length(vals)) %*% t(vecs)
+			vecs %*% diag(sqrt(vals)) %*% t(vecs)
 }
 
 organize <- function(vars, type = "cov"){
@@ -47,6 +47,14 @@ cov_matrix <- function(x, y, type = "cov"){
 	x %*% t(y) / n
 }
 
+#' Binary Indicator Matrix
+#'
+#' @param class vector or data frame of type `character`
+#'
+#' @return matrix of binary indicator matrix where each column represents  
+#'
+#' @export
+
 binary_matrix <- function(class) {
 	class <- dplyr::as_data_frame(class)
 	num_class <- dim(unique(class))[1]
@@ -60,7 +68,20 @@ square <- function(x){
 	x^2
 }
 
-
+#' Expand Feature Space
+#'
+#' \code{expand_feature_space}
+#'
+#' @param feature_space a matrix or data frame of input variables
+#'
+#' @return data frame of all input variables, their squares and all cross products
+#'
+#' @examples
+#' data(iris)
+#' iris_features <- iris[,1:4]
+#' expand_feature_space(iris)
+#' 
+#' @export
 expand_feature_space <- function(feature_space){
 	feature_space <- dplyr::as_data_frame(feature_space)
 	feature_squares <- feature_space %>%

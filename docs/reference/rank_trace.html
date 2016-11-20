@@ -81,7 +81,7 @@
     <p>Rank trace to determine number of principle components to use in reduced-rank PCA.</p>
     
 
-    <pre><span class='fu'>rank_trace</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>gamma_matrix</span>)</pre>
+    <pre><span class='fu'>rank_trace</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>gamma_matrix</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -91,6 +91,10 @@
       <dd>data frame or matrix of response variables</dd>
       <dt>gamma_matrix</dt>
       <dd>weight matrix</dd>
+      <dt>type</dt>
+      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
+      <dt>k</dt>
+      <dd>small number to add to the ridge.</dd>
     </dl>
     
 

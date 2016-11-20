@@ -81,12 +81,16 @@
     <p>Plot of rank trace to determine number of principle components to use in reduced-rank PCA.</p>
     
 
-    <pre><span class='fu'>pca_rank_trace_plot</span>(<span class='no'>x</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre><span class='fu'>pca_rank_trace_plot</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
       <dd>data frame or matrix of input variables</dd>
+      <dt>type</dt>
+      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
+      <dt>k</dt>
+      <dd>small number to add to the ridge.</dd>
       <dt>interactive</dt>
       <dd>logical. If <code>TRUE</code> prints an interactive Plotly graphic.</dd>
     </dl>

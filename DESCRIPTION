@@ -12,7 +12,8 @@ Imports:
     magrittr,
     dplyr,
     ggplot2,
-    plotly
+    plotly,
+    GGally
 Collate:
     utility_functions.R
     rrr.R
@@ -22,8 +23,9 @@ Collate:
     pca_plots.R
     cva.R
     cva_diagnostics.R
+    cva_plots.R
     lda.R
-    qlda.R
+    lda_plots.R
     data.R
 License: GPL-3
 Encoding: UTF-8

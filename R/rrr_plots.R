@@ -1,20 +1,26 @@
-delta_C <- function(x, y, gamma_mat, type = "cov", k = 0){
-	theta_full <- rrr(x, y, gamma_mat, rank = "full", type, k)$C
-	reduced_rank <- min(dim(x)[2], dim(y)[2])
-	delta <- c()
-	for(i in 1:reduced_rank){
-		delta[i] <- sum((theta_full - rrr(x, y, gamma_mat, rank = i, type, k)$C)^2) / sum(theta_full^2)
+### Rank Trace Plot
+###################
+
+delta_coeff <- function(x, y, gamma_matrix, type = "cov", k = 0){
+	full_rank <- min(dim(x)[2], dim(y)[2])
+	coeff_full <- rrr(x, y, gamma_matrix, rank = full_rank, type, k)$C	
+	delta_coeff_norm <- c()
+	for(i in 1:full_rank){
+		delta_coeff_norm[i] <-sqrt(sum((coeff_full - rrr(x, y, gamma_matrix, i, type, k)$C)^2))
 	}
-	c(1, delta)
+	delta_c <- delta_coeff_norm / sqrt(sum(coeff_full^2))
+	data_frame(dC = c(1, delta_c))
 }
 
-delta_EE <- function(x, y, gamma_mat, type = "cov", k = 0){
-	cov_y <- cov(y) + k * diag(1, dim(y_organize)[1])
-	cov_EE_full <- cov_y -  rrr(x, y, gamma_mat, rank = "full", type, k)
-	reduced_rank <- min(dim(x)[2], dim(y)[2])
-#	for(i in 1:reduced_rank){
-#		sum(cov_EE_full - ) / sum((cov_EE_full - cov_y)^2)
-#	}
+delta_error <- function(x, y, gamma_matrix, type = "cov", k = 0){
+	full_rank <- min(dim(x)[2], dim(y)[2])
+	resid_full <- cov(rrr_residuals(x, y, gamma_matrix, full_rank, type, k))
+	delta_resid_norm <- c()
+	for(i in 1:full_rank){
+		delta_resid_norm[i] <- sqrt(sum((resid_full - cov(rrr_residuals(x, y, gamma_matrix, i, type, k)))^2))
+	}
+	delta_EE <- delta_resid_norm / sqrt(sum((resid_full - cov(y))^2))
+	data_frame(dEE = c(1, delta_EE))
 }
 
 #' Rank Trace
@@ -25,21 +31,13 @@ delta_EE <- function(x, y, gamma_mat, type = "cov", k = 0){
 #'
 #' @export
 
-rank_trace <- function(x, y, gamma_matrix) {
-	s <- min(dim(x)[2], dim(y)[2])
-	rt_x <- c()
-	rt_y <- c()
-	for(i in 1:s){
-		rt_x[i] <- delta_C(x, y, gamma_mat, i)
-		rt_y[i] <- delta_EE(x, y, gamma_mat, i)
-	}
-	rt_x <- c(1, rt_x)
-	rt_y <- c(1, rt_y)
-	rank <- 0:min(dim(x)[2], dim(y)[2])
-	data_frame(rank = rank,
-		       deltaC = rt_x,
-			   deltaEE = rt_y)
-}
+rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0){
+	dC <- delta_coeff(x, y, gamma_matrix, type, k)
+	dEE <- delta_error(x, y, gamma_matrix, k)
+	ranks <- dplyr::data_frame(ranks = 0:(dim(dC)[1] - 1))
+	dplyr::bind_cols(ranks, dC, dEE)
+
+}	
 
 #' Rank Trace Plot
 #'
@@ -49,19 +47,13 @@ rank_trace <- function(x, y, gamma_matrix) {
 #'
 #' @export
 
-rank_trace_plot <- function(x, y, gamma_matrix){
-	trace <- rank_trace(x, y, gamma_matrix)
-	ggplot() +
-	aes(x = rank_trace_x(x, y, gamma_mat), #trace$deltaC,
-		y = rank_trace_y(x, y, gamma_mat), #trace$deltaEE,
-		label = 0:3) +
+rank_trace_plot <- function(x, y, gamma_matrix, type = "cov", k = 0){
+	trace <- rank_trace(x, y, gamma_matrix, type = "cov", k)
+	ggplot(trace, aes(dC, dEE, label = ranks)) +
 	lims(x = c(0,1), y = c(0,1)) +
 	geom_line(color = "red") +
 	geom_text(check_overlap = TRUE, size = 5) +
-	geom_label() + 
 	labs(x = "dC", y = "dE") +
-	ggtitle(expression(paste("Rank Trace Plot for ",
-				 Theta^(0),
-				 " to ",
-				 Theta^(s) )))
+	ggtitle(paste("Rank Trace Plot, k =  ", k, sep =""))
 }
+				 
