@@ -16,6 +16,7 @@ lda_organize <- function(features, classes){
 #' \code{lda} fits a reduced-rank linear discriminant analysis model.
 #' 
 #' @inheritParams rrr
+#' @param class vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.
 #' @param quadratic `logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.
 #' 
 #' @return `list` containing: a data frame of class
@@ -24,11 +25,11 @@ lda_organize <- function(features, classes){
 #'
 #' @export
 
-rrlda <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
+rrlda <- function(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE){
     if(quadratic == TRUE){
 	x <- expand_feature_space(x)
     }
-    ordered <- lda_organize(x, y)
+    ordered <- lda_organize(x, class)
     x_ordered <- ordered$features_ordered
     y_ordered <- ordered$classes_ordered
     full_rank <- min(dim(x_ordered)[2], dim(y_ordered)[2])
@@ -62,9 +63,9 @@ rrlda <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
 
 rrlda2 <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
 	ordered <- lda_organize(x, y)
-	x_ordered <- ordered$features_ordered
-	y_ordered <- ordered$features_ordered
-	rrcva(x_ordered, y_ordered, rank, type, k)
+	x_organize <- organize(ordered$features_ordered)
+	y_organize <- organize(ordered$features_ordered)
+	rrcva(x_organize, y_organize, rank, type, k)
 }	
 #' Linear Discriminant Scores
 #'
@@ -74,17 +75,15 @@ rrlda2 <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
 #'
 #' @export
 
-ld_scores <- function(x, y, rank = "full", type = "cov", k = 0){
-    class <- y
-    names(class) <- "class"
-    lda_object <- rrlda(x, y, rank, type, k)
-    ordered <- lda_organize(x, y)
+ld_scores <- function(x, class, rank = "full", type = "cov", k = 0){
+    class_label <- class
+    names(class_label) <- "class"
+    lda_object <- rrlda(x, class_label, rank, type, k)
+    ordered <- lda_organize(x, class_label)
     x_organize <- organize(ordered$features_ordered)
     y_organize <- organize(ordered$classes_ordered)
     xi <- as_data_frame(t(t(lda_object$G) %*% x_organize))
     omega <- as_data_frame(t(t(lda_object$H) %*% y_organize))
-    #list(ldf = dplyr::bind_cols(xi, class), 
-#	 class_mean = unique(dplyr::bind_cols(omega, class)))
     list(scores = dplyr::bind_cols(xi, class), class_means = unique(dplyr::bind_cols(omega, class))) 
 }
 

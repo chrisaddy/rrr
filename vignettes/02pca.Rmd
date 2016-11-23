@@ -1,0 +1,128 @@
+---
+title: "`rrr` for Principal Component Analysis"
+author: "Chris Addy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Mathematical Background
+
+### PCA is a special case of Reduced-Rank Regression
+
+$$
+\begin{aligned}
+  \mathbf{A}^{\left(t\right)} & = \left(\mathbf{v}_1, \dots, \mathbf{v}_t\right) \\
+  \mathbf{B}^{\left(t\right)} & = \mathbf{A}^{\left(t\right) \tau} \\
+  \boldsymbol{\mu}^{\left(t\right)} & = \left(\mathbf{I}_r - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\right)\boldsymbol{\mu}_X \\
+\end{aligned}
+$$
+
+where $\mathbf{v}_j = \mathbf{v}_j \left(\mathbf{\Sigma}_{XX}\right)$ is eigenvector associated with the $j$th largest eigenvalue of  $\mathbf{\Sigma}_{XX}.$
+
+The best reduced-rank approximation to the original $\mathbf{X}$ is
+
+$$
+\begin{aligned}
+\hat{\mathbf{X}}^{\left(t\right)} & =
+  \boldsymbol{\mu}^{\left(t\right)} + \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)} \mathbf{X}
+\end{aligned}
+$$
+
+## The `pendigits` Data Set
+
+```{r message = FALSE, warning = FALSE}
+data(pendigits)
+digits <- as_data_frame(pendigits) %>% select(-V36)
+
+glimpse(digits)
+```
+
+```{r}
+digits_features <- digits %>% select(-V35)
+digits_class <- digits %>% select(V35)
+```
+
+## Assessing Dimensionality
+
+```{r}
+pca_gof(digits_features) %>% round(4)
+```
+
+### Estimate $t$ and ridge constant $k$ with `pca_rank_trace_plot()`
+
+```{r}
+args(pca_rank_trace)
+args(pca_rank_trace_plot)
+``` 
+
+`pca_rank_trace()` and `pca_rank_trace_plot()` are special of `rank_trace()` and `rank_trace_plot()`, respectively, when $\mathbf{Y} \equiv \mathbf{X}$ and $\mathbf{\Gamma} = \mathbf{I}_r$.
+
+```{r}
+pca_rank_trace(digits_features)
+
+pca_rank_trace_plot(digits_features)
+```
+
+## Plot Principal Component Scores 
+
+### Pairwise Plots with `pc_pairwise_plot()`
+
+```{r}
+args(pc_pairwise_plot)
+```
+
+A common PCA method of visualization for diagnostic and analysis purposes is to plot the $j$th sample PC scores against the $k$th PC scores,
+
+$$
+\begin{aligned}
+  \left(\xi_{ij}, \xi_{ik}\right) \\
+  \left(\hat{\mathbf{v}}_j^\tau \mathbf{X}_i, \hat{\mathbf{v}}_k^\tau\right),  \quad i = 1,2, \dots, n  
+\end{aligned}
+$$
+
+Since the first two principal components will capture the most variance -- and hence the most useful information -- of all possible pairs of principal components, we typically would set $j = 1, k = 2$ and plot the first two sample PC scores against each other. In `rrr` this is the default.
+
+```{r}
+pc_pairwise_plot(digits_features, class_labels = digits_class)
+```
+
+We can set the $x$- and $y$-axes to whichever pairs of PC scores we would like to plot by changing the `pc_x` and `pc_y` arguments.
+
+```{r}
+pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
+```
+
+### Plot all pairs of PC scores with `pc_allpairs_plot()`
+
+```{r}
+args(pc_allpairs_plot)
+```
+
+```{r}
+pc_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)
+```
+
+```{r warnings = FALSE}
+#pc_plot_3D(digits_features, class_labels = digits_class)
+```
+
+## Fitting a PCA Model
+
+### Fit model with `rrpca`
+
+```{r}
+args(rrpca)
+```
+
+```{r}
+digits_class <- digits %>% dplyr::select(V35)
+digits_features <- digits %>% dplyr::select(-V5, -V6)
+
+digits_pca <- rrpca(digits_features)
+
+digits_pca
+```

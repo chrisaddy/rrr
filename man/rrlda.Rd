@@ -4,12 +4,12 @@
 \alias{rrlda}
 \title{Fit Reduced-Rank LDA Model}
 \usage{
-rrlda(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE)
+rrlda(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
 
-\item{y}{data frame or matrix of response variables}
+\item{class}{vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.}
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 

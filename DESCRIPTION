@@ -17,6 +17,7 @@ Imports:
 Collate:
     utility_functions.R
     rrr.R
+    rrr_diagnostics.R
     rrr_plots.R
     pca.R
     pca_diagnostics.R

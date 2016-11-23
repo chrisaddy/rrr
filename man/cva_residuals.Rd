@@ -2,9 +2,9 @@
 % Please edit documentation in R/cva_diagnostics.R
 \name{cva_residuals}
 \alias{cva_residuals}
-\title{Residuals of Reduced-Rank Canonical Variate}
+\title{Residuals of Reduced-Rank Canonical Variate Analysis}
 \usage{
-cva_residuals(x, y, rank = "full", type = "cov")
+cva_residuals(x, y, rank = "full", type = "cov", k = 0)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -14,6 +14,8 @@ cva_residuals(x, y, rank = "full", type = "cov")
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
+
+\item{k}{small number to add to the ridge.}
 }
 \description{
 \code{cva_residuals} returns the multivariate residuals of the reduced-rank CVA regression

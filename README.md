@@ -7,5 +7,5 @@ R package for reduced-rank regression.
 ### Install
 
 ```{r}
-#devtools::install_github("chrisaddy/rrr")
+devtools::install_github("chrisaddy/rrr")
 ```

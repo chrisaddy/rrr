@@ -1,5 +1,5 @@
 ---
-title: "`rrr` for Multivariate Analysis"
+title: "`rrr` for Multivariate Regression"
 author: "Chris Addy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -7,15 +7,14 @@ vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+always_allow_html: yes
 ---
 
 ```{r}
 library(rrr)
 ```
 
-## Reduced-Rank Regression
-
-### Classical Multivariate Regression 
+## Classical Multivariate Regression 
 
 Let $\mathbf{X} = \left(X_1, X_2, \dots, X_r\right)^\tau$ and $\mathbf{Y} = \left(Y_1, Y_2, \dots, Y_s\right)^\tau$, i.e., $\mathbf{X}$ is a random vector. The classical multivariate regression model is given by
 
@@ -31,19 +30,36 @@ $$
 
 and $\varepsilon$ is distributed independently of $\mathbf{X}.$
 
-The least-squares estimator is given by
+To estimate $\boldsymbol{\mu}$ and $\mathbf{C}$ we minimize the least-squares criterion
 
 $$
-\hat{\mathbf{C}} = \mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1}
+\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{C} \mathbf{X}\right)\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{C}\mathbf{X}\right)^\tau\right], 
+
+with expecation taken over the joint distribution of $\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)$, with the assumption that $\mathbf{\Sigma}_{XX}$ is nonsingular, and therefore invertible.
+
+This is minimized when
+
+$$
+\begin{aligned}
+	\boldsymbol{\mu} & = \boldsymbol{\mu}_Y - \mathbf{C} \boldsymbol{\mu} \\
+	\mathbf{C} & = \mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1}
+\end{aligned}
 $$
 
-Note that $\hat{\mathbf{C}}$ contains no term that takes into the account the correlation of the $Y_i$s. This is a surprising result, since we would expect correlation, perhaps very heavy correlation, among the responses.
+The least-squares estimator of $\mathbf{C}$ is given by
+
+$$
+\hat{\mathbf{C}} = \hat{\mathbf{\Sigma}}_{YX} \hat{\mathbf{\Sigma}}_{XX}^{-1}
+$$
+
+Note that $\mathbf{C}$ and hence $\hat{\mathbf{C}}$ contains no term that takes into the account the correlation of the $Y_i$s. This is a surprising result, since we would expect correlation among the responses.
 
 In other words, to find the least-squares estimate $\hat{\mathbf{C}}$ of $\mathbf{C}$, one need only regress $\mathbf{X}$ separately on each $Y_i$ and concatenate those multiple-regression coefficient vectors into a matrix to construct the estimated coefficient matrix $\hat{\mathbf{C}}$.
 
-The classical multivariate regression model is not *truly* multivariate. 
+The classical multivariate regression model is not *truly* multivariate.
 
-### Multivariate Regression: The Tobacco Data Set
+
+## The `tobacco` Data Set
 
 ```{r}
 library(dplyr)
@@ -51,12 +67,28 @@ data(tobacco)
 
 tobacco <- as_data_frame(tobacco)
 
-tobacco_x <- tobacco %>% 
+glimpse(tobacco)
+```
+
+We see that the `tobacco` data set^[Anderson, R.L and Bancroft, T.A (1952). *Statistical Theory in Research*, New York: McGraw-Hill. p. 205. ] has 9 variables and 25 observations. There are 6 $X_i$ predictor variables -- representing the percentages of nitrogen, chlorine, potassium, phosphorus, calcium, and magnesium, respectively -- and 3 $Y_j$ response variables -- representing cigarette burn rates in inches per 1,000 seconds, percent sugar in the leaf, and percent nicotine in the leaf, respectively.
+
+```{r}
+tobacco_x <- tobacco %>%
 	select(starts_with("X"))
-	
+
 tobacco_y <- tobacco %>% 
 	select(starts_with("Y"))
-	
+```
+
+```{r}
+GGally::ggcorr(tobacco_x)
+```
+
+```{r}
+GGally::ggcorr(tobacco_y)
+```
+
+```{r}	
 ## multivariate regression
 
 x <- as.matrix(tobacco_x)
@@ -77,7 +109,7 @@ multivar_reg
 cbind(lm1, lm2, lm3)
 ```
 
-### The Reduced-Rank Regression Approach
+## Reduced-Rank Regression
 
 One way to introduce a multivariate component into the model is to allow for the possibility that $\mathbf{C}$ is deficient, or of *reduced-rank* $t$.
 
@@ -87,13 +119,15 @@ $$
 
 In other words, we allow for the possibility that there are unknown linear constraints on $\mathbf{C}$.
 
-Without loss of generality, we consider the case when there are more $ r > s$, i.e., $t < s$. 
+Without loss of generality, we consider the case when $r > s$, i.e., $t < s$. 
 
 When $t = s$, the regression model is *full-rank*, and can be fit using multiple regression on each $Y_i \in \mathbf{Y}.$ When $t < s$, $\mathbf{C}$ can be decomposed into non-unique matrices $\mathbf{A}_{s \times t}$ and $\mathbf{B}_{t \times r}$, such that $\mathbf{C} = \mathbf{AB},$ and the multivariate regression model is given by
 
 $$
 \overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times t}{\mathbf{A}} \; \overset{t \times r}{\mathbf{B}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
-$$}, \mathbf{B}$, and ultimately the *reduced-rank regression coefficient* $\mathbf{C}^{\left(t\right)}$, is done by minimizing the weighted sum-of-squares criterion
+$$ 
+
+Estimating $\boldsymbol{\mu}, \mathbf{A}, \mathbf{B}$, and ultimately the *reduced-rank regression coefficient* $\mathbf{C}^{\left(t\right)}$, is done by minimizing the weighted sum-of-squares criterion
 
 $$
 \mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)^\tau \mathbf{\Gamma}\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)\right]
@@ -103,7 +137,7 @@ where $\boldsymbol{\Gamma}$ is a positive-definite symmetric $\left(s \times s\r
 
 $$
 \begin{aligned}
-\boldsymbol{\mu}^\left(t\right) & = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
+\boldsymbol{\mu}^{\left(t\right)} & = \boldsymbol{\mu}_Y - \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\boldsymbol{\mu}_X \\
         \mathbf{A}^{\left(t\right)} & = \mathbf{\Gamma}^{-1/2}\mathbf{V}_t \\
         \mathbf{B}^{\left(t\right)} & = \mathbf{V}_t^\tau \boldsymbol{\Gamma}^{-1/2}\mathbf{\Sigma}_{YX}\mathbf{\Sigma}_{XX}^{-1} \\
 \end{aligned}
@@ -128,18 +162,36 @@ $$
 \end{aligned}
 $$
 
-### Fit Reduced-Rank Regression with `rrr()`
+## Assessessing Effective Dimensionality 
 
-The main function in the `rrr` package is -- unsurprisingly -- `rrr()` 
+### Estimate $t$ and $k$ with `pc_rank_trace()`
 
-`rrr()` takes as inputs the data frames, or matrices,  of input and response variables, the weight matrix $\mathbf{\Gamma}$, the rank (defaulted to full rank), the type of covariance matrix to be used (either covariance or correlation), and the ridge constant $k$.
+```{r}
+args(rank_trace)
+args(rank_trace_plot)
+```
+
+Since $\hat{\mathbf{C}}$ is calculated using sample observations, its *mathematical* rank will always be full, but it will have a *statistical* rank $t$ that is an unknown hyperparameter that 
+
+```{r}
+#rank_trace(tobacco_x, tobacco_y, ident) 
+
+#rank_trace_plot(tobacco_x, tobacco_y, ident)
+```
+
+## Fitting Reduced-Rank Regression Model
+
+### Fit reduced-rank regression model with `rrr()`
 
 ```{r}
 args(rrr)
 ```
 
-`rrr()` returns a `list` containing the means $\hat{boldsymbol{\mu}}$, the matrices $\hat{\mathbf{A}}$, $\hat{mathbf{B}}$, and the coefficient matrix $\hat{\mathbf{C}}$
+The main function in the `rrr` package is -- unsurprisingly -- `rrr()` 
 
+`rrr()` takes as inputs the data frames, or matrices,  of input and response variables, the weight matrix $\mathbf{\Gamma}$, the rank (defaulted to full rank), the type of covariance matrix to be used (either covariance or correlation), and the ridge constant $k$.
+
+`rrr()` returns a `list` containing the means $\hat{\boldsymbol{\mu}}$, the matrices $\hat{\mathbf{A}}$, $\hat{\mathbf{B}}$, and the coefficient matrix $\hat{\mathbf{C}}$
 
 ```{r}
 ### use the identity matrix for gamma
@@ -150,83 +202,19 @@ rrr(tobacco_x, tobacco_y, ident, rank = "full")
 
 We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical multivariate regression coefficients as before. They differ only by a transpose, and is presented this way in `rrr` as a matter of convention. It is this form that is presented in the literature (Izenman, 2008).
 
-### Assess Effective Dimensionality and Ridge Constant with `rank_trace`
+## Diagnostics
 
-Since $\hat{\mathbf{C}}$ is calculated using sample observations, its *mathematical* rank will always be full, but it will have a *statistical* rank $t$ that is an unknown hyperparameter that 
+### Plot Residuals with `rrr_residual_plot()`
+
 ```{r}
-rank_trace(tobacco_x, tobacco_y, ident) 
-
-rank_trace_plot(tobacco_x, tobacco_y, ident)
-```
-
-## Principle Components Analysis 
-
-```{r message = FALSE, warning = FALSE}
-data(pendigits)
-digits <- as_data_frame(pendigits)
-
-digits_class <- digits %>% dplyr::select(V35)
-digits_features <- digits %>% dplyr::select(-V5, -V6)
-
-digits_pca <- rrpca(digits_features)
-
-pca_gof(digits_features) %>% round(4)
-
-pca_rank_trace(digits_features)
-
-pca_rank_trace_plot(digits_features)
-
-pc_pairwise_plot(digits_features, class_labels = digits_class)
-
-
-#pc_plot_3D(digits_features, class_labels = digits_class)
+args(rrr_residuals)
+args(rrr_residuals_plot)
 ```
 
 ```{r}
-pc_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)
+rrr_residuals(tobacco_x, tobacco_y, ident, rank = 1)
 ```
 
-## Canonical Variate Analysis
-
 ```{r}
-### COMBO-17 galaxy data
-data(COMBO17)
-galaxy <- as_data_frame(COMBO17) %>%
-       select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
-       na.omit()
-
-galaxy_x <- galaxy %>% select(-Rmag:-chi2red)
-galaxy_y <- galaxy %>% select(Rmag:chi2red)
-
-galaxy_x
-galaxy_y
-
-rrcva(galaxy_x, galaxy_y, rank = 2, k = 0.0001)
-
-canonical_cov(galaxy_x, galaxy_y, rank = 3, k = 0.0001)
-canonical_corr(galaxy_x, galaxy_y, rank = 3, k = 0.0001)
-
-cva_rank_trace(galaxy_x, galaxy_y)
-
-cva_rank_trace_plot(galaxy_x, galaxy_y)
-
-cva_rank_trace_plot(galaxy_x, galaxy_y, k = 0.0001)
+#rrr_residuals_plot(tobacco_x, tobacco_y, ident, rank = 1)
 ```
-
-## Linear Discriminant Analysis
-
-```{r}
-### create training and test sets
-set.seed(12345)
-num_obs <- dim(digits)[1]
-train_number <- floor(.75 * num_obs)
-train_index <- sample(num_obs, train_number)
-
-### training set
-train_digits_features <- digits_features[train_index, ]
-train_digits_class <- digits_class[train_index, ]
-
-### test set
-test_digits_features <- digits_features[-train_index, ]
-test_digits_class <- digits_class[-train_index, ]
-``` 

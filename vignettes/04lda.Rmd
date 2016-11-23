@@ -1,0 +1,28 @@
+---
+title: "`rrr` for Linear Discriminant Analysis"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Linear Discriminant Analysis
+
+```{r}
+### create training and test sets
+set.seed(12345)
+num_obs <- dim(digits)[1]
+train_number <- floor(.75 * num_obs)
+train_index <- sample(num_obs, train_number)
+
+### training set
+train_digits_features <- digits_features[train_index, ]
+train_digits_class <- digits_class[train_index, ]
+
+### test set
+test_digits_features <- digits_features[-train_index, ]
+test_digits_class <- digits_class[-train_index, ]
+```

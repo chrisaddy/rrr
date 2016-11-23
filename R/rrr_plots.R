@@ -57,3 +57,17 @@ rank_trace_plot <- function(x, y, gamma_matrix, type = "cov", k = 0){
 	ggtitle(paste("Rank Trace Plot, k =  ", k, sep =""))
 }
 				 
+#' RRR Residuals Plots
+#' 
+#' \code{rrr_residuals_plot}
+#' 
+#' @inheritParams rrr
+#'
+#' @export
+
+rrr_residuals_plot <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
+	residuals <- rrr_residuals(x, y, gamma_matrix, rank, type, k)
+	index <- as_data_frame(index = 1:dim(residuals)[1])
+	df <- bind_cols(index, residuals)
+	GGally::ggpairs(df)
+}

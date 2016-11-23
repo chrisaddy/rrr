@@ -4,12 +4,12 @@
 \alias{ld_scores}
 \title{Linear Discriminant Scores}
 \usage{
-ld_scores(x, y, rank = "full", type = "cov", k = 0)
+ld_scores(x, class, rank = "full", type = "cov", k = 0)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
 
-\item{y}{data frame or matrix of response variables}
+\item{class}{vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.}
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
