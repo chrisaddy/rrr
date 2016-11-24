@@ -56,6 +56,10 @@ digits_features <- digits %>% select(-V35)
 digits_class <- digits %>% select(V35)
 ```
 
+```{r}
+GGally::ggcorr(digits_features)
+```
+
 ## Assessing Dimensionality
 
 ```{r}

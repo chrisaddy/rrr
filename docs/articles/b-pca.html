@@ -117,6 +117,8 @@ digits &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(pendi
 ## $ V35 &lt;int&gt; 8, 2, 1, 4, 1, 6, 4, 0, 5, 0, 9, 8, 5, 9, 7, 3, 3, 9, 2, 2...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span><span class="kw">select</span>(-V35)
 digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span><span class="kw">select</span>(V35)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally::<span class="kw">ggcorr</span>(digits_features)</code></pre></div>
+<p><img src="b-pca_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 </div>
 <div id="assessing-dimensionality" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#assessing-dimensionality" class="anchor"> </a></body></html>Assessing Dimensionality</h2>
@@ -150,7 +152,7 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 ## 10     9 0.8574929      0.04138801
 ## # ... with 25 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
-<p><img src="b-pca_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="b-pca_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 </div>
 </div>
 <div id="plot-principal-component-scores" class="section level2">
@@ -170,10 +172,10 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 \]</span></p>
 <p>Since the first two principal components will capture the most variance &ndash; and hence the most useful information &ndash; of all possible pairs of principal components, we typically would set <span class="math inline">\(j = 1, k = 2\)</span> and plot the first two sample PC scores against each other. In <code>rrr</code> this is the default.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_pairwise_plot.html">pc_pairwise_plot</a></span>(digits_features, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
-<p><img src="b-pca_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="b-pca_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <p>We can set the <span class="math inline">\(x\)</span>- and <span class="math inline">\(y\)</span>-axes to whichever pairs of PC scores we would like to plot by changing the <code>pc_x</code> and <code>pc_y</code> arguments.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_pairwise_plot.html">pc_pairwise_plot</a></span>(digits_features, <span class="dt">pc_x =</span> <span class="dv">1</span>, <span class="dt">pc_y =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
-<p><img src="b-pca_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="b-pca_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div id="plot-all-pairs-of-pc-scores-with-pc_allpairs_plot" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#plot-all-pairs-of-pc-scores-with-pc_allpairs_plot" class="anchor"> </a></body></html>Plot all pairs of PC scores with <code><a href="../reference/pc_allpairs_plot.html">pc_allpairs_plot()</a></code></h3>
@@ -184,7 +186,7 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="b-pca_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="b-pca_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </div>
 </div>
 <div id="fitting-a-pca-model" class="section level2">
