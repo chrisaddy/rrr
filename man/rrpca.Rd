@@ -18,6 +18,12 @@ rrpca(x, rank = "full", type = "cov", k = 0)
 \description{
 \code{pca} fits reduced-rank principle component analysis model.
 }
+\examples{
+data(pendigits)
+digits_features <- pendigits[, -35:-36]
+rrpca(digits_features, rank = 3)
+
+}
 \references{
 Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }

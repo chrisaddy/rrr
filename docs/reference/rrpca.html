@@ -100,6 +100,62 @@
     <p>Izenman, A. J. (2008) <em>Modern Multivariate Statistical Techniques</em>. Springer.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>pendigits</span>)
+<span class='no'>digits_features</span> <span class='kw'>&lt;-</span> <span class='no'>digits</span>[, -<span class='fl'>35</span>:-<span class='fl'>36</span>]
+<span class='fu'>rrpca</span>(<span class='no'>digits_features</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; $means
+#&gt; # A tibble: 34 × 1
+#&gt;       value
+#&gt; *     &lt;dbl&gt;
+#&gt; 1  38.81432
+#&gt; 2  85.12027
+#&gt; 3  40.60562
+#&gt; 4  83.77420
+#&gt; 5  49.77038
+#&gt; 6  65.57314
+#&gt; 7  51.22025
+#&gt; 8  44.49900
+#&gt; 9  56.86854
+#&gt; 10 33.69596
+#&gt; # ... with 24 more rows
+#&gt; 
+#&gt; $C
+#&gt; # A tibble: 34 × 34
+#&gt;             V1           V2           V3           V4           V5           V6
+#&gt;          &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+#&gt; 1   0.15227028  0.041971586  0.057621563  0.032824603 -0.083070856 -0.005097600
+#&gt; 2   0.04197159  0.013118640  0.010598715  0.005435764 -0.027861499 -0.010118470
+#&gt; 3   0.05762156  0.010598715  0.057059768  0.042972135  0.005136858  0.048612391
+#&gt; 4   0.03282460  0.005435764  0.042972135  0.034784478  0.014445469  0.041246125
+#&gt; 5  -0.08307086 -0.027861499  0.005136858  0.014445469  0.083611542  0.054433598
+#&gt; 6  -0.00509760 -0.010118470  0.048612391  0.041246125  0.054433598  0.074336749
+#&gt; 7  -0.12925579 -0.039313730 -0.047145641 -0.030698476  0.070011543  0.011999221
+#&gt; 8  -0.03613352 -0.021185046  0.025475341  0.019298193  0.056664934  0.065381821
+#&gt; 9  -0.04375152 -0.018001465 -0.036555354 -0.038171115 -0.002983700 -0.013777198
+#&gt; 10 -0.05163631 -0.020586646 -0.022911782 -0.022807068  0.019987392  0.007198665
+#&gt; # ... with 24 more rows, and 28 more variables: V7 &lt;dbl&gt;, V8 &lt;dbl&gt;, V9 &lt;dbl&gt;,
+#&gt; #   V10 &lt;dbl&gt;, V11 &lt;dbl&gt;, V12 &lt;dbl&gt;, V13 &lt;dbl&gt;, V14 &lt;dbl&gt;, V15 &lt;dbl&gt;,
+#&gt; #   V16 &lt;dbl&gt;, V17 &lt;dbl&gt;, V18 &lt;dbl&gt;, V19 &lt;dbl&gt;, V20 &lt;dbl&gt;, V21 &lt;dbl&gt;,
+#&gt; #   V22 &lt;dbl&gt;, V23 &lt;dbl&gt;, V24 &lt;dbl&gt;, V25 &lt;dbl&gt;, V26 &lt;dbl&gt;, V27 &lt;dbl&gt;,
+#&gt; #   V28 &lt;dbl&gt;, V29 &lt;dbl&gt;, V30 &lt;dbl&gt;, V31 &lt;dbl&gt;, V32 &lt;dbl&gt;, V33 &lt;dbl&gt;, V34 &lt;dbl&gt;
+#&gt; 
+#&gt; $PC
+#&gt; # A tibble: 34 × 3
+#&gt;            PC1          PC2         PC3
+#&gt;          &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+#&gt; 1   0.02861158 -0.142768395 -0.36203431
+#&gt; 2   0.04680878 -0.033512929 -0.09901748
+#&gt; 3  -0.13901701  0.046687918 -0.18855842
+#&gt; 4  -0.10267046  0.083217740 -0.13159811
+#&gt; 5  -0.15980723  0.196663538  0.13927183
+#&gt; 6  -0.24050660  0.117714673 -0.05134764
+#&gt; 7  -0.10613246  0.031714447  0.33613210
+#&gt; 8  -0.28960021 -0.002314316  0.07783244
+#&gt; 9  -0.11746249 -0.263105908  0.21532196
+#&gt; 10 -0.14441246 -0.150734547  0.19065755
+#&gt; # ... with 24 more rows
+#&gt; </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -107,7 +163,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#references">References</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
