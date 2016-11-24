@@ -1,13 +1,13 @@
 #' Error of Reduced-Rank Canonical Variate Analysis
 #'
 #' @inheritParams rrcva
-#' @param cva_object cva object
 #' @param x_new new x
 #' @param y_new new y
 #'
 #' @export
 
-cva_error <- function(cva_object, x_new, y_new){
+cva_error <- function(x, y, x_new, y_new, rank = "full", type = "cov", k = 0){
+	cva_object <- rrcva(x, y, rank, type, k)
 	index <- data_frame(index = 1:dim(y_new)[1])
 	error <- as_data_frame(t(cva_object$H %*% organize(y_new) - cva_object$G %*% organize(x_new)))
 	names(error) <- paste("CV", 1:dim(error)[2], sep = "") 

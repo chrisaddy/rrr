@@ -4,14 +4,22 @@
 \alias{cva_error}
 \title{Error of Reduced-Rank Canonical Variate Analysis}
 \usage{
-cva_error(cva_object, x_new, y_new)
+cva_error(x, y, x_new, y_new, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{cva_object}{cva object}
+\item{x}{data frame or matrix of input variables}
+
+\item{y}{data frame or matrix of response variables}
 
 \item{x_new}{new x}
 
 \item{y_new}{new y}
+
+\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
+
+\item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
+
+\item{k}{small number to add to the ridge.}
 }
 \description{
 Error of Reduced-Rank Canonical Variate Analysis

@@ -11,7 +11,17 @@ vignette: >
 
 ## Mathematical Background
 
-### PCA is a special case of Reduced-Rank Regression
+### PCA is a special case of [Reduced-Rank Regression](a-rrr.html)
+
+Set
+
+$$
+\begin{aligned}
+\mathbf{Y} & \equiv \mathbf{X}
+\mathbf{\Gamma} & = \mathbf{I}_r
+\end{aligned}
+$$
+
 
 $$
 \begin{aligned}
@@ -104,10 +114,6 @@ args(pc_allpairs_plot)
 
 ```{r}
 pc_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)
-```
-
-```{r warnings = FALSE}
-#pc_plot_3D(digits_features, class_labels = digits_class)
 ```
 
 ## Fitting a PCA Model

@@ -67,7 +67,8 @@ rank_trace_plot <- function(x, y, gamma_matrix, type = "cov", k = 0){
 
 rrr_residuals_plot <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	residuals <- rrr_residuals(x, y, gamma_matrix, rank, type, k)
-	index <- as_data_frame(index = 1:dim(residuals)[1])
+	index <- dplyr::as_data_frame(1:dim(residuals)[1])
+	names(index) <- "index"
 	df <- bind_cols(index, residuals)
 	GGally::ggpairs(df)
 }

@@ -9,10 +9,10 @@
 #' @export
 
 rrcva <- function(x, y, rank = "full", type = "cov", k = 0) {
-	gamma <- cov(y) + k * diag(1, dim(y)[2])
+	gamma <- solve(cov(y) + k * diag(1, dim(y)[2]))
 	rrr_object <- rrr(x, y, gamma, rank, type, k)
         rrr_object$H <- ginv(rrr_object$A)
-    list(mean = rrr_object$mean, G = rrr_object$B, H = ginv(rrr_object$A), eigen_values = rrr_object$eigen_values)
+    list(mean = rrr_object$mean, G = rrr_object$B, H = ginv(rrr_object$A), canonical_corr = rrr_object$eigen_values)
 }
 
 #' Canonical Variate Scores
@@ -23,9 +23,10 @@ rrcva <- function(x, y, rank = "full", type = "cov", k = 0) {
 
 cv_scores <- function(x, y, rank = "full", type = "cov", k = 0){
 	cva_object <- rrcva(x, y, rank, typ, k)
+	correlation <- cva_object[["canonical_corr"]]
 	xi <- as_data_frame(t(cva_object$G %*% organize(x)))
 	names(xi) <- paste("xi", 1:dim(xi)[2], sep = "")
 	omega <- as_data_frame(t(cva_object$H %*% organize(y)))
 	names(omega) <- paste("omega", 1:dim(omega)[2], sep = "")
-	list(xi = xi, omega = omega)
+	list(xi = xi, omega = omega, canonical_corr = correlation)
 }

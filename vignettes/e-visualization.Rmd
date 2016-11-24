@@ -13,21 +13,22 @@ vignette: >
 
 The graphical display of data should be intuitive enough that any viewer of the display unfamiliar with the data, even unfamiliar with statistical analysis generally, should be able to see clear patterns, if in fact clear patterns exist in the data. This, the author believes, is especially true for multivariate data, where due to the higher dimensionality of the data, the potential for visualization to overwhelm is high.
 
-#data(pendigits)
-#digits <- pendigits
+```{r}
+data(pendigits)
+digits <- pendigits
 
-#digits_class <- digits %>% dplyr::select(V35)
-#digits_features <- digits %>% dplyr::select(-V35, -V36)
+digits_class <- digits %>% dplyr::select(V35)
+digits_features <- digits %>% dplyr::select(-V35, -V36)
 
-#digits_pca <- rrpca(digits_features)
+digits_pca <- rrpca(digits_features)
 
-#pca_rank_trace(digits_features)
+pca_rank_trace(digits_features)
 
-#pca_rank_trace_plot(digits_features)
+pca_rank_trace_plot(digits_features)
 
-#pc_pairwise_plot(digits_features)
+pc_pairwise_plot(digits_features)
 
-#pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
+pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
 ```
 
 ## Plots are Interactive

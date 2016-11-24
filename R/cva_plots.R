@@ -20,7 +20,7 @@ cva_rank_trace <- function(x, y, type = "cov", k = 0){
 #' @export
 
 cva_rank_trace_plot <- function(x, y, type = "cov", k = 0){
-	gamma <- cov(y)
+	gamma <- solve(cov(y) + k * diag(1, dim(y)[2]))
 	rank_trace_plot(x, y, gamma, type, k) + 
 	ggtitle(paste("CVA Rank Trace Plot, k = ", k, sep = ""))
 }
@@ -49,12 +49,14 @@ cva_residual_plot <- function(x, y, rank = "full", type = "cov", k = 0){
 
 cv_pairwise_plot <- function(x, y, cv_pair = 1, type = "cov", k = 0){
 	scores_object <- cv_scores(x, y, cv_pair, type, k)
+	corr <- scores_object[["canonical_corr"]][cv_pair]
 	x_axis <- scores_object$xi[,cv_pair]
 	y_axis <- scores_object$omega[,cv_pair]
 	df <- bind_cols(x_axis, y_axis)
 	ggplot(df, aes_q(x = as.name(names(df)[1]), y = as.name(names(df)[2]))) + 
 		geom_point() + 
-		labs(title = paste("CV", cv_pair, " Pairwise Plot", sep = ""))
+		geom_smooth(method = "lm") + 
+		labs(title = paste("CV", cv_pair, " Pairwise Plot, Canonical Correlation = ", round(corr, 4), sep = ""))
 }
 
 

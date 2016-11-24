@@ -78,19 +78,23 @@
     </div>
 
     
-    <p><code>cv_scores</code> calculates the canonical variate scores for \(\mathbf{X}\) and \(\mathbf{Y}\)</p>
+    <p>Canonical Variate Scores</p>
     
 
-    <pre><span class='fu'>cv_scores</span>(<span class='no'>cva_object</span>, <span class='no'>x</span>, <span class='no'>y</span>)</pre>
+    <pre><span class='fu'>cv_scores</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>cva_object</dt>
-      <dd>A reduced-rank CVA object obtained by <code>cva</code></dd>
       <dt>x</dt>
-      <dd>data frame or matrix of predictor variables</dd>
+      <dd>data frame or matrix of input variables</dd>
       <dt>y</dt>
       <dd>data frame or matrix of response variables</dd>
+      <dt>rank</dt>
+      <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
+      <dt>type</dt>
+      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
+      <dt>k</dt>
+      <dd>small number to add to the ridge.</dd>
     </dl>
     
 

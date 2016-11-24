@@ -164,7 +164,7 @@ $$
 
 ## Assessessing Effective Dimensionality 
 
-### Estimate $t$ and $k$ with `pc_rank_trace()`
+### Estimate $t$ and $k$ with `rank_trace()` and `rank_trace_plot()`
 
 ```{r}
 args(rank_trace)
@@ -174,9 +174,23 @@ args(rank_trace_plot)
 Since $\hat{\mathbf{C}}$ is calculated using sample observations, its *mathematical* rank will always be full, but it will have a *statistical* rank $t$ that is an unknown hyperparameter that 
 
 ```{r}
-#rank_trace(tobacco_x, tobacco_y, ident) 
+### use the identity matrix for gamma
 
-#rank_trace_plot(tobacco_x, tobacco_y, ident)
+ident <- diag(1, dim(tobacco_y)[2])
+
+rank_trace(tobacco_x, tobacco_y, ident) 
+
+rank_trace_plot(tobacco_x, tobacco_y, ident)
+```
+
+```{r}
+### use inverse of estimated covariance of Y for gamma
+
+gamma2 <- solve(cov(tobacco_y))
+
+rank_trace(tobacco_x, tobacco_y, gamma2)
+
+rank_trace_plot(tobacco_x, tobacco_y, gamma2)
 ```
 
 ## Fitting Reduced-Rank Regression Model
@@ -194,9 +208,6 @@ The main function in the `rrr` package is -- unsurprisingly -- `rrr()`
 `rrr()` returns a `list` containing the means $\hat{\boldsymbol{\mu}}$, the matrices $\hat{\mathbf{A}}$, $\hat{\mathbf{B}}$, and the coefficient matrix $\hat{\mathbf{C}}$
 
 ```{r}
-### use the identity matrix for gamma
-ident <- diag(1, dim(tobacco_y)[2])
-
 rrr(tobacco_x, tobacco_y, ident, rank = "full") 
 ```
 
@@ -204,7 +215,7 @@ We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical m
 
 ## Diagnostics
 
-### Plot Residuals with `rrr_residual_plot()`
+### Plot Residuals with `rrr_residuals_plot()`
 
 ```{r}
 args(rrr_residuals)
@@ -216,5 +227,5 @@ rrr_residuals(tobacco_x, tobacco_y, ident, rank = 1)
 ```
 
 ```{r}
-#rrr_residuals_plot(tobacco_x, tobacco_y, ident, rank = 1)
+rrr_residuals_plot(tobacco_x, tobacco_y, ident, rank = 1)
 ```
