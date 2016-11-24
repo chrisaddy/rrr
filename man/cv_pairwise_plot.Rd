@@ -20,4 +20,16 @@ cv_pairwise_plot(x, y, cv_pair = 1, type = "cov", k = 0)
 \description{
 Pairwise Canonical Variates Plot
 }
+\examples{
+library(dplyr)
+data(COMBO17)
+data(COMBO17)
+galaxy <- as_data_frame(COMBO17)
+galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+galaxy <- na.omit(galaxy)
+galaxy_x <- select(galaxy, -Rmag:-chi2red)
+galaxy_y <- select(galaxy, Rmag:chi2red)
+cv_pairwise_plot(galaxy_x, galaxy_y)
+
+}
 

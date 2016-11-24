@@ -20,4 +20,8 @@ cva_residual_plot(x, y, rank = "full", type = "cov", k = 0)
 \description{
 \code{cv_residual_plot}
 }
+\examples{
+
+
+}
 

@@ -20,6 +20,17 @@ rrcva(x, y, rank = "full", type = "cov", k = 0)
 \description{
 \code{cva} fits a reduced-rank canonical variate/correlation model.
 }
+\examples{
+library(dplyr)
+data(COMBO17)
+galaxy <- as_data_frame(COMBO17)
+galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+galaxy <- na.omit(galaxy)
+galaxy_x <- select(galaxy, -Rmag:-chi2red)
+galaxy_y <- select(galaxy, Rmag:chi2red)
+rrcva(galaxy_x, galaxy_y, rank = 2)
+
+}
 \references{
 Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }

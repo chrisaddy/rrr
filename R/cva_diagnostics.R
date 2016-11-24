@@ -20,7 +20,7 @@ cva_error <- function(x, y, x_new, y_new, rank = "full", type = "cov", k = 0){
 #'
 #' @inheritParams rrcva
 #'
-#' @export
+#'
 
 cva_residuals <- function(x, y, rank = "full", type = "cov", k = 0){
 	cva_object <- rrcva(x, y, rank, type, k)
@@ -54,7 +54,7 @@ lambda_rank <- function(x, y, rank, k = 0){
 #' data(COMBO17)
 #' 
 #'
-#' @export
+#'
 
 canonical_cov <- function(x, y, rank = "full", k = 0){
 	full_rank <- min(dim(x)[2], dim(y)[2])
@@ -81,7 +81,7 @@ canonical_cov <- function(x, y, rank = "full", k = 0){
 #'
 #' @inheritParams rrcva
 #'
-#' @export
+#'
 
 canonical_corr <- function(x, y, rank = "full", type = "cov", k = 0){
 	full_rank <- min(dim(x)[2], dim(y)[2])

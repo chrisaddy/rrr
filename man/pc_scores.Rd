@@ -21,4 +21,10 @@ data frame with \code{rank} number of columns, each of which represent the princ
 \description{
 \code{pc_scores} returns data frame of principle component scores from reduced-rank PCA
 }
+\examples{
+data(pendigits)
+digits_features <- pendigits[, -35:-36]
+pc_scores(digits_features, rank = 3)
+
+}
 

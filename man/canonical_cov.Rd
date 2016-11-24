@@ -22,5 +22,6 @@ canonical_cov(x, y, rank = "full", k = 0)
 data(COMBO17)
 
 
+
 }
 

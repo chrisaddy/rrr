@@ -100,6 +100,24 @@
     <p>data frame with <code>rank</code> number of columns, each of which represent the principal component scores of the observations.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>pendigits</span>)
+<span class='no'>digits_features</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[, -<span class='fl'>35</span>:-<span class='fl'>36</span>]
+<span class='fu'>pc_scores</span>(<span class='no'>digits_features</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; # A tibble: 10,992 × 3
+#&gt;            PC1         PC2        PC3
+#&gt;          &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+#&gt; 1   155.566449    4.978394  -29.92034
+#&gt; 2   -13.769794  107.245141  -29.49099
+#&gt; 3  -106.072574  -12.394709  110.20702
+#&gt; 4    -4.184733  -47.779421   11.43866
+#&gt; 5  -100.904599   50.618077   76.39842
+#&gt; 6   -19.235101   31.016531 -151.44893
+#&gt; 7    21.368904  -63.616851  122.34104
+#&gt; 8   122.842132 -128.821329  113.64392
+#&gt; 9   172.378851  111.913854   65.54326
+#&gt; 10  142.956443 -100.197126  -25.96261
+#&gt; # ... with 10,982 more rows</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -107,7 +125,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -4,6 +4,17 @@
 #' 
 #' @inheritParams rrcva
 #'
+#' @examples
+#' library(dplyr)
+#' data(COMBO17)
+#' data(COMBO17)
+#' galaxy <- as_data_frame(COMBO17)
+#' galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+#' galaxy <- na.omit(galaxy)
+#' galaxy_x <- select(galaxy, -Rmag:-chi2red)
+#' galaxy_y <- select(galaxy, Rmag:chi2red)
+#' cva_rank_trace(galaxy_x, galaxy_y)
+#'
 #' @export
 
 cva_rank_trace <- function(x, y, type = "cov", k = 0){
@@ -17,6 +28,17 @@ cva_rank_trace <- function(x, y, type = "cov", k = 0){
 #'
 #' @inheritParams cva_rank_trace
 #'
+#' @examples
+#' library(dplyr)
+#' data(COMBO17)
+#' data(COMBO17)
+#' galaxy <- as_data_frame(COMBO17)
+#' galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+#' galaxy <- na.omit(galaxy)
+#' galaxy_x <- select(galaxy, -Rmag:-chi2red)
+#' galaxy_y <- select(galaxy, Rmag:chi2red)
+#' cva_rank_trace_plot(galaxy_x, galaxy_y)
+#'
 #' @export
 
 cva_rank_trace_plot <- function(x, y, type = "cov", k = 0){
@@ -25,15 +47,15 @@ cva_rank_trace_plot <- function(x, y, type = "cov", k = 0){
 	ggtitle(paste("CVA Rank Trace Plot, k = ", k, sep = ""))
 }
 
-#cv_pairwise <- function(x, y, cv_pair, rank = "full", type = "cov")
-
 #' Residual Plots for Reduced-Rank CVA
 #'
 #' \code{cv_residual_plot}
 #' 
 #' @inheritParams rrcva
 #'
-#' @export
+#' @examples
+#'
+#'
 
 cva_residual_plot <- function(x, y, rank = "full", type = "cov", k = 0){
 	residuals <- cva_residuals(x, y, rank, type, k)
@@ -44,6 +66,17 @@ cva_residual_plot <- function(x, y, rank = "full", type = "cov", k = 0){
 #'
 #' @inheritParams rrcva
 #' @param cv_pair integer. canonical variate pair to be plotted
+#'
+#' @examples
+#' library(dplyr)
+#' data(COMBO17)
+#' data(COMBO17)
+#' galaxy <- as_data_frame(COMBO17)
+#' galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+#' galaxy <- na.omit(galaxy)
+#' galaxy_x <- select(galaxy, -Rmag:-chi2red)
+#' galaxy_y <- select(galaxy, Rmag:chi2red)
+#' cv_pairwise_plot(galaxy_x, galaxy_y)
 #'
 #' @export 
 

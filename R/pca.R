@@ -32,6 +32,11 @@ rrpca <- function(x, rank = "full", type = "cov", k = 0){
 #'
 #' @inheritParams rrpca
 #'
+#' @examples
+#' data(pendigits)
+#' digits_features <- pendigits[, -35:-36]
+#' pc_scores(digits_features, rank = 3)
+#'
 #' @return data frame with \code{rank} number of columns, each of which represent the principal component scores of the observations.
 #'
 #' @export
@@ -51,9 +56,9 @@ pc_scores <- function(x, rank = "full", type = "cov", k = 0){
 #' @param rrpca_object `list` object obtained from `rrpca()`
 #' @param x_new data frame or matrix of new observations to predict. 
 #'
-#' @export 
+#'
 
-rrpca_predict <- function(rrpca_object, x_new){
+pca_predict <- function(rrpca_object, x_new){
 	rrpca_object$C %*% organize(x_new)
 }
 
@@ -61,12 +66,12 @@ rrpca_predict <- function(rrpca_object, x_new){
 #'
 #' \code{rrpca_error}
 #'
-#' @inheritParams rrpca_predict
+#' @inheritParams pca_predict
 #'
-#' @export
+#' 
 
-rrpca_error <- function(rrpca_object, x_new){
-	x_new - rrpca_predict(rrpca_object, x_new)
+pca_error <- function(rrpca_object, x_new){
+	x_new - pca_predict(rrpca_object, x_new)
 }	
 
 #' Reduced-Rank PCA Residuals
@@ -75,9 +80,9 @@ rrpca_error <- function(rrpca_object, x_new){
 #'
 #' @inheritParams rrpca
 #'
-#' @export
+#'
 
-rrpca_residuals <- function(x, rank = "full", type = "cov", k = 0){
+pca_residuals <- function(x, rank = "full", type = "cov", k = 0){
 	object <- rrpca(x, rank, type, k)
-	rrpca_error(object, x)
+	pca_error(object, x)
 }
