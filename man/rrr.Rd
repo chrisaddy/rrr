@@ -22,6 +22,14 @@ rrr(x, y, gamma_matrix, rank = "full", type = "cov", k = 0)
 \description{
 \code{rrr} fits a reduced-rank regression model.
 }
+\examples{
+data(tobacco)
+tobacco_x <- tobacco[,1:3]
+tobacco_y <- tobacco[,4:9]
+gamma <- diag(1, dim(tobacco_y)[2])
+rrr(tobacco_x, tobacco_y, gamma, rank = 1)
+
+}
 \references{
 Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }

@@ -9,6 +9,13 @@
 #' @param type the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.
 #' @param k small number to add to the ridge.
 #'
+#' @examples
+#' data(tobacco)
+#' tobacco_x <- tobacco[,1:3]
+#' tobacco_y <- tobacco[,4:9]
+#' gamma <- diag(1, dim(tobacco_y)[2])
+#' rrr(tobacco_x, tobacco_y, gamma, rank = 1)
+#'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 

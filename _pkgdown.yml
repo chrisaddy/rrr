@@ -1,49 +1,49 @@
 reference:
-- title: Fit 
-  desc: Functions to fit reduced-rank regression models
+- title: Reduced-Rank Regression 
+  desc: Functions for fitting reduced-rank regression models, diagnostics and plots.
   contents:
   - rrr
-  - rrpca
-  - rrcva
-  - rrlda
-- title: Prediction
-  desc: Functions for prediction via reduced-rank regression
-  contents:
-  - pc_scores
-  - rrr_predict
-  - ld_scores
-  - rrpca_predict
-- title: Plots
-  desc: Reduced-rank regression plots
-  contents:
-  - rank_trace_plot
-  - pca_rank_trace_plot
-  - pc_pairwise_plot
-  - pc_plot_3D
-- title: Diagnostics
-  desc: Diagnostic functions to test reduced-rank regression models
-  contents:
-  - canonical_cov
-  - canonical_corr
-  - cva_residuals
-  - rrr_error
-  - rrr_residuals
   - rank_trace
+  - rank_trace_plot
+  - rrr_residuals
+  - rrr_predict
+  - rrr_error
+  - rrr_residuals_plot
+- title: Principal Component Analysis
+  desc: Functions for fitting principal component analysis models, diagnostics and plots.
+  contents:
+  - rrpca
+  - pc_scores
   - pca_gof
   - pca_rank_trace
-  - rrpca_residuals
-  - rrpca_error
-  - pc_gof
-- title: Utility Functions
-  desc: Functions useful for rrr 
+  - pca_rank_trace_plot
+  - pc_pairwise_plot
+  - pc_allpairs_plot
+  - pc_plot_3D
+  - pca_residuals
+  - pca_error
+  - pca_predict
+- title: Canonical Variate Analysis
+  desc: Functions for fitting canonical variate analysis models, diagnostics and plots.
   contents:
-  - binary_matrix
-  - expand_feature_space
+  - rrcva
+  - cv_scores
+  - cva_rank_trace
+  - cva_rank_trace_plot
+  - cv_pairwise_plot
+  - cva_residuals
+  - cva_residual_plot
+  - canonical_cov
+  - canonical_corr
+- title: Linear Discriminant Analysis
+  desc: Functions for fitting linear discriminant analysis models, diagnostics and plots.
+  contents:
+  - rrlda
+  - ld_scores
+  - ld_pairwise_plot
 - title: Data
   desc: Multivariate data sets
   contents:
   - pendigits
   - COMBO17
   - tobacco
-
-
