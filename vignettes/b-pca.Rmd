@@ -11,7 +11,7 @@ vignette: >
 
 ## Mathematical Background
 
-### PCA is a special case of [Reduced-Rank Regression](a-rrr.html)
+### PCA is a Special Case of [Reduced-Rank Regression](a-rrr.html)
 
 Set
 
@@ -91,15 +91,15 @@ args(pca_rank_trace_plot)
 ```{r}
 pca_rank_trace(digits_features)
 
-pca_rank_trace_plot(digits_features)
+#pca_rank_trace_plot(digits_features)
 ```
 
 ## Plot Principal Component Scores 
 
-### Pairwise Plots with `pc_pairwise_plot()`
+### Pairwise Plots with `pca_pairwise_plot()`
 
 ```{r}
-args(pc_pairwise_plot)
+args(pca_pairwise_plot)
 ```
 
 A common PCA method of visualization for diagnostic and analysis purposes is to plot the $j$th sample PC scores against the $k$th PC scores,
@@ -107,45 +107,45 @@ A common PCA method of visualization for diagnostic and analysis purposes is to 
 $$
 \begin{aligned}
   \left(\xi_{ij}, \xi_{ik}\right) & \\
-  \left(\hat{\mathbf{v}}_j^\tau \mathbf{X}_i, \hat{\mathbf{v}}_k^\tau \mathbf{X}_i\right), & i = 1,2, \dots, n  
+  = \left(\hat{\mathbf{v}}_j^\tau \mathbf{X}_i, \hat{\mathbf{v}}_k^\tau \mathbf{X}_i\right)&, \quad i = 1,2, \dots, n  
 \end{aligned}
 $$
 
 Since the first two principal components will capture the most variance -- and hence the most useful information -- of all possible pairs of principal components, we typically would set $j = 1, k = 2$ and plot the first two sample PC scores against each other. In `rrr` this is the default.
 
 ```{r}
-pc_pairwise_plot(digits_features, class_labels = digits_class)
+pca_pairwise_plot(digits_features, class_labels = digits_class)
 ```
 
 We can set the $x$- and $y$-axes to whichever pairs of PC scores we would like to plot by changing the `pc_x` and `pc_y` arguments.
 
 ```{r}
-pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
+pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
 ```
 
-### Plot all pairs of PC scores with `pc_allpairs_plot()`
+### Plot all pairs of PC scores with `pca_allpairs_plot()`
 
 ```{r}
-args(pc_allpairs_plot)
+#args(pca_allpairs_plot)
 ```
 
 ```{r}
-pc_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)
+#pca_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)
 ```
 
 ## Fitting a PCA Model
 
-### Fit model with `rrpca()`
+### Fit model with `pca()`
 
 ```{r}
-args(rrpca)
+args(pca)
 ```
 
 ```{r}
 digits_class <- digits %>% dplyr::select(V35)
 digits_features <- digits %>% dplyr::select(-V5, -V6)
 
-digits_pca <- rrpca(digits_features, rank  = 3)
+digits_pca <- pca(digits_features, rank  = 3)
 
 digits_pca
 ```

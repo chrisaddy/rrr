@@ -17,15 +17,18 @@ rrr(x, y, gamma_matrix, rank = "full", type = "cov", k = 0)
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
-\item{k}{small number to add to the ridge.}
+\item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+}
+\value{
+list containing: matrix of means; matrix \eqn{\mathbf{A}} with \code{rank} number of columns; matrix \eqn{\mathbf{B}} with \code{rank} number of rows; matrix \eqn{\mathbf{C}} of coefficients; vector of eigenvalues of weight matrix.
 }
 \description{
 \code{rrr} fits a reduced-rank regression model.
 }
 \examples{
 data(tobacco)
-tobacco_x <- tobacco[,1:3]
-tobacco_y <- tobacco[,4:9]
+tobacco_x <- tobacco[,4:9]
+tobacco_y <- tobacco[,1:3]
 gamma <- diag(1, dim(tobacco_y)[2])
 rrr(tobacco_x, tobacco_y, gamma, rank = 1)
 

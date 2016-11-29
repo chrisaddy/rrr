@@ -7,12 +7,14 @@
 #' @param gamma_matrix weight matrix
 #' @param rank of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.
 #' @param type the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.
-#' @param k small number to add to the ridge.
+#' @param k small constant to add to the ridge of covariance matrices to avoid singularity.
+#'
+#' @return list containing: matrix of means; matrix \eqn{\mathbf{A}} with \code{rank} number of columns; matrix \eqn{\mathbf{B}} with \code{rank} number of rows; matrix \eqn{\mathbf{C}} of coefficients; vector of eigenvalues of weight matrix.
 #'
 #' @examples
 #' data(tobacco)
-#' tobacco_x <- tobacco[,1:3]
-#' tobacco_y <- tobacco[,4:9]
+#' tobacco_x <- tobacco[,4:9]
+#' tobacco_y <- tobacco[,1:3]
 #' gamma <- diag(1, dim(tobacco_y)[2])
 #' rrr(tobacco_x, tobacco_y, gamma, rank = 1)
 #'
@@ -39,8 +41,8 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 		cov_xy %*%
 		sqrtm
 	eigens <- eigen(weighted_matrix)
-	eigen_values <- eigens$values
-	V_t <- eigens$vectors[,1:reduce_rank] %>%
+	eigen_values <- eigens[["values"]]
+	V_t <- eigens[["vectors"]][,1:reduce_rank] %>%
 		as.matrix(ncol = reduce_rank)
 	A_t <- solve(sqrtm) %*% V_t
 	B_t <- t(V_t) %*%

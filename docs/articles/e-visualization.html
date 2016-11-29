@@ -38,7 +38,7 @@
       <h1>Data Visualization in <code>rrr</code></h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-24</h4>
+            <h4 class="date">2016-11-29</h4>
           </div>
 
     
@@ -53,7 +53,7 @@ digits &lt;-<span class="st"> </span>pendigits
 digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(V35)
 digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-V35, -V36)
 
-digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rrpca.html">rrpca</a></span>(digits_features)
+digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pca.html">pca</a></span>(digits_features)
 
 <span class="kw"><a href="../reference/pca_rank_trace.html">pca_rank_trace</a></span>(digits_features)</code></pre></div>
 <pre><code>## # A tibble: 35 &times; 3
@@ -72,18 +72,18 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 ## # ... with 25 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
 <p><img src="e-visualization_files/figure-html/unnamed-chunk-1-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_pairwise_plot.html">pc_pairwise_plot</a></span>(digits_features)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot</a></span>(digits_features)</code></pre></div>
 <p><img src="e-visualization_files/figure-html/unnamed-chunk-1-2.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_pairwise_plot.html">pc_pairwise_plot</a></span>(digits_features, <span class="dt">pc_x =</span> <span class="dv">1</span>, <span class="dt">pc_y =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot</a></span>(digits_features, <span class="dt">pc_x =</span> <span class="dv">1</span>, <span class="dt">pc_y =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
 <p><img src="e-visualization_files/figure-html/unnamed-chunk-1-3.png" width="672"></p>
 </div>
 <div id="plots-are-interactive" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#plots-are-interactive" class="anchor"> </a></body></html>Plots are Interactive</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)</span></code></pre></div>
 </div>
 <div id="plots-are-3d" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#plots-are-3d" class="anchor"> </a></body></html>Plots are 3D</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pc_plot_3D(digits_features, class_labels = digits_class)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_plot_3D(digits_features, class_labels = digits_class)</span></code></pre></div>
 </div>
 </div>
   </div>

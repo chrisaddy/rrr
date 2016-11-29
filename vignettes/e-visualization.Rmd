@@ -20,25 +20,25 @@ digits <- pendigits
 digits_class <- digits %>% dplyr::select(V35)
 digits_features <- digits %>% dplyr::select(-V35, -V36)
 
-digits_pca <- rrpca(digits_features)
+digits_pca <- pca(digits_features)
 
 pca_rank_trace(digits_features)
 
 pca_rank_trace_plot(digits_features)
 
-pc_pairwise_plot(digits_features)
+pca_pairwise_plot(digits_features)
 
-pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
+pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
 ```
 
 ## Plots are Interactive
 
 ```{r}
-#pc_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)
+#pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)
 ```
 
 ## Plots are 3D
 
 ```{r}
-#pc_plot_3D(digits_features, class_labels = digits_class)
+#pca_plot_3D(digits_features, class_labels = digits_class)
 ```

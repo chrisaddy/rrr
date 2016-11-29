@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Principal Component Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-24</h4>
+            <h4 class="date">2016-11-29</h4>
           </div>
 
     
@@ -47,7 +47,7 @@
 <div id="mathematical-background" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#mathematical-background" class="anchor"> </a></body></html>Mathematical Background</h2>
 <div id="pca-is-a-special-case-of-reduced-rank-regression" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#pca-is-a-special-case-of-reduced-rank-regression" class="anchor"> </a></body></html>PCA is a special case of <a href="a-rrr.html">Reduced-Rank Regression</a></h3>
+<h3 class="hasAnchor"><html><body><a href="#pca-is-a-special-case-of-reduced-rank-regression" class="anchor"> </a></body></html>PCA is a Special Case of <a href="a-rrr.html">Reduced-Rank Regression</a></h3>
 <p>Set</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -160,15 +160,14 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 ## 9      8 0.8744746      0.06065970
 ## 10     9 0.8574929      0.04138801
 ## # ... with 25 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot</a></span>(digits_features)</code></pre></div>
-<p><img src="b-pca_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_rank_trace_plot(digits_features)</span></code></pre></div>
 </div>
 </div>
 <div id="plot-principal-component-scores" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#plot-principal-component-scores" class="anchor"> </a></body></html>Plot Principal Component Scores</h2>
-<div id="pairwise-plots-with-pc_pairwise_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#pairwise-plots-with-pc_pairwise_plot" class="anchor"> </a></body></html>Pairwise Plots with <code><a href="../reference/pc_pairwise_plot.html">pc_pairwise_plot()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pc_pairwise_plot)</code></pre></div>
+<div id="pairwise-plots-with-pca_pairwise_plot" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#pairwise-plots-with-pca_pairwise_plot" class="anchor"> </a></body></html>Pairwise Plots with <code><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pca_pairwise_plot)</code></pre></div>
 <pre><code>## function (x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", 
 ##     type = "cov", interactive = FALSE) 
 ## NULL</code></pre>
@@ -176,39 +175,33 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 <p><span class="math display">\[
 \begin{aligned}
   \left(\xi_{ij}, \xi_{ik}\right) &amp; \\
-  \left(\hat{\mathbf{v}}_j^\tau \mathbf{X}_i, \hat{\mathbf{v}}_k^\tau \mathbf{X}_i\right), &amp; i = 1,2, \dots, n  
+  = \left(\hat{\mathbf{v}}_j^\tau \mathbf{X}_i, \hat{\mathbf{v}}_k^\tau \mathbf{X}_i\right)&amp;, \quad i = 1,2, \dots, n  
 \end{aligned}
 \]</span></p>
 <p>Since the first two principal components will capture the most variance &ndash; and hence the most useful information &ndash; of all possible pairs of principal components, we typically would set <span class="math inline">\(j = 1, k = 2\)</span> and plot the first two sample PC scores against each other. In <code>rrr</code> this is the default.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_pairwise_plot.html">pc_pairwise_plot</a></span>(digits_features, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot</a></span>(digits_features, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
 <p><img src="b-pca_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <p>We can set the <span class="math inline">\(x\)</span>- and <span class="math inline">\(y\)</span>-axes to whichever pairs of PC scores we would like to plot by changing the <code>pc_x</code> and <code>pc_y</code> arguments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_pairwise_plot.html">pc_pairwise_plot</a></span>(digits_features, <span class="dt">pc_x =</span> <span class="dv">1</span>, <span class="dt">pc_y =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot</a></span>(digits_features, <span class="dt">pc_x =</span> <span class="dv">1</span>, <span class="dt">pc_y =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
 <p><img src="b-pca_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
-<div id="plot-all-pairs-of-pc-scores-with-pc_allpairs_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#plot-all-pairs-of-pc-scores-with-pc_allpairs_plot" class="anchor"> </a></body></html>Plot all pairs of PC scores with <code><a href="../reference/pc_allpairs_plot.html">pc_allpairs_plot()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pc_allpairs_plot)</code></pre></div>
-<pre><code>## function (x, rank, type = "cov", k = 0, class_labels = NULL) 
-## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pc_allpairs_plot.html">pc_allpairs_plot</a></span>(digits_features, <span class="dt">rank =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="b-pca_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<div id="plot-all-pairs-of-pc-scores-with-pca_allpairs_plot" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#plot-all-pairs-of-pc-scores-with-pca_allpairs_plot" class="anchor"> </a></body></html>Plot all pairs of PC scores with <code>pca_allpairs_plot()</code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#args(pca_allpairs_plot)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)</span></code></pre></div>
 </div>
 </div>
 <div id="fitting-a-pca-model" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#fitting-a-pca-model" class="anchor"> </a></body></html>Fitting a PCA Model</h2>
-<div id="fit-model-with-rrpca" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#fit-model-with-rrpca" class="anchor"> </a></body></html>Fit model with <code><a href="../reference/rrpca.html">rrpca()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(rrpca)</code></pre></div>
+<div id="fit-model-with-pca" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#fit-model-with-pca" class="anchor"> </a></body></html>Fit model with <code><a href="../reference/pca.html">pca()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pca)</code></pre></div>
 <pre><code>## function (x, rank = "full", type = "cov", k = 0) 
 ## NULL</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(V35)
 digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-V5, -V6)
 
-digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rrpca.html">rrpca</a></span>(digits_features, <span class="dt">rank  =</span> <span class="dv">3</span>)
+digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pca.html">pca</a></span>(digits_features, <span class="dt">rank  =</span> <span class="dv">3</span>)
 
 digits_pca</code></pre></div>
 <pre><code>## $means

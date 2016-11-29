@@ -2,7 +2,7 @@
 #'
 #' Rank trace to determine number of principle components to use in reduced-rank PCA.
 #'
-#' @inheritParams rrpca
+#' @inheritParams pca
 #' 
 #' @examples
 #' data(pendigits)
@@ -12,7 +12,7 @@
 #' @export
 
 pca_rank_trace <- function(x, type = "cov", k = 0){
-    eigenvecs <- rrpca(x, rank = "full", type, k)$A
+    eigenvecs <- pca(x, rank = "full", type, k)$A
     eigens <- eigen(cov(x) + k * diag(1, dim(x)[2]))
     full_rank <- dim(eigens$vectors)[2]
     delta_C <- function(t){
@@ -37,7 +37,7 @@ pca_rank_trace <- function(x, type = "cov", k = 0){
 #'
 #' Plot of rank trace to determine number of principle components to use in reduced-rank PCA.
 #'
-#' @inheritParams rrpca
+#' @inheritParams pca
 #' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
 #'
 #' @examples
@@ -52,10 +52,9 @@ pca_rank_trace <- function(x, type = "cov", k = 0){
 pca_rank_trace_plot <- function(x, type = "cov", k = 0, interactive = FALSE){
     tuner <- k
     rt <- pca_rank_trace(x)
-    static_plot <- ggplot2::ggplot(rt) +
-        aes(x = delta_C,
-                     y = delta_residuals,
-                     label = rank) +
+    static_plot <- ggplot2::ggplot(rt, ggplot2::aes(x = delta_C,
+                                                    y = delta_residuals,
+                                                    label = rank)) +
         lims(x = c(0,1), y = c(0,1)) +
         geom_line(color = "red") +
         geom_text(check_overlap = TRUE, size = 5) +
@@ -68,27 +67,33 @@ pca_rank_trace_plot <- function(x, type = "cov", k = 0, interactive = FALSE){
     	}
 }
 
-pc_pairwise <- function(x, pc_x, pc_y, rank = "full", type = "cov"){
-    scores <- pc_scores(x, rank, type)
-    score_1 <- paste("PC", pc_x, sep = "")
-    score_2 <- paste("PC", pc_y, sep = "")
+pca_pairwise <- function(x, pca_x, pca_y, rank = "full", type = "cov"){
+    scores <- pca_scores(x, rank, type)
+    score_1 <- paste("PC", pca_x, sep = "")
+    score_2 <- paste("PC", pca_y, sep = "")
     select(scores, ends_with(score_1), ends_with(score_2))
 }
 
 #' PC Pairwise Plot
 #'
-#' \code{pc_pairwise_plot}
+#' \code{pca_pairwise_plot}
 #'
-#' @inheritParams rrpca
+#' @inheritParams pca
 #' @param pc_x principal component for the x-axis
 #' @param pc_y principal component for the y-axis
 #' @param class_labels data frame or vector of class labels
 #' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
 #'
+#' @examples
+#' data(pendigits)
+#' digits_features <- pendigits[,1:34]
+#' digits_class <- pendigits[,35]
+#' pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3)
+#'
 #' @export
  
-pc_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
-    pairs <- pc_pairwise(x, pc_x, pc_y, rank, type)
+pca_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
+    pairs <- pca_pairwise(x, pc_x, pc_y, rank, type)
     if(is.null(class_labels)){
         pairs_tbl <- pairs
         names(pairs_tbl) <- c("pc_x", "pc_y")
@@ -106,7 +111,7 @@ pc_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = 
         names(pairs_tbl) <- c("pc_x", "pc_y", "class")
         static_plot <- ggplot2::ggplot(pairs_tbl,
                                        aes(pc_x,
-                                        pc_y)) +
+                                           pc_y)) +
             geom_point(aes(color = factor(class))) +
             labs(x = paste("PC", pc_x, sep = ""),
                           y = paste("PC", pc_y, sep = "")) +
@@ -120,31 +125,32 @@ pc_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = 
     }
 }
 
-pc_threewise <- function(x, pc_x, pc_y, pc_z, rank = "full", type = "cov"){
-    scores <- pc_scores(x, rank, type)
-    score_1 <- paste("PC", pc_x, sep = "")
-    score_2 <- paste("PC", pc_y, sep = "")
-    score_3 <- paste("PC", pc_z, sep = "")
+pca_threewise <- function(x, pca_x, pca_y, pca_z, rank = "full", type = "cov"){
+    scores <- pca_scores(x, rank, type)
+    score_1 <- paste("PC", pca_x, sep = "")
+    score_2 <- paste("PC", pca_y, sep = "")
+    score_3 <- paste("PC", pca_z, sep = "")
     select(scores, ends_with(score_1), ends_with(score_2), ends_with(score_3))
 }
 
 
 #' 3D Principal Component Plot
 #'
-#' \code{pc_plot_3D}
+#' code{pca_plot_3D}
 #'
 #' @param x data frame or matrix of predictor variables
-#' @param pc_x integer number of the principal component used for the x-axis
-#' @param pc_y integer number of the principal component used for the y-axis
-#' @param pc_z integer number of the principal component used for the z-axis
+#' @param pca_x integer number of the principal component used for the x-axis
+#' @param pca_y integer number of the principal component used for the y-axis
+#' @param pca_z integer number of the principal component used for the z-axis
 #' @param class_labels data frame or vector of class labels
 #' @param rank rank of coefficient matrix
 #' @param type type of covariance matrix
 #'
 #' @export
-pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, rank = "full", type = "cov"){
+
+pca_plot_3D <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL, rank = "full", type = "cov"){
     class <- as_data_frame(class_labels)
-    threes <- pc_threewise(x, pc_x, pc_y, pc_z, rank, type)
+    threes <- pca_threewise(x, pca_x, pca_y, pca_z, rank, type)
     threes_tbl <- bind_cols(threes, class)
     names(threes_tbl) <- c("x_coord", "y_coord", "z_coord", "class")
     plot_ly(threes_tbl, x = ~x_coord, y = ~y_coord, z = ~z_coord, color = ~factor(class)) #%>%
@@ -158,16 +164,17 @@ pc_plot_3D <- function(x, pc_x = 1, pc_y = 2, pc_z = 3, class_labels = NULL, ran
 
 #' Scatterplot Matrix of Principle Components
 #'
-#' @inheritParams pc_scores
-#' @inheritParams pc_pairwise_plot
+#' plots all pairs of principal components
+#'
+#' @inheritParams pca_scores
+#' @inheritParams pca_pairwise_plot
 #'
 #' @export
 
-pc_allpairs_plot <- function(x, rank, type = "cov", k = 0, class_labels = NULL){
-	class <- as.factor(class_labels[[1]])
-	pc <- pc_scores(x, rank, type, k)
-	df <- dplyr::bind_cols(pc, as_data_frame(class))
-	names(df)[dim(df)[2]] <- "class"
-	GGally::ggpairs(df, aes(color = class))
-}
-	 
+#pca_allpairs_plot <- function(x, rank, type = "cov", k = 0, class_labels = NULL){
+#	class <- as.factor(class_labels[[1]])
+#	pc <- pca_scores(x, rank, type, k)
+#	df <- dplyr::bind_cols(pc, as_data_frame(class))
+#	names(df)[dim(df)[2]] <- "class"
+#	GGally::ggpairs(df, aes(color = class))
+#}

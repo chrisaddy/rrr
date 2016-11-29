@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Multivariate Regression</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-24</h4>
+            <h4 class="date">2016-11-29</h4>
           </div>
 
     
@@ -57,7 +57,9 @@
 \]</span></p>
 <p>and <span class="math inline">\(\varepsilon\)</span> is distributed independently of <span class="math inline">\(\mathbf{X}.\)</span></p>
 <p>To estimate <span class="math inline">\(\boldsymbol{\mu}\)</span> and <span class="math inline">\(\mathbf{C}\)</span> we minimize the least-squares criterion</p>
-<p>$$ [( -  -  )( -  - )^],</p>
+<p><span class="math display">\[
+\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{C} \mathbf{X}\right)\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{C}\mathbf{X}\right)^\tau\right],
+\]</span></p>
 <p>with expecation taken over the joint distribution of <span class="math inline">\(\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)\)</span>, with the assumption that <span class="math inline">\(\mathbf{\Sigma}_{XX}\)</span> is nonsingular, and therefore invertible.</p>
 <p>This is minimized when</p>
 <p><span class="math display">\[
@@ -265,11 +267,8 @@ gamma2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="
 </div>
 <div id="diagnostics" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#diagnostics" class="anchor"> </a></body></html>Diagnostics</h2>
-<div id="plot-residuals-with-rrr_residuals_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#plot-residuals-with-rrr_residuals_plot" class="anchor"> </a></body></html>Plot Residuals with <code><a href="../reference/rrr_residuals_plot.html">rrr_residuals_plot()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(rrr_residuals)</code></pre></div>
-<pre><code>## function (x, y, gamma_matrix, rank = "full", type = "cov", k = 0) 
-## NULL</code></pre>
+<div id="calculate-residuals-with-rrr_residuals" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#calculate-residuals-with-rrr_residuals" class="anchor"> </a></body></html>Calculate Residuals with <code><a href="../reference/rrr_residuals.html">rrr_residuals()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(rrr_residuals_plot)</code></pre></div>
 <pre><code>## function (x, y, gamma_matrix, rank = "full", type = "cov", k = 0) 
 ## NULL</code></pre>
@@ -288,8 +287,15 @@ gamma2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="
 ## 9  -0.09788965       1.5330911         -0.5878621
 ## 10 -0.35531326       2.6111104         -0.3332054
 ## # ... with 15 more rows</code></pre>
+</div>
+<div id="plot-residuals-with-rrr_residuals_plot" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#plot-residuals-with-rrr_residuals_plot" class="anchor"> </a></body></html>Plot Residuals with <code><a href="../reference/rrr_residuals_plot.html">rrr_residuals_plot()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(rrr_residuals)</code></pre></div>
+<pre><code>## function (x, y, gamma_matrix, rank = "full", type = "cov", k = 0) 
+## NULL</code></pre>
+<p>We can visually check the model assumptions that</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rrr_residuals_plot.html">rrr_residuals_plot</a></span>(tobacco_x, tobacco_y, ident, <span class="dt">rank =</span> <span class="dv">1</span>)</code></pre></div>
-<p><img src="a-rrr_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="a-rrr_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
 </div>
 <div class="footnotes">

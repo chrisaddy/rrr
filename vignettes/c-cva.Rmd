@@ -15,6 +15,8 @@ set.seed(12345)
 
 ## Mathematical Background
 
+### CVA is a Special Case of [Reduced-Rank Regression](a-rrr.html)
+
 ## The `COMBO17` Data Set
 
 ```{r}
@@ -83,16 +85,39 @@ train <- function(rank, k){
 
 ## Diagnostics
 
+### Calculate residuals with `cva_residuals()`
+
 ```{r}
-#cva_residual_plot(galaxy_x, galaxy_y, rank = 2, k = 0.001)
+args(cva_residuals)
 ```
 
 ```{r}
-cv_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 1, k = 0.0001)
+cva_residuals(galaxy_x, galaxy_y, rank = 2, k = 0.001)
+```
 
-cv_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 2, k = 0.0001)
+### Plot Residuals with `cva_residual_plot()`
+
+```{r}
+cva_residual_plot(galaxy_x, galaxy_y, rank = 2, k = 0.001)
+```
+
+### Plot Pairwise Canonical Variate Scores with `cva_pairwise_plot()`
+
+```{r}
+cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 1, k = 0.0001)
+
+cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 2, k = 0.0001)
 ```
 
 ```{r}
-rrcva(galaxy_x, galaxy_y, rank = 2, k = 0.0001)
+cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 3, k = 0.0001)
+cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 6, k = 0.0001)
+```
+
+## Fit Reduced-Rank Canonical Variate Model
+
+### Fit model with `cva()`
+
+```{r}
+cva(galaxy_x, galaxy_y, rank = 2, k = 0.0001)
 ```

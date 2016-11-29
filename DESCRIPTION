@@ -26,6 +26,7 @@ Collate:
     cva_diagnostics.R
     cva_plots.R
     lda.R
+    lda_diagnostics.R
     lda_plots.R
     data.R
 License: GPL-3

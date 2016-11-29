@@ -33,7 +33,8 @@ and $\varepsilon$ is distributed independently of $\mathbf{X}.$
 To estimate $\boldsymbol{\mu}$ and $\mathbf{C}$ we minimize the least-squares criterion
 
 $$
-\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{C} \mathbf{X}\right)\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{C}\mathbf{X}\right)^\tau\right], 
+\mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{C} \mathbf{X}\right)\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{C}\mathbf{X}\right)^\tau\right],
+$$
 
 with expecation taken over the joint distribution of $\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)$, with the assumption that $\mathbf{\Sigma}_{XX}$ is nonsingular, and therefore invertible.
 
@@ -215,16 +216,23 @@ We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical m
 
 ## Diagnostics
 
-### Plot Residuals with `rrr_residuals_plot()`
+### Calculate Residuals with `rrr_residuals()`
 
 ```{r}
-args(rrr_residuals)
 args(rrr_residuals_plot)
 ```
 
 ```{r}
 rrr_residuals(tobacco_x, tobacco_y, ident, rank = 1)
 ```
+
+### Plot Residuals with `rrr_residuals_plot()`
+
+```{r}
+args(rrr_residuals)
+```
+
+We can visually check the model assumptions that 
 
 ```{r}
 rrr_residuals_plot(tobacco_x, tobacco_y, ident, rank = 1)

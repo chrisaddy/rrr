@@ -20,8 +20,8 @@ MASS::ginv
 
 sqrt_matrix <- function(matr){
 			eigens <- eigen(matr)
-			vecs <- eigens$vectors
-			vals <- eigens$values
+			vecs <- eigens[["vectors"]]
+			vals <- eigens[["values"]]
 			vecs %*% diag(sqrt(vals)) %*% t(vecs)
 }
 

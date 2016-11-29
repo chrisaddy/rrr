@@ -36,16 +36,24 @@
   <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1><code>rrr</code> for Linear Discriminant Analysis</h1>
-                        <h4 class="author">Vignette Author</h4>
+                        <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-24</h4>
+            <h4 class="date">2016-11-29</h4>
           </div>
 
     
     
 <div class="contents">
-<div id="linear-discriminant-analysis" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#linear-discriminant-analysis" class="anchor"> </a></body></html>Linear Discriminant Analysis</h2>
+<div id="mathematical-background" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#mathematical-background" class="anchor"> </a></body></html>Mathematical Background</h2>
+<div id="lda-is-a-special-case-of-cva" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#lda-is-a-special-case-of-cva" class="anchor"> </a></body></html>LDA is a Special Case of <a href="c-cva.html">CVA</a></h3>
+<p>Linear discriminant analysis is a classification procedure. We can turn it into a regression procedure &ndash; specifically a reduced-rank canonical variate procedure &ndash; in the following way.</p>
+<p>Let each <span class="math inline">\(i = 1, 2, \dots, n\)</span> observation observationbelong to one, and only one, of <span class="math inline">\(K = s + 1\)</span> distinct classes.</p>
+<p>We can construct an <em>indicator response matrix</em>, <span class="math inline">\(\mathbf{Y}\)</span></p>
+<p><span class="math display">\[
+\mathbf{Y}
+\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### create training and test sets
 <span class="kw">set.seed</span>(<span class="dv">12345</span>)
 num_obs &lt;-<span class="st"> </span><span class="kw">dim</span>(digits)[<span class="dv">1</span>]
@@ -61,12 +69,61 @@ test_digits_features &lt;-<span class="st"> </span>digits_features[-train_index,
 test_digits_class &lt;-<span class="st"> </span>digits_class[-train_index, ]</code></pre></div>
 </div>
 </div>
+<div id="assesss-effective-dimensionality" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#assesss-effective-dimensionality" class="anchor"> </a></body></html>Assesss Effective Dimensionality</h2>
+</div>
+<div id="diagnostics" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#diagnostics" class="anchor"> </a></body></html>Diagnostics</h2>
+</div>
+<div id="fit-lda-model" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#fit-lda-model" class="anchor"> </a></body></html>Fit LDA Model</h2>
+<div id="fit-lda-model-with-lda" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#fit-lda-model-with-lda" class="anchor"> </a></body></html>Fit LDA model with <code><a href="../reference/lda.html">lda()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda.html">lda</a></span>(digits_features, digits_class, <span class="dt">rank =</span> <span class="dv">3</span>)</code></pre></div>
+<pre><code>## $G
+## # A tibble: 34 &times; 3
+##          LD1         LD2       LD3
+##        &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+## 1    2405021 -11209838.3 -17497369
+## 2    4073385  -2531157.7  -4667681
+## 3  -11362280   2734881.6 -10564953
+## 4   -8676515   6433188.5  -6791473
+## 5   -9345338   2121623.6  15997927
+## 6  -25724450   -683783.7   3233597
+## 7  -11903070 -20598146.8  11458301
+## 8  -13663134 -12059795.1   9450861
+## 9   -7258174 -30742922.8  -1186985
+## 10  10862274 -11973305.9  11306444
+## # ... with 24 more rows
+## 
+## $H
+## # A tibble: 9 &times; 3
+##           LD1         LD2         LD3
+##         &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1 17094183513  -772813231  3227891483
+## 2   851532363  8196963069  3007265366
+## 3  5564970917 16154559358  -434924204
+## 4  -979203942  2313154788   174540466
+## 5  6805822241  2038280427  1531870087
+## 6 13520360191  9095794847   226633162
+## 7  9120989142  3206987622 -5632699783
+## 8  7239450434 12739982222  1821072066
+## 9 15557836983  7991559825  -245171061
+## 
+## $eigen_portion
+## [1] 0.51553699 0.40739327 0.07706974</code></pre>
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
       <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked"><li><a href="#linear-discriminant-analysis">Linear Discriminant Analysis</a></li>
+      <ul class="nav nav-pills nav-stacked"><li><a href="#mathematical-background">Mathematical Background</a></li>
+      <li><a href="#assesss-effective-dimensionality">Assesss Effective Dimensionality</a></li>
+      <li><a href="#diagnostics">Diagnostics</a></li>
+      <li><a href="#fit-lda-model">Fit LDA Model</a></li>
       </ul></div>
       </div>
 

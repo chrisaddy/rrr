@@ -90,15 +90,15 @@
       <dt>y</dt>
       <dd>data frame or matrix of response variables</dd>
       <dt>x_new</dt>
-      <dd>new x</dd>
+      <dd>data frame or matrix of input variables used to predict the response matrix.</dd>
       <dt>y_new</dt>
-      <dd>new y</dd>
+      <dd>data frame or matrix of observed response variables.</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
       <dt>type</dt>
       <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>k</dt>
-      <dd>small number to add to the ridge.</dd>
+      <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
     </dl>
     
 

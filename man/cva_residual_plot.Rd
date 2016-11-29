@@ -15,13 +15,20 @@ cva_residual_plot(x, y, rank = "full", type = "cov", k = 0)
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
-\item{k}{small number to add to the ridge.}
+\item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
 \description{
-\code{cv_residual_plot}
+\code{cva_residual_plot}
 }
 \examples{
-
+library(dplyr)
+data(COMBO17)
+galaxy <- as_data_frame(COMBO17)
+galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+galaxy <- na.omit(galaxy)
+galaxy_x <- select(galaxy, -Rmag:-chi2red)
+galaxy_y <- select(galaxy, Rmag:chi2red)
+cva_residual_plot(galaxy_x, galaxy_y, rank = 3)
 
 }
 

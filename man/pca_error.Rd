@@ -4,14 +4,14 @@
 \alias{pca_error}
 \title{Reduced-Rank PCA Error}
 \usage{
-pca_error(rrpca_object, x_new)
+pca_error(pca_object, x_new)
 }
 \arguments{
-\item{rrpca_object}{`list` object obtained from `rrpca()`}
+\item{pca_object}{`list` object obtained from `pca()`}
 
 \item{x_new}{data frame or matrix of new observations to predict.}
 }
 \description{
-\code{rrpca_error}
+\code{pca_error}
 }
 

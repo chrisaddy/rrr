@@ -3,10 +3,10 @@
 
 delta_coeff <- function(x, y, gamma_matrix, type = "cov", k = 0){
 	full_rank <- min(dim(x)[2], dim(y)[2])
-	coeff_full <- rrr(x, y, gamma_matrix, rank = full_rank, type, k)$C	
+	coeff_full <- rrr(x, y, gamma_matrix, rank = full_rank, type, k)[["C"]]	
 	delta_coeff_norm <- c()
 	for(i in 1:full_rank){
-		delta_coeff_norm[i] <-sqrt(sum((coeff_full - rrr(x, y, gamma_matrix, i, type, k)$C)^2))
+		delta_coeff_norm[i] <-sqrt(sum((coeff_full - rrr(x, y, gamma_matrix, i, type, k)[["C"]])^2))
 	}
 	delta_c <- delta_coeff_norm / sqrt(sum(coeff_full^2))
 	data_frame(dC = c(1, delta_c))
@@ -29,6 +29,15 @@ delta_error <- function(x, y, gamma_matrix, type = "cov", k = 0){
 #'
 #' @inheritParams rrr
 #'
+#' @return data frame containing rank trace.
+#'
+#' @examples
+#' data(tobacco)
+#' tobacco_x <- tobacco[,4:9]
+#' tobacco_y <- tobacco[,1:3]
+#' gamma <- diag(1, dim(tobacco_y)[2])
+#' rank_trace(tobacco_x, tobacco_y, gamma)
+#'
 #' @export
 
 rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0){
@@ -36,7 +45,6 @@ rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0){
 	dEE <- delta_error(x, y, gamma_matrix, k)
 	ranks <- dplyr::data_frame(ranks = 0:(dim(dC)[1] - 1))
 	dplyr::bind_cols(ranks, dC, dEE)
-
 }	
 
 #' Rank Trace Plot
@@ -44,6 +52,15 @@ rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0){
 #' Plot of rank trace to determine suitable rank of coefficient matrix.
 #'
 #' @inheritParams rank_trace
+#'
+#' @return plot
+#'
+#' @examples
+#' data(tobacco)
+#' tobacco_x <- tobacco[,4:9]
+#' tobacco_y <- tobacco[,1:3]
+#' gamma <- diag(1, dim(tobacco_y)[2])
+#' rank_trace_plot(tobacco_x, tobacco_y, gamma)
 #'
 #' @export
 
@@ -62,6 +79,17 @@ rank_trace_plot <- function(x, y, gamma_matrix, type = "cov", k = 0){
 #' \code{rrr_residuals_plot}
 #' 
 #' @inheritParams rrr
+#'
+#' @return plot
+#'
+#' @examples
+#' data(tobacco)
+#' tobacco_x <- tobacco[,4:9]
+#' tobacco_y <- tobacco[,1:3]
+#' gamma <- diag(1, dim(tobacco_y)[2])
+#' rrr_residuals_plot(tobacco_x, tobacco_y, gamma)
+#' gamma2 <- solve(cov(tobacco_y))
+#' rrr_residuals_plot(tobacco_x, tobacco_y, gamma2)
 #'
 #' @export
 

@@ -12,35 +12,33 @@ reference:
 - title: Principal Component Analysis
   desc: Functions for fitting principal component analysis models, diagnostics and plots.
   contents:
-  - rrpca
-  - pc_scores
+  - pca
+  - pca_scores
   - pca_gof
   - pca_rank_trace
   - pca_rank_trace_plot
-  - pc_pairwise_plot
-  - pc_allpairs_plot
-  - pc_plot_3D
+  - pca_pairwise_plot
+  - pca_allpairs_plot
+  - pca_plot_3D
   - pca_residuals
   - pca_error
   - pca_predict
 - title: Canonical Variate Analysis
   desc: Functions for fitting canonical variate analysis models, diagnostics and plots.
   contents:
-  - rrcva
-  - cv_scores
+  - cva
+  - cva_scores
   - cva_rank_trace
   - cva_rank_trace_plot
-  - cv_pairwise_plot
+  - cva_pairwise_plot
   - cva_residuals
   - cva_residual_plot
-  - canonical_cov
-  - canonical_corr
 - title: Linear Discriminant Analysis
   desc: Functions for fitting linear discriminant analysis models, diagnostics and plots.
   contents:
-  - rrlda
-  - ld_scores
-  - ld_pairwise_plot
+  - lda
+  - lda_scores
+  - lda_pairwise_plot
 - title: Data
   desc: Multivariate data sets
   contents:

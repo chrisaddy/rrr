@@ -1,6 +1,6 @@
 ---
 title: "`rrr` for Linear Discriminant Analysis"
-author: "Vignette Author"
+author: "Chris Addy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,7 +9,19 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Linear Discriminant Analysis
+## Mathematical Background
+
+### LDA is a Special Case of [CVA](c-cva.html)
+
+Linear discriminant analysis is a classification procedure. We can turn it into a regression procedure -- specifically a reduced-rank canonical variate procedure -- in the following way.
+
+Let each $i = 1, 2, \dots, n$ observation observationbelong to one, and only one, of $K = s + 1$ distinct classes.
+
+We can construct an *indicator response matrix*, $\mathbf{Y}$
+
+$$
+\mathbf{Y}
+$$
 
 ```{r}
 ### create training and test sets
@@ -25,4 +37,16 @@ train_digits_class <- digits_class[train_index, ]
 ### test set
 test_digits_features <- digits_features[-train_index, ]
 test_digits_class <- digits_class[-train_index, ]
+```
+
+## Assesss Effective Dimensionality
+
+## Diagnostics
+
+## Fit LDA Model
+
+### Fit LDA model with `lda()`
+
+```{r}
+lda(digits_features, digits_class, rank = 3)
 ```

@@ -15,9 +15,20 @@ rank_trace_plot(x, y, gamma_matrix, type = "cov", k = 0)
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
-\item{k}{small number to add to the ridge.}
+\item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+}
+\value{
+plot
 }
 \description{
 Plot of rank trace to determine suitable rank of coefficient matrix.
+}
+\examples{
+data(tobacco)
+tobacco_x <- tobacco[,4:9]
+tobacco_y <- tobacco[,1:3]
+gamma <- diag(1, dim(tobacco_y)[2])
+rank_trace_plot(tobacco_x, tobacco_y, gamma)
+
 }
 

@@ -1,6 +1,7 @@
 lda_organize <- function(features, classes){
+    classes <- as_data_frame(classes)
     names(classes) <- "class"
-    if(length(classes$class) <= 2){
+    if(length(classes[["class"]]) <= 2){
 	stop("too few classes for multiclass lda")
     }
     combine_df <- dplyr::bind_cols(features, classes)
@@ -21,24 +22,30 @@ lda_organize <- function(features, classes){
 #' 
 #' @return `list` containing: a data frame of class
 #'
+#' @examples
+#' data(pendigits)
+#' digits_features <- pendigits[,-35:-36]
+#' digits_class <- pendigits[,35]
+#' lda(digits_features, digits_class, rank = 3, quadratic = TRUE)
+#'
 #' @references Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #'
 #' @export
 
-rrlda <- function(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE){
+lda <- function(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE){
     if(quadratic == TRUE){
-	x <- expand_feature_space(x)
+    x <- expand_feature_space(x)
     }
     ordered <- lda_organize(x, class)
     x_ordered <- ordered$features_ordered
     y_ordered <- ordered$classes_ordered
     full_rank <- min(dim(x_ordered)[2], dim(y_ordered)[2])
     if(rank == "full"){
-	reduce_rank <- full_rank
+    reduce_rank <- full_rank
     } else if(rank <= full_rank){
-	reduce_rank <- rank
+    reduce_rank <- rank
     } else {
-	stop("rank out of bounds")
+    stop("rank out of bounds")
     }
     n <- colSums(y_ordered)
     n_last <- n[length(n)]
@@ -61,29 +68,33 @@ rrlda <- function(x, class, rank = "full", type = "cov", k = 0, quadratic = FALS
     list(G = G, H = H, eigen_portion = eigen_portion) 
 }
 
-rrlda2 <- function(x, y, rank = "full", type = "cov", k = 0, quadratic = FALSE){
-	ordered <- lda_organize(x, y)
-	x_organize <- organize(ordered$features_ordered)
-	y_organize <- organize(ordered$features_ordered)
-	rrcva(x_organize, y_organize, rank, type, k)
-}	
+
+#lda <- function(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE){
+#	ordered <- lda_organize(x, class)
+#	x_organize <- ordered[["features_ordered"]]
+#	y_organize <- ordered[["classes_ordered"]]
+#	cva(x_organize, y_organize, rank, type, k)
+#}
+
 #' Linear Discriminant Scores
 #'
-#' \code{ld_scores} 
+#' \code{lda_scores} 
 #'
-#' @inheritParams rrlda
+#' @inheritParams lda
 #'
 #' @export
 
-ld_scores <- function(x, class, rank = "full", type = "cov", k = 0){
-    class_label <- class
+lda_scores <- function(x, class, rank = "full", type = "cov", k = 0){
+    class_label <- as_data_frame(as.factor(class))
     names(class_label) <- "class"
-    lda_object <- rrlda(x, class_label, rank, type, k)
+    lda_object <- lda(x, class_label, rank, type, k)
     ordered <- lda_organize(x, class_label)
-    x_organize <- organize(ordered$features_ordered)
-    y_organize <- organize(ordered$classes_ordered)
-    xi <- as_data_frame(t(t(lda_object$G) %*% x_organize))
-    omega <- as_data_frame(t(t(lda_object$H) %*% y_organize))
-    list(scores = dplyr::bind_cols(xi, class), class_means = unique(dplyr::bind_cols(omega, class))) 
+    x_organize <- organize(ordered[["features_ordered"]])
+    y_organize <- organize(ordered[["classes_ordered"]])
+    xi <- as_data_frame(t(lda_object[["G"]] %*% x_organize))
+    names(xi) <- paste("LD", 1:dim(xi)[2], sep = "")
+    omega <- as_data_frame(t(lda_object[["H"]] %*% y_organize))
+    names(omega) <- names(xi)
+    omega
+    list(scores = dplyr::bind_cols(xi, class_label), class_means = dplyr::distinct(dplyr::bind_cols(omega, class_label))) 
 }
-

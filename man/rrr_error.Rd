@@ -16,4 +16,19 @@ rrr_error(rrr_object, x_new, y_new)
 \description{
 \code{predict_rrr} predicts a matrix of responses from the coefficients of a \code{rrr} object.
 }
+\examples{
+data(tobacco)
+set.seed(123)
+train_index <- sample(dim(tobacco)[1], 18)
+tobacco_x <- tobacco[,4:9]
+tobacco_y <- tobacco[,1:3]
+tobacco_train_x <- tobacco_x[train_index, ]
+tobacco_train_y <- tobacco_y[train_index, ]
+tobacco_test_x <- tobacco_x[-train_index, ]
+tobacco_test_y <- tobacco_y[-train_index, ]
+gamma <- diag(1, dim(tobacco_y)[2])
+tobacco_rrr <- rrr(tobacco_train_x, tobacco_train_y, gamma, rank = 1)
+rrr_error(tobacco_rrr, tobacco_test_x, tobacco_test_y)
+
+}
 

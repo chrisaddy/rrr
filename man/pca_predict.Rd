@@ -4,14 +4,14 @@
 \alias{pca_predict}
 \title{Predict via Reduced-Rank Principle Components Analysis}
 \usage{
-pca_predict(rrpca_object, x_new)
+pca_predict(pca_object, x_new)
 }
 \arguments{
-\item{rrpca_object}{`list` object obtained from `rrpca()`}
+\item{pca_object}{`list` object obtained from `pca()`}
 
 \item{x_new}{data frame or matrix of new observations to predict.}
 }
 \description{
-\code{rrpca_predict}
+\code{pca_predict}
 }
 

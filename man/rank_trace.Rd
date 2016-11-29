@@ -15,9 +15,20 @@ rank_trace(x, y, gamma_matrix, type = "cov", k = 0)
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
-\item{k}{small number to add to the ridge.}
+\item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+}
+\value{
+data frame containing rank trace.
 }
 \description{
 Rank trace to determine number of principle components to use in reduced-rank PCA.
+}
+\examples{
+data(tobacco)
+tobacco_x <- tobacco[,4:9]
+tobacco_y <- tobacco[,1:3]
+gamma <- diag(1, dim(tobacco_y)[2])
+rank_trace(tobacco_x, tobacco_y, gamma)
+
 }
 

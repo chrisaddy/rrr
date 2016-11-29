@@ -1,15 +1,14 @@
 #' Error of Reduced-Rank Canonical Variate Analysis
 #'
-#' @inheritParams rrcva
-#' @param x_new new x
-#' @param y_new new y
+#' @inheritParams cva
+#' @inheritParams rrr_error
 #'
 #' @export
 
 cva_error <- function(x, y, x_new, y_new, rank = "full", type = "cov", k = 0){
-	cva_object <- rrcva(x, y, rank, type, k)
+	cva_object <- cva(x, y, rank, type, k)
 	index <- data_frame(index = 1:dim(y_new)[1])
-	error <- as_data_frame(t(cva_object$H %*% organize(y_new) - cva_object$G %*% organize(x_new)))
+	error <- as_data_frame(t(cva_object[["H"]] %*% organize(y_new) - cva_object[["G"]] %*% organize(x_new)))
 	names(error) <- paste("CV", 1:dim(error)[2], sep = "") 
 	dplyr::bind_cols(index, error)
 }
@@ -18,13 +17,22 @@ cva_error <- function(x, y, x_new, y_new, rank = "full", type = "cov", k = 0){
 #'
 #' \code{cva_residuals} returns the multivariate residuals of the reduced-rank CVA regression
 #'
-#' @inheritParams rrcva
+#' @inheritParams cva
 #'
+#' @examples
+#' library(dplyr)
+#' data(COMBO17)
+#' galaxy <- as_data_frame(COMBO17)
+#' galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+#' galaxy <- na.omit(galaxy)
+#' galaxy_x <- select(galaxy, -Rmag:-chi2red)
+#' galaxy_y <- select(galaxy, Rmag:chi2red)
+#' cva_residuals(galaxy_x, galaxy_y, rank = 2, k = 0.001)
 #'
+#' @export
 
 cva_residuals <- function(x, y, rank = "full", type = "cov", k = 0){
-	cva_object <- rrcva(x, y, rank, type, k)
-	cva_error(cva_object, x, y)	
+	cva_error(x, y, x, y, rank, type, k)	
 }
 
 identity_rank <- function(rank){
@@ -41,14 +49,14 @@ lambda_rank <- function(x, y, rank, k = 0){
 		solve(cov_y) %*%
 		cov_yx %*%
 		solve(sqrt_matrix(cov_x)) 
-	eigens <- Re(eigen(r_star)$values)[1:rank]
+	eigens <- Re(eigen(r_star)[["values"]])[1:rank]
 	diag(eigens)
 }
 
 #' Canonical Covariance Matrix
 #'
 #' \code{canonical_cov} 
-#' @inheritParams rrcva
+#' @inheritParams cva
 #' 
 #' @examples
 #' data(COMBO17)
@@ -79,7 +87,7 @@ canonical_cov <- function(x, y, rank = "full", k = 0){
 #'
 #' \code{canonical_corr}
 #'
-#' @inheritParams rrcva
+#' @inheritParams cva
 #'
 #'
 

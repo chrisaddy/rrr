@@ -15,7 +15,7 @@ canonical_corr(x, y, rank = "full", type = "cov", k = 0)
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
-\item{k}{small number to add to the ridge.}
+\item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
 \description{
 \code{canonical_corr}

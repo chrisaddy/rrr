@@ -13,7 +13,7 @@ canonical_cov(x, y, rank = "full", k = 0)
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
-\item{k}{small number to add to the ridge.}
+\item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
 \description{
 \code{canonical_cov}

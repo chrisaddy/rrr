@@ -17,9 +17,18 @@ rrr_residuals(x, y, gamma_matrix, rank = "full", type = "cov", k = 0)
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
-\item{k}{small number to add to the ridge.}
+\item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
 \description{
 \code{rrr_residuals}
+}
+\examples{
+data(tobacco)
+tobacco_x <- tobacco[,4:9]
+tobacco_y <- tobacco[,1:3]
+gamma <- diag(1, dim(tobacco_y)[2])
+tobacco_rrr <- rrr(tobacco_x, tobacco_y, gamma, rank = 1)
+rrr_residuals(tobacco_x, tobacco_y, gamma, rank = 1)
+
 }
 

@@ -2,7 +2,7 @@
 #'
 #' \code{cva_rank_trace}
 #' 
-#' @inheritParams rrcva
+#' @inheritParams cva
 #'
 #' @examples
 #' library(dplyr)
@@ -18,7 +18,7 @@
 #' @export
 
 cva_rank_trace <- function(x, y, type = "cov", k = 0){
-	gamma <- cov(y)
+	gamma <- solve(cov(y) + k * diag(1, dim(y)[2]))
 	rank_trace(x, y, gamma, type, k)
 }
 
@@ -49,13 +49,21 @@ cva_rank_trace_plot <- function(x, y, type = "cov", k = 0){
 
 #' Residual Plots for Reduced-Rank CVA
 #'
-#' \code{cv_residual_plot}
+#' \code{cva_residual_plot}
 #' 
-#' @inheritParams rrcva
+#' @inheritParams cva
 #'
 #' @examples
+#' library(dplyr)
+#' data(COMBO17)
+#' galaxy <- as_data_frame(COMBO17)
+#' galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+#' galaxy <- na.omit(galaxy)
+#' galaxy_x <- select(galaxy, -Rmag:-chi2red)
+#' galaxy_y <- select(galaxy, Rmag:chi2red)
+#' cva_residual_plot(galaxy_x, galaxy_y, rank = 3)
 #'
-#'
+#' @export
 
 cva_residual_plot <- function(x, y, rank = "full", type = "cov", k = 0){
 	residuals <- cva_residuals(x, y, rank, type, k)
@@ -64,8 +72,8 @@ cva_residual_plot <- function(x, y, rank = "full", type = "cov", k = 0){
 
 #' Pairwise Canonical Variates Plot
 #'
-#' @inheritParams rrcva
-#' @param cv_pair integer. canonical variate pair to be plotted
+#' @inheritParams cva
+#' @param cva_pair integer. canonical variate pair to be plotted
 #'
 #' @examples
 #' library(dplyr)
@@ -76,25 +84,25 @@ cva_residual_plot <- function(x, y, rank = "full", type = "cov", k = 0){
 #' galaxy <- na.omit(galaxy)
 #' galaxy_x <- select(galaxy, -Rmag:-chi2red)
 #' galaxy_y <- select(galaxy, Rmag:chi2red)
-#' cv_pairwise_plot(galaxy_x, galaxy_y)
+#' cva_pairwise_plot(galaxy_x, galaxy_y)
 #'
 #' @export 
 
-cv_pairwise_plot <- function(x, y, cv_pair = 1, type = "cov", k = 0){
-	scores_object <- cv_scores(x, y, cv_pair, type, k)
-	corr <- scores_object[["canonical_corr"]][cv_pair]
-	x_axis <- scores_object$xi[,cv_pair]
-	y_axis <- scores_object$omega[,cv_pair]
+cva_pairwise_plot <- function(x, y, cva_pair = 1, type = "cov", k = 0){
+	scores_object <- cva_scores(x, y, cva_pair, type, k)
+	corr <- scores_object[["canonical_corr"]][cva_pair]
+	x_axis <- scores_object[["xi"]][,cva_pair]
+	y_axis <- scores_object[["omega"]][,cva_pair]
 	df <- bind_cols(x_axis, y_axis)
 	ggplot(df, aes_q(x = as.name(names(df)[1]), y = as.name(names(df)[2]))) + 
 		geom_point() + 
 		geom_smooth(method = "lm") + 
-		labs(title = paste("CV", cv_pair, " Pairwise Plot, Canonical Correlation = ", round(corr, 4), sep = ""))
+		labs(title = paste("CV", cva_pair, " Pairwise Plot, Canonical Correlation = ", round(corr, 4), sep = ""))
 }
 
 
-cv_allpairs_plot <- function(x, y, rank, type = "cov", k = 0){
-	scores_object <- cv_scores(x, y, rank, type, k)
+cva_allpairs_plot <- function(x, y, rank, type = "cov", k = 0){
+	scores_object <- cva_scores(x, y, rank, type, k)
 	all_pairs <- dplyr::bind_cols(scores_object[["xi"]], scores_object[["omega"]])
 	GGally::ggpairs(all_pairs)
 }

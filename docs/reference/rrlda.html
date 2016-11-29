@@ -108,6 +108,12 @@
     <p>Izenman, A. J. (2008) <em>Modern Multivariate Statistical Techniques</em>. Springer.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>pendigits</span>)
+<span class='no'>digits_features</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[,-<span class='fl'>35</span>:-<span class='fl'>36</span>]
+<span class='no'>digits_class</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[,<span class='fl'>35</span>]
+<span class='fu'>rrlda</span>(<span class='no'>digits_features</span>, <span class='no'>digits_class</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>quadratic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): could not find function &quot;rrlda&quot;</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -117,7 +123,9 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#references">References</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
