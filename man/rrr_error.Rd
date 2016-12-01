@@ -2,7 +2,7 @@
 % Please edit documentation in R/rrr_diagnostics.R
 \name{rrr_error}
 \alias{rrr_error}
-\title{RRR Error}
+\title{Reduced-Rank Regression Error}
 \usage{
 rrr_error(rrr_object, x_new, y_new)
 }
@@ -14,7 +14,7 @@ rrr_error(rrr_object, x_new, y_new)
 \item{y_new}{data frame or matrix of observed response variables.}
 }
 \description{
-\code{predict_rrr} predicts a matrix of responses from the coefficients of a \code{rrr} object.
+\code{rrr_error} calculates the error from predicting response variables from a test set using coefficients calculated from training data.
 }
 \examples{
 data(tobacco)

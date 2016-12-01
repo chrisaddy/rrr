@@ -1,3 +1,24 @@
+template:
+  params:
+    bootswatch: paper
+
+articles:
+- title: "rrr for Reduced-Rank Regression"
+  contents:
+  - rrr
+- title: "Principal Component Analysis"
+  contents:
+  - pca
+- title: "Canonical Variate Analysis"
+  contents:
+  - cva
+- title: "Linear Discriminant Analysis"
+  contents:
+  - lda
+- title: "Multivariate Visualization in rrr"
+  contents:
+  - visualization
+
 reference:
 - title: Reduced-Rank Regression 
   desc: Functions for fitting reduced-rank regression models, diagnostics and plots.

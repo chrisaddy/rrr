@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Principal Component Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-29</h4>
+            <h4 class="date">2016-12-01</h4>
           </div>
 
     
@@ -169,7 +169,7 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 <h3 class="hasAnchor"><html><body><a href="#pairwise-plots-with-pca_pairwise_plot" class="anchor"> </a></body></html>Pairwise Plots with <code><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pca_pairwise_plot)</code></pre></div>
 <pre><code>## function (x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", 
-##     type = "cov", interactive = FALSE) 
+##     type = "cov", interactive = FALSE, point_size = 2.5) 
 ## NULL</code></pre>
 <p>A common PCA method of visualization for diagnostic and analysis purposes is to plot the <span class="math inline">\(j\)</span>th sample PC scores against the <span class="math inline">\(k\)</span>th PC scores,</p>
 <p><span class="math display">\[
@@ -256,6 +256,8 @@ digits_pca</code></pre></div>
 ## 9  -0.22435733  0.32701486 -0.05355998
 ## 10  0.05637675  0.21559127  0.20522769
 ## # ... with 23 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally::<span class="kw">ggcorr</span>(digits_pca)</code></pre></div>
+<p><img src="b-pca_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 </div>
 </div>
 </div>

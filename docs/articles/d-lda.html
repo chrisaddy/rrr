@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Linear Discriminant Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-29</h4>
+            <h4 class="date">2016-12-01</h4>
           </div>
 
     
@@ -54,64 +54,97 @@
 <p><span class="math display">\[
 \mathbf{Y}
 \]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### create training and test sets
-<span class="kw">set.seed</span>(<span class="dv">12345</span>)
-num_obs &lt;-<span class="st"> </span><span class="kw">dim</span>(digits)[<span class="dv">1</span>]
-train_number &lt;-<span class="st"> </span><span class="kw">floor</span>(.<span class="dv">75</span> *<span class="st"> </span>num_obs)
-train_index &lt;-<span class="st"> </span><span class="kw">sample</span>(num_obs, train_number)
-
-### training set
-train_digits_features &lt;-<span class="st"> </span>digits_features[train_index, ]
-train_digits_class &lt;-<span class="st"> </span>digits_class[train_index, ]
-
-### test set
-test_digits_features &lt;-<span class="st"> </span>digits_features[-train_index, ]
-test_digits_class &lt;-<span class="st"> </span>digits_class[-train_index, ]</code></pre></div>
 </div>
 </div>
-<div id="assesss-effective-dimensionality" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#assesss-effective-dimensionality" class="anchor"> </a></body></html>Assesss Effective Dimensionality</h2>
+<div id="the-iris-data-set" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#the-iris-data-set" class="anchor"> </a></body></html>The <code>iris</code> Data Set</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">data</span>(iris)
+iris &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(iris)
+
+<span class="kw">glimpse</span>(iris)</code></pre></div>
+<pre><code>## Observations: 150
+## Variables: 5
+## $ Sepal.Length &lt;dbl&gt; 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9,...
+## $ Sepal.Width  &lt;dbl&gt; 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1,...
+## $ Petal.Length &lt;dbl&gt; 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5,...
+## $ Petal.Width  &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1,...
+## $ Species      &lt;fctr&gt; setosa, setosa, setosa, setosa, setosa, setosa, ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris_features &lt;-<span class="st"> </span>iris %&gt;%
+<span class="st">    </span><span class="kw">select</span>(-Species)
+
+iris_class &lt;-<span class="st"> </span>iris %&gt;%
+<span class="st">    </span><span class="kw">select</span>(Species)</code></pre></div>
+</div>
+<div id="assesssing-effective-dimensionality" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#assesssing-effective-dimensionality" class="anchor"> </a></body></html>Assesssing Effective Dimensionality</h2>
+</div>
+<div id="fitting-lda-models" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#fitting-lda-models" class="anchor"> </a></body></html>Fitting LDA Models</h2>
+<div id="fit-lda-model-with-lda" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#fit-lda-model-with-lda" class="anchor"> </a></body></html>Fit LDA model with <code><a href="../reference/lda.html">lda()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda.html">lda</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<pre><code>## $G
+## # A tibble: 4 &times; 2
+##          LD1         LD2
+##        &lt;dbl&gt;       &lt;dbl&gt;
+## 1 -0.1449717 -0.02060269
+## 2 -0.2682816 -1.92305340
+## 3  0.3852265  0.82465900
+## 4  0.4897665 -2.51570024
+## 
+## $H
+## # A tibble: 2 &times; 2
+##          LD1      LD2
+##        &lt;dbl&gt;    &lt;dbl&gt;
+## 1 -2.3382163 0.264133
+## 2 -0.6901901 1.100532
+## 
+## $eigen_portion
+## [1] 0.81387 0.18613</code></pre>
+</div>
+<div id="calculate-lda-scores-with-lda_scores" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#calculate-lda-scores-with-lda_scores" class="anchor"> </a></body></html>Calculate LDA Scores with <code><a href="../reference/lda_scores.html">lda_scores()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda_scores.html">lda_scores</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<pre><code>## $scores
+## # A tibble: 150 &times; 3
+##          LD1         LD2  class
+##        &lt;dbl&gt;       &lt;dbl&gt; &lt;fctr&gt;
+## 1  -1.408801 -0.26647978 setosa
+## 2  -1.245666  0.69916746 setosa
+## 3  -1.308851  0.23621141 setosa
+## 4  -1.190480  0.59550882 setosa
+## 5  -1.421132 -0.45672485 setosa
+## 6  -1.346084 -1.29762430 setosa
+## 7  -1.260511 -0.31544312 setosa
+## 8  -1.328953  0.01035173 setosa
+## 9  -1.146352  0.90177414 setosa
+## 10 -1.282948  0.84089804 setosa
+## # ... with 140 more rows
+## 
+## $class_means
+## # A tibble: 3 &times; 3
+##          LD1        LD2      class
+##        &lt;dbl&gt;      &lt;dbl&gt;     &lt;fctr&gt;
+## 1 -1.6468552 -0.8269707     setosa
+## 2  0.9554941  0.9637513 versicolor
+## 3  0.6913611 -0.1367806  virginica</code></pre>
+</div>
 </div>
 <div id="diagnostics" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#diagnostics" class="anchor"> </a></body></html>Diagnostics</h2>
 </div>
-<div id="fit-lda-model" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#fit-lda-model" class="anchor"> </a></body></html>Fit LDA Model</h2>
-<div id="fit-lda-model-with-lda" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#fit-lda-model-with-lda" class="anchor"> </a></body></html>Fit LDA model with <code><a href="../reference/lda.html">lda()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda.html">lda</a></span>(digits_features, digits_class, <span class="dt">rank =</span> <span class="dv">3</span>)</code></pre></div>
-<pre><code>## $G
-## # A tibble: 34 &times; 3
-##          LD1         LD2       LD3
-##        &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;
-## 1    2405021 -11209838.3 -17497369
-## 2    4073385  -2531157.7  -4667681
-## 3  -11362280   2734881.6 -10564953
-## 4   -8676515   6433188.5  -6791473
-## 5   -9345338   2121623.6  15997927
-## 6  -25724450   -683783.7   3233597
-## 7  -11903070 -20598146.8  11458301
-## 8  -13663134 -12059795.1   9450861
-## 9   -7258174 -30742922.8  -1186985
-## 10  10862274 -11973305.9  11306444
-## # ... with 24 more rows
-## 
-## $H
-## # A tibble: 9 &times; 3
-##           LD1         LD2         LD3
-##         &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-## 1 17094183513  -772813231  3227891483
-## 2   851532363  8196963069  3007265366
-## 3  5564970917 16154559358  -434924204
-## 4  -979203942  2313154788   174540466
-## 5  6805822241  2038280427  1531870087
-## 6 13520360191  9095794847   226633162
-## 7  9120989142  3206987622 -5632699783
-## 8  7239450434 12739982222  1821072066
-## 9 15557836983  7991559825  -245171061
-## 
-## $eigen_portion
-## [1] 0.51553699 0.40739327 0.07706974</code></pre>
+<div id="plotting" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#plotting" class="anchor"> </a></body></html>Plotting</h2>
+<div id="plot-lda-pairs-with-lda_pairwise_plot" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#plot-lda-pairs-with-lda_pairwise_plot" class="anchor"> </a></body></html>Plot LDA Pairs with <code><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(lda_pairwise_plot)</code></pre></div>
+<pre><code>## function (x, class, lda_x = 1, lda_y = 2, rank = "full", type = "cov", 
+##     k = 0) 
+## NULL</code></pre>
+<p>A typical graphical display for multiclass LDA is to plot the <span class="math inline">\(j\)</span>th discriminant scores for the <span class="math inline">\(n\)</span> points against the <span class="math inline">\(k\)</span> discriminant scores with the class means superimposed on the same graph.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<p><img src="d-lda_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -121,9 +154,11 @@ test_digits_class &lt;-<span class="st"> </span>digits_class[-train_index, ]</co
         <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked"><li><a href="#mathematical-background">Mathematical Background</a></li>
-      <li><a href="#assesss-effective-dimensionality">Assesss Effective Dimensionality</a></li>
+      <li><a href="#the-iris-data-set">The <code>iris</code> Data Set</a></li>
+      <li><a href="#assesssing-effective-dimensionality">Assesssing Effective Dimensionality</a></li>
+      <li><a href="#fitting-lda-models">Fitting LDA Models</a></li>
       <li><a href="#diagnostics">Diagnostics</a></li>
-      <li><a href="#fit-lda-model">Fit LDA Model</a></li>
+      <li><a href="#plotting">Plotting</a></li>
       </ul></div>
       </div>
 

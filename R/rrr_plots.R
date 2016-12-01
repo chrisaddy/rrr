@@ -52,6 +52,7 @@ rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0){
 #' Plot of rank trace to determine suitable rank of coefficient matrix.
 #'
 #' @inheritParams rank_trace
+#' @param interactive if TRUE, creates an interactive plotly graphic.
 #'
 #' @return plot
 #'
@@ -64,15 +65,21 @@ rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0){
 #'
 #' @export
 
-rank_trace_plot <- function(x, y, gamma_matrix, type = "cov", k = 0){
+rank_trace_plot <- function(x, y, gamma_matrix, type = "cov", k = 0, interactive = FALSE){
 	trace <- rank_trace(x, y, gamma_matrix, type = "cov", k)
-	ggplot(trace, aes(dC, dEE, label = ranks)) +
-	lims(x = c(0,1), y = c(0,1)) +
-	geom_line(color = "red") +
-	geom_text(check_overlap = TRUE, size = 5) +
-	labs(x = "dC", y = "dE") +
-	ggtitle(paste("Rank Trace Plot, k =  ", k, sep =""))
-}
+	rt_plot <- ggplot(trace, aes(dC, dEE, label = ranks)) +
+		lims(x = c(0,1), y = c(0,1)) +
+		geom_line(color = "red") +
+		geom_point(size = 5) + 
+		geom_text(check_overlap = TRUE, size = 4, color = "white") +
+		labs(x = "dC", y = "dE") +
+		ggtitle(paste("Rank Trace Plot, k =  ", k, sep =""))
+	if(interactive == TRUE){
+		plotly::ggplotly(rt_plot)
+		} else {
+			rt_plot
+		}
+	}
 				 
 #' RRR Residuals Plots
 #' 

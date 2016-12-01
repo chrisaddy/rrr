@@ -29,7 +29,7 @@ lda(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE)
 data(pendigits)
 digits_features <- pendigits[,-35:-36]
 digits_class <- pendigits[,35]
-lda(digits_features, digits_class, rank = 3, quadratic = TRUE)
+lda(digits_features, digits_class, rank = 3, k = 0.001)
 
 }
 \references{

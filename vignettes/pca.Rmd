@@ -11,7 +11,7 @@ vignette: >
 
 ## Mathematical Background
 
-### PCA is a Special Case of [Reduced-Rank Regression](a-rrr.html)
+### PCA is a Special Case of [Reduced-Rank Regression](rrr.html)
 
 Set
 
@@ -148,4 +148,8 @@ digits_features <- digits %>% dplyr::select(-V5, -V6)
 digits_pca <- pca(digits_features, rank  = 3)
 
 digits_pca
+```
+
+```{r}
+GGally::ggcorr(digits_pca)
 ```

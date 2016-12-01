@@ -14,6 +14,8 @@ Imports:
     ggplot2,
     plotly,
     GGally
+Suggests:
+    caret
 Collate:
     utility_functions.R
     rrr.R

@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Canonical Variate Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-29</h4>
+            <h4 class="date">2016-12-01</h4>
           </div>
 
     
@@ -149,6 +149,9 @@ test_galaxy_y &lt;-<span class="st"> </span>galaxy_y[-train_index, ]</code></pre
 <h2 class="hasAnchor"><html><body><a href="#fit-reduced-rank-canonical-variate-model" class="anchor"> </a></body></html>Fit Reduced-Rank Canonical Variate Model</h2>
 <div id="fit-model-with-cva" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#fit-model-with-cva" class="anchor"> </a></body></html>Fit model with <code><a href="../reference/cva.html">cva()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(cva)</code></pre></div>
+<pre><code>## function (x, y, rank = "full", type = "cov", k = 0) 
+## NULL</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cva.html">cva</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">2</span>, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
 <pre><code>## $mean
 ##           [,1]
@@ -180,6 +183,53 @@ test_galaxy_y &lt;-<span class="st"> </span>galaxy_y[-train_index, ]</code></pre
 ## 
 ## $canonical_corr
 ## [1] 0.93863397 0.46957833 0.07553122 0.02573175 0.01503215 0.01113977</code></pre>
+</div>
+<div id="calculate-canonical-variate-scores-with-cva_scores" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#calculate-canonical-variate-scores-with-cva_scores" class="anchor"> </a></body></html>Calculate Canonical Variate Scores with <code><a href="../reference/cva_scores.html">cva_scores()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(cva_scores)</code></pre></div>
+<pre><code>## function (x, y, rank = "full", type = "cov", k = 0) 
+## NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scores &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cva_scores.html">cva_scores</a></span>(galaxy_x, galaxy_y, <span class="dt">k =</span> <span class="fl">0.0001</span>)
+
+scores</code></pre></div>
+<pre><code>## $xi
+## # A tibble: 3,462 &times; 6
+##            xi1         xi2         xi3          xi4           xi5
+##          &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;
+## 1   0.10939069  0.37863862  0.09371909 -0.003416401  0.0304444050
+## 2  -0.03538215  1.44069847  0.59607833 -0.030832491 -1.1786675532
+## 3  -1.00592711  0.13378629 -0.07555343  0.075422524 -0.0103557500
+## 4   0.04954501  0.09491797  0.13809968 -0.046355061  0.0658264675
+## 5   0.08832029 -0.08406486 -0.94084545 -0.087123895 -0.1673241799
+## 6  -0.54188182  0.60825647 -0.21698924 -0.189999849 -0.0109414043
+## 7   0.43229161  0.55503061  0.30205123 -0.103879503  0.1676262684
+## 8   0.54398298  0.34909483 -0.36149807 -0.183401317  0.0534814641
+## 9   0.08025841  0.25643637  0.01428582  0.116461965 -0.0002147714
+## 10  3.02965620 -0.65724548  0.19306838 -0.005443985  0.1183344965
+## # ... with 3,452 more rows, and 1 more variables: xi6 &lt;dbl&gt;
+## 
+## $omega
+## # A tibble: 3,462 &times; 6
+##         omega1     omega2      omega3      omega4      omega5     omega6
+##          &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+## 1   0.13299889 -0.2173703 -0.82056198  2.36274461  1.87573329 -2.7920084
+## 2  -0.03692747  1.4276006  0.58346789 -0.03508845 -1.15833053 -0.4571182
+## 3  -1.39563939 -0.2373857  0.63559910 -0.33690047  1.94034502 -2.4384869
+## 4   0.08731544  1.0810924  1.86899400  0.13642828 -0.12305606 -1.9836103
+## 5   0.52632555  0.1414576 -7.69998276 -3.47083455 -0.43477107  2.9161274
+## 6  -0.54285403  0.7202036 -3.06887667 -2.24228337 -2.47056921  2.0813830
+## 7   0.45612941  1.0018636  0.02338828 -0.74050515  0.39177820 -0.1386883
+## 8   0.07037098  1.1413856  0.34575432 -0.34985205  0.07238352  1.3803591
+## 9   0.25717552  0.4112277  0.66382655  0.42277241  0.32681940 -0.8157131
+## 10  2.60406898 -0.5219489 -0.13703696 -0.72516693 -0.46445692 -1.5229440
+## # ... with 3,452 more rows
+## 
+## $canonical_corr
+## [1] 0.93863397 0.46957833 0.07553122 0.02573175 0.01503215 0.01113977</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally::<span class="kw">ggcorr</span>(scores[[<span class="st">"xi"</span>]])</code></pre></div>
+<p><img src="c-cva_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally::<span class="kw">ggcorr</span>(scores[[<span class="st">"omega"</span>]])</code></pre></div>
+<p><img src="c-cva_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
 </div>
 </div>
 </div>

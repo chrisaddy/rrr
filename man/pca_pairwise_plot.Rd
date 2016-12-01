@@ -5,7 +5,7 @@
 \title{PC Pairwise Plot}
 \usage{
 pca_pairwise_plot(x, pc_x = 1, pc_y = 2, class_labels = NULL,
-  rank = "full", type = "cov", interactive = FALSE)
+  rank = "full", type = "cov", interactive = FALSE, point_size = 2.5)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -21,9 +21,11 @@ pca_pairwise_plot(x, pc_x = 1, pc_y = 2, class_labels = NULL,
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{interactive}{logical. If \code{TRUE} prints an interactive Plotly graphic.}
+
+\item{point_size}{size of points in scatter}
 }
 \description{
-\code{pca_pairwise_plot}
+\code{pca_pairwise_plot} plots the scores of one principal component against the scores of another in a two-dimensional scatterplot.
 }
 \examples{
 data(pendigits)

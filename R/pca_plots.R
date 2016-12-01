@@ -1,6 +1,6 @@
 #' PCA Rank Trace
 #'
-#' Rank trace to determine number of principle components to use in reduced-rank PCA.
+#' Rank trace to determine number of principle components to use in reduced-rank principal component analysis.
 #'
 #' @inheritParams pca
 #' 
@@ -35,7 +35,7 @@ pca_rank_trace <- function(x, type = "cov", k = 0){
 
 #' PCA Rank Trace Plot
 #'
-#' Plot of rank trace to determine number of principle components to use in reduced-rank PCA.
+#' Plot of rank trace to determine number of principle components to use in reduced-rank principal component analysis.
 #'
 #' @inheritParams pca
 #' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
@@ -57,11 +57,12 @@ pca_rank_trace_plot <- function(x, type = "cov", k = 0, interactive = FALSE){
                                                     label = rank)) +
         lims(x = c(0,1), y = c(0,1)) +
         geom_line(color = "red") +
-        geom_text(check_overlap = TRUE, size = 5) +
+        geom_point(size = 5) + 
+        geom_text(check_overlap = TRUE, size = 4, color = "white") + 
         labs(x = "dC", y = "dE") +
         ggtitle(paste("PCA Rank Trace Plot, k = ", tuner, sep = ""))
 	if(interactive == TRUE){
-        	plotly::ggplotly(static_plot)
+        	plotly::ggplotly(static_plot )
     	} else {
         	static_plot
     	}
@@ -76,13 +77,14 @@ pca_pairwise <- function(x, pca_x, pca_y, rank = "full", type = "cov"){
 
 #' PC Pairwise Plot
 #'
-#' \code{pca_pairwise_plot}
+#' \code{pca_pairwise_plot} plots the scores of one principal component against the scores of another in a two-dimensional scatterplot.
 #'
 #' @inheritParams pca
 #' @param pc_x principal component for the x-axis
 #' @param pc_y principal component for the y-axis
 #' @param class_labels data frame or vector of class labels
 #' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
+#' @param point_size size of points in scatter
 #'
 #' @examples
 #' data(pendigits)
@@ -92,7 +94,7 @@ pca_pairwise <- function(x, pca_x, pca_y, rank = "full", type = "cov"){
 #'
 #' @export
  
-pca_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE){
+pca_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE, point_size = 2.5){
     pairs <- pca_pairwise(x, pc_x, pc_y, rank, type)
     if(is.null(class_labels)){
         pairs_tbl <- pairs
@@ -109,19 +111,24 @@ pca_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank =
         class <- as_data_frame(class_labels)
         pairs_tbl <- bind_cols(pairs, class)
         names(pairs_tbl) <- c("pc_x", "pc_y", "class")
+        ptsize <- point_size
         static_plot <- ggplot2::ggplot(pairs_tbl,
                                        aes(pc_x,
                                            pc_y)) +
-            geom_point(aes(color = factor(class))) +
+            geom_point(aes(color = factor(class)), size = (ptsize - 1.5)) +
             labs(x = paste("PC", pc_x, sep = ""),
                           y = paste("PC", pc_y, sep = "")) +
             labs(title = "PC Pairwise") +
             theme(legend.title = element_blank())
     }
     if(interactive == TRUE){
-        ggplotly(static_plot)
+        interactive_plot <- plotly::ggplotly(static_plot)
+        for(i in 1:dim(distinct(class_labels))[1]){
+            interactive_plot[["x"]][["data"]][[i]][["marker"]][["size"]] <- ptsize
+        }
+        interactive_plot
     } else {
-        static_plot
+        print(static_plot)
     }
 }
 
@@ -136,7 +143,7 @@ pca_threewise <- function(x, pca_x, pca_y, pca_z, rank = "full", type = "cov"){
 
 #' 3D Principal Component Plot
 #'
-#' code{pca_plot_3D}
+#' code{pca_3D_plot}
 #'
 #' @param x data frame or matrix of predictor variables
 #' @param pca_x integer number of the principal component used for the x-axis
@@ -145,20 +152,33 @@ pca_threewise <- function(x, pca_x, pca_y, pca_z, rank = "full", type = "cov"){
 #' @param class_labels data frame or vector of class labels
 #' @param rank rank of coefficient matrix
 #' @param type type of covariance matrix
+#' @param point_size size of points in scatter
 #'
 #' @export
 
-pca_plot_3D <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL, rank = "full", type = "cov"){
+pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL, rank = "full", type = "cov", point_size = 3){
     class <- as_data_frame(class_labels)
     threes <- pca_threewise(x, pca_x, pca_y, pca_z, rank, type)
     threes_tbl <- bind_cols(threes, class)
+    #names(threes_tbl) <- c(paste("PC", pca_x, sep = ""),
+    #                       paste("PC", pca_y, sep = ""),
+    #                       paste("PC", pca_z, sep = ""))
     names(threes_tbl) <- c("x_coord", "y_coord", "z_coord", "class")
-    plot_ly(threes_tbl, x = ~x_coord, y = ~y_coord, z = ~z_coord, color = ~factor(class)) #%>%
-        #layout(title = "PC Scatter 3D",
-         #scene = list(
-         #  xaxis = list(title = names(threes)[1]), 
-         #  yaxis = list(title = names(threes)[2]), 
-        #   zaxis = list(title = names(threes)[3])))
+    ptsize <- point_size
+    plotly::plot_ly(threes_tbl,
+            x = ~x_coord,
+            y = ~y_coord,
+            z = ~z_coord,
+            type = "scatter3d",
+            mode = "markers",
+            color = ~factor(class),
+            marker = list(size = ptsize),
+            name = "PC 3D Scatter Plot")# %>%
+        #layout(list(title = "PC 3D Scatterplot"))#,
+         #scene = li1
+          # xaxis = list(title = "x"), 
+           #yaxis = list(title = "y"), 
+           #zaxis = list(title = "z")))
 }
 
 

@@ -19,7 +19,7 @@ pca_scores(x, rank = "full", type = "cov", k = 0)
 data frame with \code{rank} number of columns, each of which represent the principal component scores of the observations.
 }
 \description{
-\code{pca_scores} returns data frame of principle component scores from reduced-rank PCA
+\code{pca_scores} returns data frame of principal component scores from reduced-rank PCA
 }
 \examples{
 data(pendigits)

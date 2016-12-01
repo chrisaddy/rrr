@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Multivariate Regression</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-11-29</h4>
+            <h4 class="date">2016-12-01</h4>
           </div>
 
     
@@ -184,7 +184,7 @@ multivar_reg</code></pre></div>
 <pre><code>## function (x, y, gamma_matrix, type = "cov", k = 0) 
 ## NULL</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(rank_trace_plot)</code></pre></div>
-<pre><code>## function (x, y, gamma_matrix, type = "cov", k = 0) 
+<pre><code>## function (x, y, gamma_matrix, type = "cov", k = 0, interactive = FALSE) 
 ## NULL</code></pre>
 <p>Since <span class="math inline">\(\hat{\mathbf{C}}\)</span> is calculated using sample observations, its <em>mathematical</em> rank will always be full, but it will have a <em>statistical</em> rank <span class="math inline">\(t\)</span> that is an unknown hyperparameter that</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### use the identity matrix for gamma

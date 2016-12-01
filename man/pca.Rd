@@ -2,7 +2,7 @@
 % Please edit documentation in R/pca.R
 \name{pca}
 \alias{pca}
-\title{Fit Reduced-Rank PCA Model}
+\title{Fit Reduced-Rank Principal Component Model}
 \usage{
 pca(x, rank = "full", type = "cov", k = 0)
 }
@@ -16,7 +16,7 @@ pca(x, rank = "full", type = "cov", k = 0)
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
 \description{
-\code{pca} fits reduced-rank principle component analysis model.
+\code{pca} fits reduced-rank principal component analysis model.
 }
 \examples{
 data(pendigits)

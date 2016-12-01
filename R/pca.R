@@ -1,6 +1,6 @@
-#' Fit Reduced-Rank PCA Model
+#' Fit Reduced-Rank Principal Component Model
 #' 
-#' \code{pca} fits reduced-rank principle component analysis model.
+#' \code{pca} fits reduced-rank principal component analysis model.
 #' 
 #' @inheritParams rrr
 #'
@@ -28,7 +28,7 @@ pca <- function(x, rank = "full", type = "cov", k = 0){
 
 #' Reduced-rank Principal Component Scores
 #'
-#' \code{pca_scores} returns data frame of principle component scores from reduced-rank PCA
+#' \code{pca_scores} returns data frame of principal component scores from reduced-rank PCA
 #'
 #' @inheritParams pca
 #'
@@ -49,7 +49,7 @@ pca_scores <- function(x, rank = "full", type = "cov", k = 0){
     scores
 }
 
-#' Predict via Reduced-Rank Principle Components Analysis
+#' Predict via Reduced-Rank Principal Component Analysis
 #' 
 #' \code{pca_predict} 
 #' 

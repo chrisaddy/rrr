@@ -14,7 +14,7 @@ pca_rank_trace(x, type = "cov", k = 0)
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
 \description{
-Rank trace to determine number of principle components to use in reduced-rank PCA.
+Rank trace to determine number of principle components to use in reduced-rank principal component analysis.
 }
 \examples{
 data(pendigits)

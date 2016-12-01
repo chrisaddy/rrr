@@ -1,6 +1,6 @@
 #' PCA Goodness of Fit
 #'
-#' \code{pca_gof} is a measure of the goodness of fit of the \eqn{i}th principle component.
+#' \code{pca_gof} is a measure of the goodness of fit of the \eqn{i}th principal component.
 #'
 #' @inheritParams pca
 #' 

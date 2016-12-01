@@ -1,0 +1,74 @@
+---
+title: "`rrr` for Linear Discriminant Analysis"
+author: "Chris Addy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Mathematical Background
+
+### LDA is a Special Case of [CVA](cva.html)
+
+Linear discriminant analysis is a classification procedure. We can turn it into a regression procedure -- specifically a reduced-rank canonical variate procedure -- in the following way.
+
+Let each $i = 1, 2, \dots, n$ observation observationbelong to one, and only one, of $K = s + 1$ distinct classes.
+
+We can construct an *indicator response matrix*, $\mathbf{Y}$
+
+$$
+\mathbf{Y}
+$$
+
+## The `iris` Data Set
+
+```{r}
+library(dplyr)
+data(iris)
+iris <- as_data_frame(iris)
+
+glimpse(iris)
+```
+
+```{r}
+iris_features <- iris %>%
+	select(-Species)
+
+iris_class <- iris %>%
+	select(Species)
+```
+
+## Assesssing Effective Dimensionality
+
+## Fitting LDA Models
+
+### Fit LDA model with `lda()`
+
+```{r}
+lda(iris_features, iris_class, k = 0.0001)
+```
+
+### Calculate LDA Scores with `lda_scores()`
+
+```{r}
+lda_scores(iris_features, iris_class, k = 0.0001)
+```
+
+## Diagnostics
+
+## Plotting
+
+### Plot LDA Pairs with `lda_pairwise_plot()`
+
+```{r}
+args(lda_pairwise_plot)
+```
+
+A typical graphical display for multiclass LDA is to plot the $j$th discriminant scores for the $n$ points against the $k$ discriminant scores with the class means superimposed on the same graph.
+
+```{r}
+lda_pairwise_plot(iris_features, iris_class, k = 0.0001)
+```

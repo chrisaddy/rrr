@@ -11,11 +11,13 @@ vignette: >
  
 ```{r}
 set.seed(12345)
+library(rrr)
+library(dplyr)
 ```
 
 ## Mathematical Background
 
-### CVA is a Special Case of [Reduced-Rank Regression](a-rrr.html)
+### CVA is a Special Case of [Reduced-Rank Regression](rrr.html)
 
 ## The `COMBO17` Data Set
 
@@ -26,7 +28,7 @@ galaxy <- as_data_frame(COMBO17) %>%
        select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
        na.omit()
 
-#glimpse(galaxy)
+glimpse(galaxy)
 ```
 
 ```{r}
@@ -119,5 +121,29 @@ cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 6, k = 0.0001)
 ### Fit model with `cva()`
 
 ```{r}
+args(cva)
+```
+
+```{r}
 cva(galaxy_x, galaxy_y, rank = 2, k = 0.0001)
+```
+
+### Calculate Canonical Variate Scores with `cva_scores()`
+
+```{r}
+args(cva_scores)
+```
+
+```{r}
+scores <- cva_scores(galaxy_x, galaxy_y, k = 0.0001)
+
+scores
+```
+
+```{r}
+GGally::ggcorr(scores[["xi"]])
+```
+
+```{r}
+GGally::ggcorr(scores[["omega"]])
 ```

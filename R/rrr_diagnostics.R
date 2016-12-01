@@ -1,6 +1,6 @@
-#' Predict  RRR 
+#' Predict Multivariate Responses via Reduced-Rank Regression
 #'
-#' \code{predict_rrr} predicts a matrix of responses from the coefficients of a \code{rrr} object.
+#' \code{rrr_predict} predicts a matrix of responses from the coefficients of a \code{rrr} object.
 #'
 #' @inheritParams rrr
 #' @param rrr_object an object of type `list` that contains the means and coefficients of the reduced-rank regression.
@@ -25,13 +25,13 @@ rrr_predict <- function(rrr_object, x_new){
 	num_obs <- dim(x_new)[1]
 	coeffs <- rrr_object[["C"]]
 	means <- matrix(rep(rrr_object[["mean"]], num_obs), ncol = num_obs)
-	t(means + coeffs %*% organize(x_new)) %>% 
-		as_data_frame
+	df <- t(means + coeffs %*% organize(x_new)) %>% 
+		as_data_frame()
 }
 
-#' RRR Error 
+#' Reduced-Rank Regression Error
 #'
-#' \code{predict_rrr} predicts a matrix of responses from the coefficients of a \code{rrr} object.
+#' \code{rrr_error} calculates the error from predicting response variables from a test set using coefficients calculated from training data.
 #'
 #' @inheritParams rrr_predict
 #' @param y_new data frame or matrix of observed response variables.

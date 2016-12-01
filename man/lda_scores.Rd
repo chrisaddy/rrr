@@ -20,4 +20,9 @@ lda_scores(x, class, rank = "full", type = "cov", k = 0)
 \description{
 \code{lda_scores}
 }
+\examples{
+data(iris)
+lda_scores(iris[,1:4], iris[,5])
+
+}
 

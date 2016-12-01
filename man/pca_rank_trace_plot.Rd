@@ -16,7 +16,7 @@ pca_rank_trace_plot(x, type = "cov", k = 0, interactive = FALSE)
 \item{interactive}{logical. If \code{TRUE} prints an interactive Plotly graphic.}
 }
 \description{
-Plot of rank trace to determine number of principle components to use in reduced-rank PCA.
+Plot of rank trace to determine number of principle components to use in reduced-rank principal component analysis.
 }
 \examples{
 data(pendigits)

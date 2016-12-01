@@ -2,7 +2,7 @@
 % Please edit documentation in R/pca.R
 \name{pca_predict}
 \alias{pca_predict}
-\title{Predict via Reduced-Rank Principle Components Analysis}
+\title{Predict via Reduced-Rank Principal Component Analysis}
 \usage{
 pca_predict(pca_object, x_new)
 }
