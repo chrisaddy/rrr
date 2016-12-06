@@ -75,3 +75,17 @@ expand_feature_space <- function(feature_space){
 	names(feature_squares) <- paste(names(feature_space), "_squared", sep = "")
 	dplyr::bind_cols(feature_space, feature_squares)
 }	
+
+lda_organize <- function(features, classes){
+    classes <- as_data_frame(classes)
+    names(classes) <- "class"
+    if(dim(unique(classes))[1] <= 2){
+    stop("too few classes for multiclass lda")
+    }
+    combine_df <- dplyr::bind_cols(features, classes)
+    arrange_df <- dplyr::arrange(combine_df, class)
+    features_ordered <- dplyr::select(combine_df, -class)
+    classes_ordered <- dplyr::select(combine_df, class)
+    list(features_ordered = scale(features_ordered, scale = FALSE), 
+	 classes_ordered = scale(binary_matrix(classes_ordered)), scale = FALSE)
+}

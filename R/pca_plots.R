@@ -173,7 +173,7 @@ pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL,
             mode = "markers",
             color = ~factor(class),
             marker = list(size = ptsize),
-            name = "PC 3D Scatter Plot")# %>%
+            name = "PCA 3D Scatter Plot")# %>%
         #layout(list(title = "PC 3D Scatterplot"))#,
          #scene = li1
           # xaxis = list(title = "x"), 

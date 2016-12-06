@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Linear Discriminant Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-12-01</h4>
+            <h4 class="date">2016-12-05</h4>
           </div>
 
     
@@ -49,11 +49,11 @@
 <div id="lda-is-a-special-case-of-cva" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#lda-is-a-special-case-of-cva" class="anchor"> </a></body></html>LDA is a Special Case of <a href="cva.html">CVA</a></h3>
 <p>Linear discriminant analysis is a classification procedure. We can turn it into a regression procedure &ndash; specifically a reduced-rank canonical variate procedure &ndash; in the following way.</p>
-<p>Let each <span class="math inline">\(i = 1, 2, \dots, n\)</span> observation observationbelong to one, and only one, of <span class="math inline">\(K = s + 1\)</span> distinct classes.</p>
-<p>We can construct an <em>indicator response matrix</em>, <span class="math inline">\(\mathbf{Y}\)</span></p>
-<p><span class="math display">\[
-\mathbf{Y}
-\]</span></p>
+<p>Let each <span class="math inline">\(i = 1, 2, \dots, n\)</span> observation belong to one, and only one, of <span class="math inline">\(K = s + 1\)</span> distinct classes.</p>
+<p>We can construct an <em>indicator response matrix</em>, <span class="math inline">\(\mathbf{Y}\)</span> where each row <span class="math inline">\(i\)</span> is an indicator response vector for the <span class="math inline">\(i\)</span>th observation. The vector will have a 1 in the column that represents that class to which the observation belongs and will be 0 elsewhere.</p>
+<p>We then regress this <span class="math inline">\(Y\)</span> binary response matrix against the matrix <span class="math inline">\(X\)</span> of predictor variables.</p>
+<p>Linear discriminant analysis requires the assumptions that each class is normally distributed and that the covariance matrix of each class is equal to all others.</p>
+<p>While these assumptions will not be met in all cases, when they are &ndash; and when the classes are well separated &ndash; linear discriminant analysis is a very efficient classification method.</p>
 </div>
 </div>
 <div id="the-iris-data-set" class="section level2">
@@ -78,13 +78,32 @@ iris_class &lt;-<span class="st"> </span>iris %&gt;%
 </div>
 <div id="assesssing-effective-dimensionality" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#assesssing-effective-dimensionality" class="anchor"> </a></body></html>Assesssing Effective Dimensionality</h2>
+<p>Assessing the rank <span class="math inline">\(t\)</span> of this reduced-rank regression is equivalent to determining the number of linear discriminant functions that best discriminate between the <span class="math inline">\(K\)</span> classes, with <span class="math inline">\(\mathrm{min}\left(r, s\right) = \mathrm{min}\left(r, K - 1\right)\)</span> maximum number of linear discriminant functions.</p>
+<p>Generally, plotting linear discriminant functions against each other, i.e., the first and second linear discriminant functions, is used to determine whether sufficient discrimination is obtained.</p>
+</div>
+<div id="plotting" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#plotting" class="anchor"> </a></body></html>Plotting</h2>
+<div id="plot-lda-pairs-with-lda_pairwise_plot" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#plot-lda-pairs-with-lda_pairwise_plot" class="anchor"> </a></body></html>Plot LDA Pairs with <code><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(lda_pairwise_plot)</code></pre></div>
+<pre><code>## function (x, class, lda_x = 1, lda_y = 2, rank = "full", type = "cov", 
+##     k = 0, quadratic = FALSE) 
+## NULL</code></pre>
+<p>A typical graphical display for multiclass LDA is to plot the <span class="math inline">\(j\)</span>th discriminant scores for the <span class="math inline">\(n\)</span> points against the <span class="math inline">\(k\)</span> discriminant scores with the class means superimposed on the same graph.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<p><img src="lda_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+</div>
 </div>
 <div id="fitting-lda-models" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#fitting-lda-models" class="anchor"> </a></body></html>Fitting LDA Models</h2>
 <div id="fit-lda-model-with-lda" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#fit-lda-model-with-lda" class="anchor"> </a></body></html>Fit LDA model with <code><a href="../reference/lda.html">lda()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda.html">lda</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
-<pre><code>## $G
+<pre><code>## $prior
+##     setosa versicolor  virginica 
+##  0.3333333  0.3333333  0.3333333 
+## 
+## $G
 ## # A tibble: 4 &times; 2
 ##          LD1         LD2
 ##        &lt;dbl&gt;       &lt;dbl&gt;
@@ -134,19 +153,6 @@ iris_class &lt;-<span class="st"> </span>iris %&gt;%
 <div id="diagnostics" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#diagnostics" class="anchor"> </a></body></html>Diagnostics</h2>
 </div>
-<div id="plotting" class="section level2">
-<h2 class="hasAnchor"><html><body><a href="#plotting" class="anchor"> </a></body></html>Plotting</h2>
-<div id="plot-lda-pairs-with-lda_pairwise_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#plot-lda-pairs-with-lda_pairwise_plot" class="anchor"> </a></body></html>Plot LDA Pairs with <code><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(lda_pairwise_plot)</code></pre></div>
-<pre><code>## function (x, class, lda_x = 1, lda_y = 2, rank = "full", type = "cov", 
-##     k = 0) 
-## NULL</code></pre>
-<p>A typical graphical display for multiclass LDA is to plot the <span class="math inline">\(j\)</span>th discriminant scores for the <span class="math inline">\(n\)</span> points against the <span class="math inline">\(k\)</span> discriminant scores with the class means superimposed on the same graph.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
-<p><img src="lda_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
-</div>
-</div>
 </div>
   </div>
 
@@ -156,9 +162,9 @@ iris_class &lt;-<span class="st"> </span>iris %&gt;%
       <ul class="nav nav-pills nav-stacked"><li><a href="#mathematical-background">Mathematical Background</a></li>
       <li><a href="#the-iris-data-set">The <code>iris</code> Data Set</a></li>
       <li><a href="#assesssing-effective-dimensionality">Assesssing Effective Dimensionality</a></li>
+      <li><a href="#plotting">Plotting</a></li>
       <li><a href="#fitting-lda-models">Fitting LDA Models</a></li>
       <li><a href="#diagnostics">Diagnostics</a></li>
-      <li><a href="#plotting">Plotting</a></li>
       </ul></div>
       </div>
 

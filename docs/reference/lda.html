@@ -112,38 +112,44 @@
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>pendigits</span>)
 <span class='no'>digits_features</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[,-<span class='fl'>35</span>:-<span class='fl'>36</span>]
 <span class='no'>digits_class</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[,<span class='fl'>35</span>]
-<span class='fu'>lda</span>(<span class='no'>digits_features</span>, <span class='no'>digits_class</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.001</span>)</div><div class='output co'>#&gt; $G
+<span class='fu'>lda</span>(<span class='no'>digits_features</span>, <span class='no'>digits_class</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.001</span>)</div><div class='output co'>#&gt; $prior
+#&gt;          0          1          2          3          4          5          6 
+#&gt; 0.10398472 0.10398472 0.10407569 0.09597889 0.10407569 0.09597889 0.09606987 
+#&gt;          7          8          9 
+#&gt; 0.10389374 0.09597889 0.09597889 
+#&gt; 
+#&gt; $G
 #&gt; # A tibble: 34 × 3
-#&gt;                 LD1              LD2              LD3
-#&gt;              &lt;cplx&gt;           &lt;cplx&gt;           &lt;cplx&gt;
-#&gt; 1  -4.084331e-04+0i  2.673256e-03+0i -2.828805e-03+0i
-#&gt; 2   1.318003e-04+0i  1.744069e-03+0i -7.641535e-03+0i
-#&gt; 3   1.760460e-04+0i  2.251182e-04+0i -4.268579e-05+0i
-#&gt; 4   2.674138e-04+0i -4.999458e-03+0i  1.070153e-02+0i
-#&gt; 5  -6.090273e-05+0i -2.958977e-03+0i  6.886435e-03+0i
-#&gt; 6  -1.871425e-04+0i  1.660323e-03+0i -3.183527e-04+0i
-#&gt; 7   1.024797e-04+0i -1.769586e-03+0i -1.934749e-03+0i
-#&gt; 8   9.924649e-05+0i  3.954015e-05+0i  1.137345e-03+0i
-#&gt; 9  -3.667089e-05+0i  3.541013e-04+0i  3.179892e-03+0i
-#&gt; 10 -6.109829e-04+0i  7.364155e-04+0i  4.902319e-03+0i
+#&gt;              LD1           LD2           LD3
+#&gt;            &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+#&gt; 1  -4.084331e-04  2.673256e-03 -2.828805e-03
+#&gt; 2   1.318003e-04  1.744069e-03 -7.641535e-03
+#&gt; 3   1.760460e-04  2.251182e-04 -4.268579e-05
+#&gt; 4   2.674138e-04 -4.999458e-03  1.070153e-02
+#&gt; 5  -6.090273e-05 -2.958977e-03  6.886435e-03
+#&gt; 6  -1.871425e-04  1.660323e-03 -3.183527e-04
+#&gt; 7   1.024797e-04 -1.769586e-03 -1.934749e-03
+#&gt; 8   9.924649e-05  3.954015e-05  1.137345e-03
+#&gt; 9  -3.667089e-05  3.541013e-04  3.179892e-03
+#&gt; 10 -6.109829e-04  7.364155e-04  4.902319e-03
 #&gt; # ... with 24 more rows
 #&gt; 
 #&gt; $H
 #&gt; # A tibble: 9 × 3
-#&gt;              LD1            LD2           LD3
-#&gt;           &lt;cplx&gt;         &lt;cplx&gt;        &lt;cplx&gt;
-#&gt; 1 -2.85634163+0i  1.51237682+0i  0.8050839+0i
-#&gt; 2 -2.50054364+0i -1.09099530+0i  0.5518140+0i
-#&gt; 3 -2.08040344+0i -1.75985448+0i  0.2875693+0i
-#&gt; 4 -1.84678718+0i -0.37414635+0i  1.1998905+0i
-#&gt; 5 -1.53932365+0i -0.08673702+0i -1.3482415+0i
-#&gt; 6 -1.13402336+0i  0.33147944+0i  1.0048436+0i
-#&gt; 7 -0.73595413+0i  0.41396783+0i -0.7817387+0i
-#&gt; 8 -0.33291438+0i -1.27968435+0i  0.9148828+0i
-#&gt; 9 -0.04292934+0i  0.39895558+0i  1.4905944+0i
+#&gt;           LD1         LD2        LD3
+#&gt;         &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+#&gt; 1 -2.85634163  1.51237682  0.8050839
+#&gt; 2 -2.50054364 -1.09099530  0.5518140
+#&gt; 3 -2.08040344 -1.75985448  0.2875693
+#&gt; 4 -1.84678718 -0.37414635  1.1998905
+#&gt; 5 -1.53932365 -0.08673702 -1.3482415
+#&gt; 6 -1.13402336  0.33147944  1.0048436
+#&gt; 7 -0.73595413  0.41396783 -0.7817387
+#&gt; 8 -0.33291438 -1.27968435  0.9148828
+#&gt; 9 -0.04292934  0.39895558  1.4905944
 #&gt; 
 #&gt; $eigen_portion
-#&gt; [1] 0.3755987+0i 0.3394781+0i 0.2849233-0i
+#&gt; [1] 0.3755987 0.3394781 0.2849233
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

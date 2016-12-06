@@ -4,7 +4,8 @@
 \alias{lda_scores}
 \title{Linear Discriminant Scores}
 \usage{
-lda_scores(x, class, rank = "full", type = "cov", k = 0)
+lda_scores(x, class, rank = "full", type = "cov", k = 0,
+  quadratic = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -16,6 +17,8 @@ lda_scores(x, class, rank = "full", type = "cov", k = 0)
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+
+\item{quadratic}{`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
 }
 \description{
 \code{lda_scores}

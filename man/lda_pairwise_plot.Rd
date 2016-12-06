@@ -2,10 +2,10 @@
 % Please edit documentation in R/lda_plots.R
 \name{lda_pairwise_plot}
 \alias{lda_pairwise_plot}
-\title{LD Pairwise Plot}
+\title{LDA Pairwise Plot}
 \usage{
 lda_pairwise_plot(x, class, lda_x = 1, lda_y = 2, rank = "full",
-  type = "cov", k = 0)
+  type = "cov", k = 0, quadratic = FALSE, interactive = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -21,8 +21,17 @@ lda_pairwise_plot(x, class, lda_x = 1, lda_y = 2, rank = "full",
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+
+\item{quadratic}{`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
 }
 \description{
 \code{lda_pairwise_plot}
+}
+\examples{
+data(iris)
+iris_x <- iris[,1:4]
+iris_y <- iris[5]
+lda_pairwise_plot(iris_x, iris_y)
+
 }
 

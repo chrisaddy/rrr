@@ -21,11 +21,7 @@ library(dplyr)
 ### TOBACCO DATA SET
 data(tobacco)
 
-tobacco_x <- tobacco %>%
-	select(starts_with("X"))
-
-tobacco_y <- tobacco %>% 
-	select(starts_with("Y"))
+tobacco <- as_data_frame(tobacco)
 
 ### PENDIGITS DATA SET
 data(pendigits)
@@ -49,18 +45,6 @@ iris_features <- iris %>%
 
 iris_class <- iris %>%
 	select(Species)
-
-### COMBO-17 DATA SET
-data(COMBO17)
-galaxy <- as_data_frame(COMBO17) %>%
-       select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
-       na.omit()
-
-galaxy_x <- galaxy %>%
-	select(-Rmag:-chi2red)
-
-galaxy_y <- galaxy %>%
-	select(Rmag:chi2red)
 ```
 
 ```{r}
@@ -87,7 +71,7 @@ Rank trace plots can be made interactive with the argument `interactive = TRUE`.
 ```{r}
 rank_trace_plot(tobacco_x, tobacco_y, gamma1, interactive = TRUE)
 
-rank_trace_plot(tobacco_x, tobacco_y, gamma2, interactive = TRUE)
+#rank_trace_plot(tobacco_x, tobacco_y, gamma2, interactive = TRUE)
 ```
 
 ## RRR Residuals Plots
@@ -105,47 +89,25 @@ pca_rank_trace_plot(digits_features)
 PCA rank trace plots can be made interactive with the argument `interactive = TRUE`.
 
 ```{r}
-pca_rank_trace_plot(digits_features, interactive = TRUE)
+#pca_rank_trace_plot(digits_features, interactive = TRUE)
 ```
 
 
 ## PC Pairwise Plots
 
 ```{r}
-pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)
+#pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)
 ```
 
-## PC 3D Plots
+## Plots are 3D
 
 ```{r}
-pca_3D_plot(digits_features, class_labels = digits_class)
+#pca_3D_plot(digits_features, class_labels = digits_class)
 ```
 
 ### Change Point Size with argument `point_size`
 
 ```{r}
-pca_3D_plot(iris_features, class_labels = iris_class)
-pca_3D_plot(iris_features, class_labels = iris_class, point_size = 5)
-```
-
-## CVA Rank Trace Plots
-
-```{r}
-cva_rank_trace_plot(galaxy_x, galaxy_y)
-```
-
-```{r}
-cva_rank_trace_plot(galaxy_x, galaxy_y)
-```
-
-## CVA Residuals Plots
-
-```{r}
-cva_residual_plot(galaxy_x, galaxy_y)
-```
-
-## LD Pairwise Plots
-
-```{r}
-lda_pairwise_plot(iris_features, iris_class)
+#pca_3D_plot(iris_features, class_labels = iris_class)
+#pca_3D_plot(iris_features, class_labels = iris_class, point_size = 5)
 ```

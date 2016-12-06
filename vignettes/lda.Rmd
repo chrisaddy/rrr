@@ -15,13 +15,15 @@ vignette: >
 
 Linear discriminant analysis is a classification procedure. We can turn it into a regression procedure -- specifically a reduced-rank canonical variate procedure -- in the following way.
 
-Let each $i = 1, 2, \dots, n$ observation observationbelong to one, and only one, of $K = s + 1$ distinct classes.
+Let each $i = 1, 2, \dots, n$ observation belong to one, and only one, of $K = s + 1$ distinct classes.
 
-We can construct an *indicator response matrix*, $\mathbf{Y}$
+We can construct an *indicator response matrix*, $\mathbf{Y}$ where each row $i$ is an indicator response vector for the $i$th observation. The vector will have a 1 in the column that represents that class to which the observation belongs and will be 0 elsewhere.
 
-$$
-\mathbf{Y}
-$$
+We then regress this $Y$ binary response matrix against the matrix $X$ of predictor variables.
+
+Linear discriminant analysis requires the assumptions that each class is normally distributed and that the covariance matrix of each class is equal to all others.
+
+While these assumptions will not be met in all cases, when they are -- and when the classes are well separated -- linear discriminant analysis is a very efficient classification method.
 
 ## The `iris` Data Set
 
@@ -43,6 +45,26 @@ iris_class <- iris %>%
 
 ## Assesssing Effective Dimensionality
 
+Assessing the rank $t$ of this reduced-rank regression is equivalent to determining the number of linear discriminant functions that best discriminate between the $K$ classes, with $\mathrm{min}\left(r, s\right) = \mathrm{min}\left(r, K - 1\right)$ maximum number of linear discriminant functions.
+
+Generally, plotting linear discriminant functions against each other, i.e., the first and second linear discriminant functions, is used to determine whether sufficient discrimination is obtained.
+
+Plotting techniques are discussed in the following section.
+
+## Plotting
+
+### Plot LDA Pairs with `lda_pairwise_plot()`
+
+```{r}
+args(lda_pairwise_plot)
+```
+
+A typical graphical display for multiclass LDA is to plot the $j$th discriminant scores for the $n$ points against the $k$ discriminant scores.
+
+```{r}
+lda_pairwise_plot(iris_features, iris_class, k = 0.0001)
+```
+
 ## Fitting LDA Models
 
 ### Fit LDA model with `lda()`
@@ -58,17 +80,3 @@ lda_scores(iris_features, iris_class, k = 0.0001)
 ```
 
 ## Diagnostics
-
-## Plotting
-
-### Plot LDA Pairs with `lda_pairwise_plot()`
-
-```{r}
-args(lda_pairwise_plot)
-```
-
-A typical graphical display for multiclass LDA is to plot the $j$th discriminant scores for the $n$ points against the $k$ discriminant scores with the class means superimposed on the same graph.
-
-```{r}
-lda_pairwise_plot(iris_features, iris_class, k = 0.0001)
-```
