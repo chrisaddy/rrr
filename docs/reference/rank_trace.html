@@ -112,7 +112,13 @@
 <span class='no'>tobacco_x</span> <span class='kw'>&lt;-</span> <span class='no'>tobacco</span>[,<span class='fl'>4</span>:<span class='fl'>9</span>]
 <span class='no'>tobacco_y</span> <span class='kw'>&lt;-</span> <span class='no'>tobacco</span>[,<span class='fl'>1</span>:<span class='fl'>3</span>]
 <span class='no'>gamma</span> <span class='kw'>&lt;-</span> <span class='fu'>diag</span>(<span class='fl'>1</span>, <span class='fu'>dim</span>(<span class='no'>tobacco_y</span>)[<span class='fl'>2</span>])
-<span class='fu'>rank_trace_plot</span>(<span class='no'>tobacco_x</span>, <span class='no'>tobacco_y</span>, <span class='no'>gamma</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): could not find function &quot;rank_trace_plot&quot;</span></div><div class='input'>
+<span class='fu'>rank_trace</span>(<span class='no'>tobacco_x</span>, <span class='no'>tobacco_y</span>, <span class='no'>gamma</span>)</div><img src='rank_trace-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>rank_trace</span>(<span class='no'>tobacco_x</span>, <span class='no'>tobacco_y</span>, <span class='no'>gamma</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 4 × 3
+#&gt;   ranks         dC         dEE
+#&gt;   &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;
+#&gt; 1     0 1.00000000 1.000000000
+#&gt; 2     1 0.20198327 0.011933691
+#&gt; 3     2 0.08419093 0.003095346
+#&gt; 4     3 0.00000000 0.000000000</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

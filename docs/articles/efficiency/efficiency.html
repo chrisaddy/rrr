@@ -76,22 +76,20 @@ tobacco_y &lt;-<span class="st"> </span>tobacco %&gt;%<span class="st"> </span>
 <span class="kw">microbenchmark</span>(<span class="kw"><a href="../../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y, <span class="kw">diag</span>(<span class="dv">1</span>, <span class="dv">3</span>)))</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##                                          expr      min       lq     mean
-##  rank_trace(tobacco_x, tobacco_y, diag(1, 3)) 23.96559 24.47713 26.32085
+##  rank_trace(tobacco_x, tobacco_y, diag(1, 3)) 28.69959 32.84398 38.99665
 ##    median       uq      max neval
-##  24.82718 26.84566 58.42385   100</code></pre>
+##  36.36854 44.75993 66.59187   100</code></pre>
 </div>
 <div id="principal-component-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#principal-component-analysis" class="anchor"> </a></body></html>Principal Component Analysis</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(<span class="kw"><a href="../../reference/pca.html">pca</a></span>(tobacco_x))</code></pre></div>
 <pre><code>## Unit: microseconds
-##            expr     min     lq     mean  median      uq      max neval
-##  pca(tobacco_x) 641.263 666.47 726.8187 678.677 701.202 1299.028   100</code></pre>
+##            expr     min       lq     mean   median      uq      max neval
+##  pca(tobacco_x) 724.668 776.6345 807.1747 803.5335 837.282 1164.317   100</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(<span class="kw">prcomp</span>(tobacco_x))</code></pre></div>
 <pre><code>## Unit: microseconds
-##               expr     min      lq     mean  median       uq      max
-##  prcomp(tobacco_x) 242.069 247.499 274.3457 259.886 269.7765 1577.081
-##  neval
-##    100</code></pre>
+##               expr     min       lq     mean  median      uq     max neval
+##  prcomp(tobacco_x) 267.699 276.5965 315.2691 317.854 334.576 492.917   100</code></pre>
 </div>
 <div class="footnotes">
 <hr><ol><li id="fn1"><p><a href="http://astro.temple.edu/~alan/MMST/code/rscripts/RRR+MULTANL.r" class="uri">http://astro.temple.edu/~alan/MMST/code/rscripts/RRR+MULTANL.r</a><a href="#fnref1">&#8617;</a></p></li>

@@ -9,3 +9,9 @@ R package for reduced-rank regression.
 ```{r}
 devtools::install_github("chrisaddy/rrr")
 ```
+
+The rrr package provides four categories of reduced-rank regression functions:
+* reduced-rank regression
+* principal component analysis
+* canonical variate analysis
+* multiclass linear discriminant analysis

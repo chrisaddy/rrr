@@ -91,8 +91,10 @@
       <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
+      <dt>plot</dt>
+      <dd>if FALSE, returns data frame of rank trace coordinates.</dd>
       <dt>interactive</dt>
-      <dd>logical. If <code>TRUE</code> prints an interactive Plotly graphic.</dd>
+      <dd>if TRUE, creates an interactive plotly graphic.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -103,7 +105,20 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>pendigits</span>)
 <span class='no'>digits_features</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[,<span class='fl'>1</span>:<span class='fl'>34</span>]
-<span class='fu'>pca_rank_trace_plot</span>(<span class='no'>digits_features</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): could not find function &quot;pca_rank_trace_plot&quot;</span></div><div class='input'>
+<span class='fu'>pca_rank_trace</span>(<span class='no'>digits_features</span>)</div><img src='pca_rank_trace-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>pca_rank_trace</span>(<span class='no'>digits_features</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 35 × 3
+#&gt;     rank   delta_C delta_residuals
+#&gt;    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
+#&gt; 1      0 1.0000000      1.00000000
+#&gt; 2      1 0.9851844      0.71687775
+#&gt; 3      2 0.9701425      0.46805987
+#&gt; 4      3 0.9548637      0.31446713
+#&gt; 5      4 0.9393364      0.22432933
+#&gt; 6      5 0.9235481      0.16640087
+#&gt; 7      6 0.9074852      0.11813147
+#&gt; 8      7 0.8911328      0.08737814
+#&gt; 9      8 0.8744746      0.06065970
+#&gt; 10     9 0.8574929      0.04138801
+#&gt; # ... with 25 more rows</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

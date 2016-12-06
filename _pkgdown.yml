@@ -28,7 +28,6 @@ reference:
   contents:
   - rrr
   - rank_trace
-  - rank_trace_plot
   - rrr_residuals
   - rrr_predict
   - rrr_error
@@ -40,7 +39,6 @@ reference:
   - pca_scores
   - pca_gof
   - pca_rank_trace
-  - pca_rank_trace_plot
   - pca_pairwise_plot
   - pca_allpairs_plot
   - pca_3D_plot
@@ -53,7 +51,6 @@ reference:
   - cva
   - cva_scores
   - cva_rank_trace
-  - cva_rank_trace_plot
   - cva_pairwise_plot
   - cva_residuals
   - cva_residual_plot
