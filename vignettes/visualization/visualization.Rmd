@@ -64,7 +64,7 @@ galaxy_y <- galaxy %>%
 ```
 
 ```{r}
-pca_rank_trace_plot(digits_features)
+pca_rank_trace(digits_features)
 
 pca_pairwise_plot(digits_features)
 
@@ -77,17 +77,17 @@ pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_cla
 gamma1 <- diag(1, 3)
 gamma2 <- solve(cov(tobacco_y))
 
-rank_trace_plot(tobacco_x, tobacco_y, gamma1)
+rank_trace(tobacco_x, tobacco_y, gamma1)
 
-rank_trace_plot(tobacco_x, tobacco_y, gamma2)
+rank_trace(tobacco_x, tobacco_y, gamma2)
 ```
 
 Rank trace plots can be made interactive with the argument `interactive = TRUE`.
 
 ```{r}
-rank_trace_plot(tobacco_x, tobacco_y, gamma1, interactive = TRUE)
+rank_trace(tobacco_x, tobacco_y, gamma1, interactive = TRUE)
 
-rank_trace_plot(tobacco_x, tobacco_y, gamma2, interactive = TRUE)
+rank_trace(tobacco_x, tobacco_y, gamma2, interactive = TRUE)
 ```
 
 ## RRR Residuals Plots
@@ -99,13 +99,13 @@ rank_trace_plot(tobacco_x, tobacco_y, gamma2, interactive = TRUE)
 ## PC Rank Trace Plots
 
 ```{r}
-pca_rank_trace_plot(digits_features)
+pca_rank_trace(digits_features)
 ```
 
 PCA rank trace plots can be made interactive with the argument `interactive = TRUE`.
 
 ```{r}
-pca_rank_trace_plot(digits_features, interactive = TRUE)
+pca_rank_trace(digits_features, interactive = TRUE)
 ```
 
 
@@ -131,11 +131,11 @@ pca_3D_plot(iris_features, class_labels = iris_class, point_size = 5)
 ## CVA Rank Trace Plots
 
 ```{r}
-cva_rank_trace_plot(galaxy_x, galaxy_y)
+cva_rank_trace(galaxy_x, galaxy_y)
 ```
 
 ```{r}
-cva_rank_trace_plot(galaxy_x, galaxy_y, interactive = TRUE)
+cva_rank_trace(galaxy_x, galaxy_y, interactive = TRUE)
 ```
 
 ## CVA Pairwise Plots
@@ -156,6 +156,12 @@ cva_residual_plot(galaxy_x, galaxy_y, rank = 2)
 
 ```{r}
 cva_residual_plot(galaxy_x, galaxy_y, rank = 2, interactive = TRUE)
+```
+
+## CVA 3D Residuals Plots
+
+```{r}
+cva_residual_3D_plot(galaxy_x, galaxy_y)
 ```
 
 ## LDA Pairwise Plots

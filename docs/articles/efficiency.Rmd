@@ -1,0 +1,44 @@
+---
+title: "Efficiency of `rrr`"
+author: "Chris Addy"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+library(microbenchmark)
+```
+
+The `rrr` package used as a jumping-off point the function rrr^[http://astro.temple.edu/~alan/MMST/code/rscripts/RRR+MULTANL.r], written by Chuck Miller in 2007 and used in the text. This original function was used to plot rank traces and pairwise plots.
+
+```{r}
+source("http://astro.temple.edu/~alan/MMST/code/rscripts/RRR+MULTANL.r")
+```
+
+Below are benchmark comparisons of the original rrr function (Miller), with the analogous functions in `rrr`.
+
+```{r}
+### LOAD DATA
+
+data(tobacco)
+
+tobacco <- as_data_frame(tobacco)
+
+tobacco_x <- tobacco %>%
+	select(starts_with("X"))
+
+tobacco_y <- tobacco %>% 
+	select(starts_with("Y"))
+```
+
+## Rank Trace Plots
+
+```{r}
+mircobenchmark(rrr(tobacco_x, tobacco_y))
+
+microbenchmark(rank_trace(tobacco_x, tobacco_y, diag(1, 3)))
+```

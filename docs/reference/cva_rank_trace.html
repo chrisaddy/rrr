@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rank Trace for Reduced-Rank CVA — cva_rank_trace • rrr</title>
+<title>Rank Trace Plot for Reduced-Rank CVA — cva_rank_trace • rrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,14 +74,15 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rank Trace for Reduced-Rank CVA</h1>
+    <h1>Rank Trace Plot for Reduced-Rank CVA</h1>
     </div>
 
     
     <p><code>cva_rank_trace</code></p>
     
 
-    <pre><span class='fu'>cva_rank_trace</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre><span class='fu'>cva_rank_trace</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -93,6 +94,10 @@
       <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
+      <dt>plot</dt>
+      <dd>if FALSE, returns data frame of rank trace coordinates.</dd>
+      <dt>interactive</dt>
+      <dd>if TRUE, creates an interactive plotly graphic.</dd>
     </dl>
     
 
@@ -105,16 +110,7 @@
 <span class='no'>galaxy</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>galaxy</span>)
 <span class='no'>galaxy_x</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, -<span class='no'>Rmag</span>:-<span class='no'>chi2red</span>)
 <span class='no'>galaxy_y</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, <span class='no'>Rmag</span>:<span class='no'>chi2red</span>)
-<span class='fu'>cva_rank_trace</span>(<span class='no'>galaxy_x</span>, <span class='no'>galaxy_y</span>)</div><div class='output co'>#&gt; # A tibble: 7 × 3
-#&gt;   ranks        dC         dEE
-#&gt;   &lt;int&gt;     &lt;dbl&gt;       &lt;dbl&gt;
-#&gt; 1     0 1.0000000 1.000000000
-#&gt; 2     1 0.9912825 0.805325582
-#&gt; 3     2 0.3245965 0.013313406
-#&gt; 4     3 0.3012955 0.012360544
-#&gt; 5     4 0.2970647 0.012088297
-#&gt; 6     5 0.1678916 0.005243693
-#&gt; 7     6 0.0000000 0.000000000</div><div class='input'>
+<span class='fu'>cva_rank_trace_plot</span>(<span class='no'>galaxy_x</span>, <span class='no'>galaxy_y</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): could not find function &quot;cva_rank_trace_plot&quot;</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

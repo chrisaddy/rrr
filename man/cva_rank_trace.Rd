@@ -2,9 +2,10 @@
 % Please edit documentation in R/cva_plots.R
 \name{cva_rank_trace}
 \alias{cva_rank_trace}
-\title{Rank Trace for Reduced-Rank CVA}
+\title{Rank Trace Plot for Reduced-Rank CVA}
 \usage{
-cva_rank_trace(x, y, type = "cov", k = 0)
+cva_rank_trace(x, y, type = "cov", k = 0, plot = TRUE,
+  interactive = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -14,6 +15,10 @@ cva_rank_trace(x, y, type = "cov", k = 0)
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+
+\item{plot}{if FALSE, returns data frame of rank trace coordinates.}
+
+\item{interactive}{if TRUE, creates an interactive plotly graphic.}
 }
 \description{
 \code{cva_rank_trace}
@@ -28,6 +33,7 @@ galaxy <- na.omit(galaxy)
 galaxy_x <- select(galaxy, -Rmag:-chi2red)
 galaxy_y <- select(galaxy, Rmag:chi2red)
 cva_rank_trace(galaxy_x, galaxy_y)
+cva_rank_trace(galaxy_x, galaxy_y, plot = FALSE)
 
 }
 

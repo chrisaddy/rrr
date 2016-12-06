@@ -79,19 +79,20 @@ GGally::ggcorr(digits_features)
 pca_gof(digits_features) %>% round(4)
 ```
 
-### Estimate $t$ and ridge constant $k$ with `pca_rank_trace_plot()`
+### Estimate $t$ and ridge constant $k$ with `pca_rank_trace()`
 
 ```{r}
 args(pca_rank_trace)
-args(pca_rank_trace_plot)
 ``` 
 
-`pca_rank_trace()` and `pca_rank_trace_plot()` are special of `rank_trace()` and `rank_trace_plot()`, respectively, when $\mathbf{Y} \equiv \mathbf{X}$ and $\mathbf{\Gamma} = \mathbf{I}_r$.
+`pca_rank_trace()` is a special case of `rank_trace()`, with $\mathbf{Y} \equiv \mathbf{X}$ and $\mathbf{\Gamma} = \mathbf{I}_r$.
 
 ```{r}
 pca_rank_trace(digits_features)
+```
 
-#pca_rank_trace_plot(digits_features)
+```{r}
+pca_rank_trace(digits_features, plot = FALSE)
 ```
 
 ## Plot Principal Component Scores 

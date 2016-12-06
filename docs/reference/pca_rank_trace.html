@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PCA Rank Trace — pca_rank_trace • rrr</title>
+<title>PCA Rank Trace Plot — pca_rank_trace • rrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,14 +74,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>PCA Rank Trace</h1>
+    <h1>PCA Rank Trace Plot</h1>
     </div>
 
     
-    <p>Rank trace to determine number of principle components to use in reduced-rank principal component analysis.</p>
+    <p>Plot of rank trace to determine number of principle components to use in reduced-rank principal component analysis.</p>
     
 
-    <pre><span class='fu'>pca_rank_trace</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre><span class='fu'>pca_rank_trace</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -91,33 +91,28 @@
       <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
+      <dt>interactive</dt>
+      <dd>logical. If <code>TRUE</code> prints an interactive Plotly graphic.</dd>
     </dl>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='rank_trace.html'>rank_trace</a></code> <code><a href='cva_rank_trace.html'>cva_rank_trace</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>pendigits</span>)
 <span class='no'>digits_features</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[,<span class='fl'>1</span>:<span class='fl'>34</span>]
-<span class='fu'>pca_rank_trace</span>(<span class='no'>digits_features</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.001</span>)</div><div class='output co'>#&gt; # A tibble: 35 × 3
-#&gt;     rank   delta_C delta_residuals
-#&gt;    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
-#&gt; 1      0 1.0000000      1.00000000
-#&gt; 2      1 0.9851844      0.71687804
-#&gt; 3      2 0.9701425      0.46806041
-#&gt; 4      3 0.9548637      0.31446781
-#&gt; 5      4 0.9393364      0.22433008
-#&gt; 6      5 0.9235481      0.16640166
-#&gt; 7      6 0.9074852      0.11813227
-#&gt; 8      7 0.8911328      0.08737895
-#&gt; 9      8 0.8744746      0.06066050
-#&gt; 10     9 0.8574929      0.04138880
-#&gt; # ... with 25 more rows</div><div class='input'>
+<span class='fu'>pca_rank_trace_plot</span>(<span class='no'>digits_features</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): could not find function &quot;pca_rank_trace_plot&quot;</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

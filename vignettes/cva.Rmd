@@ -49,14 +49,14 @@ GGally::ggcorr(galaxy_y)
 
 ## Assessing Effective Dimensionality
 
-### Estimate $t$ and $k$ with `cva_rank_trace()` and `cva_rank_trace_plot()`
+### Estimate $t$ and $k$ with `cva_rank_trace()`
 
 ```{r}
 cva_rank_trace(galaxy_x, galaxy_y)
 ```
 
 ```{r}
-cva_rank_trace_plot(galaxy_x, galaxy_y)
+cva_rank_trace(galaxy_x, galaxy_y, plot = FALSE)
 ```
 
 ```{r}
@@ -106,14 +106,13 @@ cva_residual_plot(galaxy_x, galaxy_y, rank = 2, k = 0.001)
 ### Plot Pairwise Canonical Variate Scores with `cva_pairwise_plot()`
 
 ```{r}
-cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 1, k = 0.0001)
-
-cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 2, k = 0.0001)
+cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 1, k = 0.0001)
+cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 2, k = 0.0001)
 ```
 
 ```{r}
-cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 3, k = 0.0001)
-cva_pairwise_plot(galaxy_x, galaxy_y, cva_pair = 6, k = 0.0001)
+cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 3, k = 0.0001)
+cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 6, k = 0.0001)
 ```
 
 ## Fit Reduced-Rank Canonical Variate Model

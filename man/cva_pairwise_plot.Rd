@@ -4,7 +4,7 @@
 \alias{cva_pairwise_plot}
 \title{Pairwise Canonical Variates Plot}
 \usage{
-cva_pairwise_plot(x, y, cva_pair = 1, type = "cov", k = 0,
+cva_pairwise_plot(x, y, cv_pair = 1, type = "cov", k = 0,
   interactive = TRUE)
 }
 \arguments{
@@ -12,7 +12,7 @@ cva_pairwise_plot(x, y, cva_pair = 1, type = "cov", k = 0,
 
 \item{y}{data frame or matrix of response variables}
 
-\item{cva_pair}{integer. canonical variate pair to be plotted}
+\item{cv_pair}{integer. canonical variate pair to be plotted}
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 

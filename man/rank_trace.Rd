@@ -2,9 +2,10 @@
 % Please edit documentation in R/rrr_plots.R
 \name{rank_trace}
 \alias{rank_trace}
-\title{Rank Trace}
+\title{Rank Trace Plot}
 \usage{
-rank_trace(x, y, gamma_matrix, type = "cov", k = 0)
+rank_trace(x, y, gamma_matrix, type = "cov", k = 0, plot = TRUE,
+  interactive = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -16,12 +17,16 @@ rank_trace(x, y, gamma_matrix, type = "cov", k = 0)
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+
+\item{plot}{if FALSE, returns data frame of rank trace coordinates.}
+
+\item{interactive}{if TRUE, creates an interactive plotly graphic.}
 }
 \value{
-data frame containing rank trace.
+plot of rank trace coordinates if \code{plot = TRUE} or data frame of rank trace coordinates if \code{plot = FALSE}.
 }
 \description{
-Rank trace to determine number of principle components to use in reduced-rank PCA.
+Plot of rank trace to determine suitable rank of coefficient matrix.
 }
 \examples{
 data(tobacco)
@@ -29,6 +34,7 @@ tobacco_x <- tobacco[,4:9]
 tobacco_y <- tobacco[,1:3]
 gamma <- diag(1, dim(tobacco_y)[2])
 rank_trace(tobacco_x, tobacco_y, gamma)
+rank_trace(tobacco_x, tobacco_y, gamma, plot = FALSE)
 
 }
 

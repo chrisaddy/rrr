@@ -18,6 +18,9 @@ articles:
 - title: "Multivariate Visualization in rrr"
   contents:
   - visualization
+- title: "Efficiency of `rrr`"
+  contents:
+  - efficiency
 
 reference:
 - title: Reduced-Rank Regression 
@@ -40,7 +43,7 @@ reference:
   - pca_rank_trace_plot
   - pca_pairwise_plot
   - pca_allpairs_plot
-  - pca_plot_3D
+  - pca_3D_plot
   - pca_residuals
   - pca_error
   - pca_predict
@@ -54,12 +57,14 @@ reference:
   - cva_pairwise_plot
   - cva_residuals
   - cva_residual_plot
+  - cva_residual_3D_plot
 - title: Linear Discriminant Analysis
   desc: Functions for fitting linear discriminant analysis models, diagnostics and plots.
   contents:
   - lda
   - lda_scores
   - lda_pairwise_plot
+  - lda_3D_plot
 - title: Data
   desc: Multivariate data sets
   contents:

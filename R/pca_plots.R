@@ -1,17 +1,20 @@
-#' PCA Rank Trace
+#' PCA Rank Trace Plot
 #'
-#' Rank trace to determine number of principle components to use in reduced-rank principal component analysis.
+#' Plot of rank trace to determine number of principle components to use in reduced-rank principal component analysis.
 #'
-#' @inheritParams pca
-#' 
+#' @inheritParams rank_trace
+#'
 #' @examples
 #' data(pendigits)
 #' digits_features <- pendigits[,1:34]
-#' pca_rank_trace(digits_features, k = 0.001)
+#' pca_rank_trace(digits_features)
+#' pca_rank_trace(digits_features, plot = FALSE)
 #'
+#' @seealso \code{\link{rank_trace}} \code{\link{cva_rank_trace}}
+#' 
 #' @export
 
-pca_rank_trace <- function(x, type = "cov", k = 0){
+pca_rank_trace <- function(x, type = "cov", k = 0, plot = TRUE, interactive = FALSE){
     eigenvecs <- pca(x, rank = "full", type, k)$A
     eigens <- eigen(cov(x) + k * diag(1, dim(x)[2]))
     full_rank <- dim(eigens$vectors)[2]
@@ -28,44 +31,28 @@ pca_rank_trace <- function(x, type = "cov", k = 0){
         pca_rank_trace_y[i] <- delta_residuals(i)
     }
     pca_rank_trace_y[length(pca_rank_trace_y)] <- 0
-    dplyr::data_frame(rank = 0:length(pca_rank_trace_x),
-                      delta_C = c(1, pca_rank_trace_x),
-                      delta_residuals = c(1, pca_rank_trace_y))
-}
-
-#' PCA Rank Trace Plot
-#'
-#' Plot of rank trace to determine number of principle components to use in reduced-rank principal component analysis.
-#'
-#' @inheritParams pca
-#' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
-#'
-#' @examples
-#' data(pendigits)
-#' digits_features <- pendigits[,1:34]
-#' pca_rank_trace_plot(digits_features)
-#'
-#' @seealso \code{pca_rank_trace} \code{rank_trace_plot}
-#' 
-#' @export
-
-pca_rank_trace_plot <- function(x, type = "cov", k = 0, interactive = FALSE){
-    tuner <- k
-    rt <- pca_rank_trace(x)
-    static_plot <- ggplot2::ggplot(rt, ggplot2::aes(x = delta_C,
-                                                    y = delta_residuals,
-                                                    label = rank)) +
-        lims(x = c(0,1), y = c(0,1)) +
-        geom_line(color = "red") +
-        geom_point(size = 5) + 
-        geom_text(check_overlap = TRUE, size = 4, color = "white") + 
-        labs(x = "dC", y = "dE") +
-        ggtitle(paste("PCA Rank Trace Plot, k = ", tuner, sep = ""))
-	if(interactive == TRUE){
-        	plotly::ggplotly(static_plot )
-    	} else {
-        	static_plot
-    	}
+    trace <- dplyr::data_frame(rank = 0:length(pca_rank_trace_x),
+        delta_C = c(1, pca_rank_trace_x),
+        delta_residuals = c(1, pca_rank_trace_y))
+    if(plot == FALSE){
+        trace
+    } else {
+        tuner <- k
+        static_plot <- ggplot2::ggplot(trace, ggplot2::aes(x = delta_C,
+                y = delta_residuals,
+                label = rank)) +
+            lims(x = c(0,1), y = c(0,1)) +
+            geom_line(color = "red") +
+            geom_point(size = 5) + 
+            geom_text(check_overlap = TRUE, size = 4, color = "white") + 
+            labs(x = "dC", y = "dE") +
+            ggtitle(paste("PCA Rank Trace Plot, k = ", tuner, sep = ""))
+    	if(interactive == TRUE){
+            	plotly::ggplotly(static_plot )
+        	} else {
+            	static_plot
+        	}
+    }
 }
 
 pca_pairwise <- function(x, pca_x, pca_y, rank = "full", type = "cov"){
@@ -108,7 +95,7 @@ pca_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank =
             labs(title = "PC Pairwise") +
             theme(legend.title = element_blank())
     } else {
-        class <- as_data_frame(class_labels)
+        class <- dplyr::as_data_frame(class_labels)
         pairs_tbl <- bind_cols(pairs, class)
         names(pairs_tbl) <- c("pc_x", "pc_y", "class")
         ptsize <- point_size
@@ -157,7 +144,7 @@ pca_threewise <- function(x, pca_x, pca_y, pca_z, rank = "full", type = "cov"){
 #' @export
 
 pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL, rank = "full", type = "cov", point_size = 3){
-    class <- as_data_frame(class_labels)
+    class <- dplyr::as_data_frame(class_labels)
     threes <- pca_threewise(x, pca_x, pca_y, pca_z, rank, type)
     threes_tbl <- bind_cols(threes, class)
     #names(threes_tbl) <- c(paste("PC", pca_x, sep = ""),
@@ -173,7 +160,7 @@ pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL,
             mode = "markers",
             color = ~factor(class),
             marker = list(size = ptsize),
-            name = "PCA 3D Scatter Plot")# %>%
+            name = "PC 3D Scatter Plot")# %>%
         #layout(list(title = "PC 3D Scatterplot"))#,
          #scene = li1
           # xaxis = list(title = "x"), 

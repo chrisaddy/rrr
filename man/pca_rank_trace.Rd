@@ -2,9 +2,9 @@
 % Please edit documentation in R/pca_plots.R
 \name{pca_rank_trace}
 \alias{pca_rank_trace}
-\title{PCA Rank Trace}
+\title{PCA Rank Trace Plot}
 \usage{
-pca_rank_trace(x, type = "cov", k = 0)
+pca_rank_trace(x, type = "cov", k = 0, plot = TRUE, interactive = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -12,14 +12,22 @@ pca_rank_trace(x, type = "cov", k = 0)
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+
+\item{plot}{if FALSE, returns data frame of rank trace coordinates.}
+
+\item{interactive}{if TRUE, creates an interactive plotly graphic.}
 }
 \description{
-Rank trace to determine number of principle components to use in reduced-rank principal component analysis.
+Plot of rank trace to determine number of principle components to use in reduced-rank principal component analysis.
 }
 \examples{
 data(pendigits)
 digits_features <- pendigits[,1:34]
-pca_rank_trace(digits_features, k = 0.001)
+pca_rank_trace(digits_features)
+pca_rank_trace(digits_features, plot = FALSE)
 
+}
+\seealso{
+\code{\link{rank_trace}} \code{\link{cva_rank_trace}}
 }
 

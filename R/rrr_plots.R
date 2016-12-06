@@ -23,13 +23,15 @@ delta_error <- function(x, y, gamma_matrix, type = "cov", k = 0){
 	data_frame(dEE = c(1, delta_EE))
 }
 
-#' Rank Trace
+#' Rank Trace Plot
 #'
-#' Rank trace to determine number of principle components to use in reduced-rank PCA.
+#' Plot of rank trace to determine suitable rank of coefficient matrix.
 #'
 #' @inheritParams rrr
+#' @param plot if FALSE, returns data frame of rank trace coordinates. 
+#' @param interactive if TRUE, creates an interactive plotly graphic.
 #'
-#' @return data frame containing rank trace.
+#' @return plot of rank trace coordinates if \code{plot = TRUE} or data frame of rank trace coordinates if \code{plot = FALSE}.
 #'
 #' @examples
 #' data(tobacco)
@@ -37,36 +39,18 @@ delta_error <- function(x, y, gamma_matrix, type = "cov", k = 0){
 #' tobacco_y <- tobacco[,1:3]
 #' gamma <- diag(1, dim(tobacco_y)[2])
 #' rank_trace(tobacco_x, tobacco_y, gamma)
+#' rank_trace(tobacco_x, tobacco_y, gamma, plot = FALSE)
 #'
 #' @export
 
-rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0){
+rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0, plot = TRUE, interactive = FALSE){
 	dC <- delta_coeff(x, y, gamma_matrix, type, k)
 	dEE <- delta_error(x, y, gamma_matrix, k)
 	ranks <- dplyr::data_frame(ranks = 0:(dim(dC)[1] - 1))
-	dplyr::bind_cols(ranks, dC, dEE)
-}	
-
-#' Rank Trace Plot
-#'
-#' Plot of rank trace to determine suitable rank of coefficient matrix.
-#'
-#' @inheritParams rank_trace
-#' @param interactive if TRUE, creates an interactive plotly graphic.
-#'
-#' @return plot
-#'
-#' @examples
-#' data(tobacco)
-#' tobacco_x <- tobacco[,4:9]
-#' tobacco_y <- tobacco[,1:3]
-#' gamma <- diag(1, dim(tobacco_y)[2])
-#' rank_trace_plot(tobacco_x, tobacco_y, gamma)
-#'
-#' @export
-
-rank_trace_plot <- function(x, y, gamma_matrix, type = "cov", k = 0, interactive = FALSE){
-	trace <- rank_trace(x, y, gamma_matrix, type = "cov", k)
+	trace <- dplyr::bind_cols(ranks, dC, dEE)
+	if(plot == FALSE){
+		trace
+	} else {
 	rt_plot <- ggplot(trace, aes(dC, dEE, label = ranks)) +
 		lims(x = c(0,1), y = c(0,1)) +
 		geom_line(color = "red") +
@@ -74,10 +58,11 @@ rank_trace_plot <- function(x, y, gamma_matrix, type = "cov", k = 0, interactive
 		geom_text(check_overlap = TRUE, size = 4, color = "white") +
 		labs(x = "dC", y = "dE") +
 		ggtitle(paste("Rank Trace Plot, k =  ", k, sep =""))
-	if(interactive == TRUE){
-		plotly::ggplotly(rt_plot)
-		} else {
-			rt_plot
+		if(interactive == TRUE){
+			plotly::ggplotly(rt_plot)
+			} else {
+				rt_plot
+			}
 		}
 	}
 				 

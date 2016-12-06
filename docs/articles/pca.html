@@ -136,16 +136,15 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 ## [11] 0.0190 0.0122 0.0078 0.0038 0.0020 0.0003 0.0001 0.0000 0.0000 0.0000
 ## [21] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
 ## [31] 0.0000 0.0000 0.0000 0.0000</code></pre>
-<div id="estimate-t-and-ridge-constant-k-with-pca_rank_trace_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#estimate-t-and-ridge-constant-k-with-pca_rank_trace_plot" class="anchor"> </a></body></html>Estimate <span class="math inline">\(t\)</span> and ridge constant <span class="math inline">\(k\)</span> with <code><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot()</a></code></h3>
+<div id="estimate-t-and-ridge-constant-k-with-pca_rank_trace" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#estimate-t-and-ridge-constant-k-with-pca_rank_trace" class="anchor"> </a></body></html>Estimate <span class="math inline">\(t\)</span> and ridge constant <span class="math inline">\(k\)</span> with <code><a href="../reference/pca_rank_trace.html">pca_rank_trace()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pca_rank_trace)</code></pre></div>
-<pre><code>## function (x, type = "cov", k = 0) 
+<pre><code>## function (x, type = "cov", k = 0, plot = TRUE, interactive = FALSE) 
 ## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pca_rank_trace_plot)</code></pre></div>
-<pre><code>## function (x, type = "cov", k = 0, interactive = FALSE) 
-## NULL</code></pre>
-<p><code><a href="../reference/pca_rank_trace.html">pca_rank_trace()</a></code> and <code><a href="../reference/pca_rank_trace_plot.html">pca_rank_trace_plot()</a></code> are special of <code><a href="../reference/rank_trace.html">rank_trace()</a></code> and <code><a href="../reference/rank_trace_plot.html">rank_trace_plot()</a></code>, respectively, when <span class="math inline">\(\mathbf{Y} \equiv \mathbf{X}\)</span> and <span class="math inline">\(\mathbf{\Gamma} = \mathbf{I}_r\)</span>.</p>
+<p><code><a href="../reference/pca_rank_trace.html">pca_rank_trace()</a></code> is a special case of <code><a href="../reference/rank_trace.html">rank_trace()</a></code>, with <span class="math inline">\(\mathbf{Y} \equiv \mathbf{X}\)</span> and <span class="math inline">\(\mathbf{\Gamma} = \mathbf{I}_r\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace.html">pca_rank_trace</a></span>(digits_features)</code></pre></div>
+<p><img src="pca_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace.html">pca_rank_trace</a></span>(digits_features, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## # A tibble: 35 &times; 3
 ##     rank   delta_C delta_residuals
 ##    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
@@ -160,7 +159,6 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 ## 9      8 0.8744746      0.06065970
 ## 10     9 0.8574929      0.04138801
 ## # ... with 25 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_rank_trace_plot(digits_features)</span></code></pre></div>
 </div>
 </div>
 <div id="plot-principal-component-scores" class="section level2">
@@ -180,10 +178,10 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 \]</span></p>
 <p>Since the first two principal components will capture the most variance &ndash; and hence the most useful information &ndash; of all possible pairs of principal components, we typically would set <span class="math inline">\(j = 1, k = 2\)</span> and plot the first two sample PC scores against each other. In <code>rrr</code> this is the default.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot</a></span>(digits_features, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
-<p><img src="pca_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="pca_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 <p>We can set the <span class="math inline">\(x\)</span>- and <span class="math inline">\(y\)</span>-axes to whichever pairs of PC scores we would like to plot by changing the <code>pc_x</code> and <code>pc_y</code> arguments.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot</a></span>(digits_features, <span class="dt">pc_x =</span> <span class="dv">1</span>, <span class="dt">pc_y =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
-<p><img src="pca_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="pca_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 </div>
 <div id="plot-all-pairs-of-pc-scores-with-pca_allpairs_plot" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#plot-all-pairs-of-pc-scores-with-pca_allpairs_plot" class="anchor"> </a></body></html>Plot all pairs of PC scores with <code>pca_allpairs_plot()</code></h3>
@@ -257,7 +255,7 @@ digits_pca</code></pre></div>
 ## 10  0.05637675  0.21559127  0.20522769
 ## # ... with 23 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally::<span class="kw">ggcorr</span>(digits_pca)</code></pre></div>
-<p><img src="pca_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="pca_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
 </div>
 </div>

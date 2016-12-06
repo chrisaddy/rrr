@@ -178,13 +178,11 @@ multivar_reg</code></pre></div>
 </div>
 <div id="assessessing-effective-dimensionality" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#assessessing-effective-dimensionality" class="anchor"> </a></body></html>Assessessing Effective Dimensionality</h2>
-<div id="estimate-t-and-k-with-rank_trace-and-rank_trace_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#estimate-t-and-k-with-rank_trace-and-rank_trace_plot" class="anchor"> </a></body></html>Estimate <span class="math inline">\(t\)</span> and <span class="math inline">\(k\)</span> with <code><a href="../reference/rank_trace.html">rank_trace()</a></code> and <code><a href="../reference/rank_trace_plot.html">rank_trace_plot()</a></code></h3>
+<div id="estimate-t-and-k-with-rank_trace" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#estimate-t-and-k-with-rank_trace" class="anchor"> </a></body></html>Estimate <span class="math inline">\(t\)</span> and <span class="math inline">\(k\)</span> with <code><a href="../reference/rank_trace.html">rank_trace()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(rank_trace)</code></pre></div>
-<pre><code>## function (x, y, gamma_matrix, type = "cov", k = 0) 
-## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(rank_trace_plot)</code></pre></div>
-<pre><code>## function (x, y, gamma_matrix, type = "cov", k = 0, interactive = FALSE) 
+<pre><code>## function (x, y, gamma_matrix, type = "cov", k = 0, plot = TRUE, 
+##     interactive = FALSE) 
 ## NULL</code></pre>
 <p>Since <span class="math inline">\(\hat{\mathbf{C}}\)</span> is calculated using sample observations, its <em>mathematical</em> rank will always be full, but it will have a <em>statistical</em> rank <span class="math inline">\(t\)</span> that is an unknown hyperparameter that</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### use the identity matrix for gamma
@@ -192,6 +190,8 @@ multivar_reg</code></pre></div>
 ident &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">1</span>, <span class="kw">dim</span>(tobacco_y)[<span class="dv">2</span>])
 
 <span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y, ident) </code></pre></div>
+<p><img src="rrr_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y, ident, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## # A tibble: 4 &times; 3
 ##   ranks         dC         dEE
 ##   &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;
@@ -199,13 +199,13 @@ ident &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv
 ## 2     1 0.20198327 0.011933691
 ## 3     2 0.08419093 0.003095346
 ## 4     3 0.00000000 0.000000000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace_plot.html">rank_trace_plot</a></span>(tobacco_x, tobacco_y, ident)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### use inverse of estimated covariance of Y for gamma
 
 gamma2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="kw">cov</span>(tobacco_y))
 
 <span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y, gamma2)</code></pre></div>
+<p><img src="rrr_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y, gamma2, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## # A tibble: 4 &times; 3
 ##   ranks        dC        dEE
 ##   &lt;int&gt;     &lt;dbl&gt;      &lt;dbl&gt;
@@ -213,8 +213,6 @@ gamma2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="
 ## 2     1 0.5546365 0.08594144
 ## 3     2 0.4063885 0.03296964
 ## 4     3 0.0000000 0.00000000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace_plot.html">rank_trace_plot</a></span>(tobacco_x, tobacco_y, gamma2)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
 </div>
 <div id="fitting-reduced-rank-regression-model" class="section level2">
@@ -295,7 +293,7 @@ gamma2 &lt;-<span class="st"> </span><span class="kw">solve</span>(<span class="
 ## NULL</code></pre>
 <p>We can visually check the model assumptions that</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rrr_residuals_plot.html">rrr_residuals_plot</a></span>(tobacco_x, tobacco_y, ident, <span class="dt">rank =</span> <span class="dv">1</span>)</code></pre></div>
-<p><img src="rrr_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="rrr_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
 </div>
 </div>
 <div class="footnotes">
