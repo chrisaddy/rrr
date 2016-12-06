@@ -36,4 +36,7 @@ iris_y <- iris[5]
 lda_pairwise_plot(iris_x, iris_y)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

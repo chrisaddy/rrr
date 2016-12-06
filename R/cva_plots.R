@@ -16,6 +16,7 @@
 #' cva_rank_trace(galaxy_x, galaxy_y)
 #' cva_rank_trace(galaxy_x, galaxy_y, plot = FALSE)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 cva_rank_trace <- function(x, y, type = "cov", k = 0, plot = TRUE, interactive = FALSE){
@@ -49,6 +50,7 @@ cva_rank_trace <- function(x, y, type = "cov", k = 0, plot = TRUE, interactive =
 #' galaxy_y <- select(galaxy, Rmag:chi2red)
 #' cva_residual_plot(galaxy_x, galaxy_y, rank = 3)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 cva_residual_plot <- function(x, y, rank = "full", type = "cov", k = 0, interactive = FALSE){
@@ -73,6 +75,7 @@ cva_residual_plot <- function(x, y, rank = "full", type = "cov", k = 0, interact
 #' @param cva_z integer number of the canonical variate used for the z-axis.
 #' @param point_size size of points in scatter.
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 cva_residual_3D_plot <- function(x, y, cva_x = 1, cva_y = 2, cva_z = 3, rank = "full", type = "cov", k = 0, point_size = 3){
@@ -110,6 +113,7 @@ cva_residual_3D_plot <- function(x, y, cva_x = 1, cva_y = 2, cva_z = 3, rank = "
 #' galaxy_y <- select(galaxy, Rmag:chi2red)
 #' cva_pairwise_plot(galaxy_x, galaxy_y)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export 
 
 cva_pairwise_plot <- function(x, y, cv_pair = 1, type = "cov", k = 0, interactive = TRUE){

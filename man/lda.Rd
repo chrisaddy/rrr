@@ -34,5 +34,7 @@ lda(iris_x, iris_y)
 }
 \references{
 Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }
 

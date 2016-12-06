@@ -13,6 +13,7 @@
 #' iris_y <- iris[5]
 #' lda_pairwise_plot(iris_x, iris_y)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", type = "cov", k = 0, quadratic = FALSE, interactive = FALSE){
@@ -53,6 +54,7 @@ lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", typ
 #' @inheritParams pca_3D_plot
 #' @param lda_z integer. Linear discriminant function plotted along the z-axis.
 #' 
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 lda_3D_plot <- function(x, class, lda_x = 1, lda_y = 2, lda_z = 3, rank = "full", type = "cov", k = 0, quadratic = FALSE, point_size = 3){

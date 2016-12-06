@@ -24,4 +24,7 @@ cva_error(x, y, x_new, y_new, rank = "full", type = "cov", k = 0)
 \description{
 Error of Reduced-Rank Canonical Variate Analysis
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

@@ -39,6 +39,7 @@ pca <- function(x, rank = "full", type = "cov", k = 0){
 #'
 #' @return data frame with \code{rank} number of columns, each of which represent the principal component scores of the observations.
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 pca_scores <- function(x, rank = "full", type = "cov", k = 0){

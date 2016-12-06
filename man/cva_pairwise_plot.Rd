@@ -35,4 +35,7 @@ galaxy_y <- select(galaxy, Rmag:chi2red)
 cva_pairwise_plot(galaxy_x, galaxy_y)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

@@ -31,4 +31,7 @@ tobacco_rrr <- rrr(tobacco_x, tobacco_y, gamma, rank = 1)
 rrr_residuals(tobacco_x, tobacco_y, gamma, rank = 1)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

@@ -41,6 +41,7 @@ delta_error <- function(x, y, gamma_matrix, type = "cov", k = 0){
 #' rank_trace(tobacco_x, tobacco_y, gamma)
 #' rank_trace(tobacco_x, tobacco_y, gamma, plot = FALSE)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0, plot = TRUE, interactive = FALSE){
@@ -83,6 +84,7 @@ rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0, plot = TRUE, int
 #' gamma2 <- solve(cov(tobacco_y))
 #' rrr_residuals_plot(tobacco_x, tobacco_y, gamma2)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 rrr_residuals_plot <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){

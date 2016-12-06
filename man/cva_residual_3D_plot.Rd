@@ -29,4 +29,7 @@ cva_residual_3D_plot(x, y, cva_x = 1, cva_y = 2, cva_z = 3,
 \description{
 3D Plot of Residuals for Reduced-Rank CVA
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

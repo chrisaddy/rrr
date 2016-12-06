@@ -31,4 +31,7 @@ galaxy_y <- select(galaxy, Rmag:chi2red)
 cva_residuals(galaxy_x, galaxy_y, rank = 2, k = 0.001)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

@@ -37,4 +37,7 @@ rank_trace(tobacco_x, tobacco_y, gamma)
 rank_trace(tobacco_x, tobacco_y, gamma, plot = FALSE)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

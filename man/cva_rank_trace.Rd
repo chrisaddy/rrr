@@ -36,4 +36,7 @@ cva_rank_trace(galaxy_x, galaxy_y)
 cva_rank_trace(galaxy_x, galaxy_y, plot = FALSE)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

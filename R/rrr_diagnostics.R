@@ -19,6 +19,7 @@
 #' tobacco_rrr <- rrr(tobacco_train_x, tobacco_train_y, gamma, rank = 1)
 #' rrr_predict(tobacco_rrr, tobacco_test_x)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 rrr_predict <- function(rrr_object, x_new){
@@ -50,6 +51,7 @@ rrr_predict <- function(rrr_object, x_new){
 #' tobacco_rrr <- rrr(tobacco_train_x, tobacco_train_y, gamma, rank = 1)
 #' rrr_error(tobacco_rrr, tobacco_test_x, tobacco_test_y)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 rrr_error <- function(rrr_object, x_new, y_new){
@@ -70,6 +72,7 @@ rrr_error <- function(rrr_object, x_new, y_new){
 #' tobacco_rrr <- rrr(tobacco_x, tobacco_y, gamma, rank = 1)
 #' rrr_residuals(tobacco_x, tobacco_y, gamma, rank = 1)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 rrr_residuals <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){

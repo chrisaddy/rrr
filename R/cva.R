@@ -40,6 +40,7 @@ cva <- function(x, y, rank = "full", type = "cov", k = 0) {
 #' galaxy_y <- select(galaxy, Rmag:chi2red)
 #' cva_scores(galaxy_x, galaxy_y, rank = 2)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 cva_scores <- function(x, y, rank = "full", type = "cov", k = 0){

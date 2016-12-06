@@ -34,4 +34,7 @@ digits_class <- pendigits[,35]
 pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

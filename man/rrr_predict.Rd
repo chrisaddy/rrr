@@ -28,4 +28,7 @@ tobacco_rrr <- rrr(tobacco_train_x, tobacco_train_y, gamma, rank = 1)
 rrr_predict(tobacco_rrr, tobacco_test_x)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

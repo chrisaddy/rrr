@@ -27,4 +27,7 @@ digits_features <- pendigits[, -35:-36]
 pca_scores(digits_features, rank = 3)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

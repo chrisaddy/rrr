@@ -27,6 +27,9 @@ pca_rank_trace(digits_features)
 pca_rank_trace(digits_features, plot = FALSE)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 \seealso{
 \code{\link{rank_trace}} \code{\link{cva_rank_trace}}
 }

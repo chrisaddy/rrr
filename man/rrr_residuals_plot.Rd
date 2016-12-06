@@ -35,4 +35,7 @@ gamma2 <- solve(cov(tobacco_y))
 rrr_residuals_plot(tobacco_x, tobacco_y, gamma2)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

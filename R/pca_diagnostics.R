@@ -4,6 +4,7 @@
 #'
 #' @inheritParams pca
 #' 
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 pca_gof <- function(x) {

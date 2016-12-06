@@ -12,6 +12,7 @@
 #'
 #' @seealso \code{\link{rank_trace}} \code{\link{cva_rank_trace}}
 #' 
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 pca_rank_trace <- function(x, type = "cov", k = 0, plot = TRUE, interactive = FALSE){
@@ -79,6 +80,7 @@ pca_pairwise <- function(x, pca_x, pca_y, rank = "full", type = "cov"){
 #' digits_class <- pendigits[,35]
 #' pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
  
 pca_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE, point_size = 2.5){
@@ -141,6 +143,7 @@ pca_threewise <- function(x, pca_x, pca_y, pca_z, rank = "full", type = "cov"){
 #' @param type type of covariance matrix
 #' @param point_size size of points in scatter
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL, rank = "full", type = "cov", point_size = 3){

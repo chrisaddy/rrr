@@ -31,4 +31,7 @@ tobacco_rrr <- rrr(tobacco_train_x, tobacco_train_y, gamma, rank = 1)
 rrr_error(tobacco_rrr, tobacco_test_x, tobacco_test_y)
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

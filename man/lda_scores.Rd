@@ -28,4 +28,7 @@ data(iris)
 lda_scores(iris[,1:4], iris[,5])
 
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

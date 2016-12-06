@@ -3,6 +3,7 @@
 #' @inheritParams cva
 #' @inheritParams rrr_error
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 cva_error <- function(x, y, x_new, y_new, rank = "full", type = "cov", k = 0){
@@ -29,6 +30,7 @@ cva_error <- function(x, y, x_new, y_new, rank = "full", type = "cov", k = 0){
 #' galaxy_y <- select(galaxy, Rmag:chi2red)
 #' cva_residuals(galaxy_x, galaxy_y, rank = 2, k = 0.001)
 #'
+#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 cva_residuals <- function(x, y, rank = "full", type = "cov", k = 0){

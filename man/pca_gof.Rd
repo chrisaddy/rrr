@@ -12,4 +12,7 @@ pca_gof(x)
 \description{
 \code{pca_gof} is a measure of the goodness of fit of the \eqn{i}th principal component.
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

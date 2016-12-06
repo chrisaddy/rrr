@@ -31,4 +31,7 @@ lda_3D_plot(x, class, lda_x = 1, lda_y = 2, lda_z = 3, rank = "full",
 \description{
 \code{lda_3D_plot}
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 

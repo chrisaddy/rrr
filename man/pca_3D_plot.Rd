@@ -27,4 +27,7 @@ pca_3D_plot(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL,
 \description{
 code{pca_3D_plot}
 }
+\references{
+Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
 
