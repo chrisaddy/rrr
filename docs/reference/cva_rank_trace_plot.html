@@ -81,7 +81,7 @@
     <p><code>cva_rank_trace_plot</code></p>
     
 
-    <pre><span class='fu'>cva_rank_trace_plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre><span class='fu'>cva_rank_trace_plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -93,6 +93,8 @@
       <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
+      <dt>interactive</dt>
+      <dd>if TRUE, creates an interactive plotly graphic.</dd>
     </dl>
     
 
@@ -105,8 +107,7 @@
 <span class='no'>galaxy</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>galaxy</span>)
 <span class='no'>galaxy_x</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, -<span class='no'>Rmag</span>:-<span class='no'>chi2red</span>)
 <span class='no'>galaxy_y</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, <span class='no'>Rmag</span>:<span class='no'>chi2red</span>)
-<span class='fu'>cva_rank_trace_plot</span>(<span class='no'>galaxy_x</span>, <span class='no'>galaxy_y</span>)</div><img src='cva_rank_trace_plot-2.png' alt='' width='540' height='400' /><div class='input'>
-</div></pre>
+<span class='fu'>cva_rank_trace_plot</span>(<span class='no'>galaxy_x</span>, <span class='no'>galaxy_y</span>)</div><img src='cva_rank_trace_plot-2.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

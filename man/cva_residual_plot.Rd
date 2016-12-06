@@ -4,18 +4,19 @@
 \alias{cva_residual_plot}
 \title{Residual Plots for Reduced-Rank CVA}
 \usage{
-cva_residual_plot(x, y, rank = "full", type = "cov", k = 0)
+cva_residual_plot(x, y, rank = "full", type = "cov", k = 0,
+  interactive = FALSE)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
 
 \item{y}{data frame or matrix of response variables}
 
-\item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
-
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
+
+\item{interactive}{if TRUE, creates an interactive plotly graphic.}
 }
 \description{
 \code{cva_residual_plot}

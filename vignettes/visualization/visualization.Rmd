@@ -115,7 +115,7 @@ pca_rank_trace_plot(digits_features, interactive = TRUE)
 pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)
 ```
 
-## PC 3D Plots
+## PCA 3D Plots
 
 ```{r}
 pca_3D_plot(digits_features, class_labels = digits_class)
@@ -135,17 +135,45 @@ cva_rank_trace_plot(galaxy_x, galaxy_y)
 ```
 
 ```{r}
-cva_rank_trace_plot(galaxy_x, galaxy_y)
+cva_rank_trace_plot(galaxy_x, galaxy_y, interactive = TRUE)
+```
+
+## CVA Pairwise Plots
+
+```{r}
+cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 2)
+```
+
+```{r}
+cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 2, interactive = TRUE)
 ```
 
 ## CVA Residuals Plots
 
 ```{r}
-cva_residual_plot(galaxy_x, galaxy_y)
+cva_residual_plot(galaxy_x, galaxy_y, rank = 2)
 ```
 
-## LD Pairwise Plots
+```{r}
+cva_residual_plot(galaxy_x, galaxy_y, rank = 2, interactive = TRUE)
+```
+
+## LDA Pairwise Plots
 
 ```{r}
 lda_pairwise_plot(iris_features, iris_class)
+```
+
+```{r}
+lda_pairwise_plot(iris_features, iris_class, interactive = TRUE)
+```
+
+## LDA 3D Plots
+
+```{r}
+args(lda_3D_plot)
+```
+
+```{r}
+lda_3D_plot(digits_features, digits_class, k = 0.0001)
 ```

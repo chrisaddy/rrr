@@ -17,6 +17,7 @@ Imports:
 Suggests:
     caret
 Collate:
+    rrr_package.R
     utility_functions.R
     rrr.R
     rrr_diagnostics.R
