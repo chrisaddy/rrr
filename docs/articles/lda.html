@@ -80,6 +80,7 @@ iris_class &lt;-<span class="st"> </span>iris %&gt;%
 <h2 class="hasAnchor"><html><body><a href="#assesssing-effective-dimensionality" class="anchor"> </a></body></html>Assesssing Effective Dimensionality</h2>
 <p>Assessing the rank <span class="math inline">\(t\)</span> of this reduced-rank regression is equivalent to determining the number of linear discriminant functions that best discriminate between the <span class="math inline">\(K\)</span> classes, with <span class="math inline">\(\mathrm{min}\left(r, s\right) = \mathrm{min}\left(r, K - 1\right)\)</span> maximum number of linear discriminant functions.</p>
 <p>Generally, plotting linear discriminant functions against each other, i.e., the first and second linear discriminant functions, is used to determine whether sufficient discrimination is obtained.</p>
+<p>Plotting techniques are discussed in the following section.</p>
 </div>
 <div id="plotting" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#plotting" class="anchor"> </a></body></html>Plotting</h2>
@@ -87,9 +88,9 @@ iris_class &lt;-<span class="st"> </span>iris %&gt;%
 <h3 class="hasAnchor"><html><body><a href="#plot-lda-pairs-with-lda_pairwise_plot" class="anchor"> </a></body></html>Plot LDA Pairs with <code><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(lda_pairwise_plot)</code></pre></div>
 <pre><code>## function (x, class, lda_x = 1, lda_y = 2, rank = "full", type = "cov", 
-##     k = 0, quadratic = FALSE) 
+##     k = 0, quadratic = FALSE, interactive = FALSE) 
 ## NULL</code></pre>
-<p>A typical graphical display for multiclass LDA is to plot the <span class="math inline">\(j\)</span>th discriminant scores for the <span class="math inline">\(n\)</span> points against the <span class="math inline">\(k\)</span> discriminant scores with the class means superimposed on the same graph.</p>
+<p>A typical graphical display for multiclass LDA is to plot the <span class="math inline">\(j\)</span>th discriminant scores for the <span class="math inline">\(n\)</span> points against the <span class="math inline">\(k\)</span> discriminant scores.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
 <p><img src="lda_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 </div>
@@ -100,54 +101,51 @@ iris_class &lt;-<span class="st"> </span>iris %&gt;%
 <h3 class="hasAnchor"><html><body><a href="#fit-lda-model-with-lda" class="anchor"> </a></body></html>Fit LDA model with <code><a href="../reference/lda.html">lda()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda.html">lda</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
 <pre><code>## $prior
-##     setosa versicolor  virginica 
-##  0.3333333  0.3333333  0.3333333 
+##       setosa   versicolor    virginica 
+## 7.401487e-17 7.401487e-17 1.000000e+00 
 ## 
 ## $G
 ## # A tibble: 4 &times; 2
-##          LD1         LD2
-##        &lt;dbl&gt;       &lt;dbl&gt;
-## 1 -0.1449717 -0.02060269
-## 2 -0.2682816 -1.92305340
-## 3  0.3852265  0.82465900
-## 4  0.4897665 -2.51570024
+##          LD1          LD2
+##        &lt;dbl&gt;        &lt;dbl&gt;
+## 1 -0.1427550  0.009711862
+## 2 -0.2639139  0.905610891
+## 3  0.3792278 -0.388369442
+## 4  0.4826420  1.184645528
 ## 
 ## $H
 ## # A tibble: 2 &times; 2
-##          LD1      LD2
-##        &lt;dbl&gt;    &lt;dbl&gt;
-## 1 -2.3382163 0.264133
-## 2 -0.6901901 1.100532
-## 
-## $eigen_portion
-## [1] 0.81387 0.18613</code></pre>
+##         LD1        LD2
+##       &lt;dbl&gt;      &lt;dbl&gt;
+## 1 -1.123703 -0.3319998
+## 2 -0.265336 -1.1058423</code></pre>
 </div>
 <div id="calculate-lda-scores-with-lda_scores" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#calculate-lda-scores-with-lda_scores" class="anchor"> </a></body></html>Calculate LDA Scores with <code><a href="../reference/lda_scores.html">lda_scores()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda_scores.html">lda_scores</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
 <pre><code>## $scores
 ## # A tibble: 150 &times; 3
-##          LD1         LD2  class
-##        &lt;dbl&gt;       &lt;dbl&gt; &lt;fctr&gt;
-## 1  -1.408801 -0.26647978 setosa
-## 2  -1.245666  0.69916746 setosa
-## 3  -1.308851  0.23621141 setosa
-## 4  -1.190480  0.59550882 setosa
-## 5  -1.421132 -0.45672485 setosa
-## 6  -1.346084 -1.29762430 setosa
-## 7  -1.260511 -0.31544312 setosa
-## 8  -1.328953  0.01035173 setosa
-## 9  -1.146352  0.90177414 setosa
-## 10 -1.282948  0.84089804 setosa
+##          LD1          LD2  class
+##        &lt;dbl&gt;        &lt;dbl&gt; &lt;fctr&gt;
+## 1  -1.387251  0.125583983 setosa
+## 2  -1.226743 -0.329163835 setosa
+## 3  -1.288897 -0.111147085 setosa
+## 4  -1.172385 -0.280353248 setosa
+## 5  -1.399367  0.215173886 setosa
+## 6  -1.325346  0.611160171 setosa
+## 7  -1.241218  0.148631516 setosa
+## 8  -1.308661 -0.004785237 setosa
+## 9  -1.128974 -0.424580855 setosa
+## 10 -1.263476 -0.395904243 setosa
 ## # ... with 140 more rows
 ## 
 ## $class_means
 ## # A tibble: 3 &times; 3
 ##          LD1        LD2      class
 ##        &lt;dbl&gt;      &lt;dbl&gt;     &lt;fctr&gt;
-## 1 -1.6468552 -0.8269707     setosa
-## 2  0.9554941  0.9637513 versicolor
-## 3  0.6913611 -0.1367806  virginica</code></pre>
+## 1 -1.3498742  0.4053488     setosa
+## 2  0.3239739 -1.3716811 versicolor
+## 3  1.0259003  0.9663322  virginica</code></pre>
 </div>
 </div>
 <div id="diagnostics" class="section level2">

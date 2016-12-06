@@ -23,9 +23,11 @@ lda_pairwise_plot(x, class, lda_x = 1, lda_y = 2, rank = "full",
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 
 \item{quadratic}{`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
+
+\item{interactive}{logical. If \code{TRUE} prints an interactive Plotly graphic.}
 }
 \description{
-\code{lda_pairwise_plot}
+lda_pairwise_plot()
 }
 \examples{
 data(iris)

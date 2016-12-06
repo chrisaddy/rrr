@@ -81,7 +81,8 @@
     <p><code>lda_scores</code></p>
     
 
-    <pre><span class='fu'>lda_scores</span>(<span class='no'>x</span>, <span class='no'>class</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre><span class='fu'>lda_scores</span>(<span class='no'>x</span>, <span class='no'>class</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>quadratic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -95,6 +96,8 @@
       <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
+      <dt>quadratic</dt>
+      <dd>`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.</dd>
     </dl>
     
 
@@ -102,27 +105,27 @@
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>iris</span>)
 <span class='fu'>lda_scores</span>(<span class='no'>iris</span>[,<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='no'>iris</span>[,<span class='fl'>5</span>])</div><div class='output co'>#&gt; $scores
 #&gt; # A tibble: 150 × 3
-#&gt;          LD1         LD2  class
-#&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fctr&gt;
-#&gt; 1  -1.408803 -0.26677589 setosa
-#&gt; 2  -1.245741  0.69856068 setosa
-#&gt; 3  -1.308851  0.23566352 setosa
-#&gt; 4  -1.190610  0.59552569 setosa
-#&gt; 5  -1.421124 -0.45684679 setosa
-#&gt; 6  -1.345918 -1.29801978 setosa
-#&gt; 7  -1.260408 -0.31598537 setosa
-#&gt; 8  -1.329028  0.01033094 setosa
-#&gt; 9  -1.146459  0.90147332 setosa
-#&gt; 10 -1.283203  0.84122695 setosa
+#&gt;          LD1          LD2  class
+#&gt;        &lt;dbl&gt;        &lt;dbl&gt; &lt;fctr&gt;
+#&gt; 1  -1.387419  0.125704003 setosa
+#&gt; 2  -1.226832 -0.329159709 setosa
+#&gt; 3  -1.288983 -0.111043950 setosa
+#&gt; 4  -1.172537 -0.280609930 setosa
+#&gt; 5  -1.399553  0.215264848 setosa
+#&gt; 6  -1.325489  0.611623049 setosa
+#&gt; 7  -1.241276  0.148891363 setosa
+#&gt; 8  -1.308855 -0.004867908 setosa
+#&gt; 9  -1.129057 -0.424771543 setosa
+#&gt; 10 -1.263725 -0.396383630 setosa
 #&gt; # ... with 140 more rows
 #&gt; 
 #&gt; $class_means
 #&gt; # A tibble: 3 × 3
 #&gt;          LD1        LD2      class
 #&gt;        &lt;dbl&gt;      &lt;dbl&gt;     &lt;fctr&gt;
-#&gt; 1 -1.6480566 -0.8282904     setosa
-#&gt; 2  0.9561788  0.9650059 versicolor
-#&gt; 3  0.6918778 -0.1367155  virginica
+#&gt; 1 -1.3499219  0.4054351     setosa
+#&gt; 2  0.3238438 -1.3717842 versicolor
+#&gt; 3  1.0260780  0.9663491  virginica
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

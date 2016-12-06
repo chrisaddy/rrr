@@ -5,7 +5,7 @@
 \title{LDA 3D Plot}
 \usage{
 lda_3D_plot(x, class, lda_x = 1, lda_y = 2, lda_z = 3, rank = "full",
-  type = "cov", k = 0, quadratic = FALSE)
+  type = "cov", k = 0, quadratic = FALSE, point_size = 3)
 }
 \arguments{
 \item{x}{data frame or matrix of input variables}
@@ -25,6 +25,8 @@ lda_3D_plot(x, class, lda_x = 1, lda_y = 2, lda_z = 3, rank = "full",
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 
 \item{quadratic}{`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
+
+\item{point_size}{size of points in scatter}
 }
 \description{
 \code{lda_3D_plot}

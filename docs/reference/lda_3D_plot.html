@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fit Reduced-Rank LDA Model — lda • rrr</title>
+<title>LDA 3D Plot — lda_3D_plot • rrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,14 +74,15 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fit Reduced-Rank LDA Model</h1>
+    <h1>LDA 3D Plot</h1>
     </div>
 
     
-    <p><code>lda</code> fits a reduced-rank linear discriminant analysis model.</p>
+    <p><code>lda_3D_plot</code></p>
     
 
-    <pre><span class='fu'>lda</span>(<span class='no'>x</span>, <span class='no'>class</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>quadratic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre><span class='fu'>lda_3D_plot</span>(<span class='no'>x</span>, <span class='no'>class</span>, <span class='kw'>lda_x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>lda_y</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lda_z</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>quadratic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>point_size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -89,6 +90,12 @@
       <dd>data frame or matrix of input variables</dd>
       <dt>class</dt>
       <dd>vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.</dd>
+      <dt>lda_x</dt>
+      <dd>integer. Linear discriminant function plotted along the x-axis.</dd>
+      <dt>lda_y</dt>
+      <dd>integer. Linear discriminant function plotted along the y-axis.</dd>
+      <dt>lda_z</dt>
+      <dd>integer. Linear discriminant function plotted along the z-axis.</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
       <dt>type</dt>
@@ -97,54 +104,17 @@
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
       <dt>quadratic</dt>
       <dd>`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.</dd>
+      <dt>point_size</dt>
+      <dd>size of points in scatter</dd>
     </dl>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>`list` containing: a data frame of class</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Izenman, A. J. (2008) <em>Modern Multivariate Statistical Techniques</em>. Springer.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>iris</span>)
-<span class='no'>iris_x</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[,<span class='fl'>1</span>:<span class='fl'>4</span>]
-<span class='no'>iris_y</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[<span class='fl'>5</span>]
-<span class='fu'>lda</span>(<span class='no'>iris_x</span>, <span class='no'>iris_y</span>)</div><div class='output co'>#&gt; $prior
-#&gt;       setosa   versicolor    virginica 
-#&gt; 7.401487e-17 7.401487e-17 1.000000e+00 
-#&gt; 
-#&gt; $G
-#&gt; # A tibble: 4 × 2
-#&gt;          LD1         LD2
-#&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-#&gt; 1 -0.1427341  0.01008498
-#&gt; 2 -0.2640795  0.90569343
-#&gt; 3  0.3788238 -0.38994070
-#&gt; 4  0.4836742  1.18799194
-#&gt; 
-#&gt; $H
-#&gt; # A tibble: 2 × 2
-#&gt;          LD1        LD2
-#&gt;        &lt;dbl&gt;      &lt;dbl&gt;
-#&gt; 1 -1.1238094 -0.3321454
-#&gt; 2 -0.2653032 -1.1058991
-#&gt; </div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#references">References</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

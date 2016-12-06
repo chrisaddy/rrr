@@ -1,8 +1,9 @@
 #' LDA Pairwise Plot
 #'
-#' \code{lda_pairwise_plot}
+#' lda_pairwise_plot()
 #'
 #' @inheritParams lda_scores
+#' @inheritParams pca_pairwise_plot
 #' @param lda_x integer. Linear discriminant function plotted along the x-axis.
 #' @param lda_y integer. Linear discriminant function plotted along the y-axis.
 #'
@@ -49,6 +50,7 @@ lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", typ
 #' \code{lda_3D_plot}
 #'
 #' @inheritParams lda_pairwise_plot
+#' @inheritParams pca_3D_plot
 #' @param lda_z integer. Linear discriminant function plotted along the z-axis.
 #' 
 #' @export
