@@ -4,19 +4,19 @@
 \alias{pca_3D_plot}
 \title{3D Principal Component Plot}
 \usage{
-pca_3D_plot(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = "none",
+pca_3D_plot(x, class_labels = "none", pca_x = 1, pca_y = 2, pca_z = 3,
   rank = "full", type = "cov", point_size = 3)
 }
 \arguments{
 \item{x}{data frame or matrix of predictor variables}
+
+\item{class_labels}{data frame or vector of class labels}
 
 \item{pca_x}{integer number of the principal component used for the x-axis}
 
 \item{pca_y}{integer number of the principal component used for the y-axis}
 
 \item{pca_z}{integer number of the principal component used for the z-axis}
-
-\item{class_labels}{data frame or vector of class labels}
 
 \item{rank}{rank of coefficient matrix}
 

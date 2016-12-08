@@ -157,7 +157,7 @@ pca_threewise <- function(x, pca_x, pca_y, pca_z, rank = "full", type = "cov"){
 #'
 #' @export
 
-pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = "none", rank = "full", type = "cov", point_size = 3){
+pca_3D_plot <- function(x, class_labels = "none", pca_x = 1, pca_y = 2, pca_z = 3, rank = "full", type = "cov", point_size = 3){
     if(class_labels == "none"){
         class <- dplyr::as_data_frame(rep("class = none", dim(x)[1]))
     } else {
@@ -171,19 +171,13 @@ pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = "none
     names(threes_tbl) <- c("x_coord", "y_coord", "z_coord", "class")
     ptsize <- point_size
     plotly::plot_ly(threes_tbl,
-            x = ~x_coord,
-            y = ~y_coord,
-            z = ~z_coord,
-            type = "scatter3d",
-            mode = "markers",
-            color = ~factor(class),
-            marker = list(size = ptsize),
-            name = "PC 3D Scatter Plot")# %>%
-        #layout(list(title = "PC 3D Scatterplot"))#,
-         #scene = li1
-          # xaxis = list(title = "x"), 
-           #yaxis = list(title = "y"), 
-           #zaxis = list(title = "z")))
+        x = ~x_coord,
+        y = ~y_coord,
+        z = ~z_coord,
+        type = "scatter3d",
+        mode = "markers",
+        color = ~factor(class),
+        marker = list(size = ptsize))
 }
 
 

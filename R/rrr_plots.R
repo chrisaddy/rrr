@@ -94,5 +94,7 @@ rrr_residual_plot <- function(x, y, gamma_matrix, rank = "full", type = "cov", k
 	index <- dplyr::as_data_frame(1:dim(residuals)[1])
 	names(index) <- "index"
 	df <- bind_cols(index, residuals)
-	GGally::ggpairs(df)
+	plot <- GGally::ggpairs(df)
+	plot[1,1] <- ggplot()
+	plot
 }

@@ -1,5 +1,5 @@
 ---
-title: "`rrr` for Multivariate Regression"
+title: "rrr for Multivariate Regression"
 author: "Chris Addy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -81,6 +81,8 @@ tobacco_y <- tobacco %>%
 	select(starts_with("Y"))
 ```
 
+Below we see that there is not only correlation among the $X_i$s but also among the $Y_i$s. The classical multivariate will not capture that information.
+
 ```{r}
 GGally::ggcorr(tobacco_x)
 ```
@@ -104,9 +106,12 @@ lm2 <- lm(y[,2] ~ x)$coeff
 lm3 <- lm(y[,3] ~ x)$coeff
 
 ### compare multivariate regression and separate multiple regresions
+```
 
+As expected, the multivariate coefficients are the same as the multiple regression coefficients of each of the $Y_i$s
+
+```{r}
 multivar_reg
-
 cbind(lm1, lm2, lm3)
 ```
 
@@ -171,7 +176,9 @@ $$
 args(rank_trace)
 ```
 
-Since $\hat{\mathbf{C}}$ is calculated using sample observations, its *mathematical* rank will always be full, but it will have a *statistical* rank $t$ that is an unknown hyperparameter that 
+Since $\hat{\mathbf{C}}$ is calculated using sample observations, its *mathematical* rank will always be full, but it will have a *statistical* rank $t$ which is an unknown hyperparameter that needs to be estimated.
+
+One method of estimating $t$ is to plot the *rank trace*. Along the $X$-axis, we plot a measure of the difference between the rank-$t$ coefficient matrix and the full-rank coefficient matrix for each value of $t$. Along the $Y$-axis, we plot the reduction in residual covariance between the rank-$t$ residuals and the full-rank residuals for each value of $t$.
 
 ```{r}
 ### use the identity matrix for gamma
@@ -181,15 +188,23 @@ ident <- diag(1, dim(tobacco_y)[2])
 rank_trace(tobacco_x, tobacco_y, ident) 
 ```
 
+Set `plot = FALSE` to print data frame of rank trace coordinates.
+
 ```{r}
 rank_trace(tobacco_x, tobacco_y, ident, plot = FALSE)
 ```
+
+When the weight matrix, $\mathbf{\Gamma}$, takes on a more complicated form, the rank trace may plot points outside the unit square, or may not be a smooth monotic curve. When this is the case, we can change the value of `k` to smooth the rank trace. This value of $\hat{k}$ is then an estimate of the ridge pertubation $k$ described above. 
 
 ```{r}
 ### use inverse of estimated covariance of Y for gamma
 
 gamma2 <- solve(cov(tobacco_y))
+```
 
+The following rank trace is smooth, but we can always add a value $k$ to *softly shrink*^[Aldrin, Magne. "Multivariate Prediction Using Softly Shrunk Reduced-Rank Regression." The American Statistician 54.1 (2000): 29. Web. ] the reduced-rank regression.
+
+```{r}
 rank_trace(tobacco_x, tobacco_y, gamma2)
 ```
 
@@ -199,30 +214,31 @@ rank_trace(tobacco_x, tobacco_y, gamma2, plot = FALSE)
 
 ## Fitting Reduced-Rank Regression Model
 
+The main function in the `rrr` package is -- unsurprisingly -- `rrr()` which fits a reduced-rank regression model and outputs the coefficients.
+
 ### Fit reduced-rank regression model with `rrr()`
 
 ```{r}
 args(rrr)
 ```
 
-The main function in the `rrr` package is -- unsurprisingly -- `rrr()` 
-
 `rrr()` takes as inputs the data frames, or matrices,  of input and response variables, the weight matrix $\mathbf{\Gamma}$, the rank (defaulted to full rank), the type of covariance matrix to be used (either covariance or correlation), and the ridge constant $k$.
 
-`rrr()` returns a `list` containing the means $\hat{\boldsymbol{\mu}}$, the matrices $\hat{\mathbf{A}}$, $\hat{\mathbf{B}}$, and the coefficient matrix $\hat{\mathbf{C}}$
+`rrr()` returns a `list` containing the means $\hat{\boldsymbol{\mu}}$, the matrices $\hat{\mathbf{A}}$, $\hat{\mathbf{B}}$, and the coefficient matrix $\hat{\mathbf{C}}$, as well as the eigenvalues of the weight marix $\mathbf{\Gamma}$.
 
 ```{r}
 rrr(tobacco_x, tobacco_y, ident, rank = "full") 
 ```
 
-We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical multivariate regression coefficients as before. They differ only by a transpose, and is presented this way in `rrr` as a matter of convention. It is this form that is presented in the literature (Izenman, 2008).
+We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical multivariate regression coefficients as above. They differ only by a transpose, and is presented this way in `rrr` as a matter of convention. It is this form that is presented in the literature.^[Izenman, A.J. (2008) *Modern Multivariate Statistical Techniques*. Springer.
+]
 
 ## Diagnostics
 
 ### Calculate Residuals with `rrr_residual()`
 
 ```{r}
-args(rrr_residual_plot)
+args(rrr_residual)
 ```
 
 ```{r}
@@ -232,7 +248,7 @@ rrr_residual(tobacco_x, tobacco_y, ident, rank = 1)
 ### Plot Residuals with `rrr_residual_plot()`
 
 ```{r}
-args(rrr_residual)
+args(rrr_residual_plot)
 ```
 
 We can visually check the model assumptions that 

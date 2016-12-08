@@ -45,6 +45,7 @@
     
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(microbenchmark)</code></pre></div>
+<pre><code>## Loading required package: microbenchmark</code></pre>
 <p>The <code>rrr</code> package used as a jumping-off point the function rrr<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, written by Chuck Miller in 2007 and used in the text. This original function was used to plot rank traces and pairwise plots.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#source("http://astro.temple.edu/~alan/MMST/code/rscripts/RRR+MULTANL.r")</span>
 
@@ -76,22 +77,20 @@ tobacco_y &lt;-<span class="st"> </span>tobacco %&gt;%<span class="st"> </span>
 <span class="kw">microbenchmark</span>(<span class="kw"><a href="../../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y, <span class="kw">diag</span>(<span class="dv">1</span>, <span class="dv">3</span>)))</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##                                          expr      min       lq     mean
-##  rank_trace(tobacco_x, tobacco_y, diag(1, 3)) 64.94472 83.07096 90.85158
+##  rank_trace(tobacco_x, tobacco_y, diag(1, 3)) 58.78116 72.82337 80.69293
 ##    median       uq      max neval
-##  91.70811 98.76297 119.8212   100</code></pre>
+##  81.77616 87.71435 111.1119   100</code></pre>
 </div>
 <div id="principal-component-analysis" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#principal-component-analysis" class="anchor"> </a></body></html>Principal Component Analysis</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(<span class="kw"><a href="../../reference/pca.html">pca</a></span>(tobacco_x))</code></pre></div>
-<pre><code>## Unit: microseconds
-##            expr     min       lq     mean  median      uq      max neval
-##  pca(tobacco_x) 992.326 1739.785 2186.039 2021.39 2453.68 5572.908   100</code></pre>
+<pre><code>## Unit: milliseconds
+##            expr      min       lq     mean   median      uq      max neval
+##  pca(tobacco_x) 1.185893 1.675941 2.031454 2.038327 2.22677 5.067002   100</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">microbenchmark</span>(<span class="kw">prcomp</span>(tobacco_x))</code></pre></div>
 <pre><code>## Unit: microseconds
-##               expr     min       lq     mean  median       uq      max
-##  prcomp(tobacco_x) 536.375 771.9075 1022.985 981.436 1194.749 2255.627
-##  neval
-##    100</code></pre>
+##               expr     min       lq     mean median      uq      max neval
+##  prcomp(tobacco_x) 480.247 608.0775 755.4241 723.36 842.247 2308.671   100</code></pre>
 </div>
 <div class="footnotes">
 <hr><ol><li id="fn1"><p><a href="http://astro.temple.edu/~alan/MMST/code/rscripts/RRR+MULTANL.r" class="uri">http://astro.temple.edu/~alan/MMST/code/rscripts/RRR+MULTANL.r</a><a href="#fnref1">&#8617;</a></p></li>
