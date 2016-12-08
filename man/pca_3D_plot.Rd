@@ -4,7 +4,7 @@
 \alias{pca_3D_plot}
 \title{3D Principal Component Plot}
 \usage{
-pca_3D_plot(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL,
+pca_3D_plot(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = "none",
   rank = "full", type = "cov", point_size = 3)
 }
 \arguments{
@@ -24,10 +24,10 @@ pca_3D_plot(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL,
 
 \item{point_size}{size of points in scatter}
 }
-\description{
-code{pca_3D_plot}
+\value{
+plotly object.
 }
-\references{
-Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+\description{
+\code{pca_3D_plot} creates an interactive, html plotly plot that can be manipulated by the viewer.
 }
 

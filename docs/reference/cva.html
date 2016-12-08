@@ -78,7 +78,11 @@
     </div>
 
     
-    <p><code>cva</code> fits a reduced-rank canonical variate/correlation model.</p>
+    <p><code>cva</code> fits a reduced-rank canonical variate/correlation model. This is a special case of reduced-rank regression
+with the weight matrix set to the covariance matrix of \(Y\), i.e., \(\mathbf{\Gamma} = \mathbf{\Sigma}_{YY}\).
+Canonical variate analysis creates a set of new predictor variables that are linear combinations of the orignal predictors,
+and a set of new resonse variables that are linear combinations of the original responses, such that each pair of new predictor and new
+response maximizes correlation between the two and all pairs of canonical variates are independent of each other.</p>
     
 
     <pre><span class='fu'>cva</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
@@ -86,7 +90,7 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>data frame or matrix of input variables</dd>
+      <dd>data frame or matrix of predictor variables</dd>
       <dt>y</dt>
       <dd>data frame or matrix of response variables</dd>
       <dt>rank</dt>
@@ -97,9 +101,17 @@
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
     </dl>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>list containing: matrix of means; matrix of canonical variate coefficients of predictor variables; matrix of canonical variate coefficients of response variables; vector of canonical correlations.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Izenman, A. J. (2008) <em>Modern Multivariate Statistical Techniques</em>. Springer.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='rrr.html'>rrr</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -111,13 +123,13 @@
 <span class='no'>galaxy_x</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, -<span class='no'>Rmag</span>:-<span class='no'>chi2red</span>)
 <span class='no'>galaxy_y</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, <span class='no'>Rmag</span>:<span class='no'>chi2red</span>)
 <span class='fu'>cva</span>(<span class='no'>galaxy_x</span>, <span class='no'>galaxy_y</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; $mean
-#&gt;            [,1]
-#&gt; [1,] 27.0430945
-#&gt; [2,]  0.9028657
-#&gt; [3,] 25.6729200
-#&gt; [4,] -1.3514412
-#&gt; [5,] -1.2214416
-#&gt; [6,]  2.1352826
+#&gt;               [,1]
+#&gt; Rmag    27.0430945
+#&gt; ApDRmag  0.9028657
+#&gt; mumax   25.6729200
+#&gt; Mcz     -1.3514412
+#&gt; MCzml   -1.2214416
+#&gt; chi2red  2.1352826
 #&gt; 
 #&gt; $G
 #&gt;           UjMAG        BjMAG     VjMAG       usMAG      gsMAG      rsMAG
@@ -148,7 +160,11 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

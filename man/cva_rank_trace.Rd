@@ -8,7 +8,7 @@ cva_rank_trace(x, y, type = "cov", k = 0, plot = TRUE,
   interactive = FALSE)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{y}{data frame or matrix of response variables}
 
@@ -20,8 +20,13 @@ cva_rank_trace(x, y, type = "cov", k = 0, plot = TRUE,
 
 \item{interactive}{if TRUE, creates an interactive plotly graphic.}
 }
+\value{
+ggplot object if plot is \code{TRUE}, a data frame of rank trace coordinates if plot = \code{FALSE},
+or an interactive plotly object if interactive = \code{TRUE}.
+}
 \description{
-\code{cva_rank_trace}
+\code{cva_rank_trace} is a plot used to determine the effective dimensionality, i.e., \eqn{t = \mathrm{rank}\left(\mathbf{C}\right)},
+of the reduced-rank regression equation, or the number of canonical variates to be used in the model.
 }
 \examples{
 library(dplyr)
@@ -38,5 +43,8 @@ cva_rank_trace(galaxy_x, galaxy_y, plot = FALSE)
 }
 \references{
 Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
+\seealso{
+\code{\link{rank_trace}}
 }
 

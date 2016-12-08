@@ -4,11 +4,10 @@
 \alias{cva_residual_plot}
 \title{Residual Plots for Reduced-Rank CVA}
 \usage{
-cva_residual_plot(x, y, rank = "full", type = "cov", k = 0,
-  interactive = FALSE)
+cva_residual_plot(x, y, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{y}{data frame or matrix of response variables}
 
@@ -17,11 +16,12 @@ cva_residual_plot(x, y, rank = "full", type = "cov", k = 0,
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
-
-\item{interactive}{if TRUE, creates an interactive plotly graphic.}
+}
+\value{
+ggplot object, scatterplot matrix.
 }
 \description{
-\code{cva_residual_plot}
+\code{cva_residual_plot} is a scatter plot matrix used for diagnostics of the reduced-rank canonical variate analysis.
 }
 \examples{
 library(dplyr)
@@ -34,7 +34,7 @@ galaxy_y <- select(galaxy, Rmag:chi2red)
 cva_residual_plot(galaxy_x, galaxy_y, rank = 3)
 
 }
-\references{
-Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+\seealso{
+\code{\link{rrr_residual_plot}}
 }
 

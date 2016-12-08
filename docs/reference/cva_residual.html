@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Error of Reduced-Rank Canonical Variate Analysis — cva_error • rrr</title>
+<title>Residuals of Reduced-Rank Canonical Variate Analysis — cva_residual • rrr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,14 +74,14 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Error of Reduced-Rank Canonical Variate Analysis</h1>
+    <h1>Residuals of Reduced-Rank Canonical Variate Analysis</h1>
     </div>
 
     
-    <p><code>cva_error</code> calculates the errors of a canonical-variate regression model built on a training set and applied to a test set.</p>
+    <p><code>cva_residual</code> returns the multivariate residuals of the reduced-rank CVA regression.</p>
     
 
-    <pre><span class='fu'>cva_error</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>x_new</span>, <span class='no'>y_new</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre><span class='fu'>cva_residual</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -89,10 +89,6 @@
       <dd>data frame or matrix of predictor variables</dd>
       <dt>y</dt>
       <dd>data frame or matrix of response variables</dd>
-      <dt>x_new</dt>
-      <dd>data frame or matrix of input variables used to predict the response matrix.</dd>
-      <dt>y_new</dt>
-      <dd>data frame or matrix of observed response variables.</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
       <dt>type</dt>
@@ -103,7 +99,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data frame of error.</p>
+    <p>data frame of residuals.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -111,35 +107,27 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>set.seed</span>(<span class='fl'>12345</span>)
-<span class='fu'>library</span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='fu'>data</span>(<span class='no'>COMBO17</span>)
 <span class='no'>galaxy</span> <span class='kw'>&lt;-</span> <span class='fu'>as_data_frame</span>(<span class='no'>COMBO17</span>)
 <span class='no'>galaxy</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, -<span class='fu'>starts_with</span>(<span class='st'>"e."</span>), -<span class='no'>Nr</span>, -<span class='no'>UFS</span>:-<span class='no'>IFD</span>)
 <span class='no'>galaxy</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>galaxy</span>)
-<span class='no'>galaxy_train</span> <span class='kw'>&lt;-</span>
-<span class='no'>sample_size</span> <span class='kw'>&lt;-</span> <span class='fu'>floor</span>(<span class='fl'>0.66</span> * <span class='fu'>nrow</span>(<span class='no'>galaxy</span>))
-<span class='no'>train_ind</span> <span class='kw'>&lt;-</span> <span class='fu'>sample</span>(<span class='fu'>seq_len</span>(<span class='fu'>nrow</span>(<span class='no'>galaxy</span>)), <span class='kw'>size</span> <span class='kw'>=</span> <span class='no'>sample_size</span>)
-<span class='no'>train</span> <span class='kw'>&lt;-</span> <span class='no'>galaxy</span>[<span class='no'>train_ind</span>, ]
-<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='no'>galaxy</span>[-<span class='no'>train_ind</span>, ]
-<span class='no'>train_x</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>train</span>, -<span class='no'>Rmag</span>:-<span class='no'>chi2red</span>)
-<span class='no'>train_y</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>train</span>, <span class='no'>Rmag</span>:<span class='no'>chi2red</span>)
-<span class='no'>test_x</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>test</span>, -<span class='no'>Rmag</span>:-<span class='no'>chi2red</span>)
-<span class='no'>test_y</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>test</span>, <span class='no'>Rmag</span>:<span class='no'>chi2red</span>)
-<span class='fu'>cva_error</span>(<span class='no'>train_x</span>, <span class='no'>train_y</span>, <span class='no'>test_x</span>, <span class='no'>test_y</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.001</span>)</div><div class='output co'>#&gt; # A tibble: 1,178 × 3
-#&gt;    index        CV1         CV2
-#&gt;    &lt;int&gt;      &lt;dbl&gt;       &lt;dbl&gt;
-#&gt; 1      1 -0.3325655  0.56296266
-#&gt; 2      2  0.2136488  0.21247374
-#&gt; 3      3 -0.7341411  1.46165807
-#&gt; 4      4  0.2707906  0.59126916
-#&gt; 5      5 -0.1121691  0.64194445
-#&gt; 6      6 -0.6899002 -0.19232415
-#&gt; 7      7  0.1226567 -0.21403048
-#&gt; 8      8  0.7249506  0.03342818
-#&gt; 9      9  0.3965837  0.81853987
-#&gt; 10    10 -0.5252940  1.56516986
-#&gt; # ... with 1,168 more rows</div><div class='input'>
+<span class='no'>galaxy_x</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, -<span class='no'>Rmag</span>:-<span class='no'>chi2red</span>)
+<span class='no'>galaxy_y</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, <span class='no'>Rmag</span>:<span class='no'>chi2red</span>)
+<span class='fu'>cva_residual</span>(<span class='no'>galaxy_x</span>, <span class='no'>galaxy_y</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.001</span>)</div><div class='output co'>#&gt; # A tibble: 3,462 × 3
+#&gt;    index        CV1        CV2
+#&gt;    &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+#&gt; 1      1 -0.3202596  0.5609487
+#&gt; 2      2 -0.3373066 -0.3235156
+#&gt; 3      3  0.2342563  0.2243338
+#&gt; 4      4  0.2188205  0.6709930
+#&gt; 5      5 -0.7183237  1.5344605
+#&gt; 6      6 -1.0225019  0.1872628
+#&gt; 7      7  0.2784014  0.5923622
+#&gt; 8      8 -0.1242796  0.6893633
+#&gt; 9      9  0.2544044  0.2704908
+#&gt; 10    10 -0.6856947 -0.1686793
+#&gt; # ... with 3,452 more rows</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -49,7 +49,7 @@ cov_matrix <- function(x, y, type = "cov"){
 
 #' Binary Indicator Matrix
 #'
-#' @param class vector or data frame of type `character`
+#' @param class vector or data frame of type character
 #'
 #' @return matrix of binary indicator matrix where each column represents  
 #'

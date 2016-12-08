@@ -8,9 +8,9 @@ lda_scores(x, class, rank = "full", type = "cov", k = 0,
   quadratic = FALSE)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
-\item{class}{vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.}
+\item{class}{vector or one-column data frame of type factor or character that are the class labels of the observations.}
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
@@ -18,10 +18,15 @@ lda_scores(x, class, rank = "full", type = "cov", k = 0,
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 
-\item{quadratic}{`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
+\item{quadratic}{logical. If \code{TRUE} fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
+}
+\value{
+list containing: data frame of linear discriminant function scores; data frame of class means.
 }
 \description{
-\code{lda_scores}
+\code{lda_scores} calculates canonical-variate scores. In the case of linear discriminant analysis, the canonical-variate
+scores of the predictor variables are the linear discriminant functions evaluated at the values of predictor variables, while the scores for the
+response variables correspond to class means.
 }
 \examples{
 data(iris)

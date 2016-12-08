@@ -86,7 +86,7 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>data frame or matrix of input variables</dd>
+      <dd>data frame or matrix of predictor variables</dd>
       <dt>y</dt>
       <dd>data frame or matrix of response variables</dd>
       <dt>gamma_matrix</dt>
@@ -114,16 +114,16 @@
 <span class='no'>tobacco_y</span> <span class='kw'>&lt;-</span> <span class='no'>tobacco</span>[,<span class='fl'>1</span>:<span class='fl'>3</span>]
 <span class='no'>gamma</span> <span class='kw'>&lt;-</span> <span class='fu'>diag</span>(<span class='fl'>1</span>, <span class='fu'>dim</span>(<span class='no'>tobacco_y</span>)[<span class='fl'>2</span>])
 <span class='fu'>rrr</span>(<span class='no'>tobacco_x</span>, <span class='no'>tobacco_y</span>, <span class='no'>gamma</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; $mean
-#&gt;           [,1]
-#&gt; [1,]  1.749756
-#&gt; [2,] 14.687990
-#&gt; [3,]  2.639914
+#&gt;                         [,1]
+#&gt; Y1.BurnRate         1.749756
+#&gt; Y2.PercentSugar    14.687990
+#&gt; Y3.PercentNicotine  2.639914
 #&gt; 
 #&gt; $A
-#&gt;             [,1]
-#&gt; [1,]  0.03107787
-#&gt; [2,] -0.97005030
-#&gt; [3,]  0.24090782
+#&gt;                           [,1]
+#&gt; Y1.BurnRate         0.03107787
+#&gt; Y2.PercentSugar    -0.97005030
+#&gt; Y3.PercentNicotine  0.24090782
 #&gt; 
 #&gt; $B
 #&gt;      X1.PercentNitrogen X2.PercentChlorine X3.PercentPotassium
@@ -132,14 +132,14 @@
 #&gt; [1,]            -13.72942        -0.4528289            3.866896
 #&gt; 
 #&gt; $C
-#&gt;      X1.PercentNitrogen X2.PercentChlorine X3.PercentPotassium
-#&gt; [1,]          0.1343891        -0.04222389         -0.04602109
-#&gt; [2,]         -4.1947590         1.31795724          1.43648115
-#&gt; [3,]          1.0417504        -0.32730901         -0.35674392
-#&gt;      X4.PercentPhosphorus X5.PercentCalcium X6.PercentMagnesium
-#&gt; [1,]           -0.4266812       -0.01407296           0.1201749
-#&gt; [2,]           13.3182319        0.43926680          -3.7510833
-#&gt; [3,]           -3.3075256       -0.10909002           0.9315654
+#&gt;                    X1.PercentNitrogen X2.PercentChlorine X3.PercentPotassium
+#&gt; Y1.BurnRate                 0.1343891        -0.04222389         -0.04602109
+#&gt; Y2.PercentSugar            -4.1947590         1.31795724          1.43648115
+#&gt; Y3.PercentNicotine          1.0417504        -0.32730901         -0.35674392
+#&gt;                    X4.PercentPhosphorus X5.PercentCalcium X6.PercentMagnesium
+#&gt; Y1.BurnRate                  -0.4266812       -0.01407296           0.1201749
+#&gt; Y2.PercentSugar              13.3182319        0.43926680          -3.7510833
+#&gt; Y3.PercentNicotine           -3.3075256       -0.10909002           0.9315654
 #&gt; 
 #&gt; $eigen_values
 #&gt; [1] 3.28209974 0.03782978 0.01015996

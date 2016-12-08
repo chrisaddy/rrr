@@ -7,7 +7,7 @@
 cva_scores(x, y, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{y}{data frame or matrix of response variables}
 
@@ -17,8 +17,11 @@ cva_scores(x, y, rank = "full", type = "cov", k = 0)
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
+\value{
+list containing: data frame of canonical variate scores of predictor variables; data frame of canonical variate scores of response variables; vector of canonical correlations.
+}
 \description{
-Canonical Variate Scores
+\code{cva_scores} creates linear combinations of predictor and response variables from the coefficients of reduced-rank canonical variate analysis.
 }
 \examples{
 library(dplyr)
@@ -33,5 +36,8 @@ cva_scores(galaxy_x, galaxy_y, rank = 2)
 }
 \references{
 Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
+\seealso{
+\code{\link{cva}}
 }
 

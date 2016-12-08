@@ -7,7 +7,7 @@
 cva_error(x, y, x_new, y_new, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{y}{data frame or matrix of response variables}
 
@@ -21,8 +21,30 @@ cva_error(x, y, x_new, y_new, rank = "full", type = "cov", k = 0)
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
+\value{
+data frame of error.
+}
 \description{
-Error of Reduced-Rank Canonical Variate Analysis
+\code{cva_error} calculates the errors of a canonical-variate regression model built on a training set and applied to a test set.
+}
+\examples{
+set.seed(12345)
+library(dplyr)
+data(COMBO17)
+galaxy <- as_data_frame(COMBO17)
+galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+galaxy <- na.omit(galaxy)
+galaxy_train <- 
+sample_size <- floor(0.66 * nrow(galaxy))
+train_ind <- sample(seq_len(nrow(galaxy)), size = sample_size)
+train <- galaxy[train_ind, ]
+test <- galaxy[-train_ind, ]
+train_x <- select(train, -Rmag:-chi2red)
+train_y <- select(train, Rmag:chi2red)
+test_x <- select(test, -Rmag:-chi2red)
+test_y <- select(test, Rmag:chi2red)
+cva_error(train_x, train_y, test_x, test_y, rank = 2, k = 0.001)
+
 }
 \references{
 Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.

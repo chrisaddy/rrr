@@ -7,7 +7,7 @@
 cva(x, y, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{y}{data frame or matrix of response variables}
 
@@ -17,8 +17,15 @@ cva(x, y, rank = "full", type = "cov", k = 0)
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
+\value{
+list containing: matrix of means; matrix of canonical variate coefficients of predictor variables; matrix of canonical variate coefficients of response variables; vector of canonical correlations.
+}
 \description{
-\code{cva} fits a reduced-rank canonical variate/correlation model.
+\code{cva} fits a reduced-rank canonical variate/correlation model. This is a special case of reduced-rank regression
+with the weight matrix set to the covariance matrix of \eqn{Y}, i.e., \eqn{\mathbf{\Gamma} = \mathbf{\Sigma}_{YY}}.
+Canonical variate analysis creates a set of new predictor variables that are linear combinations of the orignal predictors,
+and a set of new resonse variables that are linear combinations of the original responses, such that each pair of new predictor and new
+response maximizes correlation between the two and all pairs of canonical variates are independent of each other.
 }
 \examples{
 library(dplyr)
@@ -33,5 +40,8 @@ cva(galaxy_x, galaxy_y, rank = 2)
 }
 \references{
 Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+}
+\seealso{
+\code{\link{rrr}}
 }
 

@@ -52,6 +52,7 @@ reference:
   - cva_scores
   - cva_rank_trace
   - cva_pairwise_plot
+  - cva_error
   - cva_residuals
   - cva_residual_plot
   - cva_residual_3D_plot

@@ -1,12 +1,14 @@
 #' Fit Reduced-Rank LDA Model
 #'
-#' \code{lda} fits a reduced-rank linear discriminant analysis model.
+#' \code{lda} fits a reduced-rank linear discriminant analysis model by fitting a reduced-rank canonical variate
+#' model to the predictor variables and a response-indicator matrix.
 #' 
 #' @inheritParams rrr
-#' @param class vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.
-#' @param quadratic `logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.
+#' @param class vector or one-column data frame of type factor or character that are the class labels of the observations.
+#' @param quadratic logical. If \code{TRUE} fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.
 #' 
-#' @return `list` containing: a data frame of class
+#' @return list containing: a named vector of prior probabilities; a data frame of canonical-variate coefficients of the predictor variables;
+#' a data frame of canonical-variate coefficients for the reponse variables.
 #'
 #' @examples
 #' data(iris)
@@ -16,7 +18,6 @@
 #'
 #' @references Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #'
-#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 lda <- function(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE){
@@ -54,15 +55,20 @@ lda <- function(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE)
 
 #' Linear Discriminant Scores
 #'
-#' \code{lda_scores} 
+#' \code{lda_scores} calculates canonical-variate scores. In the case of linear discriminant analysis, the canonical-variate
+#' scores of the predictor variables are the linear discriminant functions evaluated at the values of predictor variables, while the scores for the
+#' response variables correspond to class means.
 #'
 #' @inheritParams lda
+#'
+#' @return list containing: data frame of linear discriminant function scores; data frame of class means.
 #'
 #' @examples
 #' data(iris)
 #' lda_scores(iris[,1:4], iris[,5])
 #'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#'
 #' @export
 
 lda_scores <- function(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE){

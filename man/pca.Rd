@@ -7,7 +7,7 @@
 pca(x, rank = "full", type = "cov", k = 0)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
@@ -15,8 +15,19 @@ pca(x, rank = "full", type = "cov", k = 0)
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 }
+\value{
+list containing: named vector of means; data frame of reduced-rank regression coefficients; data frame of principal components; named matrix of goodness-of-fit statistics for the principal components.
+}
 \description{
-\code{pca} fits reduced-rank principal component analysis model.
+\code{pca} fits a reduced-rank principal component model. This is a special case of reduced-rank
+regression with the weight matrix set the identity, i.e., \eqn{\mathbf{\Gamma} = \mathbf{I}}, and
+response variables set to the predictor variables, i.e, \eqn{\mathbf{X} \equiv \mathbf{Y}}. Principal
+componennt analysis creates a new variable, the first principal component, that is a linear combination
+of the origianl predictor variables that maximizes variance. The second principal component is constructed
+as a linear combination of the original predictor variables while being uncorrelated with the first principal
+component. There are, at most, as many principal components as original predictor variables, each of which are
+uncorrelated with each \code{i}-th principal component capture less variance than the \code{i - 1} principal
+components.
 }
 \examples{
 data(pendigits)

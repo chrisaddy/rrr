@@ -86,10 +86,18 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>rrr_object</dt>
-      <dd>an object of type `list` that contains the means and coefficients of the reduced-rank regression.</dd>
+      <dd>an object of type list that contains the means and coefficients of the reduced-rank regression.</dd>
       <dt>x_new</dt>
       <dd>data frame or matrix of input variables used to predict the response matrix.</dd>
     </dl>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data frame of predicted values of resonse variables.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Izenman, A.J. (2008) <em>Modern Multivariate Statistical Techniques</em>. Springer.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -103,13 +111,27 @@
 <span class='no'>tobacco_test_x</span> <span class='kw'>&lt;-</span> <span class='no'>tobacco_x</span>[-<span class='no'>train_index</span>, ]
 <span class='no'>gamma</span> <span class='kw'>&lt;-</span> <span class='fu'>diag</span>(<span class='fl'>1</span>, <span class='fu'>dim</span>(<span class='no'>tobacco_y</span>)[<span class='fl'>2</span>])
 <span class='no'>tobacco_rrr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rrr.html'>rrr</a></span>(<span class='no'>tobacco_train_x</span>, <span class='no'>tobacco_train_y</span>, <span class='no'>gamma</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'>rrr_predict</span>(<span class='no'>tobacco_rrr</span>, <span class='no'>tobacco_test_x</span>)</div></pre>
+<span class='fu'>rrr_predict</span>(<span class='no'>tobacco_rrr</span>, <span class='no'>tobacco_test_x</span>)</div><div class='output co'>#&gt; # A tibble: 7 × 3
+#&gt;   Y1.BurnRate Y2.PercentSugar Y3.PercentNicotine
+#&gt;         &lt;dbl&gt;           &lt;dbl&gt;              &lt;dbl&gt;
+#&gt; 1    1.465374        23.98723          0.3909981
+#&gt; 2    1.505135        22.59047          0.7327746
+#&gt; 3    1.438942        24.91572          0.1638036
+#&gt; 4    1.479101        23.50503          0.5089896
+#&gt; 5    1.478193        23.53691          0.5011894
+#&gt; 6    1.453997        24.38687          0.2932108
+#&gt; 7    1.447361        24.61999          0.2361666</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

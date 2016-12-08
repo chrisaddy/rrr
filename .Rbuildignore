@@ -1,2 +1,3 @@
 ^\.travis\.yml$
 ^vignettes/visualization\.Rmd$
+^cran-comments\.md$

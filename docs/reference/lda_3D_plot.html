@@ -78,7 +78,7 @@
     </div>
 
     
-    <p><code>lda_3D_plot</code></p>
+    <p><code>lda_3D_plot</code> creates an interactive, html plotly plot that can be manipulated by the viewer.</p>
     
 
     <pre><span class='fu'>lda_3D_plot</span>(<span class='no'>x</span>, <span class='no'>class</span>, <span class='kw'>lda_x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>lda_y</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lda_z</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>,
@@ -87,9 +87,9 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>data frame or matrix of input variables</dd>
+      <dd>data frame or matrix of predictor variables</dd>
       <dt>class</dt>
-      <dd>vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.</dd>
+      <dd>vector or one-column data frame of type factor or character that are the class labels of the observations.</dd>
       <dt>lda_x</dt>
       <dd>integer. Linear discriminant function plotted along the x-axis.</dd>
       <dt>lda_y</dt>
@@ -103,10 +103,14 @@
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
       <dt>quadratic</dt>
-      <dd>`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.</dd>
+      <dd>logical. If <code>TRUE</code> fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.</dd>
       <dt>point_size</dt>
       <dd>size of points in scatter</dd>
     </dl>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>plotly object.</p>
     
 
   </div>
@@ -114,7 +118,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

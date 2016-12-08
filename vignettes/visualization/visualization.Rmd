@@ -154,10 +154,6 @@ cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 2, interactive = TRUE)
 cva_residual_plot(galaxy_x, galaxy_y, rank = 2)
 ```
 
-```{r}
-cva_residual_plot(galaxy_x, galaxy_y, rank = 2, interactive = TRUE)
-```
-
 ## CVA 3D Residuals Plots
 
 ```{r}

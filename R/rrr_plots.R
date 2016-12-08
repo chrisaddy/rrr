@@ -14,10 +14,10 @@ delta_coeff <- function(x, y, gamma_matrix, type = "cov", k = 0){
 
 delta_error <- function(x, y, gamma_matrix, type = "cov", k = 0){
 	full_rank <- min(dim(x)[2], dim(y)[2])
-	resid_full <- cov(rrr_residuals(x, y, gamma_matrix, full_rank, type, k))
+	resid_full <- cov(rrr_residual(x, y, gamma_matrix, full_rank, type, k))
 	delta_resid_norm <- c()
 	for(i in 1:full_rank){
-		delta_resid_norm[i] <- sqrt(sum((resid_full - cov(rrr_residuals(x, y, gamma_matrix, i, type, k)))^2))
+		delta_resid_norm[i] <- sqrt(sum((resid_full - cov(rrr_residual(x, y, gamma_matrix, i, type, k)))^2))
 	}
 	delta_EE <- delta_resid_norm / sqrt(sum((resid_full - cov(y))^2))
 	data_frame(dEE = c(1, delta_EE))
@@ -25,7 +25,8 @@ delta_error <- function(x, y, gamma_matrix, type = "cov", k = 0){
 
 #' Rank Trace Plot
 #'
-#' Plot of rank trace to determine suitable rank of coefficient matrix.
+#' \code{rank_trace} is a plot used to determine the effective dimensionality, i.e., \eqn{t = \mathrm{rank}\left(\mathbf{C}\right)},
+#' of the reduced-rank regression equation.
 #'
 #' @inheritParams rrr
 #' @param plot if FALSE, returns data frame of rank trace coordinates. 
@@ -42,6 +43,7 @@ delta_error <- function(x, y, gamma_matrix, type = "cov", k = 0){
 #' rank_trace(tobacco_x, tobacco_y, gamma, plot = FALSE)
 #'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#'
 #' @export
 
 rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0, plot = TRUE, interactive = FALSE){
@@ -67,28 +69,28 @@ rank_trace <- function(x, y, gamma_matrix, type = "cov", k = 0, plot = TRUE, int
 		}
 	}
 				 
-#' RRR Residuals Plots
+#' Plot Residuals of Reduced-Rank Regression
 #' 
-#' \code{rrr_residuals_plot}
-#' 
+#' \code{rrr_residual_plot} is a scatter plot matrix used for diagnostics of the reduced-rank regression model.
 #' @inheritParams rrr
 #'
-#' @return plot
+#' @return ggplot object, scatterplot matrix.
 #'
 #' @examples
 #' data(tobacco)
 #' tobacco_x <- tobacco[,4:9]
 #' tobacco_y <- tobacco[,1:3]
 #' gamma <- diag(1, dim(tobacco_y)[2])
-#' rrr_residuals_plot(tobacco_x, tobacco_y, gamma)
+#' rrr_residual_plot(tobacco_x, tobacco_y, gamma)
 #' gamma2 <- solve(cov(tobacco_y))
-#' rrr_residuals_plot(tobacco_x, tobacco_y, gamma2)
+#' rrr_residual_plot(tobacco_x, tobacco_y, gamma2)
 #'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#'
 #' @export
 
-rrr_residuals_plot <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
-	residuals <- rrr_residuals(x, y, gamma_matrix, rank, type, k)
+rrr_residual_plot <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
+	residuals <- rrr_residual(x, y, gamma_matrix, rank, type, k)
 	index <- dplyr::as_data_frame(1:dim(residuals)[1])
 	names(index) <- "index"
 	df <- bind_cols(index, residuals)

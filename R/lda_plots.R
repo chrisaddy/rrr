@@ -1,11 +1,15 @@
 #' LDA Pairwise Plot
 #'
-#' lda_pairwise_plot()
+#' \code{lda_pairwise_plot} creates a plot with the linear discriminant scores of one linear discriminant
+#' function along the \eqn{X}-axis against the linear discriminant scores of another linear discriminant function
+#' alonge the \code{Y}-axis.
 #'
 #' @inheritParams lda_scores
 #' @inheritParams pca_pairwise_plot
 #' @param lda_x integer. Linear discriminant function plotted along the x-axis.
 #' @param lda_y integer. Linear discriminant function plotted along the y-axis.
+#'
+#' @return ggplot object if \code{interactive = FALSE}, the default, or an interactive plotly plot if \code{interactive = TRUE}.
 #'
 #' @examples
 #' data(iris)
@@ -14,10 +18,12 @@
 #' lda_pairwise_plot(iris_x, iris_y)
 #'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#'
 #' @export
 
 lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", type = "cov", k = 0, quadratic = FALSE, interactive = FALSE){
 	#class <- as_data_frame(factor(as_data_frame(class)[[1]]))
+	scores_x <- scores_y <- NULL
 	scores_object <- lda_scores(x, class, rank, type, k, quadratic)
 	scores <- scores_object[["scores"]]
 	scores_x_axis <- scores[,lda_x]
@@ -31,14 +37,14 @@ lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", typ
 	means_class <- means[, dim(means)[2]]
 	means_df <- dplyr::bind_cols(means_x_axis, means_y_axis, means_class)
 	names(means_df) <- c("means_x", "means_y", "class")
-	static_plot <- ggplot() +
+	static_plot <- return(ggplot() +
 		geom_point(data = scores_df, aes(x = scores_x, y = scores_y, color = class)) + 
 		#geom_text(data = means_df, aes(x = means_x,
 		#					     	    y = means_y,
 		#					     	    label = abbreviate(class))) + 
 		labs(title = "LD Pairwise Plot",
 			 x = paste("LD", lda_x, sep = ""),
-			 y = paste("LD", lda_y, sep = ""))
+			 y = paste("LD", lda_y, sep = "")))
 	if(interactive == TRUE){
 		plotly::ggplotly(static_plot)
 	} else {
@@ -48,13 +54,14 @@ lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", typ
 
 #' LDA 3D Plot
 #'
-#' \code{lda_3D_plot}
+#' \code{lda_3D_plot} creates an interactive, html plotly plot that can be manipulated by the viewer. 
 #'
 #' @inheritParams lda_pairwise_plot
 #' @inheritParams pca_3D_plot
 #' @param lda_z integer. Linear discriminant function plotted along the z-axis.
+#'
+#' @return plotly object.
 #' 
-#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
 
 lda_3D_plot <- function(x, class, lda_x = 1, lda_y = 2, lda_z = 3, rank = "full", type = "cov", k = 0, quadratic = FALSE, point_size = 3){

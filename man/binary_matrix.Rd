@@ -7,7 +7,7 @@
 binary_matrix(class)
 }
 \arguments{
-\item{class}{vector or data frame of type `character`}
+\item{class}{vector or data frame of type character}
 }
 \value{
 matrix of binary indicator matrix where each column represents

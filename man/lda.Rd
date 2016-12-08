@@ -7,9 +7,9 @@
 lda(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
-\item{class}{vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.}
+\item{class}{vector or one-column data frame of type factor or character that are the class labels of the observations.}
 
 \item{rank}{of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.}
 
@@ -17,13 +17,15 @@ lda(x, class, rank = "full", type = "cov", k = 0, quadratic = FALSE)
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 
-\item{quadratic}{`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
+\item{quadratic}{logical. If \code{TRUE} fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
 }
 \value{
-`list` containing: a data frame of class
+list containing: a named vector of prior probabilities; a data frame of canonical-variate coefficients of the predictor variables;
+a data frame of canonical-variate coefficients for the reponse variables.
 }
 \description{
-\code{lda} fits a reduced-rank linear discriminant analysis model.
+\code{lda} fits a reduced-rank linear discriminant analysis model by fitting a reduced-rank canonical variate
+model to the predictor variables and a response-indicator matrix.
 }
 \examples{
 data(iris)
@@ -34,7 +36,5 @@ lda(iris_x, iris_y)
 }
 \references{
 Izenman, A. J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
-
-Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }
 

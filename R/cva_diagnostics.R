@@ -1,7 +1,29 @@
 #' Error of Reduced-Rank Canonical Variate Analysis
 #'
+#' \code{cva_error} calculates the errors of a canonical-variate regression model built on a training set and applied to a test set.
+#'
 #' @inheritParams cva
 #' @inheritParams rrr_error
+#'
+#' @return data frame of error.
+#'
+#' @examples
+#' set.seed(12345)
+#' library(dplyr)
+#' data(COMBO17)
+#' galaxy <- as_data_frame(COMBO17)
+#' galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
+#' galaxy <- na.omit(galaxy)
+#' galaxy_train <- 
+#' sample_size <- floor(0.66 * nrow(galaxy))
+#' train_ind <- sample(seq_len(nrow(galaxy)), size = sample_size)
+#' train <- galaxy[train_ind, ]
+#' test <- galaxy[-train_ind, ]
+#' train_x <- select(train, -Rmag:-chi2red)
+#' train_y <- select(train, Rmag:chi2red)
+#' test_x <- select(test, -Rmag:-chi2red)
+#' test_y <- select(test, Rmag:chi2red)
+#' cva_error(train_x, train_y, test_x, test_y, rank = 2, k = 0.001)
 #'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 #' @export
@@ -16,9 +38,11 @@ cva_error <- function(x, y, x_new, y_new, rank = "full", type = "cov", k = 0){
 
 #' Residuals of Reduced-Rank Canonical Variate Analysis
 #'
-#' \code{cva_residuals} returns the multivariate residuals of the reduced-rank CVA regression
+#' \code{cva_residual} returns the multivariate residuals of the reduced-rank CVA regression.
 #'
 #' @inheritParams cva
+#'
+#' @return data frame of residuals.
 #'
 #' @examples
 #' library(dplyr)
@@ -28,32 +52,33 @@ cva_error <- function(x, y, x_new, y_new, rank = "full", type = "cov", k = 0){
 #' galaxy <- na.omit(galaxy)
 #' galaxy_x <- select(galaxy, -Rmag:-chi2red)
 #' galaxy_y <- select(galaxy, Rmag:chi2red)
-#' cva_residuals(galaxy_x, galaxy_y, rank = 2, k = 0.001)
+#' cva_residual(galaxy_x, galaxy_y, rank = 2, k = 0.001)
 #'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#'
 #' @export
 
-cva_residuals <- function(x, y, rank = "full", type = "cov", k = 0){
+cva_residual <- function(x, y, rank = "full", type = "cov", k = 0){
 	cva_error(x, y, x, y, rank, type, k)	
 }
 
-identity_rank <- function(rank){
-	diag(1, rank)
-}
+# identity_rank <- function(rank){
+# 	diag(1, rank)
+# }
 
-lambda_rank <- function(x, y, rank, k = 0){
-	cov_x <- cov(x) + k * diag(dim(x)[2])
-	cov_y <- cov(y) + k * diag(dim(y)[2])
-	cov_xy <- cov(x, y)
-	cov_yx <- t(cov_xy)
-	r_star <- solve(sqrt_matrix(cov_x)) %*%
-		cov_xy %*%
-		solve(cov_y) %*%
-		cov_yx %*%
-		solve(sqrt_matrix(cov_x)) 
-	eigens <- Re(eigen(r_star)[["values"]])[1:rank]
-	diag(eigens)
-}
+# lambda_rank <- function(x, y, rank, k = 0){
+# 	cov_x <- cov(x) + k * diag(dim(x)[2])
+# 	cov_y <- cov(y) + k * diag(dim(y)[2])
+# 	cov_xy <- cov(x, y)
+# 	cov_yx <- t(cov_xy)
+# 	r_star <- solve(sqrt_matrix(cov_x)) %*%
+# 		cov_xy %*%
+# 		solve(cov_y) %*%
+# 		cov_yx %*%
+# 		solve(sqrt_matrix(cov_x)) 
+# 	eigens <- Re(eigen(r_star)[["values"]])[1:rank]
+# 	diag(eigens)
+# }
 
 #' Canonical Covariance Matrix
 #'
@@ -66,24 +91,24 @@ lambda_rank <- function(x, y, rank, k = 0){
 #'
 #'
 
-canonical_cov <- function(x, y, rank = "full", k = 0){
-	full_rank <- min(dim(x)[2], dim(y)[2])
-        	if(rank == "full"){
-                	reduce_rank <- full_rank
-        	} else if(rank <= full_rank){
-                	reduce_rank <- rank
-        	} else {
-                	stop("rank out of bounds")
-        	}
-	lambda <- lambda_rank(x, y, reduce_rank, k)
-	identity <- identity_rank(reduce_rank)
-	cov_mat <- rbind(cbind(lambda, lambda), cbind(lambda, identity))
-	mat_names <-c(paste("xi", 1:reduce_rank, sep = ""),
-		      paste("omega", 1:reduce_rank, sep = ""))
-	rownames(cov_mat) <- mat_names
-	colnames(cov_mat) <- mat_names
-	cov_mat 		
-}
+#canonical_cov <- function(x, y, rank = "full", k = 0){
+#	full_rank <- min(dim(x)[2], dim(y)[2])
+#        	if(rank == "full"){
+#                	reduce_rank <- full_rank
+#        	} else if(rank <= full_rank){
+#                	reduce_rank <- rank
+#        	} else {
+#                	stop("rank out of bounds")
+#        	}
+#	lambda <- lambda_rank(x, y, reduce_rank, k)
+#	identity <- identity_rank(reduce_rank)
+#	cov_mat <- rbind(cbind(lambda, lambda), cbind(lambda, identity))
+#	mat_names <-c(paste("xi", 1:reduce_rank, sep = ""),
+#		      paste("omega", 1:reduce_rank, sep = ""))
+#	rownames(cov_mat) <- mat_names
+#	colnames(cov_mat) <- mat_names
+#	cov_mat 		
+#}
 
 #' Canonical Correlation Matrix
 #'
@@ -93,21 +118,21 @@ canonical_cov <- function(x, y, rank = "full", k = 0){
 #'
 #'
 
-canonical_corr <- function(x, y, rank = "full", type = "cov", k = 0){
-	full_rank <- min(dim(x)[2], dim(y)[2])
-        	if(rank == "full"){
-                	reduce_rank <- full_rank
-        	} else if(rank <= full_rank){
-                	reduce_rank <- rank
-        	} else {
-                	stop("rank out of bounds")
-        	}
-	identity <- identity_rank(reduce_rank)
-	lambda <- sqrt(lambda_rank(x, y, reduce_rank, k))
-	cov_mat <- rbind(cbind(identity, lambda), cbind(lambda, identity))
-	mat_names <-c(paste("xi", 1:reduce_rank, sep = ""),
-		      paste("omega", 1:reduce_rank, sep = ""))
-	rownames(cov_mat) <- mat_names
-	colnames(cov_mat) <- mat_names
-	cov_mat
-}
+#canonical_corr <- function(x, y, rank = "full", type = "cov", k = 0){
+#	full_rank <- min(dim(x)[2], dim(y)[2])
+#        	if(rank == "full"){
+#                	reduce_rank <- full_rank
+#        	} else if(rank <= full_rank){
+#                	reduce_rank <- rank
+#        	} else {
+#                	stop("rank out of bounds")
+#        	}
+#	identity <- identity_rank(reduce_rank)
+#	lambda <- sqrt(lambda_rank(x, y, reduce_rank, k))
+#	cov_mat <- rbind(cbind(identity, lambda), cbind(lambda, identity))
+#	mat_names <-c(paste("xi", 1:reduce_rank, sep = ""),
+#		      paste("omega", 1:reduce_rank, sep = ""))
+#	rownames(cov_mat) <- mat_names
+#	colnames(cov_mat) <- mat_names
+#	cov_mat
+#}

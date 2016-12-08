@@ -87,14 +87,14 @@ train <- function(rank, k){
 
 ## Diagnostics
 
-### Calculate residuals with `cva_residuals()`
+### Calculate residuals with `cva_residual()`
 
 ```{r}
-args(cva_residuals)
+args(cva_residual)
 ```
 
 ```{r}
-cva_residuals(galaxy_x, galaxy_y, rank = 2, k = 0.001)
+cva_residual(galaxy_x, galaxy_y, rank = 2, k = 0.001)
 ```
 
 ### Plot Residuals with `cva_residual_plot()`

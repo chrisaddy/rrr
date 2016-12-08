@@ -7,9 +7,12 @@
 rrr_predict(rrr_object, x_new)
 }
 \arguments{
-\item{rrr_object}{an object of type `list` that contains the means and coefficients of the reduced-rank regression.}
+\item{rrr_object}{an object of type list that contains the means and coefficients of the reduced-rank regression.}
 
 \item{x_new}{data frame or matrix of input variables used to predict the response matrix.}
+}
+\value{
+data frame of predicted values of resonse variables.
 }
 \description{
 \code{rrr_predict} predicts a matrix of responses from the coefficients of a \code{rrr} object.

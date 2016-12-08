@@ -8,9 +8,9 @@ lda_pairwise_plot(x, class, lda_x = 1, lda_y = 2, rank = "full",
   type = "cov", k = 0, quadratic = FALSE, interactive = FALSE)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
-\item{class}{vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.}
+\item{class}{vector or one-column data frame of type factor or character that are the class labels of the observations.}
 
 \item{lda_x}{integer. Linear discriminant function plotted along the x-axis.}
 
@@ -22,12 +22,17 @@ lda_pairwise_plot(x, class, lda_x = 1, lda_y = 2, rank = "full",
 
 \item{k}{small constant to add to the ridge of covariance matrices to avoid singularity.}
 
-\item{quadratic}{`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
+\item{quadratic}{logical. If \code{TRUE} fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.}
 
 \item{interactive}{logical. If \code{TRUE} prints an interactive Plotly graphic.}
 }
+\value{
+ggplot object if \code{interactive = FALSE}, the default, or an interactive plotly plot if \code{interactive = TRUE}.
+}
 \description{
-lda_pairwise_plot()
+\code{lda_pairwise_plot} creates a plot with the linear discriminant scores of one linear discriminant
+function along the \eqn{X}-axis against the linear discriminant scores of another linear discriminant function
+alonge the \code{Y}-axis.
 }
 \examples{
 data(iris)

@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Canonical Variate Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-12-06</h4>
+            <h4 class="date">2016-12-08</h4>
           </div>
 
     
@@ -131,12 +131,12 @@ test_galaxy_y &lt;-<span class="st"> </span>galaxy_y[-train_index, ]</code></pre
 </div>
 <div id="diagnostics" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#diagnostics" class="anchor"> </a></body></html>Diagnostics</h2>
-<div id="calculate-residuals-with-cva_residuals" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#calculate-residuals-with-cva_residuals" class="anchor"> </a></body></html>Calculate residuals with <code><a href="../reference/cva_residuals.html">cva_residuals()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(cva_residuals)</code></pre></div>
+<div id="calculate-residuals-with-cva_residual" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#calculate-residuals-with-cva_residual" class="anchor"> </a></body></html>Calculate residuals with <code><a href="../reference/cva_residual.html">cva_residual()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(cva_residual)</code></pre></div>
 <pre><code>## function (x, y, rank = "full", type = "cov", k = 0) 
 ## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cva_residuals.html">cva_residuals</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">2</span>, <span class="dt">k =</span> <span class="fl">0.001</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cva_residual.html">cva_residual</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">2</span>, <span class="dt">k =</span> <span class="fl">0.001</span>)</code></pre></div>
 <pre><code>## # A tibble: 3,462 &times; 3
 ##    index        CV1        CV2
 ##    &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;
@@ -155,7 +155,6 @@ test_galaxy_y &lt;-<span class="st"> </span>galaxy_y[-train_index, ]</code></pre
 <div id="plot-residuals-with-cva_residual_plot" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#plot-residuals-with-cva_residual_plot" class="anchor"> </a></body></html>Plot Residuals with <code><a href="../reference/cva_residual_plot.html">cva_residual_plot()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cva_residual_plot.html">cva_residual_plot</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">2</span>, <span class="dt">k =</span> <span class="fl">0.001</span>)</code></pre></div>
-<p><img src="cva_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div id="plot-pairwise-canonical-variate-scores-with-cva_pairwise_plot" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#plot-pairwise-canonical-variate-scores-with-cva_pairwise_plot" class="anchor"> </a></body></html>Plot Pairwise Canonical Variate Scores with <code><a href="../reference/cva_pairwise_plot.html">cva_pairwise_plot()</a></code></h3>
@@ -178,13 +177,13 @@ test_galaxy_y &lt;-<span class="st"> </span>galaxy_y[-train_index, ]</code></pre
 ## NULL</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/cva.html">cva</a></span>(galaxy_x, galaxy_y, <span class="dt">rank =</span> <span class="dv">2</span>, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
 <pre><code>## $mean
-##           [,1]
-## [1,] 28.388670
-## [2,]  1.087370
-## [3,] 26.721374
-## [4,] -1.166768
-## [5,] -1.025344
-## [6,]  2.080132
+##              [,1]
+## Rmag    28.388670
+## ApDRmag  1.087370
+## mumax   26.721374
+## Mcz     -1.166768
+## MCzml   -1.025344
+## chi2red  2.080132
 ## 
 ## $G
 ##            UjMAG       BjMAG      VjMAG      usMAG       gsMAG      rsMAG

@@ -7,7 +7,7 @@
 pca_gof(x)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 }
 \description{
 \code{pca_gof} is a measure of the goodness of fit of the \eqn{i}th principal component.

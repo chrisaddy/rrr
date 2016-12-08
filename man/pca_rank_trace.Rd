@@ -7,7 +7,7 @@
 pca_rank_trace(x, type = "cov", k = 0, plot = TRUE, interactive = FALSE)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{type}{the format of the covariance matrix. \code{type = "cov"} runs the regression using the mean-centered covariance matrix. \code{type = "cor"} runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.}
 
@@ -17,8 +17,13 @@ pca_rank_trace(x, type = "cov", k = 0, plot = TRUE, interactive = FALSE)
 
 \item{interactive}{if TRUE, creates an interactive plotly graphic.}
 }
+\value{
+ggplot object if \code{plot = TRUE}, a data frame of rank trace coordinates if \code{plot = FALSE},
+or an interactive plotly object if \code{interactive = TRUE}.
+}
 \description{
-Plot of rank trace to determine number of principle components to use in reduced-rank principal component analysis.
+\code{pca_rank_trace} is a plot used to determine the effective dimensionality, i.e., \eqn{t = \mathrm{rank}\left(\mathbf{C}\right)},
+of the reduced-rank regression equation, or the number of principal components to be used in the model.
 }
 \examples{
 data(pendigits)
@@ -31,6 +36,6 @@ pca_rank_trace(digits_features, plot = FALSE)
 Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
 }
 \seealso{
-\code{\link{rank_trace}} \code{\link{cva_rank_trace}}
+\code{\link{rank_trace}}
 }
 

@@ -78,7 +78,15 @@
     </div>
 
     
-    <p><code>pca</code> fits reduced-rank principal component analysis model.</p>
+    <p><code>pca</code> fits a reduced-rank principal component model. This is a special case of reduced-rank
+regression with the weight matrix set the identity, i.e., \(\mathbf{\Gamma} = \mathbf{I}\), and
+response variables set to the predictor variables, i.e, \(\mathbf{X} \equiv \mathbf{Y}\). Principal
+componennt analysis creates a new variable, the first principal component, that is a linear combination
+of the origianl predictor variables that maximizes variance. The second principal component is constructed
+as a linear combination of the original predictor variables while being uncorrelated with the first principal
+component. There are, at most, as many principal components as original predictor variables, each of which are
+uncorrelated with each <code>i</code>-th principal component capture less variance than the <code>i - 1</code> principal
+components.</p>
     
 
     <pre><span class='fu'>pca</span>(<span class='no'>x</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
@@ -86,7 +94,7 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>data frame or matrix of input variables</dd>
+      <dd>data frame or matrix of predictor variables</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
       <dt>type</dt>
@@ -94,6 +102,10 @@
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
     </dl>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>list containing: named vector of means; data frame of reduced-rank regression coefficients; data frame of principal components; named matrix of goodness-of-fit statistics for the principal components.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -104,20 +116,16 @@
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>pendigits</span>)
 <span class='no'>digits_features</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[, -<span class='fl'>35</span>:-<span class='fl'>36</span>]
 <span class='fu'>pca</span>(<span class='no'>digits_features</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; $means
-#&gt; # A tibble: 34 × 1
-#&gt;       value
-#&gt; *     &lt;dbl&gt;
-#&gt; 1  38.81432
-#&gt; 2  85.12027
-#&gt; 3  40.60562
-#&gt; 4  83.77420
-#&gt; 5  49.77038
-#&gt; 6  65.57314
-#&gt; 7  51.22025
-#&gt; 8  44.49900
-#&gt; 9  56.86854
-#&gt; 10 33.69596
-#&gt; # ... with 24 more rows
+#&gt;        V1        V2        V3        V4        V5        V6        V7        V8 
+#&gt; 38.814320 85.120269 40.605622 83.774199 49.770378 65.573144 51.220251 44.498999 
+#&gt;        V9       V10       V11       V12       V13       V14       V15       V16 
+#&gt; 56.868541 33.695961 60.516376 34.826510 55.022289 34.937045 47.287482 28.845342 
+#&gt;       V17       V18       V19       V20       V21       V22       V23       V24 
+#&gt;  4.431587  5.341794 38.814320 85.120269 40.605622 83.774199 49.770378 65.573144 
+#&gt;       V25       V26       V27       V28       V29       V30       V31       V32 
+#&gt; 51.220251 44.498999 56.868541 33.695961 60.516376 34.826510 55.022289 34.937045 
+#&gt;       V33       V34 
+#&gt; 47.287482 28.845342 
 #&gt; 
 #&gt; $C
 #&gt; # A tibble: 34 × 34
@@ -154,6 +162,10 @@
 #&gt; 9  -0.11746249 -0.263105908  0.21532196
 #&gt; 10 -0.14441246 -0.150734547  0.19065755
 #&gt; # ... with 24 more rows
+#&gt; 
+#&gt; $goodness_of_fit
+#&gt;       PC1       PC2       PC3 
+#&gt; 0.7168777 0.4680599 0.3144671 
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
@@ -162,6 +174,8 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>

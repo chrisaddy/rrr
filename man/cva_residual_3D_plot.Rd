@@ -8,7 +8,7 @@ cva_residual_3D_plot(x, y, cva_x = 1, cva_y = 2, cva_z = 3,
   rank = "full", type = "cov", k = 0, point_size = 3)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{y}{data frame or matrix of response variables}
 
@@ -26,10 +26,10 @@ cva_residual_3D_plot(x, y, cva_x = 1, cva_y = 2, cva_z = 3,
 
 \item{point_size}{size of points in scatter.}
 }
-\description{
-3D Plot of Residuals for Reduced-Rank CVA
+\value{
+plotly object.
 }
-\references{
-Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+\description{
+\code{cva_residual_3D_plot} creates an interactive, html plotly plot that can be manipulated by the viewer.
 }
 

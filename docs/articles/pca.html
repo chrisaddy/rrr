@@ -38,7 +38,7 @@
       <h1><code>rrr</code> for Principal Component Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-12-06</h4>
+            <h4 class="date">2016-12-08</h4>
           </div>
 
     
@@ -203,20 +203,16 @@ digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 
 digits_pca</code></pre></div>
 <pre><code>## $means
-## # A tibble: 33 &times; 1
-##       value
-## *     &lt;dbl&gt;
-## 1  38.81432
-## 2  85.12027
-## 3  40.60562
-## 4  83.77420
-## 5  51.22025
-## 6  44.49900
-## 7  56.86854
-## 8  33.69596
-## 9  60.51638
-## 10 34.82651
-## # ... with 23 more rows
+##        V1        V2        V3        V4        V7        V8        V9 
+## 38.814320 85.120269 40.605622 83.774199 51.220251 44.498999 56.868541 
+##       V10       V11       V12       V13       V14       V15       V16 
+## 33.695961 60.516376 34.826510 55.022289 34.937045 47.287482 28.845342 
+##       V17       V18       V19       V20       V21       V22       V23 
+##  4.431587  5.341794 38.814320 85.120269 40.605622 83.774199 49.770378 
+##       V24       V25       V26       V27       V28       V29       V30 
+## 65.573144 51.220251 44.498999 56.868541 33.695961 60.516376 34.826510 
+##       V31       V32       V33       V34       V35 
+## 55.022289 34.937045 47.287482 28.845342  4.431587 
 ## 
 ## $C
 ## # A tibble: 33 &times; 33
@@ -253,7 +249,11 @@ digits_pca</code></pre></div>
 ## 8  -0.19770634  0.07599867  0.19076660
 ## 9  -0.22435733  0.32701486 -0.05355998
 ## 10  0.05637675  0.21559127  0.20522769
-## # ... with 23 more rows</code></pre>
+## # ... with 23 more rows
+## 
+## $goodness_of_fit
+##       PC1       PC2       PC3 
+## 0.7142694 0.4688514 0.3078668</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally::<span class="kw">ggcorr</span>(digits_pca)</code></pre></div>
 <p><img src="pca_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>

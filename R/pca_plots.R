@@ -1,8 +1,12 @@
 #' PCA Rank Trace Plot
 #'
-#' Plot of rank trace to determine number of principle components to use in reduced-rank principal component analysis.
+#' \code{pca_rank_trace} is a plot used to determine the effective dimensionality, i.e., \eqn{t = \mathrm{rank}\left(\mathbf{C}\right)},
+#' of the reduced-rank regression equation, or the number of principal components to be used in the model.
 #'
 #' @inheritParams rank_trace
+#'
+#' @return ggplot object if \code{plot = TRUE}, a data frame of rank trace coordinates if \code{plot = FALSE},
+#' or an interactive plotly object if \code{interactive = TRUE}.
 #'
 #' @examples
 #' data(pendigits)
@@ -10,9 +14,10 @@
 #' pca_rank_trace(digits_features)
 #' pca_rank_trace(digits_features, plot = FALSE)
 #'
-#' @seealso \code{\link{rank_trace}} \code{\link{cva_rank_trace}}
+#' @seealso \code{\link{rank_trace}}
 #' 
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#'
 #' @export
 
 pca_rank_trace <- function(x, type = "cov", k = 0, plot = TRUE, interactive = FALSE){
@@ -65,7 +70,8 @@ pca_pairwise <- function(x, pca_x, pca_y, rank = "full", type = "cov"){
 
 #' PC Pairwise Plot
 #'
-#' \code{pca_pairwise_plot} plots the scores of one principal component against the scores of another in a two-dimensional scatterplot.
+#' \code{pca_pairwise_plot} plots the scores of one principal component along the \eqn{X}-axis 
+#' against the scores of another along the \eqn{Y}-axis in a two-dimensional scatterplot.
 #'
 #' @inheritParams pca
 #' @param pc_x principal component for the x-axis
@@ -74,6 +80,8 @@ pca_pairwise <- function(x, pca_x, pca_y, rank = "full", type = "cov"){
 #' @param interactive logical. If \code{TRUE} prints an interactive Plotly graphic.
 #' @param point_size size of points in scatter
 #'
+#' @return ggplot object if \code{interactive = FALSE}, the default, or an interactive plotly plot if \code{interactive = TRUE}.
+#'
 #' @examples
 #' data(pendigits)
 #' digits_features <- pendigits[,1:34]
@@ -81,6 +89,7 @@ pca_pairwise <- function(x, pca_x, pca_y, rank = "full", type = "cov"){
 #' pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3)
 #'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#'
 #' @export
  
 pca_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", type = "cov", interactive = FALSE, point_size = 2.5){
@@ -132,9 +141,9 @@ pca_threewise <- function(x, pca_x, pca_y, pca_z, rank = "full", type = "cov"){
 
 #' 3D Principal Component Plot
 #'
-#' code{pca_3D_plot}
+#' \code{pca_3D_plot} creates an interactive, html plotly plot that can be manipulated by the viewer.
 #'
-#' @param x data frame or matrix of predictor variables
+#' @inheritParams pca
 #' @param pca_x integer number of the principal component used for the x-axis
 #' @param pca_y integer number of the principal component used for the y-axis
 #' @param pca_z integer number of the principal component used for the z-axis
@@ -143,11 +152,17 @@ pca_threewise <- function(x, pca_x, pca_y, pca_z, rank = "full", type = "cov"){
 #' @param type type of covariance matrix
 #' @param point_size size of points in scatter
 #'
-#' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#' @return plotly object.
+#'
+#'
 #' @export
 
-pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = NULL, rank = "full", type = "cov", point_size = 3){
-    class <- dplyr::as_data_frame(class_labels)
+pca_3D_plot <- function(x, pca_x = 1, pca_y = 2, pca_z = 3, class_labels = "none", rank = "full", type = "cov", point_size = 3){
+    if(class_labels == "none"){
+        class <- dplyr::as_data_frame(rep("class = none", dim(x)[1]))
+    } else {
+        class <- dplyr::as_data_frame(class_labels)
+    }
     threes <- pca_threewise(x, pca_x, pca_y, pca_z, rank, type)
     threes_tbl <- bind_cols(threes, class)
     #names(threes_tbl) <- c(paste("PC", pca_x, sep = ""),

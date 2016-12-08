@@ -78,7 +78,8 @@
     </div>
 
     
-    <p><code>lda</code> fits a reduced-rank linear discriminant analysis model.</p>
+    <p><code>lda</code> fits a reduced-rank linear discriminant analysis model by fitting a reduced-rank canonical variate
+model to the predictor variables and a response-indicator matrix.</p>
     
 
     <pre><span class='fu'>lda</span>(<span class='no'>x</span>, <span class='no'>class</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>quadratic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -86,9 +87,9 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>data frame or matrix of input variables</dd>
+      <dd>data frame or matrix of predictor variables</dd>
       <dt>class</dt>
-      <dd>vector or one-column data frame of type `factor` or `character` that are the class labels of the observations.</dd>
+      <dd>vector or one-column data frame of type factor or character that are the class labels of the observations.</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
       <dt>type</dt>
@@ -96,12 +97,13 @@
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
       <dt>quadratic</dt>
-      <dd>`logical`. If `TRUE` fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.</dd>
+      <dd>logical. If <code>TRUE</code> fits a reduced-rank linear discriminant model on an expanded feature space that includes all the input variables, their squares, and all of pairwise cross-products.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>`list` containing: a data frame of class</p>
+    <p>list containing: a named vector of prior probabilities; a data frame of canonical-variate coefficients of the predictor variables;
+a data frame of canonical-variate coefficients for the reponse variables.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

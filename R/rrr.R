@@ -2,7 +2,7 @@
 #'
 #' \code{rrr} fits a reduced-rank regression model.
 #'
-#' @param x data frame or matrix of input variables
+#' @param x data frame or matrix of predictor variables
 #' @param y data frame or matrix of response variables
 #' @param gamma_matrix weight matrix
 #' @param rank of the coefficient matrix to estimate. Default \code{rank = full} prodcues the standard multivariate regression technique.
@@ -19,6 +19,7 @@
 #' rrr(tobacco_x, tobacco_y, gamma, rank = 1)
 #'
 #' @references Izenman, A.J. (2008) \emph{Modern Multivariate Statistical Techniques}. Springer.
+#'
 #' @export
 
 rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
@@ -45,6 +46,7 @@ rrr <- function(x, y, gamma_matrix, rank = "full", type = "cov", k = 0){
 	V_t <- eigens[["vectors"]][,1:reduce_rank] %>%
 		as.matrix(ncol = reduce_rank)
 	A_t <- solve(sqrtm) %*% V_t
+	rownames(A_t) <- names(y)
 	B_t <- t(V_t) %*%
 		sqrtm %*%
 		cov_yx %*%

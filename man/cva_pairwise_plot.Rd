@@ -8,7 +8,7 @@ cva_pairwise_plot(x, y, cv_pair = 1, type = "cov", k = 0,
   interactive = TRUE)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{y}{data frame or matrix of response variables}
 
@@ -20,8 +20,12 @@ cva_pairwise_plot(x, y, cv_pair = 1, type = "cov", k = 0,
 
 \item{interactive}{if TRUE, creates an interactive plotly graphic.}
 }
+\value{
+ggplot object if \code{interactive = FALSE}, the default, or an interactive plotly plot if \code{interactive = TRUE}.
+}
 \description{
-Pairwise Canonical Variates Plot
+For a given canonical-variate pair, \code{cva_pairwise_plot} produces a scatter plot with the canonical variate scores of the predictor
+variables along the \eqn{X}-axis against the canonical-variate scores of the response variables along the \code{Y}-axis.
 }
 \examples{
 library(dplyr)

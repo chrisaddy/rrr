@@ -8,7 +8,7 @@ pca_pairwise_plot(x, pc_x = 1, pc_y = 2, class_labels = NULL,
   rank = "full", type = "cov", interactive = FALSE, point_size = 2.5)
 }
 \arguments{
-\item{x}{data frame or matrix of input variables}
+\item{x}{data frame or matrix of predictor variables}
 
 \item{pc_x}{principal component for the x-axis}
 
@@ -24,8 +24,12 @@ pca_pairwise_plot(x, pc_x = 1, pc_y = 2, class_labels = NULL,
 
 \item{point_size}{size of points in scatter}
 }
+\value{
+ggplot object if \code{interactive = FALSE}, the default, or an interactive plotly plot if \code{interactive = TRUE}.
+}
 \description{
-\code{pca_pairwise_plot} plots the scores of one principal component against the scores of another in a two-dimensional scatterplot.
+\code{pca_pairwise_plot} plots the scores of one principal component along the \eqn{X}-axis 
+against the scores of another along the \eqn{Y}-axis in a two-dimensional scatterplot.
 }
 \examples{
 data(pendigits)

@@ -219,24 +219,24 @@ We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical m
 
 ## Diagnostics
 
-### Calculate Residuals with `rrr_residuals()`
+### Calculate Residuals with `rrr_residual()`
 
 ```{r}
-args(rrr_residuals_plot)
+args(rrr_residual_plot)
 ```
 
 ```{r}
-rrr_residuals(tobacco_x, tobacco_y, ident, rank = 1)
+rrr_residual(tobacco_x, tobacco_y, ident, rank = 1)
 ```
 
-### Plot Residuals with `rrr_residuals_plot()`
+### Plot Residuals with `rrr_residual_plot()`
 
 ```{r}
-args(rrr_residuals)
+args(rrr_residual)
 ```
 
 We can visually check the model assumptions that 
 
 ```{r}
-rrr_residuals_plot(tobacco_x, tobacco_y, ident, rank = 1)
+rrr_residual_plot(tobacco_x, tobacco_y, ident, rank = 1)
 ```
