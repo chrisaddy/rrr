@@ -38,7 +38,7 @@
       <h1>rrr for Linear Discriminant Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-12-08</h4>
+            <h4 class="date">2016-12-09</h4>
           </div>
 
     
@@ -84,27 +84,18 @@ iris_class &lt;-<span class="st"> </span>iris %&gt;%
 </div>
 <div id="plotting" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#plotting" class="anchor"> </a></body></html>Plotting</h2>
-<div id="plot-lda-pairs-with-lda_pairwise_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#plot-lda-pairs-with-lda_pairwise_plot" class="anchor"> </a></body></html>Plot LDA Pairs with <code><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(lda_pairwise_plot)</code></pre></div>
-<pre><code>## function (x, class, lda_x = 1, lda_y = 2, rank = "full", type = "cov", 
-##     k = 0, quadratic = FALSE, interactive = FALSE) 
-## NULL</code></pre>
+<div id="plot-lda-pairs-with-pairwise_plot" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#plot-lda-pairs-with-pairwise_plot" class="anchor"> </a></body></html>Plot LDA Pairs with <code>pairwise_plot()</code></h3>
 <p>A typical graphical display for multiclass LDA is to plot the <span class="math inline">\(j\)</span>th discriminant scores for the <span class="math inline">\(n\)</span> points against the <span class="math inline">\(k\)</span> discriminant scores.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda_pairwise_plot.html">lda_pairwise_plot</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
-<p><img src="lda_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pairwise_plot(iris_features, iris_class, type = "lda", k = 0.0001)</span></code></pre></div>
 </div>
 </div>
 <div id="fitting-lda-models" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#fitting-lda-models" class="anchor"> </a></body></html>Fitting LDA Models</h2>
-<div id="fit-lda-model-with-lda" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#fit-lda-model-with-lda" class="anchor"> </a></body></html>Fit LDA model with <code><a href="../reference/lda.html">lda()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/lda.html">lda</a></span>(iris_features, iris_class, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
-<pre><code>## $prior
-##       setosa   versicolor    virginica 
-## 7.401487e-17 7.401487e-17 1.000000e+00 
-## 
-## $G
+<div id="fit-lda-model-with-rrr" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#fit-lda-model-with-rrr" class="anchor"> </a></body></html>Fit LDA model with <code><a href="../reference/rrr.html">rrr()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rrr.html">rrr</a></span>(iris_features, iris_class, <span class="dt">type =</span> <span class="st">"lda"</span>, <span class="dt">k =</span> <span class="fl">0.0001</span>)</code></pre></div>
+<pre><code>## $G
 ## # A tibble: 4 &times; 2
 ##          LD1          LD2
 ##        &lt;dbl&gt;        &lt;dbl&gt;

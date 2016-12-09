@@ -82,19 +82,10 @@
 of the reduced-rank regression equation, or the number of canonical variates to be used in the model.</p>
     
 
-    <pre><span class='fu'>cva_rank_trace</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre><span class='fu'>cva_rank_trace</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>data frame or matrix of predictor variables</dd>
-      <dt>y</dt>
-      <dd>data frame or matrix of response variables</dd>
-      <dt>type</dt>
-      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
-      <dt>k</dt>
-      <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
       <dt>plot</dt>
       <dd>if FALSE, returns data frame of rank trace coordinates.</dd>
       <dt>interactive</dt>

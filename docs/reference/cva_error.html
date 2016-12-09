@@ -81,7 +81,7 @@
     <p><code>cva_error</code> calculates the errors of a canonical-variate regression model built on a training set and applied to a test set.</p>
     
 
-    <pre><span class='fu'>cva_error</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>x_new</span>, <span class='no'>y_new</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre><span class='fu'>cva_error</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>x_new</span>, <span class='no'>y_new</span>, <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -95,8 +95,6 @@
       <dd>data frame or matrix of observed response variables.</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
-      <dt>type</dt>
-      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
     </dl>

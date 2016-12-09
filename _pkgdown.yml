@@ -6,66 +6,27 @@ articles:
 - title: "rrr for Reduced-Rank Regression"
   contents:
   - rrr
-- title: "Principal Component Analysis"
-  contents:
-  - pca
-- title: "Canonical Variate Analysis"
-  contents:
-  - cva
-- title: "Linear Discriminant Analysis"
-  contents:
-  - lda
 - title: "Multivariate Visualization in rrr"
   contents:
   - visualization
-- title: "Efficiency of `rrr`"
-  contents:
-  - efficiency
 
 reference:
-- title: Reduced-Rank Regression 
-  desc: Functions for fitting reduced-rank regression models, diagnostics and plots.
+- title: Fit Reduced-Rank Regression Models
+  desc: Compute coefficients and scores.
   contents:
   - rrr
+  - scores
+- title: Diagnostics and Plots
+  desc: Plot reduced-rank regression models and diagnostics.
+  contents:
   - rank_trace
-  - rrr_residuals
-  - rrr_predict
-  - rrr_error
-  - rrr_residuals_plot
-- title: Principal Component Analysis
-  desc: Functions for fitting principal component analysis models, diagnostics and plots.
-  contents:
-  - pca
-  - pca_scores
-  - pca_gof
-  - pca_rank_trace
-  - pca_pairwise_plot
-  - pca_allpairs_plot
-  - pca_3D_plot
-  - pca_residuals
-  - pca_error
-  - pca_predict
-- title: Canonical Variate Analysis
-  desc: Functions for fitting canonical variate analysis models, diagnostics and plots.
-  contents:
-  - cva
-  - cva_scores
-  - cva_rank_trace
-  - cva_pairwise_plot
-  - cva_error
-  - cva_residuals
-  - cva_residual_plot
-  - cva_residual_3D_plot
-- title: Linear Discriminant Analysis
-  desc: Functions for fitting linear discriminant analysis models, diagnostics and plots.
-  contents:
-  - lda
-  - lda_scores
-  - lda_pairwise_plot
-  - lda_3D_plot
+  - pairwise_plot
+  - residuals
+  - threewise_plot
 - title: Data
   desc: Multivariate data sets
   contents:
   - pendigits
   - COMBO17
   - tobacco
+

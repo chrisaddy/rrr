@@ -83,22 +83,16 @@ against the scores of another along the \(Y\)-axis in a two-dimensional scatterp
     
 
     <pre><span class='fu'>pca_pairwise_plot</span>(<span class='no'>x</span>, <span class='kw'>pc_x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pc_y</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>class_labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>point_size</span> <span class='kw'>=</span> <span class='fl'>2.5</span>)</pre>
+  <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>point_size</span> <span class='kw'>=</span> <span class='fl'>2.5</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>data frame or matrix of predictor variables</dd>
       <dt>pc_x</dt>
       <dd>principal component for the x-axis</dd>
       <dt>pc_y</dt>
       <dd>principal component for the y-axis</dd>
       <dt>class_labels</dt>
       <dd>data frame or vector of class labels</dd>
-      <dt>rank</dt>
-      <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
-      <dt>type</dt>
-      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>interactive</dt>
       <dd>logical. If <code>TRUE</code> prints an interactive Plotly graphic.</dd>
       <dt>point_size</dt>

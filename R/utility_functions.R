@@ -47,13 +47,11 @@ cov_matrix <- function(x, y, type = "cov"){
 	x %*% t(y) / n
 }
 
-#' Binary Indicator Matrix
-#'
-#' @param class vector or data frame of type character
-#'
-#' @return matrix of binary indicator matrix where each column represents  
-#'
-#'
+# Binary Indicator Matrix
+#
+# @param class vector or data frame of type character
+#
+# @return matrix of binary indicator matrix where each column represents  
 
 binary_matrix <- function(class) {
 	class <- dplyr::as_data_frame(class)

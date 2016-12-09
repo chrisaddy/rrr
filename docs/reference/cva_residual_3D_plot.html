@@ -82,7 +82,7 @@
     
 
     <pre><span class='fu'>cva_residual_3D_plot</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>cva_x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>cva_y</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>cva_z</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cov"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>point_size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
+  <span class='kw'>rank</span> <span class='kw'>=</span> <span class='st'>"full"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>point_size</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -98,8 +98,6 @@
       <dd>integer number of the canonical variate used for the z-axis.</dd>
       <dt>rank</dt>
       <dd>of the coefficient matrix to estimate. Default <code>rank = full</code> prodcues the standard multivariate regression technique.</dd>
-      <dt>type</dt>
-      <dd>the format of the covariance matrix. <code>type = &quot;cov&quot;</code> runs the regression using the mean-centered covariance matrix. <code>type = &quot;cor&quot;</code> runs the regression using the mean-centered, standard-deviation-scaled correlation matrix.</dd>
       <dt>k</dt>
       <dd>small constant to add to the ridge of covariance matrices to avoid singularity.</dd>
       <dt>point_size</dt>

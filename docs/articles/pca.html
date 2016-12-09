@@ -38,7 +38,7 @@
       <h1>rrr for Principal Component Analysis</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-12-08</h4>
+            <h4 class="date">2016-12-09</h4>
           </div>
 
     
@@ -77,7 +77,7 @@
   \hat{\mathbf{X}} &amp; = \mathbf{A}^{\left(t\right)}\mathbf{B}^{\left(t\right)}\mathbf{X}_c \\
 \end{aligned}
 \]</span></p>
-<p>where <span class="math inline">\(\mathbf{X}_c\)</span> is the vector <span class="math inline">\(mathbf{X}\)</span> after mean-centering.</p>
+<p>where <span class="math inline">\(\mathbf{X}_c\)</span> is the vector <span class="math inline">\(\mathbf{X}\)</span> after mean-centering.</p>
 <p>The first principle component is a latent variable that is a linear combination of the <span class="math inline">\(X_i\)</span>s that maximizes the variance among the <span class="math inline">\(X_i\)</span>s. The second principle component is another linear combination that maximizes the variance among the <span class="math inline">\(X_i\)</span>s subject to being independent of the first principal component. There are <span class="math inline">\(r\)</span> possible principal components, each independent of each other, that capture decreasing amounts of variance. The goal is to use as few principle components as necessary to capture the variance in the data and reduce dimensionality. The question of how many principle components to keep is equivalent to assessing the effective dimensionality <span class="math inline">\(t\)</span> of the reduced-rank regression.</p>
 </div>
 </div>
@@ -126,25 +126,38 @@ digits &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(pendi
 ## $ V35 &lt;int&gt; 8, 2, 1, 4, 1, 6, 4, 0, 5, 0, 9, 8, 5, 9, 7, 3, 3, 9, 2, 2...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span><span class="kw">select</span>(-V35)
 digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span><span class="kw">select</span>(V35)</code></pre></div>
+<p>We can get a good visualization of the correlation structure using <code>GGally::ggcorr</code>. Below we see that there is very heavy correlation among the variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally::<span class="kw">ggcorr</span>(digits_features)</code></pre></div>
 <p><img src="pca_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 </div>
 <div id="assessing-dimensionality" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#assessing-dimensionality" class="anchor"> </a></body></html>Assessing Dimensionality</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_gof.html">pca_gof</a></span>(digits_features) %&gt;%<span class="st"> </span><span class="kw">round</span>(<span class="dv">4</span>)</code></pre></div>
-<pre><code>##  [1] 0.7169 0.4681 0.3145 0.2243 0.1664 0.1181 0.0874 0.0607 0.0414 0.0276
-## [11] 0.0190 0.0122 0.0078 0.0038 0.0020 0.0003 0.0001 0.0000 0.0000 0.0000
-## [21] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
-## [31] 0.0000 0.0000 0.0000 0.0000</code></pre>
-<div id="estimate-t-and-ridge-constant-k-with-pca_rank_trace" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#estimate-t-and-ridge-constant-k-with-pca_rank_trace" class="anchor"> </a></body></html>Estimate <span class="math inline">\(t\)</span> and ridge constant <span class="math inline">\(k\)</span> with <code><a href="../reference/pca_rank_trace.html">pca_rank_trace()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pca_rank_trace)</code></pre></div>
-<pre><code>## function (x, type = "cov", k = 0, plot = TRUE, interactive = FALSE) 
-## NULL</code></pre>
-<p><code><a href="../reference/pca_rank_trace.html">pca_rank_trace()</a></code> is a special case of <code><a href="../reference/rank_trace.html">rank_trace()</a></code>, with <span class="math inline">\(\mathbf{Y} \equiv \mathbf{X}\)</span> and <span class="math inline">\(\mathbf{\Gamma} = \mathbf{I}_r\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace.html">pca_rank_trace</a></span>(digits_features)</code></pre></div>
-<p><img src="pca_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_rank_trace.html">pca_rank_trace</a></span>(digits_features, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>The ratio</p>
+<p><span class="math display">\[
+\frac{\lambda_{t + 1} + \cdots \lambda_r}{\lambda_1 + \cdots \lambda_r}
+\]</span></p>
+<p>is a goodness-of-fit measure of how well the last <span class="math inline">\(r - t\)</span> principal components explain the totoal variation in <span class="math inline">\(\mathbf{X}\)</span></p>
+<p>The function <code><a href="../reference/pca.html">pca()</a></code> (see below) outputs this goodness-of-fit measure</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca.html">pca</a></span>(digits_features)$goodness_of_fit</code></pre></div>
+<pre><code>##           PC1           PC2           PC3           PC4           PC5 
+##  7.168777e-01  4.680599e-01  3.144671e-01  2.243293e-01  1.664009e-01 
+##           PC6           PC7           PC8           PC9          PC10 
+##  1.181315e-01  8.737814e-02  6.065970e-02  4.138801e-02  2.763994e-02 
+##          PC11          PC12          PC13          PC14          PC15 
+##  1.896530e-02  1.222037e-02  7.761240e-03  3.816942e-03  1.958674e-03 
+##          PC16          PC17          PC18          PC19          PC20 
+##  3.133204e-04  1.279543e-04 -6.983068e-17 -8.770990e-17 -9.882538e-17 
+##          PC21          PC22          PC23          PC24          PC25 
+## -1.092158e-16 -1.158156e-16 -1.172696e-16 -1.184188e-16 -1.145857e-16 
+##          PC26          PC27          PC28          PC29          PC30 
+## -1.103970e-16 -1.053676e-16 -9.801713e-17 -8.865624e-17 -7.546966e-17 
+##          PC31          PC32          PC33          PC34 
+## -6.161541e-17 -4.449590e-17 -2.257015e-17  0.000000e+00</code></pre>
+<div id="estimate-t-and-ridge-constant-k-with-rank_trace" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#estimate-t-and-ridge-constant-k-with-rank_trace" class="anchor"> </a></body></html>Estimate <span class="math inline">\(t\)</span> and ridge constant <span class="math inline">\(k\)</span> with <code><a href="../reference/rank_trace.html">rank_trace()</a></code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(digits_features, digits_features, <span class="dt">type =</span> <span class="st">"pca"</span>)</code></pre></div>
+<p><img src="pca_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(digits_features, digits_features, <span class="dt">type =</span> <span class="st">"pca"</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## # A tibble: 35 &times; 3
 ##     rank   delta_C delta_residuals
 ##    &lt;int&gt;     &lt;dbl&gt;           &lt;dbl&gt;
@@ -163,11 +176,11 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 </div>
 <div id="plot-principal-component-scores" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#plot-principal-component-scores" class="anchor"> </a></body></html>Plot Principal Component Scores</h2>
-<div id="pairwise-plots-with-pca_pairwise_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#pairwise-plots-with-pca_pairwise_plot" class="anchor"> </a></body></html>Pairwise Plots with <code><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot()</a></code></h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pca_pairwise_plot)</code></pre></div>
-<pre><code>## function (x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", 
-##     type = "cov", interactive = FALSE, point_size = 2.5) 
+<div id="pairwise-plots-with-pairwise_plot" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#pairwise-plots-with-pairwise_plot" class="anchor"> </a></body></html>Pairwise Plots with <code>pairwise_plot()</code></h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pairwise_plot)</code></pre></div>
+<pre><code>## function (x, y, type = "pca", pair_x = 1, pair_y = 2, k = 0, 
+##     interactive = FALSE) 
 ## NULL</code></pre>
 <p>A common PCA method of visualization for diagnostic and analysis purposes is to plot the <span class="math inline">\(j\)</span>th sample PC scores against the <span class="math inline">\(k\)</span>th PC scores,</p>
 <p><span class="math display">\[
@@ -177,85 +190,81 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 \end{aligned}
 \]</span></p>
 <p>Since the first two principal components will capture the most variance &ndash; and hence the most useful information &ndash; of all possible pairs of principal components, we typically would set <span class="math inline">\(j = 1, k = 2\)</span> and plot the first two sample PC scores against each other. In <code>rrr</code> this is the default.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot</a></span>(digits_features, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
-<p><img src="pca_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pairwise_plot(digits_features, digits_features, class_labels = digits_class, type = "pca")</span></code></pre></div>
 <p>We can set the <span class="math inline">\(x\)</span>- and <span class="math inline">\(y\)</span>-axes to whichever pairs of PC scores we would like to plot by changing the <code>pc_x</code> and <code>pc_y</code> arguments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_pairwise_plot.html">pca_pairwise_plot</a></span>(digits_features, <span class="dt">pc_x =</span> <span class="dv">1</span>, <span class="dt">pc_y =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
-<p><img src="pca_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)</span></code></pre></div>
 </div>
 <div id="plot-all-pairs-of-pc-scores-with-pca_allpairs_plot" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#plot-all-pairs-of-pc-scores-with-pca_allpairs_plot" class="anchor"> </a></body></html>Plot all pairs of PC scores with <code>pca_allpairs_plot()</code></h3>
+<h3 class="hasAnchor"><html><body><a href="#plot-all-pairs-of-pc-scores-with-pca_allpairs_plot" class="anchor"> </a></body></html>Plot all pairs of PC scores with <code><a href="../reference/pca_allpairs_plot.html">pca_allpairs_plot()</a></code></h3>
+<p>Alternatively, we can look at structure in the data by plotting all PC pairs, along with some other visual diagnostics with <code><a href="../reference/pca_allpairs_plot.html">pca_allpairs_plot()</a></code>. Along with plotting principal component scores against each other, the plot matrix also shows histograms and box plots to show how the points are distributed along principal component axes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#args(pca_allpairs_plot)</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#pca_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/pca_allpairs_plot.html">pca_allpairs_plot</a></span>(digits_features, <span class="dt">rank =</span> <span class="dv">3</span>, <span class="dt">class_labels =</span> digits_class)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="pca_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </div>
 </div>
 <div id="fitting-a-pca-model" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#fitting-a-pca-model" class="anchor"> </a></body></html>Fitting a PCA Model</h2>
-<div id="fit-model-with-pca" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#fit-model-with-pca" class="anchor"> </a></body></html>Fit model with <code><a href="../reference/pca.html">pca()</a></code></h3>
+<div id="fit-model-with-rrr" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#fit-model-with-rrr" class="anchor"> </a></body></html>Fit model with <code><a href="../reference/rrr.html">rrr()</a></code></h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(pca)</code></pre></div>
-<pre><code>## function (x, rank = "full", type = "cov", k = 0) 
+<pre><code>## function (x, rank = "full", k = 0) 
 ## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(V35)
-digits_features &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span>dplyr::<span class="kw">select</span>(-V5, -V6)
-
-digits_pca &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pca.html">pca</a></span>(digits_features, <span class="dt">rank  =</span> <span class="dv">3</span>)
-
-digits_pca</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rrr.html">rrr</a></span>(digits_features, digits_features, <span class="dt">type =</span> <span class="st">"pca"</span>, <span class="dt">rank  =</span> <span class="dv">3</span>)</code></pre></div>
 <pre><code>## $means
-##        V1        V2        V3        V4        V7        V8        V9 
-## 38.814320 85.120269 40.605622 83.774199 51.220251 44.498999 56.868541 
-##       V10       V11       V12       V13       V14       V15       V16 
-## 33.695961 60.516376 34.826510 55.022289 34.937045 47.287482 28.845342 
-##       V17       V18       V19       V20       V21       V22       V23 
-##  4.431587  5.341794 38.814320 85.120269 40.605622 83.774199 49.770378 
-##       V24       V25       V26       V27       V28       V29       V30 
-## 65.573144 51.220251 44.498999 56.868541 33.695961 60.516376 34.826510 
-##       V31       V32       V33       V34       V35 
-## 55.022289 34.937045 47.287482 28.845342  4.431587 
+##        V1        V2        V3        V4        V5        V6        V7 
+## 38.814320 85.120269 40.605622 83.774199 49.770378 65.573144 51.220251 
+##        V8        V9       V10       V11       V12       V13       V14 
+## 44.498999 56.868541 33.695961 60.516376 34.826510 55.022289 34.937045 
+##       V15       V16       V17       V18       V19       V20       V21 
+## 47.287482 28.845342  4.431587  5.341794 38.814320 85.120269 40.605622 
+##       V22       V23       V24       V25       V26       V27       V28 
+## 83.774199 49.770378 65.573144 51.220251 44.498999 56.868541 33.695961 
+##       V29       V30       V31       V32       V33       V34 
+## 60.516376 34.826510 55.022289 34.937045 47.287482 28.845342 
 ## 
 ## $C
-## # A tibble: 33 &times; 33
-##             V1           V2            V3           V4          V5
-##          &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-## 1   0.15447118  0.042863441  6.348389e-02  0.030143804 -0.12970234
-## 2   0.04286344  0.013525199  1.194905e-02  0.004268061 -0.03971350
-## 3   0.06348389  0.011949051  6.273252e-02  0.045106413 -0.05127815
-## 4   0.03014380  0.004268061  4.510641e-02  0.036326297 -0.02785314
-## 5  -0.12970234 -0.039713497 -5.127815e-02 -0.027853140  0.12441842
-## 6  -0.04129191 -0.023357654  2.534616e-02  0.022890744  0.06120161
-## 7  -0.04777965 -0.019098613 -3.962215e-02 -0.038569346  0.07935551
-## 8  -0.05386455 -0.021359512 -2.499510e-02 -0.021812898  0.07603284
-## 9   0.06996666  0.014938632 -7.854437e-05 -0.023496769 -0.01998258
-## 10 -0.04958687 -0.008643804 -6.999787e-02 -0.057246332  0.05044546
-## # ... with 23 more rows, and 28 more variables: V6 &lt;dbl&gt;, V7 &lt;dbl&gt;,
+## # A tibble: 34 &times; 34
+##             V1           V2           V3           V4           V5
+##          &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+## 1   0.15227028  0.041971586  0.057621563  0.032824603 -0.083070856
+## 2   0.04197159  0.013118640  0.010598715  0.005435764 -0.027861499
+## 3   0.05762156  0.010598715  0.057059768  0.042972135  0.005136858
+## 4   0.03282460  0.005435764  0.042972135  0.034784478  0.014445469
+## 5  -0.08307086 -0.027861499  0.005136858  0.014445469  0.083611542
+## 6  -0.00509760 -0.010118470  0.048612391  0.041246125  0.054433598
+## 7  -0.12925579 -0.039313730 -0.047145641 -0.030698476  0.070011543
+## 8  -0.03613352 -0.021185046  0.025475341  0.019298193  0.056664934
+## 9  -0.04375152 -0.018001465 -0.036555354 -0.038171115 -0.002983700
+## 10 -0.05163631 -0.020586646 -0.022911782 -0.022807068  0.019987392
+## # ... with 24 more rows, and 29 more variables: V6 &lt;dbl&gt;, V7 &lt;dbl&gt;,
 ## #   V8 &lt;dbl&gt;, V9 &lt;dbl&gt;, V10 &lt;dbl&gt;, V11 &lt;dbl&gt;, V12 &lt;dbl&gt;, V13 &lt;dbl&gt;,
 ## #   V14 &lt;dbl&gt;, V15 &lt;dbl&gt;, V16 &lt;dbl&gt;, V17 &lt;dbl&gt;, V18 &lt;dbl&gt;, V19 &lt;dbl&gt;,
 ## #   V20 &lt;dbl&gt;, V21 &lt;dbl&gt;, V22 &lt;dbl&gt;, V23 &lt;dbl&gt;, V24 &lt;dbl&gt;, V25 &lt;dbl&gt;,
 ## #   V26 &lt;dbl&gt;, V27 &lt;dbl&gt;, V28 &lt;dbl&gt;, V29 &lt;dbl&gt;, V30 &lt;dbl&gt;, V31 &lt;dbl&gt;,
-## #   V32 &lt;dbl&gt;, V33 &lt;dbl&gt;
+## #   V32 &lt;dbl&gt;, V33 &lt;dbl&gt;, V34 &lt;dbl&gt;
 ## 
 ## $PC
-## # A tibble: 33 &times; 3
-##            PC1         PC2         PC3
-##          &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-## 1  -0.03374791  0.13032399 -0.36925319
-## 2   0.02894289  0.04892121 -0.10146045
-## 3  -0.10722996 -0.10651917 -0.19971961
-## 4  -0.05948104 -0.13281868 -0.12307518
-## 5  -0.08464187 -0.06408401  0.33637391
-## 6  -0.26814011 -0.13457976  0.08883364
-## 7  -0.22105337  0.18896276  0.21629094
-## 8  -0.19770634  0.07599867  0.19076660
-## 9  -0.22435733  0.32701486 -0.05355998
-## 10  0.05637675  0.21559127  0.20522769
-## # ... with 23 more rows
+## # A tibble: 34 &times; 3
+##            PC1          PC2         PC3
+##          &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+## 1   0.02861158 -0.142768395 -0.36203431
+## 2   0.04680878 -0.033512929 -0.09901748
+## 3  -0.13901701  0.046687918 -0.18855842
+## 4  -0.10267046  0.083217740 -0.13159811
+## 5  -0.15980723  0.196663538  0.13927183
+## 6  -0.24050660  0.117714673 -0.05134764
+## 7  -0.10613246  0.031714447  0.33613210
+## 8  -0.28960021 -0.002314316  0.07783244
+## 9  -0.11746249 -0.263105908  0.21532196
+## 10 -0.14441246 -0.150734547  0.19065755
+## # ... with 24 more rows
 ## 
 ## $goodness_of_fit
 ##       PC1       PC2       PC3 
-## 0.7142694 0.4688514 0.3078668</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">GGally::<span class="kw">ggcorr</span>(digits_pca)</code></pre></div>
-<p><img src="pca_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+## 0.7168777 0.4680599 0.3144671</code></pre>
 </div>
 </div>
 </div>

@@ -1,5 +1,5 @@
 ---
-title: "Data Visualization in `rrr`"
+title: "Data Visualization in rrr"
 author: "Chris Addy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -63,119 +63,69 @@ galaxy_y <- galaxy %>%
 	select(Rmag:chi2red)
 ```
 
-```{r}
-pca_rank_trace(digits_features)
-
-pca_pairwise_plot(digits_features)
-
-pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class)
-```
-
 ## Rank Trace Plots
 
+`rank_trace()` can draw rank trace plots for reduced-rank regression, principal components analysis and canonical variate analysis by setting `type = "identity"` (the default), `type = "pca"`, or `type = "cva"`, respectively.
+
 ```{r}
-gamma1 <- diag(1, 3)
-gamma2 <- solve(cov(tobacco_y))
-
-rank_trace(tobacco_x, tobacco_y, gamma1)
-
-rank_trace(tobacco_x, tobacco_y, gamma2)
+rank_trace(tobacco_x, tobacco_y)
+rank_trace(digits_features, digits_features, type = "pca")
+rank_trace(galaxy_x, galaxy_y, type = "cva")
 ```
 
 Rank trace plots can be made interactive with the argument `interactive = TRUE`.
 
 ```{r}
-rank_trace(tobacco_x, tobacco_y, gamma1, interactive = TRUE)
-
-rank_trace(tobacco_x, tobacco_y, gamma2, interactive = TRUE)
+rank_trace(tobacco_x, tobacco_y, interactive = TRUE)
+rank_trace(digits_features, digits_features, type = "pca", interactive = TRUE)
+rank_trace(galaxy_x, galaxy_y, type = "cva", interactive = TRUE)
 ```
 
-## RRR Residuals Plots
+## Residual Plots
 
 ```{r}
-#rrr_residuals_plot(tobacco_x, tobacco_y, ident, rank = 1)
+residuals(tobacco_x, tobacco_y, rank = 1)
+residuals(galaxy_x, galaxy_y, type = "cva")
 ```
 
-## PC Rank Trace Plots
+## Pairwise Plots
+
+Pairwise plots can be created for PCA, CVA, LDA, by setting `type = "pca"`, `type = "cva"`, and `type = "lda"`, respectively.
 
 ```{r}
-pca_rank_trace(digits_features)
+pairwise_plot(digits_features, digits_class, pair_x = 1, pair_y = 3)
+
+pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 2)
+
+pairwise_plot(iris_features, iris_class)
 ```
 
-PCA rank trace plots can be made interactive with the argument `interactive = TRUE`.
+Pairwise plots can be turned into interactive plotly graphs by setting `interactive = TRUE`.
 
-```{r}
-pca_rank_trace(digits_features, interactive = TRUE)
+pairwise_plot(digits_features, digits_class, pair_x = 1, pair_y = 3, interactive = TRUE)
+
+pairwise_plot(galaxy_x, galaxy_y, pair_x = 2, interactive = TRUE)
+
+pairwise_plot(iris_features, iris_class, interactive = TRUE)
 ```
 
-
-## PC Pairwise Plots
+## 3D Plots
 
 ```{r}
-pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3, class_labels = digits_class, interactive = TRUE)
+threewise_plot(digits_features, digits_class, type = "pca")
 ```
 
-## PCA 3D Plots
+```{r}
+threewise_plot(galaxy_x, galaxy_y, type = "cva")
+```
 
 ```{r}
-pca_3D_plot(digits_features, class_labels = digits_class)
+threewise_plot(digits_features, digits_class, type = "lda", k = 0.001)
 ```
 
 ### Change Point Size with argument `point_size`
 
 ```{r}
-pca_3D_plot(iris_features, class_labels = iris_class)
-pca_3D_plot(iris_features, class_labels = iris_class, point_size = 5)
-```
-
-## CVA Rank Trace Plots
-
-```{r}
-cva_rank_trace(galaxy_x, galaxy_y)
-```
-
-```{r}
-cva_rank_trace(galaxy_x, galaxy_y, interactive = TRUE)
-```
-
-## CVA Pairwise Plots
-
-```{r}
-cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 2)
-```
-
-```{r}
-cva_pairwise_plot(galaxy_x, galaxy_y, cv_pair = 2, interactive = TRUE)
-```
-
-## CVA Residuals Plots
-
-```{r}
-cva_residual_plot(galaxy_x, galaxy_y, rank = 2)
-```
-
-## CVA 3D Residuals Plots
-
-```{r}
-cva_residual_3D_plot(galaxy_x, galaxy_y)
-```
-
-## LDA Pairwise Plots
-
-```{r}
-lda_pairwise_plot(iris_features, iris_class)
-```
-
-```{r}
-lda_pairwise_plot(iris_features, iris_class, interactive = TRUE)
-```
-
-## LDA 3D Plots
-
-```{r}
-args(lda_3D_plot)
-```
-
-```{r}
-lda_3D_plot(digits_features, digits_class, k = 0.0001)
+threewise_plot(iris_features, iris_class, type = "pca")
+threewise_plot(iris_features, iris_class, point_size = 5)
 ```
