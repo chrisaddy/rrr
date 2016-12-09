@@ -14,7 +14,7 @@ COMBO-17 galaxy photometric catalogue, 216, 219, 235
 \references{
 A. Izenman (2008). \emph{Modern Multivariate Statistical Techniques}. Springer.
 
-Wolf, C. Meisenheimer, M., Kleinheinrich, M., Borch, A., Dye, S., Gray, M., Wisotski, L., Bell, E.F., Rix, H., W. Cimatti, A., Hasinger, G., and Szokoly, G. (2004). \emph{A catalogue of the Chandra Deep Field South with multi-colour classification and photometric redshifts from COMBO-17, Astronomy & Astrophysics}. \url{arXiv:astro-ph/0403666v1}
+Wolf, C. Meisenheimer, M., Kleinheinrich, M., Borch, A., Dye, S., Gray, M., Wisotski, L., Bell, E.F., Rix, H., W. Cimatti, A., Hasinger, G., and Szokoly, G. (2004). \emph{A catalogue of the Chandra Deep Field South with multi-colour classification and photometric redshifts from COMBO-17, Astronomy & Astrophysics}. \url{https://arxiv.org/pdf/astro-ph/0403666.pdf}
 }
 \keyword{datasets}
 
