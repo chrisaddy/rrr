@@ -3,11 +3,19 @@
 
 R package for reduced-rank regression.
 
-### Install
+### Install latest release from CRAN
+
+```{r}
+install.packages("rrr")
+```
+
+### Install development version from github
 
 ```{r}
 devtools::install_github("chrisaddy/rrr")
 ```
+
+Please send any issues, with minimally-reproducible code to, and any feature requests or suggestions to the package [github issues portal](https://github.com/chrisaddy/rrr/issues).
 
 The rrr package provides four categories of reduced-rank regression functions:
 * reduced-rank regression
