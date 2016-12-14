@@ -24,7 +24,7 @@ data(tobacco)
 tobacco_x <- tobacco %>%
 	select(starts_with("X"))
 
-tobacco_y <- tobacco %>% 
+tobacco_y <- tobacco %>%
 	select(starts_with("Y"))
 
 ### PENDIGITS DATA SET
@@ -94,34 +94,42 @@ Pairwise plots can be created for PCA, CVA, LDA, by setting `type = "pca"`, `typ
 
 ```{r}
 pairwise_plot(digits_features, digits_class, pair_x = 1, pair_y = 3)
-
 pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 2)
-
-pairwise_plot(iris_features, iris_class)
+pairwise_plot(iris_features, iris_class, type = "lda")
 ```
 
 Pairwise plots can be turned into interactive plotly graphs by setting `interactive = TRUE`.
 
-pairwise_plot(digits_features, digits_class, pair_x = 1, pair_y = 3, interactive = TRUE)
-
-pairwise_plot(galaxy_x, galaxy_y, pair_x = 2, interactive = TRUE)
-
-pairwise_plot(iris_features, iris_class, interactive = TRUE)
+```{r}
+pairwise_plot(digits_features, digits_class, type = "pca", pair_x = 1, pair_y = 3, interactive = TRUE)
+pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 2, interactive = TRUE)
+pairwise_plot(iris_features, iris_class, type = "lda", interactive = TRUE)
 ```
 
 ## 3D Plots
+
+Principal component scores can be plotted in three dimensions by setting
+`type = "pca"`.
 
 ```{r}
 threewise_plot(digits_features, digits_class, type = "pca")
 ```
 
+For canonical variate analysis, the `threewise_plot()` function plots
+three-dimensional residual plots by setting `type = "cva"`.
+
 ```{r}
 threewise_plot(galaxy_x, galaxy_y, type = "cva")
 ```
 
+Linear discriminant scores can be plotted in three dimensions by setting
+`type = "lda"`.
+
 ```{r}
 threewise_plot(digits_features, digits_class, type = "lda", k = 0.001)
 ```
+
+## Other tweaks
 
 ### Change Point Size with argument `point_size`
 

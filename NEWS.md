@@ -1,7 +1,8 @@
 # rrr 1.0.1
 
-* Update README/website to include CRAN installation
-* Corrections to vignette
+* Update README/website to include CRAN installation.
+* Corrections to vignette.
+* Corrections to visualization article on package website.
 
 # rrr 1.0.0
 

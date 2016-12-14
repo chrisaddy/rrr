@@ -21,6 +21,9 @@
 <li>
   <a href="../articles/index.html">Articles</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="http://github.com/chrisaddy/rrr">
     <span class="fa fa-github fa-lg"></span>
@@ -38,7 +41,7 @@
       <h1>rrr for Multivariate Regression</h1>
                         <h4 class="author">Chris Addy</h4>
             
-            <h4 class="date">2016-12-09</h4>
+            <h4 class="date">2016-12-14</h4>
           </div>
 
     
@@ -99,7 +102,7 @@ tobacco &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(toba
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tobacco_x &lt;-<span class="st"> </span>tobacco %&gt;%
 <span class="st">    </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">"X"</span>))
 
-tobacco_y &lt;-<span class="st"> </span>tobacco %&gt;%<span class="st"> </span>
+tobacco_y &lt;-<span class="st"> </span>tobacco %&gt;%
 <span class="st">    </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">"Y"</span>))</code></pre></div>
 <p>Below we see that there is not only correlation among the <span class="math inline">\(X_i\)</span>s but also among the <span class="math inline">\(Y_i\)</span>s. The classical multivariate will not capture that information.</p>
 <p>We can get a good visual look at the correlation structure using <code>GGally::ggcorr</code>. GGally is a package that extends the functionality of the package <code>ggplot2</code> and has been utilized in <code>rrr</code>.</p>
@@ -187,7 +190,7 @@ lm3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y[,<span class="dv"
 <p>One method of estimating <span class="math inline">\(t\)</span> is to plot the <em>rank trace</em>. Along the <span class="math inline">\(X\)</span>-axis, we plot a measure of the difference between the rank-<span class="math inline">\(t\)</span> coefficient matrix and the full-rank coefficient matrix for each value of <span class="math inline">\(t\)</span>. Along the <span class="math inline">\(Y\)</span>-axis, we plot the reduction in residual covariance between the rank-<span class="math inline">\(t\)</span> residuals and the full-rank residuals for each value of <span class="math inline">\(t\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### use the identity matrix for gamma
 
-<span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y) </code></pre></div>
+<span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y)</code></pre></div>
 <p><img src="rrr_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 <p>Set <code>plot = FALSE</code> to print data frame of rank trace coordinates.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rank_trace.html">rank_trace</a></span>(tobacco_x, tobacco_y, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
@@ -217,7 +220,7 @@ lm3 &lt;-<span class="st"> </span><span class="kw">lm</span>(y[,<span class="dv"
 ## NULL</code></pre>
 <p><code><a href="../reference/rrr.html">rrr()</a></code> takes as inputs the data frames, or matrices, of input and response variables, the weight matrix <span class="math inline">\(\mathbf{\Gamma}\)</span>, the rank (defaulted to full rank), the type of covariance matrix to be used (either covariance or correlation), and the ridge constant <span class="math inline">\(k\)</span>.</p>
 <p><code><a href="../reference/rrr.html">rrr()</a></code> returns a <code>list</code> containing the means <span class="math inline">\(\hat{\boldsymbol{\mu}}\)</span>, the matrices <span class="math inline">\(\hat{\mathbf{A}}\)</span>, <span class="math inline">\(\hat{\mathbf{B}}\)</span>, and the coefficient matrix <span class="math inline">\(\hat{\mathbf{C}}\)</span>, as well as the eigenvalues of the weight marix <span class="math inline">\(\mathbf{\Gamma}\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rrr.html">rrr</a></span>(tobacco_x, tobacco_y, <span class="dt">rank =</span> <span class="st">"full"</span>) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rrr.html">rrr</a></span>(tobacco_x, tobacco_y, <span class="dt">rank =</span> <span class="st">"full"</span>)</code></pre></div>
 <pre><code>## $mean
 ##                         [,1]
 ## Y1.BurnRate         1.411137
@@ -539,7 +542,7 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
   \right\} =
   \begin{pmatrix}
     \boldsymbol{\mu}_X \\
-    \bodlsybmol{\mu}_Y \\
+    \boldsybmol{\mu}_Y \\
   \end{pmatrix}, \quad
   \mathrm{cov}\left\{
   \begin{pmatrix}
@@ -554,13 +557,15 @@ digits_class &lt;-<span class="st"> </span>digits %&gt;%<span class="st"> </span
 \]</span></p>
 <p>The <span class="math inline">\(t\)</span> new pairs of canonical variables <span class="math inline">\(\left(\xi_i, \omega_i\right), i = 1, \dots, t\)</span> are calculated by fitting a reduced rank regression equation. The canonical variate scores are given by</p>
 <p><span class="math display">\[
-\mathbf{\xi}^{\left(t\right)} = \mathbf{G}^{\left(t\right)}\mathbf{X}, \quad \mathbf{\omega}^{\left(t\right)} = \mathbf{H}^{\left(t\right)} \mathbf{Y},
+\boldsymbol{\xi}^{\left(t\right)} = \mathbf{G}^{\left(t\right)}\mathbf{X}, \quad \boldsymbol{\omega}^{\left(t\right)} = \mathbf{H}^{\left(t\right)} \mathbf{Y},
 \]</span></p>
 <p>with</p>
 <p><span class="math display">\[
+\begin{aligned}
 \mathbf{\Gamma} &amp; = \mathbf{\Sigma}_{YY}^{-1} \\
 \mathbf{G}^{\left(t\right)} &amp; = \mathbf{B}^{\left(t\right)} \\
 \mathbf{H}^{\left(t\right)} &amp; = \mathbf{A}^{\left(t\right)-} \\
+  \end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\(\mathbf{A}^{\left(t\right)}, \mathbf{B}^{\left(t\right)}\)</span> are the matrices from the reduced-rank regression formulation above.</p>
 <p>Note that <span class="math inline">\(\mathbf{H}^{\left(t\right)} = \mathbf{A}^{\left(t\right)-}\)</span> is the generalized inverse of <span class="math inline">\(\mathbf{A}^{\left(t\right)}\)</span>. When <span class="math inline">\(t = s, \mathbf{H}^{\left(s\right)} = \mathbf{A}^{\left(t\right)+}\)</span> is the unique Moore-Penrose generalized inverse of <span class="math inline">\(\mathbf{A}^{\left(t\right)}\)</span>.</p>

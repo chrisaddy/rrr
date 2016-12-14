@@ -14,7 +14,7 @@ always_allow_html: yes
 library(rrr)
 ```
 
-## Classical Multivariate Regression 
+## Classical Multivariate Regression
 
 Let $\mathbf{X} = \left(X_1, X_2, \dots, X_r\right)^\tau$ and $\mathbf{Y} = \left(Y_1, Y_2, \dots, Y_s\right)^\tau$, i.e., $\mathbf{X}$ is a random vector. The classical multivariate regression model is given by
 
@@ -77,7 +77,7 @@ We see that the `tobacco` data set^[Anderson, R.L and Bancroft, T.A (1952). *Sta
 tobacco_x <- tobacco %>%
 	select(starts_with("X"))
 
-tobacco_y <- tobacco %>% 
+tobacco_y <- tobacco %>%
 	select(starts_with("Y"))
 ```
 
@@ -93,7 +93,7 @@ GGally::ggcorr(tobacco_x)
 GGally::ggcorr(tobacco_y)
 ```
 
-```{r}	
+```{r}
 ## multivariate regression
 
 x <- as.matrix(tobacco_x)
@@ -125,13 +125,13 @@ $$
 
 In other words, we allow for the possibility that there are unknown linear constraints on $\mathbf{C}$.
 
-Without loss of generality, we consider the case when $r > s$, i.e., $t < s$. 
+Without loss of generality, we consider the case when $r > s$, i.e., $t < s$.
 
 When $t = s$, the regression model is *full-rank*, and can be fit using multiple regression on each $Y_i \in \mathbf{Y}.$ When $t < s$, $\mathbf{C}$ can be decomposed into non-unique matrices $\mathbf{A}_{s \times t}$ and $\mathbf{B}_{t \times r}$, such that $\mathbf{C} = \mathbf{AB},$ and the multivariate regression model is given by
 
 $$
 \overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times t}{\mathbf{A}} \; \overset{t \times r}{\mathbf{B}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
-$$ 
+$$
 
 Estimating $\boldsymbol{\mu}, \mathbf{A}, \mathbf{B}$, and ultimately the *reduced-rank regression coefficient* $\mathbf{C}^{\left(t\right)}$, is done by minimizing the weighted sum-of-squares criterion
 
@@ -168,7 +168,7 @@ $$
 \end{aligned}
 $$
 
-### Assessessing Effective Dimensionality 
+### Assessessing Effective Dimensionality
 
 ### Estimate $t$ and $k$ with `rank_trace()`.
 
@@ -183,7 +183,7 @@ One method of estimating $t$ is to plot the *rank trace*. Along the $X$-axis, we
 ```{r}
 ### use the identity matrix for gamma
 
-rank_trace(tobacco_x, tobacco_y) 
+rank_trace(tobacco_x, tobacco_y)
 ```
 
 Set `plot = FALSE` to print data frame of rank trace coordinates.
@@ -192,7 +192,7 @@ Set `plot = FALSE` to print data frame of rank trace coordinates.
 rank_trace(tobacco_x, tobacco_y, plot = FALSE)
 ```
 
-When the weight matrix, $\mathbf{\Gamma}$, takes on a more complicated form, the rank trace may plot points outside the unit square, or may not be a smooth monotic curve. When this is the case, we can change the value of `k` to smooth the rank trace. This value of $\hat{k}$ is then an estimate of the ridge pertubation $k$ described above. 
+When the weight matrix, $\mathbf{\Gamma}$, takes on a more complicated form, the rank trace may plot points outside the unit square, or may not be a smooth monotic curve. When this is the case, we can change the value of `k` to smooth the rank trace. This value of $\hat{k}$ is then an estimate of the ridge pertubation $k$ described above.
 
 The following rank trace is smooth, but we can always add a value $k$ to *softly shrink*^[Aldrin, Magne. "Multivariate Prediction Using Softly Shrunk Reduced-Rank Regression." The American Statistician 54.1 (2000): 29. Web. ] the reduced-rank regression.
 
@@ -221,7 +221,7 @@ args(rrr)
 `rrr()` returns a `list` containing the means $\hat{\boldsymbol{\mu}}$, the matrices $\hat{\mathbf{A}}$, $\hat{\mathbf{B}}$, and the coefficient matrix $\hat{\mathbf{C}}$, as well as the eigenvalues of the weight marix $\mathbf{\Gamma}$.
 
 ```{r}
-rrr(tobacco_x, tobacco_y, rank = "full") 
+rrr(tobacco_x, tobacco_y, rank = "full")
 ```
 
 We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical multivariate regression coefficients as above. They differ only by a transpose, and is presented this way in `rrr` as a matter of convention. It is this form that is presented in the literature.^[Izenman, A.J. (2008) *Modern Multivariate Statistical Techniques*. Springer.
@@ -349,7 +349,7 @@ Print data frame of rank trace coordinates by setting `plot = FALSE`.
 rank_trace(digits_features, digits_features, type = "pca", plot = FALSE)
 ```
 
-### Plot Principal Component Scores 
+### Plot Principal Component Scores
 
 ### Pairwise Plots with `pairwise_plot()`
 
@@ -415,7 +415,7 @@ $$
   \right\} =
   \begin{pmatrix}
     \boldsymbol{\mu}_X \\
-    \bodlsybmol{\mu}_Y \\
+    \boldsybmol{\mu}_Y \\
   \end{pmatrix}, \quad
   \mathrm{cov}\left\{
   \begin{pmatrix}
@@ -432,15 +432,17 @@ $$
 The $t$ new pairs of canonical variables $\left(\xi_i, \omega_i\right), i = 1, \dots, t$ are calculated by fitting a reduced rank regression equation. The canonical variate scores are given by
 
 $$
-\mathbf{\xi}^{\left(t\right)} = \mathbf{G}^{\left(t\right)}\mathbf{X}, \quad \mathbf{\omega}^{\left(t\right)} = \mathbf{H}^{\left(t\right)} \mathbf{Y},
+\boldsymbol{\xi}^{\left(t\right)} = \mathbf{G}^{\left(t\right)}\mathbf{X}, \quad \boldsymbol{\omega}^{\left(t\right)} = \mathbf{H}^{\left(t\right)} \mathbf{Y},
 $$
 
 with
 
 $$
+\begin{aligned}
 \mathbf{\Gamma} & = \mathbf{\Sigma}_{YY}^{-1} \\
 \mathbf{G}^{\left(t\right)} & = \mathbf{B}^{\left(t\right)} \\
 \mathbf{H}^{\left(t\right)} & = \mathbf{A}^{\left(t\right)-} \\
+  \end{aligned}
 $$
 
 where $\mathbf{A}^{\left(t\right)}, \mathbf{B}^{\left(t\right)}$ are the matrices from the reduced-rank regression formulation above.
