@@ -240,6 +240,11 @@ scores <- function(x, y, type = "pca", rank = "full", k = 0){
 #' digits_class <- pendigits[,35]
 #' allpairs_plot(digits_features, digits_class, type = "pca", rank = 3)
 #'
+#' data(iris)
+#' iris_features <- iris[,1:4]
+#' iris_class <- iris[,5]
+#' allpairs_plot(iris_features, iris_class, type = "lda", rank = 2)
+#'
 #' @export
 
 allpairs_plot <- function(x, y, type = "pca", rank, k = 0){

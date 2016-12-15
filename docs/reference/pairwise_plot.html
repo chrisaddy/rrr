@@ -123,22 +123,18 @@
 <span class='no'>digits_features</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[,<span class='fl'>1</span>:<span class='fl'>34</span>]
 <span class='no'>digits_class</span> <span class='kw'>&lt;-</span> <span class='no'>pendigits</span>[,<span class='fl'>35</span>]
 <span class='fu'>pairwise_plot</span>(<span class='no'>digits_features</span>, <span class='no'>digits_class</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pca"</span>, <span class='kw'>pair_x</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pair_y</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><img src='pairwise_plot-2.png' alt='' width='540' height='400' /><div class='input'>
-<span class='fu'>library</span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>COMBO17</span>)
+<span class='fu'>library</span>(<span class='no'>dplyr</span>)
+<span class='fu'>data</span>(<span class='no'>COMBO17</span>)
 <span class='no'>galaxy</span> <span class='kw'>&lt;-</span> <span class='fu'>as_data_frame</span>(<span class='no'>COMBO17</span>)
 <span class='no'>galaxy</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, -<span class='fu'>starts_with</span>(<span class='st'>"e."</span>), -<span class='no'>Nr</span>, -<span class='no'>UFS</span>:-<span class='no'>IFD</span>)
 <span class='no'>galaxy</span> <span class='kw'>&lt;-</span> <span class='fu'>na.omit</span>(<span class='no'>galaxy</span>)
 <span class='no'>galaxy_x</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, -<span class='no'>Rmag</span>:-<span class='no'>chi2red</span>)
 <span class='no'>galaxy_y</span> <span class='kw'>&lt;-</span> <span class='fu'>select</span>(<span class='no'>galaxy</span>, <span class='no'>Rmag</span>:<span class='no'>chi2red</span>)
-<span class='fu'>pairwise_plot</span>(<span class='no'>galaxy_x</span>, <span class='no'>galaxy_y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cva"</span>)</div><img src='pairwise_plot-8.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>pairwise_plot</span>(<span class='no'>galaxy_x</span>, <span class='no'>galaxy_y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"cva"</span>)</div><img src='pairwise_plot-4.png' alt='' width='540' height='400' /><div class='input'>
 <span class='fu'>data</span>(<span class='no'>iris</span>)
 <span class='no'>iris_x</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[,<span class='fl'>1</span>:<span class='fl'>4</span>]
 <span class='no'>iris_y</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[<span class='fl'>5</span>]
-<span class='fu'>pairwise_plot</span>(<span class='no'>iris_x</span>, <span class='no'>iris_y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lda"</span>)</div><img src='pairwise_plot-10.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>pairwise_plot</span>(<span class='no'>iris_x</span>, <span class='no'>iris_y</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lda"</span>)</div><img src='pairwise_plot-6.png' alt='' width='540' height='400' /><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

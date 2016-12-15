@@ -11,10 +11,15 @@ vignette: >
 
 ## The Philosophy of Graphics in `rrr`
 
-The graphical display of data should be intuitive enough that any viewer of the display unfamiliar with the data, even unfamiliar with statistical analysis generally, should be able to see clear patterns, if in fact clear patterns exist in the data. This, the author believes, is especially true for multivariate data, where due to the higher dimensionality of the data, the potential for visualization to overwhelm is high.
+The graphical display of multivariate data is not a new problem. John Tukey's PRIM-9^[Friedman, Jerome H., and Werner Stuetzle. “John W. Tukey's Work on Interactive Graphics.” The Annals of Statistics, vol. 30, no. 6, 2002, pp. 1629–1639.] was a program to plot multivariate data in up to 9 dimensions. It allowed the user to picture, rotate, isolate, and mask data -- it was truly a revolutionary step in interactive graphics.^[The 1974 documentary film, courtesy of Bin-88 Productions, about PRIM-9 featuring John Tukey at the Stanford Linear Accelerator Center can be viewed at the ASA Video Library online at http://stat-graphics.org/movies/prim9.html] While there are contemporary versions of that vision of interactive multivariate graphics, the author of this package believes that 9 dimensions is too many dimensions. People have an intuitive understanding of three-dimensional space (four if you include time), but there are no easy ways to intuitively understand higher dimensions.
 
-```{r}
-library(dplyr)
+Since the techniques of reduced-rank regression -- especially principal component analysis and canonical variate analysis -- are designed to reduce dimensionality, there may be some way to compromise between visualizing high-dimensional data and being able to see patterns in the data in a very intuitive way.
+
+Take, for instance, principal component analysis. If the goal of principal component analysis is to reduce the problem to a few dimensions -- say 2 or 3 -- then we could say that this is equivalent to the goal of being able to plot the principal components in 2- or 3-dimensional space.
+
+```{r message = FALSE}
+require(dplyr)
+require(ggplot2)
 
 ### LOAD DATA
 
@@ -73,19 +78,27 @@ rank_trace(digits_features, digits_features, type = "pca")
 rank_trace(galaxy_x, galaxy_y, type = "cva")
 ```
 
-Rank trace plots can be made interactive with the argument `interactive = TRUE`.
+Rank trace plots can be made interactive with the argument `interactive = TRUE`. Hovering over points on the rank trace will show the rank-trace coordinates. When rank-trace points are clustered tightly together, the user can zoom in on the plot to investigate differences in rank -- though, of course, if they are close enough to require zooming, they are not likely good estimators for $t$.
 
 ```{r}
-rank_trace(tobacco_x, tobacco_y, interactive = TRUE)
 rank_trace(digits_features, digits_features, type = "pca", interactive = TRUE)
-rank_trace(galaxy_x, galaxy_y, type = "cva", interactive = TRUE)
 ```
 
 ## Residual Plots
 
+Residual plots can be created for reduced-rank regression and canonical variate analysis.
+
 ```{r}
 residuals(tobacco_x, tobacco_y, rank = 1)
-residuals(galaxy_x, galaxy_y, type = "cva")
+galaxy_residuals <- residuals(galaxy_x, galaxy_y, type = "cva")
+```
+
+Specific elements of the plot matrix can be extracted the same way one would index a matrix in `R`. Since these plots are `ggplot` objects, the user can augment them using `ggplot2` syntax.
+
+```{r}
+galaxy_residuals[2,1] + ggplot2::ggtitle("Serial Residuals for CV1")
+
+galaxy_residuals[2,2] + ggplot2::ggtitle("Density Plot of CV1 Residuals")
 ```
 
 ## Pairwise Plots
@@ -95,18 +108,25 @@ Pairwise plots can be created for PCA, CVA, LDA, by setting `type = "pca"`, `typ
 ```{r}
 pairwise_plot(digits_features, digits_class, pair_x = 1, pair_y = 3)
 pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 2)
-pairwise_plot(iris_features, iris_class, type = "lda")
 ```
 
-Pairwise plots can be turned into interactive plotly graphs by setting `interactive = TRUE`.
+Pairwise plots can be turned into interactive plotly graphs by setting `interactive = TRUE`. The user can use this to mask data -- if class labels are used -- or to zoom in and hover over points.
 
 ```{r}
 pairwise_plot(digits_features, digits_class, type = "pca", pair_x = 1, pair_y = 3, interactive = TRUE)
-pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 2, interactive = TRUE)
-pairwise_plot(iris_features, iris_class, type = "lda", interactive = TRUE)
+```
+
+## Allpairs Plots
+
+Allpairs plots can be created for principal component analysis. This is a way to see multiple dimensions in a plot matrix.
+
+```{r warning = FALSE, message = FALSE}
+allpairs_plot(digits_features, digits_class, type = "pca", rank = 3)
 ```
 
 ## 3D Plots
+
+Three-dimensional plots allow the user to zoom, rotate, and mask when classes are labeled.
 
 Principal component scores can be plotted in three dimensions by setting
 `type = "pca"`.
