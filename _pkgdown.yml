@@ -21,6 +21,7 @@ reference:
   contents:
   - rank_trace
   - pairwise_plot
+  - allpairs_plot
   - residuals
   - threewise_plot
 - title: Data
@@ -29,4 +30,3 @@ reference:
   - pendigits
   - COMBO17
   - tobacco
-

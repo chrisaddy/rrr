@@ -31,7 +31,7 @@ reduce_rank_regression <- function(x, y, gamma_matrix, rank = "full", k = 0){
 	mu_y <- colMeans(y)
 	mu_x <- colMeans(x)
 	mu_t <- mu_y - C_t %*% mu_x
-	list(mean = mu_t, A = A_t, B = B_t, C = C_t, eigen_values = eigen_values)
+	list(mean = mu_t, A = A_t, B = B_t, C = C_t, eigenvalues = eigen_values)
 }
 
 # Predict Multivariate Responses via Reduced-Rank Regression
@@ -61,7 +61,7 @@ rrr_predict <- function(rrr_object, x_new){
 	num_obs <- dim(x_new)[1]
 	coeffs <- rrr_object[["C"]]
 	means <- matrix(rep(rrr_object[["mean"]], num_obs), ncol = num_obs)
-	df <- t(means + coeffs %*% organize(x_new)) %>% 
+	df <- t(means + coeffs %*% organize(x_new)) %>%
 		as_data_frame()
 	df
 }
@@ -101,7 +101,7 @@ rrr_residual <- function(x, y, gamma_matrix, rank = "full", k = 0){
 }
 
 # Plot Residuals of Reduced-Rank Regression
-# 
+#
 # \code{rrr_residual_plot} is a scatter plot matrix used for diagnostics of the reduced-rank regression model.
 # @inheritParams rrr
 #
@@ -126,7 +126,7 @@ rrr_residual_plot <- function(x, y, gamma_matrix, rank = "full", k = 0, plot = T
 
 delta_coeff <- function(x, y, gamma_matrix, k = 0){
 	full_rank <- min(dim(x)[2], dim(y)[2])
-	coeff_full <- reduce_rank_regression(x, y, gamma_matrix, rank = full_rank, k)[["C"]]	
+	coeff_full <- reduce_rank_regression(x, y, gamma_matrix, rank = full_rank, k)[["C"]]
 	delta_coeff_norm <- c()
 	for(i in 1:full_rank){
 		delta_coeff_norm[i] <-sqrt(sum((coeff_full - reduce_rank_regression(x, y, gamma_matrix, i, k)[["C"]])^2))
@@ -158,7 +158,7 @@ rrr_rank_trace <- function(x, y, gamma_matrix, k = 0, plot = TRUE, interactive =
 	rt_plot <- ggplot(trace, aes(dC, dEE, label = ranks)) +
 		lims(x = c(0,1), y = c(0,1)) +
 		geom_line(color = "red") +
-		geom_point(size = 5) + 
+		geom_point(size = 5) +
 		geom_text(check_overlap = TRUE, size = 4, color = "white") +
 		labs(x = "dC", y = "dE") +
 		ggtitle(paste("Rank Trace Plot, k =  ", k, sep =""))

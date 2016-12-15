@@ -10,7 +10,8 @@ vignette: >
 always_allow_html: yes
 ---
 
-This vignette assumes some familiarity on the part of the reader with principal component^[Hotelling, Harold. *Analysis of a Complex of Statistical Variables into Principal Components / by Harold Hotelling*, 1933.] analysis, canonical variate analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.], and/or linear discriminant analysis. For a more thorough treatment, see the appropriate references. Here we will show a brief mathematical motivation for reduced-rank regression and then show that principal component analysis, canonical variate analysis, and linear discriminant analysis are special cases of reduced-rank regression.
+This vignette assumes some familiarity on the part of the reader with principal component analysis^[
+Hotelling, H. (1936). Analysis of a complex of statistical variables into principal components, *Journal of Educational Psychology*, **24**, 417-411, 498-520.], canonical variate analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.], and/or linear discriminant analysis^[Fisher, R.A. (1936). The use of multiple measurements in taxonomic problems, *Annals of Eugencis*, **7**, 179-188.]. For a more thorough treatment, see the appropriate references. Here we will show a brief mathematical motivation for reduced-rank regression and then show that principal component analysis, canonical variate analysis, and linear discriminant analysis are special cases of reduced-rank regression. For a more thorough treatment, see *Modern Multivariate Statistical Techniques*.^[Izenman, A.J. (2008). *Modern Multivariate Statistical Techniques: Regression, Classification, and Manifold Learning.* Springer.]
 
 ```{r}
 library(rrr)
@@ -56,7 +57,7 @@ $$
 \mathrm{E}\left(\varepsilon\right) = \mathbf{0}, \quad \mathrm{cov}\left(\varepsilon\right) = \mathbf{\Sigma}_{\varepsilon \varepsilon}
 $$
 
-and $\varepsilon$ is distributed independently of $\mathbf{X}.$
+and $\varepsilon$ distributed independently of $\mathbf{X}.$
 
 To estimate $\boldsymbol{\mu}$ and $\mathbf{C}$ we minimize the least-squares criterion
 
@@ -109,7 +110,7 @@ tobacco_y <- tobacco %>%
 
 Below we see that there is not only correlation among the $X_i$s but also among the $Y_i$s. The classical multivariate will not capture that information.
 
-We can get a good visual look at the correlation structure using `GGally::ggcorr`. GGally is a package that extends the functionality of the package `ggplot2` and has been utilized in `rrr` to create pairwise plots, as seen below.
+We can get a good idea of the correlation structure using `GGally::ggcorr`. GGally is a package that extends the functionality of the package `ggplot2` and has been utilized in `rrr` to create pairwise plots, as seen below.
 
 ```{r}
 GGally::ggcorr(tobacco_x)
@@ -157,19 +158,19 @@ In other words, we allow for the possibility that there are unknown linear const
 
 Without loss of generality, we consider the case when $r > s$, i.e., $t < s$.
 
-When $t = s$, the regression model is *full-rank*, and can be fit using multiple regression on each $Y_i \in \mathbf{Y}.$ When $t < s$, $\mathbf{C}$ can be decomposed into non-unique matrices $\mathbf{A}_{s \times t}$ and $\mathbf{B}_{t \times r}$, such that $\mathbf{C} = \mathbf{AB},$ and the multivariate regression model is given by
+When $t = s$, the regression model is *full-rank*, and can be fit using multiple regression on each $Y_i \in \mathbf{Y}$ as seen above. When $t < s$, $\mathbf{C}$ can be decomposed into non-unique matrices $\mathbf{A}_{s \times t}$ and $\mathbf{B}_{t \times r}$, such that $\mathbf{C} = \mathbf{AB},$ and the multivariate regression model is given by
 
 $$
 \overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times t}{\mathbf{A}} \; \overset{t \times r}{\mathbf{B}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
 $$
 
-Estimating $\boldsymbol{\mu}, \mathbf{A}, \mathbf{B}$, and ultimately the *reduced-rank regression coefficient* $\mathbf{C}^{\left(t\right)}$, is done by minimizing the weighted sum-of-squares criterion
+Estimating $\boldsymbol{\mu}, \mathbf{A}, \mathbf{B}$, and the *reduced-rank regression coefficient* $\mathbf{C}^{\left(t\right)}$, is done by minimizing the weighted sum-of-squares criterion
 
 $$
 \mathrm{E}\left[\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)^\tau \mathbf{\Gamma}\left(\mathbf{Y} - \boldsymbol{\mu} - \mathbf{ABX}\right)\right]
 $$
 
-where $\boldsymbol{\Gamma}$ is a positive-definite symmetric $\left(s \times s\right)$-matrix of weights, the expectation of which is taken over the joint distribution $\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)^\tau$. This weighted sum-of-squares criterion is minimized when
+where $\boldsymbol{\Gamma}$ is a positive-definite symmetric $\left(s \times s\right)$-matrix of weights. This expectation is taken over the joint distribution $\left(\mathbf{X}^\tau, \mathbf{Y}^\tau\right)^\tau$. The weighted sum-of-squares criterion is minimized when
 
 $$
 \begin{aligned}
@@ -185,11 +186,11 @@ $$
 \mathbf{\Gamma}^{1/2}\mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1} \mathbf{\Sigma}_{XY} \mathbf{\Gamma}^{1/2}
 $$
 
-In practice, we try out different values of $\mathbf{\Gamma}$. Two popular choices -- and ones that lead to interesting results as we will see -- are $\mathbf{\Gamma} = \mathbf{I}_r$ and $\mathbf{\Gamma} = \boldsymbol{\Sigma}_{YY}^{-1}$.
+We try out different values of $\mathbf{\Gamma}$ in applications. Two popular choices -- and ones that lead to interesting results as we will see -- are $\mathbf{\Gamma} = \mathbf{I}_r$ and $\mathbf{\Gamma} = \boldsymbol{\Sigma}_{YY}^{-1}$. The following is equivalent to performing canonical variate analysis.
 
 Since the reduced-rank regression coefficient relies on inverting $\boldsymbol{\Sigma}_{XX}$ and, possibly, $\boldsymbol{\Sigma}_{YY}$, we want to take into consideration the cases when $\boldsymbol{\Sigma}_{XX}, \boldsymbol{\Sigma}_{YY}$ are singular or difficult to invert.
 
-Borrowing from ridge regression, we perturb the diagonal of the covariance matrices by some small constant, $k$. Thus, we carry out the reduced-rank regression procedure using
+We can perturb the diagonal of the covariance matrices by some small constant, $k$. This will ensure that the covariance matrix is invertible by -- only slightly -- altering the data. The motivation for is taken from ridge regression^[Hoerl, A.E. and Kennard, R. (1970). Ridge regression: Biased estimation for non-orthogonal problems. *Technometrics* **12**: 55-67. Reprinted in *Technometrics*, **42** (2000), 80-86.] in the multiple-regression context, and from the idea of *softly-shrunken* reduced-rank regression.^[Aldrin, Magne. "Multivariate Prediction Using Softly Shrunk Reduced-Rank Regression." The American Statistician 54.1 (2000): 29. Web. ] Thus, we carry out the reduced-rank regression procedure using
 
 $$
 \begin{aligned}
@@ -206,7 +207,7 @@ $$
 args(rank_trace)
 ```
 
-Since $\hat{\mathbf{C}}$ is calculated using sample observations, its *mathematical* rank will always be full, but it will have a *statistical* rank $t$ which is an unknown hyperparameter that needs to be estimated.
+\ $\hat{\mathbf{C}}$ is calculated using sample observations. Therefore its *mathematical* rank will always be full, but it will have a *statistical* rank $t$ which is an unknown hyperparameter that needs to be estimated.
 
 One method of estimating $t$ is to plot the *rank trace*. Along the $X$-axis, we plot a measure of the difference between the rank-$t$ coefficient matrix and the full-rank coefficient matrix for each value of $t$. Along the $Y$-axis, we plot the reduction in residual covariance between the rank-$t$ residuals and the full-rank residuals for each value of $t$.
 
@@ -222,19 +223,11 @@ Set `plot = FALSE` to print data frame of rank trace coordinates.
 rank_trace(tobacco_x, tobacco_y, plot = FALSE)
 ```
 
-When the weight matrix, $\mathbf{\Gamma}$, takes on a more complicated form, the rank trace may plot points outside the unit square, or may not be a smooth monotic curve. When this is the case, we can change the value of `k` to smooth the rank trace. This value of $\hat{k}$ is then an estimate of the ridge pertubation $k$ described above.
-
-The following rank trace is smooth, but we can always add a value $k$ to *softly shrink*^[Aldrin, Magne. "Multivariate Prediction Using Softly Shrunk Reduced-Rank Regression." The American Statistician 54.1 (2000): 29. Web. ] the reduced-rank regression.
-
-```{r}
-### use inverse of estimated covariance of Y for gamma
-
-rank_trace(tobacco_x, tobacco_y, type = "cva")
-```
+When the weight matrix, $\mathbf{\Gamma}$, takes on a more complicated form, the rank trace may plot points outside the unit square, or may not be a smooth monotic curve. When this is the case, we can change the value of `k` to smooth the rank trace. This value of $k$ is then used as the ridge perturbation, $k$, described above.
 
 ### Fitting Reduced-Rank Regression Model
 
-The main function in the `rrr` package is -- unsurprisingly -- `rrr()` which fits a reduced-rank regression model and outputs the coefficients.
+The main function in the `rrr` package is `rrr()` which fits a reduced-rank regression model and outputs the coefficients.
 
 ### Fit reduced-rank regression model with `rrr()`
 
@@ -242,29 +235,23 @@ The main function in the `rrr` package is -- unsurprisingly -- `rrr()` which fit
 args(rrr)
 ```
 
-`rrr()` takes as inputs the data frames, or matrices,  of input and response variables, the weight matrix $\mathbf{\Gamma}$, the rank (defaulted to full rank), the type of covariance matrix to be used (either covariance or correlation), and the ridge constant $k$.
+`rrr()` takes as inputs the data frames, or matrices,  of input and response variables, the type of reduced-rank regression procedure to perform, the rank (defaulted to full rank), and the ridge constant $k$. The argument `type` defaults to `type = "identity"`, which sets $\mathbf{\Gamma} = \mathbf{I}$ but can be set to `type = "pca"`, `type = "cva"`, or `type = "lda"` to perform principal component analysis, canonical variate analysis, or linear discriminant analysis, respectively
 
-`rrr()` returns a `list` containing the means $\hat{\boldsymbol{\mu}}$, the matrices $\hat{\mathbf{A}}$, $\hat{\mathbf{B}}$, and the coefficient matrix $\hat{\mathbf{C}}$, as well as the eigenvalues of the weight marix $\mathbf{\Gamma}$.
+`rrr()` outputs the appropriate coefficients depending on the type of reduced-rank regression performed.
 
 ```{r}
 rrr(tobacco_x, tobacco_y, rank = "full")
 ```
 
-We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical multivariate regression coefficients as above. They differ only by a transpose, and is presented this way in `rrr` as a matter of convention. It is this form that is presented in the literature.^[Izenman, A.J. (2008) *Modern Multivariate Statistical Techniques*. Springer.
+We can see that `rrr()` with `rank = "full"` and `k = 0` returns the classical multivariate regression coefficients as above. They differ only by a transpose, and is presented this way in `rrr` as a matter of convention. It is this form that is presented in the literature.^[Izenman, A.J. (2008). *Modern Multivariate Statistical Techniques: Regression, Classification, and Manifold Learning.* Springer.
 ]
-
-***
 
 ### Diagnostics
 
-### Calculate Residuals with `residuals()`
+### Plot and Print Residuals with `residuals()`
 
 ```{r}
 args(residuals)
-```
-
-```{r}
-residuals(tobacco_x, tobacco_y, rank = 1, plot = FALSE)
 ```
 
 ### Plot Residuals
@@ -283,7 +270,7 @@ residuals(tobacco_x, tobacco_y, rank = 1, plot = FALSE)
 
 ## Principal Components Analysis
 
-### PCA^[Hotelling, Harold. *Analysis of a Complex of Statistical Variables into Principal Components / by Harold Hotelling*, 1933.] is a Special Case of Reduced-Rank Regression
+### PCA is a Special Case of Reduced-Rank Regression
 
 Set
 
@@ -331,6 +318,8 @@ where $\mathbf{X}_c$ is the vector $\mathbf{X}$ after mean-centering.
 data(pendigits)
 digits <- as_data_frame(pendigits) %>% select(-V36)
 ```
+
+Forty-four writers hand-wrote the digits 0-9 250 times in random order on a in 5 500x500 pixel boxes on a pressure-sensitive tablet with integrated LCD screen. The first 10 digits were thrown out -- without telling the writers -- to ignore variation from the writers gaining familiarity with the device.^[Alimoglu, F. (1995). Combining multiple classifiers for pen-based handwritten digit recognition, M.Sc. thesis, Institute of Graduate Studies in Science and Engineering, Bogazici University, Istanbul, Turkey.] The raw data of the coordinates was cleaned and translated.
 
 ```{r}
 digits_features <- digits %>% select(-V35)
@@ -394,7 +383,7 @@ Since the first two principal components will capture the most variance -- and h
 pairwise_plot(digits_features, digits_class, type = "pca")
 ```
 
-We can set the $x$- and $y$-axes to whichever pairs of PC scores we would like to plot by changing the `pc_x` and `pc_y` arguments.
+We can set the $x$- and $y$-axes to whichever pairs of PC scores we would like to plot by changing the `pair_x` and `pair_y` arguments.
 
 ```{r}
 pairwise_plot(digits_features, digits_class, type = "pca", pair_x = 1, pair_y = 3)
@@ -424,7 +413,7 @@ rrr(digits_features, digits_features, type = "pca", rank  = 3)
 
 ### CVA as a Special Case of Reduced-Rank Regression
 
-Canonical Variate Analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.] is a method of linear dimensionality reduction that turns the original $\mathbf{X}$ and $\mathbf{Y}$ into new variables $boldsymbol{\xi}$ and $\boldsymbol{\omega}$, respectively. Canonical variate analysis can be performed as a special case of reduced-rank regression.
+Canonical Variate Analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.] is a method of linear dimensionality reduction that turns the original $\mathbf{X}$ and $\mathbf{Y}$ into new variables $\boldsymbol{\xi}$ and $\boldsymbol{\omega}$, respectively. Canonical variate analysis can be performed as a special case of reduced-rank regression.
 
 Set $\mathbf{\Gamma} = \mathbf{\Sigma}_{YY}^{-1}$. Then, the $t$ new pairs of canonical variables $\left(\xi_i, \omega_i\right), i = 1, \dots, t$ are calculated by fitting a reduced-rank -- rank $t$ -- regression equation. The canonical variate scores are given by
 
@@ -455,6 +444,8 @@ galaxy <- as_data_frame(COMBO17) %>%
        na.omit()
 ```
 
+This data set^[Wolf, C., Meisenheimer, M., Kleinheinrich, M., Borch, A., Dye, S., Gray, M., Wisotski, L., Bell, E.F., Rix, H.W., Cimatti, A., Hasinger, G., and Szokoly, G. (2004). A catalogue of the Chandra Deep Field South with multi-colour classification and photometric redshifts from COMBO-17, Astronomy & Astrophysics, https://arxiv.org/pdf/astro-ph/0403666.pdf] comes from a public catalogue of objects in the Chandra Deep Field South, an area of the sky. This subset of the catalogue is all the objects classified as "Galaxies", with only observations that do not have any missing values.^[Donald Richards in the Department of Statistics at Pennsylvania State University helped Dr. Izenman in understanding the variables in this data set. The package author, by extension, would also like to acknowledge Dr. Richards for help in understanding the data set used in the text *Modern Multivariate Statistical Techniques*.]
+
 ```{r}
 galaxy_x <- galaxy %>%
   select(-Rmag:-chi2red)
@@ -471,6 +462,8 @@ GGally::ggcorr(galaxy_x)
 GGally::ggcorr(galaxy_y)
 ```
 
+We can see above the heavy correlation among the $X_i$s and among the $Y_i$s. This data set, therefore, makes for a good candidate to perform canonical variate analysis.
+
 ### Assessing Effective Dimensionality
 
 Estimate $t$ and $k$ with `rank_trace()`
@@ -481,29 +474,31 @@ rank_trace(galaxy_x, galaxy_y, type = "cva")
 
 ### Diagnostics
 
-Calculate residuals with `residuals()`, setting `type = "cva"`.
-
-```{r}
-residuals(galaxy_x, galaxy_y, type = "cva", rank = 2, k = 0.001, plot = FALSE)
-```
+Plot and print residuals with `residuals()`, setting `type = "cva"`.
 
 ### Plot Residuals
-
-Plot residuals with `residuals`, setting `type = "cva"`
 
 ```{r}
 residuals(galaxy_x, galaxy_y, type = "cva", rank = 2, k = 0.001)
 ```
 
-### Plot Pairwise Canonical Variate Scores with `pairwise_plot()`
+### Print Residuals
 
 ```{r}
-pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 1, k = 0.0001)
-pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 2, k = 0.0001)
+residuals(galaxy_x, galaxy_y, type = "cva", rank = 2, k = 0.001, plot = FALSE)
 ```
 
+### Plot Pairwise Canonical Variate Scores
+
+Plot canonical variate scores with `pairwise_plot()`
+
 ```{r}
-pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 3)
+pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 1, k = 0.001)
+```
+
+Choose which pair of canonical variate scores to plot by changing the argument `pair_x`.
+
+```{r}
 pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 6)
 ```
 
@@ -512,10 +507,16 @@ pairwise_plot(galaxy_x, galaxy_y, type = "cva", pair_x = 6)
 Fit model with `rrr()`, setting `type = "cva"`.
 
 ```{r}
-rrr(galaxy_x, galaxy_y, type = "cva", rank = 2, k = 0.0001)
+rrr(galaxy_x, galaxy_y, type = "cva", rank = 2, k = 0.001)
 ```
 
-### Calculate Canonical Variate Scores with `scores()`
+### Print Canonical Variate scores
+
+Print canonical variate scores with `scores()`, setting `type = "cva"`.
+
+```{r}
+scores(galaxy_x, galaxy_y, type = "cva", rank = 2, k = 0.001)
+```
 
 ## Linear Discriminant Analysis
 
@@ -540,6 +541,8 @@ data(iris)
 iris <- as_data_frame(iris)
 ```
 
+This is R.A. Fisher's classic `iris` data set that comes packaged in base  `R`.
+
 ```{r}
 iris_features <- iris %>%
   select(-Species)
@@ -556,9 +559,9 @@ Generally, plotting linear discriminant functions against each other, i.e., the 
 
 Plotting techniques are discussed in the following section.
 
-### Plotting
+### Plot LDA Pairs
 
-Plot LDA Pairs with `pairwise_plot()`, setting `type = "pca"`.
+Plot LDA pairs with `pairwise_plot()`, setting `type = "lda"`.
 
 A typical graphical display for multiclass LDA is to plot the $j$th discriminant scores for the $n$ points against the $k$ discriminant scores.
 
@@ -574,7 +577,9 @@ Fit LDA model with `rrr()`, setting `type = "lda"`.
 rrr(iris_features, iris_class, type = "lda", k = 0.0001)
 ```
 
-### Calculate LDA Scores with `scores()`
+### Print LDA Scores with `scores()`
+
+Print linear discriminant scores and the class means with `scores()`, setting `type = "lda"`
 
 ```{r}
 scores(iris_features, iris_class, type = "lda", k = 0.0001)

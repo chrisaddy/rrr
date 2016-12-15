@@ -128,12 +128,3 @@ Linear discriminant scores can be plotted in three dimensions by setting
 ```{r warning = FALSE, message = FALSE}
 threewise_plot(digits_features, digits_class, type = "lda", k = 0.001)
 ```
-
-## Other tweaks
-
-### Change Point Size with argument `point_size`
-
-```{r warning = FALSE, message = FALSE}
-threewise_plot(iris_features, iris_class, type = "pca")
-threewise_plot(iris_features, iris_class, point_size = 5)
-```

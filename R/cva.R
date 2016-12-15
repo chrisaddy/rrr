@@ -21,7 +21,7 @@ cva <- function(x, y, rank = "full", k = 0) {
     list(mean = rrr_object[["mean"]],
 			G = rrr_object[["B"]],
 			H = H,
-			canonical_corr = rrr_object[["eigen_values"]])
+			canonical_corr = rrr_object[["eigenvalues"]])
 }
 
 # Canonical Variate Scores
