@@ -11,7 +11,7 @@ always_allow_html: yes
 ---
 
 This vignette assumes some familiarity on the part of the reader with principal component analysis^[
-Hotelling, H. (1936). Analysis of a complex of statistical variables into principal components, *Journal of Educational Psychology*, **24**, 417-411, 498-520.], canonical variate analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.], and/or linear discriminant analysis^[Fisher, R.A. (1936). The use of multiple measurements in taxonomic problems, *Annals of Eugencis*, **7**, 179-188.]. For a more thorough treatment, see the appropriate references. Here we will show a brief mathematical motivation for reduced-rank regression and then show that principal component analysis, canonical variate analysis, and linear discriminant analysis are special cases of reduced-rank regression. For a more thorough treatment, see *Modern Multivariate Statistical Techniques*.^[Izenman, A.J. (2008). *Modern Multivariate Statistical Techniques: Regression, Classification, and Manifold Learning.* Springer.]
+Hotelling, H. (1936). Analysis of a complex of statistical variables into principal components, *Journal of Educational Psychology*, **24**, 417-411, 498-520.], canonical variate analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.], and/or linear discriminant analysis^[Fisher, R.A. (1936). The use of multiple measurements in taxonomic problems, *Annals of Eugencis*, **7**, 179-188.]. For a more thorough treatment, see the appropriate references. Here we will show a brief mathematical motivation for reduced-rank regression and then show that principal component analysis, canonical variate analysis, and linear discriminant analysis are special cases of reduced-rank regression. For a more thorough treatment of reduced-rank regression and its special cases, see *Modern Multivariate Statistical Techniques*.^[Izenman, A.J. (2008). *Modern Multivariate Statistical Techniques: Regression, Classification, and Manifold Learning.* Springer.] The mathematical formulation given below is a treatment of the theory to be minimally sufficient for anyone in need of introduction to reduced-rank regression to use in practice and is not intended to be a rigorous take on the concept. There are other packages that carry out principal component analysis, canonical variate analysis, and linear discrimnant analysis. As such, this package would prove most useful to readers of the above text, as it adopts the same hierarchical framework of reduced-rank regression.
 
 ```{r}
 library(rrr)
@@ -108,7 +108,7 @@ tobacco_y <- tobacco %>%
 	select(starts_with("Y"))
 ```
 
-Below we see that there is not only correlation among the $X_i$s but also among the $Y_i$s. The classical multivariate will not capture that information.
+Below we see that there is not only correlation among the $X_i$s but also among the $Y_i$s. The classical multivariate model will not capture that information.
 
 We can get a good idea of the correlation structure using `GGally::ggcorr`. GGally is a package that extends the functionality of the package `ggplot2` and has been utilized in `rrr` to create pairwise plots, as seen below.
 
