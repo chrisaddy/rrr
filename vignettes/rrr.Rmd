@@ -10,13 +10,41 @@ vignette: >
 always_allow_html: yes
 ---
 
+This vignette assumes some familiarity on the part of the reader with principal component^[Hotelling, Harold. *Analysis of a Complex of Statistical Variables into Principal Components / by Harold Hotelling*, 1933.] analysis, canonical variate analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.], and/or linear discriminant analysis. For a more thorough treatment, see the appropriate references. Here we will show a brief mathematical motivation for reduced-rank regression and then show that principal component analysis, canonical variate analysis, and linear discriminant analysis are special cases of reduced-rank regression.
+
 ```{r}
 library(rrr)
 ```
 
 ## Classical Multivariate Regression
 
-Let $\mathbf{X} = \left(X_1, X_2, \dots, X_r\right)^\tau$ and $\mathbf{Y} = \left(Y_1, Y_2, \dots, Y_s\right)^\tau$, i.e., $\mathbf{X}$ is a random vector. The classical multivariate regression model is given by
+Let $\mathbf{X} = \left(X_1, X_2, \dots, X_r\right)^\tau$ and $\mathbf{Y} = \left(Y_1, Y_2, \dots, Y_s\right)^\tau$ be jointly distributed random vectors with
+
+$$
+\mathrm{E}\left\{
+  \begin{pmatrix}
+    \mathbf{X} \\
+    \mathbf{Y} \\
+  \end{pmatrix}
+  \right\} =
+  \begin{pmatrix}
+    \boldsymbol{\mu}_X \\
+    \boldsymbol{\mu}_Y \\
+  \end{pmatrix},
+  \quad
+  \mathrm{cov}\left\{
+    \begin{pmatrix}
+      \mathbf{X} \\
+      \mathbf{Y} \\
+    \end{pmatrix}
+  \right\} =
+  \begin{pmatrix}
+    \mathbf{\Sigma}_{XX} & \mathbf{\Sigma}_{XY} \\
+    \mathbf{\Sigma}_{YX} & \mathbf{\Sigma}_{YY} \\
+  \end{pmatrix}
+$$
+
+The classical multivariate regression model is given by
 
 $$
 \overset{s \times 1}{\mathbf{Y}} = \overset{s \times 1}{\boldsymbol{\mu}} + \overset{s \times r}{\mathbf{C}} \; \overset{r \times 1}{\mathbf{X}} + \overset{s \times 1}{\varepsilon}
@@ -42,7 +70,7 @@ This is minimized when
 
 $$
 \begin{aligned}
-	\boldsymbol{\mu} & = \boldsymbol{\mu}_Y - \mathbf{C} \boldsymbol{\mu} \\
+	\boldsymbol{\mu} & = \boldsymbol{\mu}_Y - \mathbf{C} \boldsymbol{\mu}_X \\
 	\mathbf{C} & = \mathbf{\Sigma}_{YX} \mathbf{\Sigma}_{XX}^{-1}
 \end{aligned}
 $$
@@ -53,11 +81,11 @@ $$
 \hat{\mathbf{C}} = \hat{\mathbf{\Sigma}}_{YX} \hat{\mathbf{\Sigma}}_{XX}^{-1}
 $$
 
-Note that $\mathbf{C}$ and hence $\hat{\mathbf{C}}$ contains no term that takes into the account the correlation of the $Y_i$s. This is a surprising result, since we would expect correlation among the responses.
+Note that $\mathbf{C}$ -- and hence $\hat{\mathbf{C}}$ -- contains no term that takes into the account the correlation of the $Y_i$s. This is a surprising result, since we would expect correlation among the responses.
 
 In other words, to find the least-squares estimate $\hat{\mathbf{C}}$ of $\mathbf{C}$, one need only regress $\mathbf{X}$ separately on each $Y_i$ and concatenate those multiple-regression coefficient vectors into a matrix to construct the estimated coefficient matrix $\hat{\mathbf{C}}$.
 
-The classical multivariate regression model is not *truly* multivariate.
+In some very important sense, the classical multivariate regression model is not *truly* multivariate.
 
 
 ## The `tobacco` Data Set
@@ -67,8 +95,6 @@ library(dplyr)
 data(tobacco)
 
 tobacco <- as_data_frame(tobacco)
-
-glimpse(tobacco)
 ```
 
 We see that the `tobacco` data set^[Anderson, R.L and Bancroft, T.A (1952). *Statistical Theory in Research*, New York: McGraw-Hill. p. 205. ] has 9 variables and 25 observations. There are 6 $X_i$ predictor variables -- representing the percentages of nitrogen, chlorine, potassium, phosphorus, calcium, and magnesium, respectively -- and 3 $Y_j$ response variables -- representing cigarette burn rates in inches per 1,000 seconds, percent sugar in the leaf, and percent nicotine in the leaf, respectively.
@@ -83,15 +109,19 @@ tobacco_y <- tobacco %>%
 
 Below we see that there is not only correlation among the $X_i$s but also among the $Y_i$s. The classical multivariate will not capture that information.
 
-We can get a good visual look at the correlation structure using `GGally::ggcorr`. GGally is a package that extends the functionality of the package `ggplot2` and has been utilized in `rrr`.
+We can get a good visual look at the correlation structure using `GGally::ggcorr`. GGally is a package that extends the functionality of the package `ggplot2` and has been utilized in `rrr` to create pairwise plots, as seen below.
 
 ```{r}
 GGally::ggcorr(tobacco_x)
 ```
 
+We can see correlation between the $X_i$s, which will be accounted for in the classical multivariate regression model.
+
 ```{r}
 GGally::ggcorr(tobacco_y)
 ```
+
+There is clearly correlation in the $Y_i$s, especially between percent nicotine and percent sugar. Any regression model that we fit should take this into account.
 
 ```{r}
 ## multivariate regression
@@ -202,10 +232,6 @@ The following rank trace is smooth, but we can always add a value $k$ to *softly
 rank_trace(tobacco_x, tobacco_y, type = "cva")
 ```
 
-```{r}
-#rank_trace(tobacco_x, tobacco_y, type = "cva", plot = FALSE)
-```
-
 ### Fitting Reduced-Rank Regression Model
 
 The main function in the `rrr` package is -- unsurprisingly -- `rrr()` which fits a reduced-rank regression model and outputs the coefficients.
@@ -257,7 +283,7 @@ residuals(tobacco_x, tobacco_y, rank = 1, plot = FALSE)
 
 ## Principal Components Analysis
 
-### PCA is a Special Case of Reduced-Rank Regression
+### PCA^[Hotelling, Harold. *Analysis of a Complex of Statistical Variables into Principal Components / by Harold Hotelling*, 1933.] is a Special Case of Reduced-Rank Regression
 
 Set
 
@@ -299,15 +325,11 @@ $$
 
 where $\mathbf{X}_c$ is the vector $\mathbf{X}$ after mean-centering.
 
-The first principle component is a latent variable that is a linear combination of the $X_i$s that maximizes the variance among the $X_i$s. The second principle component is another linear combination that maximizes the variance among the $X_i$s subject to being independent of the first principal component. There are $r$ possible principal components, each independent of each other, that capture decreasing amounts of variance. The goal is to use as few principle components as necessary to capture the variance in the data and reduce dimensionality. The question of how many principle components to keep is equivalent to assessing the effective dimensionality $t$ of the reduced-rank regression.
-
 ## The `pendigits` Data Set
 
 ```{r message = FALSE, warning = FALSE}
 data(pendigits)
 digits <- as_data_frame(pendigits) %>% select(-V36)
-
-glimpse(digits)
 ```
 
 ```{r}
@@ -357,7 +379,7 @@ rank_trace(digits_features, digits_features, type = "pca", plot = FALSE)
 args(pairwise_plot)
 ```
 
-A common PCA method of visualization for diagnostic and analysis purposes is to plot the $j$th sample PC scores against the $k$th PC scores,
+A common PCA method of visualization is to plot the $j$th sample PC scores against the $k$th PC scores,
 
 $$
 \begin{aligned}
@@ -378,16 +400,16 @@ We can set the $x$- and $y$-axes to whichever pairs of PC scores we would like t
 pairwise_plot(digits_features, digits_class, type = "pca", pair_x = 1, pair_y = 3)
 ```
 
-### Plot all pairs of PC scores with `pca_allpairs_plot()`
-
-Alternatively, we can look at structure in the data by plotting all PC pairs, along with some other visual diagnostics with `pca_allpairs_plot()`. Along with plotting principal component scores against each other, the plot matrix also shows histograms and box plots to show how the points are distributed along principal component axes.
+### Plot all pairs of PC scores with `allpairs_plot()`
 
 ```{r}
-#args(pca_allpairs_plot)
+args(allpairs_plot)
 ```
 
-```{r}
-#pca_allpairs_plot(digits_features, rank = 3, class_labels = digits_class)
+Alternatively, we can look at structure in the data by plotting all PC pairs, along with some other visual diagnostics with `allpairs_plot()`. Along with plotting principal component scores against each other, the plot matrix also shows histograms and box plots to show how the points are distributed along principal component axes.
+
+```{r warning = FALSE, message = FALSE}
+allpairs_plot(digits_features, digits_class, type = "pca", rank = 3)
 ```
 
 ### Fitting a PCA Model
@@ -402,34 +424,9 @@ rrr(digits_features, digits_features, type = "pca", rank  = 3)
 
 ### CVA as a Special Case of Reduced-Rank Regression
 
-Canonical Variate Analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.] is a method of linear dimensionality reduction.
+Canonical Variate Analysis^[Hotelling, H. (1936). Relations between two sets of variates, *Biometrika*, **28**, 321-377.] is a method of linear dimensionality reduction that turns the original $\mathbf{X}$ and $\mathbf{Y}$ into new variables $boldsymbol{\xi}$ and $\boldsymbol{\omega}$, respectively. Canonical variate analysis can be performed as a special case of reduced-rank regression.
 
-It is assumed that $\left(\mathbf{X}, \mathbf{Y}\right)$ are jointly distributed with
-
-$$
-\mathrm{E}\left\{
-  \begin{pmatrix}
-    \mathbf{X}\\
-    \mathbf{Y}\\
-  \end{pmatrix}
-  \right\} =
-  \begin{pmatrix}
-    \boldsymbol{\mu}_X \\
-    \boldsybmol{\mu}_Y \\
-  \end{pmatrix}, \quad
-  \mathrm{cov}\left\{
-  \begin{pmatrix}
-    \mathbf{X}\\
-    \mathbf{Y}\\
-  \end{pmatrix}
-  \right\} =
-  \begin{pmatrix}
-    \mathbf{\Sigma}_{XX} & \mathbf{\Sigma}_{XY} \\
-    \mathbf{\Sigma}_{YX} & \mathbf{\Sigma}_{YY} \\
-  \end{pmatrix}
-$$
-
-The $t$ new pairs of canonical variables $\left(\xi_i, \omega_i\right), i = 1, \dots, t$ are calculated by fitting a reduced rank regression equation. The canonical variate scores are given by
+Set $\mathbf{\Gamma} = \mathbf{\Sigma}_{YY}^{-1}$. Then, the $t$ new pairs of canonical variables $\left(\xi_i, \omega_i\right), i = 1, \dots, t$ are calculated by fitting a reduced-rank -- rank $t$ -- regression equation. The canonical variate scores are given by
 
 $$
 \boldsymbol{\xi}^{\left(t\right)} = \mathbf{G}^{\left(t\right)}\mathbf{X}, \quad \boldsymbol{\omega}^{\left(t\right)} = \mathbf{H}^{\left(t\right)} \mathbf{Y},
@@ -439,7 +436,6 @@ with
 
 $$
 \begin{aligned}
-\mathbf{\Gamma} & = \mathbf{\Sigma}_{YY}^{-1} \\
 \mathbf{G}^{\left(t\right)} & = \mathbf{B}^{\left(t\right)} \\
 \mathbf{H}^{\left(t\right)} & = \mathbf{A}^{\left(t\right)-} \\
   \end{aligned}
@@ -457,8 +453,6 @@ data(COMBO17)
 galaxy <- as_data_frame(COMBO17) %>%
        select(-starts_with("e."), -Nr, -UFS:-IFD) %>%
        na.omit()
-
-glimpse(galaxy)
 ```
 
 ```{r}
@@ -544,8 +538,6 @@ While these assumptions will not be met in all cases, when they are -- and when 
 ```{r}
 data(iris)
 iris <- as_data_frame(iris)
-
-glimpse(iris)
 ```
 
 ```{r}
@@ -587,5 +579,3 @@ rrr(iris_features, iris_class, type = "lda", k = 0.0001)
 ```{r}
 scores(iris_features, iris_class, type = "lda", k = 0.0001)
 ```
-
-### Diagnostics

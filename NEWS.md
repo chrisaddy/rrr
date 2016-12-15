@@ -1,5 +1,6 @@
-# rrr 1.0.1
+# rrr 1.1.0
 
+* Add function - allpairs_plot
 * Update README/website to include CRAN installation.
 * Corrections to vignette.
 * Corrections to visualization article on package website.

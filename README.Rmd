@@ -1,25 +1,35 @@
-rrr
-===
+---
+output:
+  md_document:
+    variant: markdown_github
+---
 
-[![Build Status](https://travis-ci.org/chrisaddy/rrr.svg?branch=master)](https://travis-ci.org/chrisaddy/rrr) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/rrr)](http://cran.r-project.org/package=rrr) [![Coverage Status](https://img.shields.io/codecov/c/github/chrisaddy/rrr/master.svg)](https://codecov.io/github/chrisaddy/rrr?branch=master)
+# rrr
+[![Build Status](https://travis-ci.org/chrisaddy/rrr.svg?branch=master)](https://travis-ci.org/chrisaddy/rrr)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/rrr)](http://cran.r-project.org/package=rrr)
+[![Coverage Status](https://img.shields.io/codecov/c/github/chrisaddy/rrr/master.svg)](https://codecov.io/github/chrisaddy/rrr?branch=master)
 
 R package for reduced-rank regression.
 
 ### Install latest release from CRAN
 
-``` r
+```{r eval = FALSE}
 install.packages("rrr")
 ```
 
 ### Install development version from github
 
-``` r
+```{r eval = FALSE}
 devtools::install_github("chrisaddy/rrr")
 ```
 
 Please send any issues, with minimally-reproducible code, and any feature requests or suggestions to the package [github issues portal](https://github.com/chrisaddy/rrr/issues).
 
-The rrr package provides four categories of reduced-rank regression functions: \* reduced-rank regression \* principal component analysis \* canonical variate analysis \* multiclass linear discriminant analysis
+The rrr package provides four categories of reduced-rank regression functions:
+* reduced-rank regression
+* principal component analysis
+* canonical variate analysis
+* multiclass linear discriminant analysis
 
 The framework of this package was based on Alan Izenman's book *Modern Multivariate Statistical Techniques: Regression, Classification, and Manifold Learning* and the Fall 2016 course -- taught by him and based on the text -- at Temple University.
 

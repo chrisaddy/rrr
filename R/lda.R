@@ -1,9 +1,9 @@
 # \code{lda} fits a reduced-rank linear discriminant analysis model by fitting a reduced-rank canonical variate
 # model to the predictor variables and a response-indicator matrix.
-# 
+#
 # @inheritParams rrr
 # @param class vector or one-column data frame of type factor or character that are the class labels of the observations.
-# 
+#
 # @return list containing: a named vector of prior probabilities; a data frame of canonical-variate coefficients of the predictor variables;
 # a data frame of canonical-variate coefficients for the reponse variables.
 
@@ -25,13 +25,13 @@ lda <- function(x, class, rank = "full", k = 0){
     names(G) <- paste("LD", 1:reduce_rank, sep = "")
     H <- as_data_frame(cva_object$H)
     names(H) <- names(G)
-    class_names <- class %>% 
+    class_names <- class %>%
         as_data_frame() %>%
         select(class = 1) %>%
         mutate(class = as.character(class)) %>%
         distinct() %>%
         arrange(class) %>%
-        as.matrix() %>% 
+        as.matrix() %>%
         as.vector()
     n <- colSums(y_organize)
     num_classes <- dim(y_organize)[1]
@@ -64,7 +64,7 @@ lda_scores <- function(x, class, rank = "full", k = 0){
     names(xi) <- paste("LD", 1:dim(xi)[2], sep = "")
     omega <- as_data_frame(t(as.matrix(lda_object[["H"]]) %*% t(y_organize)))
     names(omega) <- names(xi)
-    list(scores = dplyr::bind_cols(xi, class_label), class_means = dplyr::distinct(dplyr::bind_cols(omega, class_label))) 
+    list(scores = dplyr::bind_cols(xi, class_label), class_means = dplyr::distinct(dplyr::bind_cols(omega, class_label)))
 }
 
 # \code{lda_pairwise_plot} creates a plot with the linear discriminant scores of one linear discriminant
@@ -96,10 +96,10 @@ lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", k =
     means_df <- dplyr::bind_cols(means_x_axis, means_y_axis, means_class)
     names(means_df) <- c("means_x", "means_y", "class")
     static_plot <- return(ggplot() +
-        geom_point(data = scores_df, aes(x = scores_x, y = scores_y, color = class)) + 
+        geom_point(data = scores_df, aes(x = scores_x, y = scores_y, color = class)) +
         #geom_text(data = means_df, aes(x = means_x,
         #                               y = means_y,
-        #                               label = abbreviate(class))) + 
+        #                               label = abbreviate(class))) +
         labs(title = "LD Pairwise Plot",
              x = paste("LD", lda_x, sep = ""),
              y = paste("LD", lda_y, sep = "")))
@@ -112,7 +112,7 @@ lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", k =
 
 # LDA 3D Plot
 #
-# \code{lda_3D_plot} creates an interactive, html plotly plot that can be manipulated by the viewer. 
+# \code{lda_3D_plot} creates an interactive, html plotly plot that can be manipulated by the viewer.
 #
 # @inheritParams lda_pairwise_plot
 # @inheritParams pca_3D_plot
@@ -125,7 +125,7 @@ lda_pairwise_plot <- function(x, class, lda_x = 1, lda_y = 2, rank = "full", k =
 # lda_3D_plot(digits_features, digits_class, k = 0.0001)
 #
 # @return plotly object.
-# 
+#
 # @export
 
 lda_3D_plot <- function(x, class, lda_x = 1, lda_y = 2, lda_z = 3, rank = "full", k = 0, point_size = 3){
@@ -149,4 +149,9 @@ lda_3D_plot <- function(x, class, lda_x = 1, lda_y = 2, lda_z = 3, rank = "full"
                     mode = "markers",
                     color = ~class,
                     marker = list(size = ptsize))
+}
+
+lda_allpairs_plot <- function(x, y, rank, k = 0){
+	ld <- lda_scores(x, y, rank, k)[["scores"]]
+	GGally::ggpairs(ld, upper = list(continuous = "blank"), aes(color = class))
 }

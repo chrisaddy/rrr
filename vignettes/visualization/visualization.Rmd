@@ -111,21 +111,21 @@ pairwise_plot(iris_features, iris_class, type = "lda", interactive = TRUE)
 Principal component scores can be plotted in three dimensions by setting
 `type = "pca"`.
 
-```{r}
+```{r warning = FALSE, message = FALSE}
 threewise_plot(digits_features, digits_class, type = "pca")
 ```
 
 For canonical variate analysis, the `threewise_plot()` function plots
 three-dimensional residual plots by setting `type = "cva"`.
 
-```{r}
+```{r warning = FALSE, message = FALSE}
 threewise_plot(galaxy_x, galaxy_y, type = "cva")
 ```
 
 Linear discriminant scores can be plotted in three dimensions by setting
 `type = "lda"`.
 
-```{r}
+```{r warning = FALSE, message = FALSE}
 threewise_plot(digits_features, digits_class, type = "lda", k = 0.001)
 ```
 
@@ -133,7 +133,7 @@ threewise_plot(digits_features, digits_class, type = "lda", k = 0.001)
 
 ### Change Point Size with argument `point_size`
 
-```{r}
+```{r warning = FALSE, message = FALSE}
 threewise_plot(iris_features, iris_class, type = "pca")
 threewise_plot(iris_features, iris_class, point_size = 5)
 ```

@@ -58,8 +58,8 @@ pca_rank_trace <- function(x, k = 0, plot = TRUE, interactive = FALSE){
                 label = rank)) +
             lims(x = c(0,1), y = c(0,1)) +
             geom_line(color = "red") +
-            geom_point(size = 5) + 
-            geom_text(check_overlap = TRUE, size = 4, color = "white") + 
+            geom_point(size = 5) +
+            geom_text(check_overlap = TRUE, size = 4, color = "white") +
             labs(x = "dC", y = "dE") +
             ggtitle(paste("PCA Rank Trace Plot, k = ", tuner, sep = ""))
         if(interactive == TRUE){
@@ -77,7 +77,7 @@ pca_pairwise <- function(x, pca_x, pca_y, rank = "full", k = 0){
     select(scores, ends_with(score_1), ends_with(score_2))
 }
 
-# \code{pca_pairwise_plot} plots the scores of one principal component along the \eqn{X}-axis 
+# \code{pca_pairwise_plot} plots the scores of one principal component along the \eqn{X}-axis
 # against the scores of another along the \eqn{Y}-axis in a two-dimensional scatterplot.
 # @return ggplot object if \code{interactive = FALSE}, the default, or an interactive plotly plot if \code{interactive = TRUE}.
 # @examples
@@ -86,7 +86,7 @@ pca_pairwise <- function(x, pca_x, pca_y, rank = "full", k = 0){
 # digits_class <- pendigits[,35]
 # pca_pairwise_plot(digits_features, pc_x = 1, pc_y = 3)
 #
- 
+
 pca_pairwise_plot <- function(x, pc_x = 1, pc_y = 2, class_labels = NULL, rank = "full", k = 0, interactive = FALSE, point_size = 2.5){
     pairs <- pca_pairwise(x, pc_x, pc_y, rank, k)
     if(is.null(class_labels)){
@@ -166,17 +166,16 @@ pca_3D_plot <- function(x, class_labels = "none", pca_x = 1, pca_y = 2, pca_z = 
         marker = list(size = ptsize))
 }
 
-# plots all pairs of principal components
-#
-# @inheritParams pca_scores
-# @inheritParams pca_pairwise_plot
-
 pca_allpairs_plot <- function(x, rank, k = 0, class_labels = NULL){
     pc <- pca_scores(x, rank, k)
     if(is.null(class_labels)){
     GGally::ggpairs(pc, upper = list(continuouse = "blank"))
     } else {
-    class <- as_data_frame(as.factor(class_labels[[1]]))
+    if(sum(class(class_labels) == "data.frame") >= 1){
+      class <- as_data_frame(as.factor(class_labels[[1]]))
+    } else {
+      class <- as_data_frame(as.factor(class_labels))
+    }
     df <- dplyr::bind_cols(pc, class)
     names(df)[dim(df)[2]] <- "class"
     GGally::ggpairs(df, upper = list(continuous = "blank"), aes(color = class))

@@ -64,7 +64,7 @@ rrr <- function(x, y, type = "identity", rank = "full", k = 0){
 #' of the reduced-rank regression equation.
 #'
 #' @inheritParams rrr
-#' @param plot if FALSE, returns data frame of rank trace coordinates. 
+#' @param plot if FALSE, returns data frame of rank trace coordinates.
 #' @param interactive if TRUE, creates an interactive plotly graphic.
 #'
 #' @return plot of rank trace coordinates if \code{plot = TRUE}, the default, or data frame of rank trace coordinates if \code{plot = FALSE}.
@@ -81,7 +81,7 @@ rrr <- function(x, y, type = "identity", rank = "full", k = 0){
 #' data(pendigits)
 #' digits_features <- pendigits[, -35:-36]
 #' rank_trace(digits_features, digits_features, type = "pca")
-#' 
+#'
 #' library(dplyr)
 #' data(COMBO17)
 #' galaxy <- as_data_frame(COMBO17)
@@ -143,13 +143,13 @@ residuals <- function(x, y, type = "identity", rank = "full", k = 0, plot = TRUE
 }
 
 #' Pairwise Plots
-#' 
+#'
 #' @inheritParams rrr
 #' @param pair_x variable to be plotted on the \eqn{X}-axis
 #' @param pair_y variable to be plotted on the \eqn{Y}-axis
 #' @param interactive logical. If \code{interactive = FALSE}, the default, plots a static pairwise plot. If \code{interactive = FALSE} plots an interactive pairwise plot.
 #' @param point_size size of points in scatter plot.
-#' 
+#'
 #' @return ggplot2 object if \code{interactive = FALSE}; plotly object if \code{interactive = TRUE}.
 #'
 #' @examples
@@ -187,7 +187,7 @@ pairwise_plot <- function(x, y, type = "pca", pair_x = 1, pair_y = 2, rank = "fu
 #' Compute Latent Variable Scores
 #'
 #' @inheritParams rrr
-#' 
+#'
 #' @examples
 #' data(pendigits)
 #' digits_features <- pendigits[, -35:-36]
@@ -218,6 +218,40 @@ scores <- function(x, y, type = "pca", rank = "full", k = 0){
 		   lda = lda_scores(x, y, rank, k),
 		   "type not recognized for this function")
 }
+
+#' All Pairs Plots
+#'
+#'
+#'
+#' @inheritParams pairwise_plot
+#'
+#' @return scatterplot matrix.
+#'
+#'
+
+# plots all pairs of principal components
+#
+# @inheritParams scores
+# @inheritParams pairwise_plot
+#'
+#' @examples
+#' data(pendigits)
+#' digits_features <- pendigits[, -35:-36]
+#' digits_class <- pendigits[,35]
+#' allpairs_plot(digits_features, digits_class, type = "pca", rank = 3)
+#'
+#' @export
+
+allpairs_plot <- function(x, y, type = "pca", rank, k = 0){
+	if(rank < 2){
+		stop("Too few pairs for allpairs_plot. Choose rank >= 2")
+	} else {
+	switch(type,
+		pca = pca_allpairs_plot(x, rank, k, y),
+		lda = lda_pairwise_plot(x, y, rank, k))
+	}
+}
+
 
 #' 3-D Reduced Rank Regression Plots
 #'
