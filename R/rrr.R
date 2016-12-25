@@ -39,23 +39,26 @@
 #' @export
 
 rrr <- function(x, y, type = "identity", rank = "full", k = 0){
-	if(type == "lda"){
-		full_rank <- dim(distinct(as_data_frame(y)))[1] - 1
+	if(is.matrix(type)){
+		reduce_rank_regression(x, y, type, rank, k)
 	} else {
-		full_rank <- min(dim(x)[2], dim(y)[2])
+		if(type == "lda"){
+			full_rank <- dim(distinct(as_data_frame(y)))[1] - 1
+		} else {
+			full_rank <- min(dim(x)[2], dim(y)[2])
+		}
+		if(rank == "full"){
+			reduced_rank <- full_rank
+		} else {
+			reduced_rank <- rank
+		}
+		ident <- diag(1, full_rank)
+		switch(type,
+			   identity = reduce_rank_regression(x, y, ident, reduced_rank, k),
+			   pca = pca(x, reduced_rank, k),
+			   cva = cva(x, y, reduced_rank, k),
+			   lda = lda(x, y, reduced_rank, k))
 	}
-	if(rank == "full"){
-		reduced_rank <- full_rank
-	} else {
-		reduced_rank <- rank
-	}
-	ident <- diag(1, full_rank)
-	switch(type,
-		   identity = reduce_rank_regression(x, y, ident, reduced_rank, k),
-		   pca = pca(x, reduced_rank, k),
-		   cva = cva(x, y, reduced_rank, k),
-		   lda = lda(x, y, reduced_rank, k),
-		   "type not recognized for this function")
 }
 
 #' Rank Trace Plot
