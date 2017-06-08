@@ -39,23 +39,23 @@
 #' @export
 
 rrr <- function(x, y, type = "identity", rank = "full", k = 0){
-	if(type == "lda"){
-		full_rank <- dim(distinct(as_data_frame(y)))[1] - 1
-	} else {
-		full_rank <- min(dim(x)[2], dim(y)[2])
-	}
-	if(rank == "full"){
-		reduced_rank <- full_rank
-	} else {
-		reduced_rank <- rank
-	}
-	ident <- diag(1, dim(y)[2])
-	switch(type,
-		   identity = reduce_rank_regression(x, y, ident, reduced_rank, k),
-		   pca = pca(x, reduced_rank, k),
-		   cva = cva(x, y, reduced_rank, k),
-		   lda = lda(x, y, reduced_rank, k),
-		   "type not recognized for this function")
+  if(type == "lda"){
+    full_rank <- dim(distinct(as_data_frame(y)))[1] - 1
+  } else {
+    full_rank <- min(dim(x)[2], dim(y)[2])
+  }
+  if(rank == "full"){
+    reduced_rank <- full_rank
+  } else {
+    reduced_rank <- rank
+  }
+  ident <- diag(1, dim(y)[2])
+  switch(type,
+         identity = reduce_rank_regression(x, y, ident, reduced_rank, k),
+         pca = pca(x, reduced_rank, k),
+         cva = cva(x, y, reduced_rank, k),
+         lda = lda(x, y, reduced_rank, k),
+         "type not recognized for this function")
 }
 
 #' Rank Trace Plot
@@ -64,7 +64,7 @@ rrr <- function(x, y, type = "identity", rank = "full", k = 0){
 #' of the reduced-rank regression equation.
 #'
 #' @inheritParams rrr
-#' @param plot if FALSE, returns data frame of rank trace coordinates. 
+#' @param plot if FALSE, returns data frame of rank trace coordinates.
 #' @param interactive if TRUE, creates an interactive plotly graphic.
 #'
 #' @return plot of rank trace coordinates if \code{plot = TRUE}, the default, or data frame of rank trace coordinates if \code{plot = FALSE}.
@@ -81,7 +81,7 @@ rrr <- function(x, y, type = "identity", rank = "full", k = 0){
 #' data(pendigits)
 #' digits_features <- pendigits[, -35:-36]
 #' rank_trace(digits_features, digits_features, type = "pca")
-#' 
+#'
 #' library(dplyr)
 #' data(COMBO17)
 #' galaxy <- as_data_frame(COMBO17)
@@ -96,12 +96,12 @@ rrr <- function(x, y, type = "identity", rank = "full", k = 0){
 #' @export
 
 rank_trace <- function(x, y, type = "identity", k = 0, plot = TRUE, interactive = FALSE){
-	ident <- diag(1, dim(y)[2])
-	switch(type,
-		   identity = rrr_rank_trace(x, y, ident, k, plot, interactive),
-		   cva = cva_rank_trace(x, y, k, plot, interactive),
-		   pca = pca_rank_trace(x, k, plot, interactive),
-		   "type not recognized for this function")
+  ident <- diag(1, dim(y)[2])
+  switch(type,
+         identity = rrr_rank_trace(x, y, ident, k, plot, interactive),
+         cva = cva_rank_trace(x, y, k, plot, interactive),
+         pca = pca_rank_trace(x, k, plot, interactive),
+         "type not recognized for this function")
 }
 
 #' Reduced-Rank Regression Residuals
@@ -135,21 +135,21 @@ rank_trace <- function(x, y, type = "identity", k = 0, plot = TRUE, interactive 
 #' @export
 
 residuals <- function(x, y, type = "identity", rank = "full", k = 0, plot = TRUE){
-	ident <- diag(1, dim(y)[2])
-	switch(type,
-		   identity = rrr_residual_plot(x, y, ident, rank, k, plot),
-		   cva = cva_residual_plot(x, y, rank, k, plot),
-		   "type not recognized for this function")
+  ident <- diag(1, dim(y)[2])
+  switch(type,
+         identity = rrr_residual_plot(x, y, ident, rank, k, plot),
+         cva = cva_residual_plot(x, y, rank, k, plot),
+         "type not recognized for this function")
 }
 
 #' Pairwise Plots
-#' 
+#'
 #' @inheritParams rrr
 #' @param pair_x variable to be plotted on the \eqn{X}-axis
 #' @param pair_y variable to be plotted on the \eqn{Y}-axis
 #' @param interactive logical. If \code{interactive = FALSE}, the default, plots a static pairwise plot. If \code{interactive = FALSE} plots an interactive pairwise plot.
 #' @param point_size size of points in scatter plot.
-#' 
+#'
 #' @return ggplot2 object if \code{interactive = FALSE}; plotly object if \code{interactive = TRUE}.
 #'
 #' @examples
@@ -177,17 +177,17 @@ residuals <- function(x, y, type = "identity", rank = "full", k = 0, plot = TRUE
 #' @export
 
 pairwise_plot <- function(x, y, type = "pca", pair_x = 1, pair_y = 2, rank = "full", k = 0, interactive = FALSE, point_size = 2.5){
-	switch(type,
-		   pca = pca_pairwise_plot(x, pair_x, pair_y, y, rank, k, interactive),
-		   cva = cva_pairwise_plot(x, y, pair_x, k, interactive),
-		   lda = lda_pairwise_plot(x, y, pair_x, pair_y, rank, k, interactive),
-		   "type not recognized for this function")
+  switch(type,
+         pca = pca_pairwise_plot(x, pair_x, pair_y, y, rank, k, interactive),
+         cva = cva_pairwise_plot(x, y, pair_x, k, interactive),
+         lda = lda_pairwise_plot(x, y, pair_x, pair_y, rank, k, interactive),
+         "type not recognized for this function")
 }
 
 #' Compute Latent Variable Scores
 #'
 #' @inheritParams rrr
-#' 
+#'
 #' @examples
 #' data(pendigits)
 #' digits_features <- pendigits[, -35:-36]
@@ -212,12 +212,46 @@ pairwise_plot <- function(x, y, type = "pca", pair_x = 1, pair_y = 2, rank = "fu
 #' @export
 
 scores <- function(x, y, type = "pca", rank = "full", k = 0){
-	switch(type,
-		   pca = pca_scores(x, rank, k),
-		   cva = cva_scores(x, y, rank, k),
-		   lda = lda_scores(x, y, rank, k),
-		   "type not recognized for this function")
+  switch(type,
+         pca = pca_scores(x, rank, k),
+         cva = cva_scores(x, y, rank, k),
+         lda = lda_scores(x, y, rank, k),
+         "type not recognized for this function")
 }
+
+#' All Pairs Plots
+#'
+#'
+#'
+#' @inheritParams pairwise_plot
+#'
+#' @return scatterplot matrix.
+#'
+#'
+
+# plots all pairs of principal components
+#
+# @inheritParams scores
+# @inheritParams pairwise_plot
+#'
+#' @examples
+#' data(pendigits)
+#' digits_features <- pendigits[, -35:-36]
+#' digits_class <- pendigits[,35]
+#' allpairs_plot(digits_features, digits_class, type = "pca", rank = 3)
+#'
+#' @export
+
+allpairs_plot <- function(x, y, type = "pca", rank, k = 0){
+  if(rank < 2){
+    stop("Too few pairs for allpairs_plot. Choose rank >= 2")
+  } else {
+    switch(type,
+           pca = pca_allpairs_plot(x, rank, k, y),
+           lda = lda_pairwise_plot(x, y, rank, k))
+  }
+}
+
 
 #' 3-D Reduced Rank Regression Plots
 #'
@@ -253,8 +287,8 @@ scores <- function(x, y, type = "pca", rank = "full", k = 0){
 #' @export
 
 threewise_plot <- function(x, y, type = "pca", pair_x = 1, pair_y = 2, pair_z = 3, rank = "full", k = 0, point_size = 2.5){
-	switch(type,
-		   pca = pca_3D_plot(x, y, pair_x, pair_y, pair_z, rank, point_size),
-		   cva = cva_residual_3D_plot(x, y, pair_x, pair_y, pair_z, rank, k, point_size),
-		   lda = lda_3D_plot(x, y, pair_x, pair_y, pair_z, rank, k, point_size))
+  switch(type,
+         pca = pca_3D_plot(x, y, pair_x, pair_y, pair_z, rank, point_size),
+         cva = cva_residual_3D_plot(x, y, pair_x, pair_y, pair_z, rank, k, point_size),
+         lda = lda_3D_plot(x, y, pair_x, pair_y, pair_z, rank, k, point_size))
 }
