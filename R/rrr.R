@@ -45,7 +45,7 @@ rrr <- function(x, y, type = "identity", rank = "full", k = 0){
 		if(type == "lda"){
 			full_rank <- dim(distinct(as_data_frame(y)))[1] - 1
 		} else {
-			full_rank <- min(dim(x)[2], dim(y)[2])
+			full_rank <- dim(y)[2]
 		}
 		if(rank == "full"){
 			reduced_rank <- full_rank
