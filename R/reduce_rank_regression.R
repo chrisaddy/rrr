@@ -1,5 +1,5 @@
 reduce_rank_regression <- function(x, y, gamma_matrix, rank = "full", k = 0){
-	full_rank <- min(dim(x)[2], dim(y)[2])
+	full_rank <- dim(y)[2]
 	if(rank == "full"){
 		reduce_rank <- full_rank
 	} else if(rank <= full_rank){
