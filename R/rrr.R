@@ -99,7 +99,7 @@ rrr <- function(x, y, type = "identity", rank = "full", k = 0){
 #' @export
 
 rank_trace <- function(x, y, type = "identity", k = 0, plot = TRUE, interactive = FALSE){
-	ident <- diag(1, min(dim(x)[2], dim(y)[2]))
+	ident <- diag(1, dim(y)[2])
 	switch(type,
 		   identity = rrr_rank_trace(x, y, ident, k, plot, interactive),
 		   cva = cva_rank_trace(x, y, k, plot, interactive),
@@ -138,7 +138,7 @@ rank_trace <- function(x, y, type = "identity", k = 0, plot = TRUE, interactive 
 #' @export
 
 residuals <- function(x, y, type = "identity", rank = "full", k = 0, plot = TRUE){
-	ident <- diag(1, min(dim(x)[2], dim(y)[2]))
+	ident <- diag(1, dim(y)[2])
 	switch(type,
 		   identity = rrr_residual_plot(x, y, ident, rank, k, plot),
 		   cva = cva_residual_plot(x, y, rank, k, plot),
